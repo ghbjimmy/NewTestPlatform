@@ -3,9 +3,6 @@
 
 #include <QMainWindow>
 
-namespace Ui {
-class MainWindow;
-}
 
 class MainWindow : public QMainWindow
 {
@@ -16,7 +13,10 @@ public:
     ~MainWindow();
 
 private:
-    Ui::MainWindow *ui;
+    void SetupUI();
+
+private:
+    QWidget* mTitleWgt;
 };
 
 #endif // MAINWINDOW_H

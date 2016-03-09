@@ -4,7 +4,7 @@
 DetailViewForm::DetailViewForm(QWidget *parent) :
     QWidget(parent)
 {
-    SetUpUi();
+    SetupUI();
 }
 
 DetailViewForm::~DetailViewForm()
@@ -12,7 +12,7 @@ DetailViewForm::~DetailViewForm()
 
 }
 
-void DetailViewForm::SetUpUi()
+void DetailViewForm::SetupUI()
 {
     QHBoxLayout* h1 = new QHBoxLayout();
     mTabWidget = new QTabWidget();
