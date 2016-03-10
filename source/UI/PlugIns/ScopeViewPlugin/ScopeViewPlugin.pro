@@ -12,10 +12,12 @@ TEMPLATE = lib
 DEFINES += TPLUGIN_LIBRARY
 
 SOURCES += scopeviewplugin.cpp \
-    scopeviewform.cpp
+    scopeviewform.cpp \
+    ../Common/uutbutton.cpp
 
 HEADERS += scopeviewplugin.h \
-    scopeviewform.h
+    scopeviewform.h \
+    ../Common/uutbutton.h
 
 unix {
     target.path = /usr/lib

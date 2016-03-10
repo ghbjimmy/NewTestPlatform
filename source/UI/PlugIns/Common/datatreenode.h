@@ -12,7 +12,7 @@ class DataTreeNode
 
 public:
     DataTreeNode();
-    ~DataTreeNode();
+    virtual ~DataTreeNode();
 
     //绑定数据
     virtual void setData(void* data, int len) = 0;

@@ -6,6 +6,11 @@ ScopeViewPlugin::ScopeViewPlugin()
     _widget = NULL;
 }
 
+ScopeViewPlugin::~ScopeViewPlugin()
+{
+
+}
+
 int ScopeViewPlugin::init()
 {
     return 0;

@@ -9,7 +9,7 @@ class DataTreeModel : public QAbstractItemModel
     Q_OBJECT
 public:
     DataTreeModel(QObject *parent = 0);
-    ~DataTreeModel();
+    virtual ~DataTreeModel();
 
     //设置模型数据
     void setRootNode(DataTreeNode *node);

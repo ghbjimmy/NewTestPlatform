@@ -8,6 +8,7 @@ class TPLUGINSHARED_EXPORT ScopeViewPlugin : public IPlugin
 
 public:
     ScopeViewPlugin();
+    ~ScopeViewPlugin();
 
 public:
     virtual int init();
