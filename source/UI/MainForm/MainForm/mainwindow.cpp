@@ -6,7 +6,6 @@
 #include <QSplitter>
 #include <QLibrary>
 
-#include "../../plugins/Plugin_global.h"
 #include "../../Util/libaryparser.h"
 
 #include <string>
@@ -21,7 +20,7 @@ MainWindow::~MainWindow()
 
 }
 
-QWidget* CreateTitleWgt()
+QWidget* createTitleWgt()
 {
 
     QLabel* nameLabel = new QLabel();
@@ -66,7 +65,7 @@ QWidget* CreateTitleWgt()
     return titleWgt;
 }
 
-QWidget* CreateDetailViewWgt()
+QWidget* createDetailViewWgt()
 {
     QLabel* lbl = new QLabel();
     lbl->setFixedHeight(10);
@@ -97,7 +96,7 @@ QWidget* CreateDetailViewWgt()
     return wgt;
 }
 
-QWidget* CreateScopeViewWgt()
+QWidget* createScopeViewWgt()
 {
     QWidget* wgt = new QWidget();
     wgt->setAutoFillBackground(true);
@@ -120,7 +119,7 @@ QWidget* CreateScopeViewWgt()
     return viewWgt;
 }
 
-QWidget* CreateInteractionViewWgt()
+QWidget* createInteractionViewWgt()
 {
     QWidget* wgt = new QWidget();
     wgt->setAutoFillBackground(true);
@@ -134,18 +133,18 @@ QWidget* CreateInteractionViewWgt()
 
 void MainWindow::setupUI()
 {
-    mTitleWgt = CreateTitleWgt();
+    mTitleWgt = createTitleWgt();
     mTitleWgt->setFixedHeight(60);
-    QWidget* mDetailViewWgt = CreateDetailViewWgt();
-    QWidget* mScopeViewWgt = CreateScopeViewWgt();
-    QWidget* mInteractionViewWgt = CreateInteractionViewWgt();
-
+    QWidget* mDetailViewWgt = createDetailViewWgt();
+    QWidget* mScopeViewWgt = createScopeViewWgt();
+    QWidget* mInteractionViewWgt = createInteractionViewWgt();
+    mInteractionViewWgt->setFixedWidth(300);
+    mScopeViewWgt->setMinimumHeight(200);
     QSplitter* split = new QSplitter(Qt::Orientation::Vertical);
     split->addWidget(mDetailViewWgt);
     split->addWidget(mScopeViewWgt);
 
-    split->setStretchFactor(0, 30);
-    split->setStretchFactor(1, 1);
+    split->setStretchFactor(0, 1);
 
     QHBoxLayout* h1 = new QHBoxLayout();
     h1->addWidget(split,3);
