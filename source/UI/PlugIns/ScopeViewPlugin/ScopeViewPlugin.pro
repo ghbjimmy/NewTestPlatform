@@ -22,5 +22,4 @@ unix {
     INSTALLS += target
 }
 
-FORMS += \
-    scopeviewform.ui
+FORMS +=
