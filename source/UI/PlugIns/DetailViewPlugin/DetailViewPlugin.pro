@@ -13,10 +13,23 @@ DEFINES += TPLUGIN_LIBRARY
 
 INCLUDEPATH += ../
 SOURCES += detailviewplugin.cpp \
-    detailviewform.cpp
+    detailviewform.cpp \
+    cvsdatatreeview.cpp \
+    cvsdatatreemodel.cpp \
+    ../Common/datatreemodel.cpp \
+    ../Common/datatreenode.cpp \
+    cvsdatatreenode.cpp \
+    cvsdataadapter.cpp
 
 HEADERS += detailviewplugin.h\
     detailviewform.h \
+    cvsdatatreeview.h \
+    cvsdatatreemodel.h \
+    ../detailviewsinterface.h \
+    ../Common/datatreemodel.h \
+    ../Common/datatreenode.h \
+    cvsdatatreenode.h \
+    cvsdataadapter.h
 
 unix {
     target.path = /usr/lib

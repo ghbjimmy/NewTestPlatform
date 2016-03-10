@@ -11,13 +11,13 @@ public:
     DetailViewPlugin();
 
 public:
-    virtual int Init();
+    virtual int init();
 
-    virtual void Fini();
+    virtual void fini();
 
-    virtual int OnMessage(const IMessage& msg);
+    virtual int onMessage(const IMessage& msg);
 
-    virtual QWidget * CreateWidget();
+    virtual QWidget * createWidget();
 
 private:
 

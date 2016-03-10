@@ -5,12 +5,12 @@ DetailViewPlugin::DetailViewPlugin()
 {
 }
 
-int DetailViewPlugin::Init()
+int DetailViewPlugin::init()
 {
     return 0;
 }
 
-void DetailViewPlugin::Fini()
+void DetailViewPlugin::fini()
 {
     if(NULL!=mWidget)
     {
@@ -19,9 +19,9 @@ void DetailViewPlugin::Fini()
 }
 
 // 消息解释
-int DetailViewPlugin::OnMessage(const IMessage& msg)
+int DetailViewPlugin::onMessage(const IMessage& msg)
 {
-    switch(msg.MessageID())
+    switch(msg.messageID())
     {
     case PLUGIN_INIT:
     {
@@ -48,13 +48,13 @@ int DetailViewPlugin::OnMessage(const IMessage& msg)
     return 0;
 }
 
-QWidget * DetailViewPlugin::CreateWidget()
+QWidget * DetailViewPlugin::createWidget()
 {
     mWidget = new DetailViewForm();
     return mWidget;
 }
 
-extern "C" IPlugin * CreatePlugin()
+extern "C" IPlugin * createPlugin()
 {
     return new DetailViewPlugin();
 }

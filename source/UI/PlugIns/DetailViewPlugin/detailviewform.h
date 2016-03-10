@@ -1,5 +1,5 @@
-#ifndef DETAILVIEWFORM_H
-#define DETAILVIEWFORM_H
+#ifndef DETAILVIEWFORM1_H
+#define DETAILVIEWFORM1_H
 
 #include <QWidget>
 #include <QTabWidget>

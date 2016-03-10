@@ -18,22 +18,22 @@ const int PLUGIN_GUI  = 10;      // 插件GUI相关消息
 class TPLUGINSHARED_EXPORT IMessage
 {
 public:
-    virtual int  MessageID() const = 0;
-    virtual void * Context() const = 0;
-    virtual int    Length() const = 0;
+    virtual int  messageID() const = 0;
+    virtual void * context() const = 0;
+    virtual int    length() const = 0;
 };
 
 class TPLUGINSHARED_EXPORT IPlugin
 {
 public:
-    virtual int Init() = 0;
-    virtual void Fini()  = 0;
-    virtual int OnMessage(const IMessage& msg) = 0;
-    virtual QWidget * CreateWidget() = 0;
+    virtual int init() = 0;
+    virtual void fini()  = 0;
+    virtual int onMessage(const IMessage& msg) = 0;
+    virtual QWidget * createWidget() = 0;
 };
 
 typedef IPlugin * (*fnCreatePlugin)();
 
-extern "C" TPLUGINSHARED_EXPORT IPlugin * CreatePlugin();
+extern "C" TPLUGINSHARED_EXPORT IPlugin * createPlugin();
 
 #endif // TPLUGIN_GLOBAL_H
