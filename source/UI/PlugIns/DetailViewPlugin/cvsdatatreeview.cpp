@@ -1,12 +1,10 @@
 
 #include "cvsdatatreeview.h"
-
 #include "cvsdataadapter.h"
 #include "cvsdatatreemodel.h"
 #include "cvsdatatreenode.h"
 
-CVSDataTreeView::CVSDataTreeView(QWidget *parent) :
-    QTreeView(parent)
+CVSDataTreeView::CVSDataTreeView(QWidget *parent) : QTreeView(parent)
 {
 
 }

@@ -14,7 +14,7 @@ public:
     ~DetailViewForm();
 
 private:
-    void SetupUI();
+    void setupUI();
 private:
     QTabWidget* mTabWidget;
 };

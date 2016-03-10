@@ -19,7 +19,9 @@ SOURCES += detailviewplugin.cpp \
     ../Common/datatreemodel.cpp \
     ../Common/datatreenode.cpp \
     cvsdatatreenode.cpp \
-    cvsdataadapter.cpp
+    cvsdataadapter.cpp \
+    progressform.cpp \
+    failform.cpp
 
 HEADERS += detailviewplugin.h\
     detailviewform.h \
@@ -29,7 +31,9 @@ HEADERS += detailviewplugin.h\
     ../Common/datatreemodel.h \
     ../Common/datatreenode.h \
     cvsdatatreenode.h \
-    cvsdataadapter.h
+    cvsdataadapter.h \
+    progressform.h \
+    failform.h
 
 unix {
     target.path = /usr/lib
