@@ -7,6 +7,8 @@
 #include <QLibrary>
 
 #include "../../plugins/Plugin_global.h"
+
+#include <string>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
@@ -35,8 +37,6 @@ QWidget* CreateTitleWgt()
     imgLbl->setPixmap(pix);
 
     QLabel* text = new QLabel("1.29");
-
-    QLabel* text1 = new QLabel("1");
 
     QVBoxLayout* v1 = new QVBoxLayout();
     v1->addWidget(imgLbl);
@@ -68,11 +68,12 @@ QWidget* CreateTitleWgt()
 QWidget* CreateDetailViewWgt()
 {
     QLabel* lbl = new QLabel();
+    lbl->setFixedHeight(10);
     lbl->setText("01");
     QHBoxLayout* h1 = new QHBoxLayout();
     h1->addStretch(1);
     h1->addWidget(lbl);
-    h1->addSpacerItem(new QSpacerItem(20,10, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    h1->addSpacerItem(new QSpacerItem(10,10, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
     /*QWidget* view = new QWidget();
     view->setAutoFillBackground(true);
@@ -81,20 +82,21 @@ QWidget* CreateDetailViewWgt()
     palette.setColor(QPalette::Background, QColor(0,255,255));
     view->setPalette(palette);*/
 
-    QLibrary * loader = new QLibrary("D:\\Work\\tm_platform_new\\source\\UI\\PlugIns\\build-DetailViewPlugin-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\debug\\DetailViewPlugin.dll");
-
+    QLibrary * loader = new QLibrary("D:\\Work\\tm_platform_new\\source\\build-ui-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\PlugIns\\DetailViewPlugin\\debug\\DetailViewPlugin.dll");
+    //QLibrary * loader = new QLibrary("D:\\Work\\tm_platform_new\\source\\UI\\PlugIns\\DetailViewPlugin\\Debug\\DetailViewPlugin.dll");
     loader->load();
-    fnCreatePlugin fn = (fnCreatePlugin)loader->resolve("CreatePlugin");
+    fnCreatePlugin fn = (fnCreatePlugin)loader->resolve("createPlugin");
 
     IPlugin * pPlugin = fn();
-    pPlugin->Init();
-    QWidget* viewWgt = pPlugin->CreateWidget();
+    pPlugin->init();
+    QWidget* viewWgt = pPlugin->createWidget();
 
     QWidget* wgt = new QWidget();
     QVBoxLayout* v1 = new QVBoxLayout();
     v1->addLayout(h1);
     v1->addWidget(viewWgt);
     wgt->setLayout(v1);
+    v1->setSpacing(1);
     v1->setContentsMargins(QMargins(0,0,0,0));
     return wgt;
 }
@@ -135,7 +137,7 @@ void MainWindow::SetupUI()
     split->addWidget(mDetailViewWgt);
     split->addWidget(mScopeViewWgt);
 
-    split->setStretchFactor(0, 60);
+    split->setStretchFactor(0, 30);
     split->setStretchFactor(1, 1);
 
     QHBoxLayout* h1 = new QHBoxLayout();

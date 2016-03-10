@@ -6,7 +6,6 @@
 
 class TPLUGINSHARED_EXPORT DetailViewPlugin : public IPlugin
 {
-    QWidget* mWidget;
 public:
     DetailViewPlugin();
 
@@ -20,7 +19,7 @@ public:
     virtual QWidget * createWidget();
 
 private:
-
+    QWidget* mWidget;
 };
 
 #endif // DETAILVIEWPLUGIN_H

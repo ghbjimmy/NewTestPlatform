@@ -3,8 +3,11 @@
 #include <QLibrary>
 #include "../../plugins/Plugin_global.h"
 
+
 int main(int argc, char *argv[])
 {
+
+
     QApplication a(argc, argv);
     MainWindow w;
     /*QLibrary * loader = new QLibrary("D:\\Work\\tm_platform_new\\source\\UI\\PlugIns\\build-DetailViewPlugin-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\debug\\DetailViewPlugin.dll");
