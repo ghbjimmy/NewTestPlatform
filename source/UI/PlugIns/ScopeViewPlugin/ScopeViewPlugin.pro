@@ -11,13 +11,16 @@ TEMPLATE = lib
 
 DEFINES += TPLUGIN_LIBRARY
 
-SOURCES += scopeviewplugin.cpp
+SOURCES += scopeviewplugin.cpp \
+    scopeviewform.cpp
 
-HEADERS += scopeviewplugin.h
+HEADERS += scopeviewplugin.h \
+    scopeviewform.h
 
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
 
-FORMS +=
+FORMS += \
+    scopeviewform.ui

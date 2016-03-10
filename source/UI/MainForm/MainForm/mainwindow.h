@@ -13,7 +13,7 @@ public:
     ~MainWindow();
 
 private:
-    void SetupUI();
+    void setupUI();
 
 private:
     QWidget* mTitleWgt;

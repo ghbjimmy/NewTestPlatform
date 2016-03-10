@@ -7,12 +7,13 @@
 #include <QLibrary>
 
 #include "../../plugins/Plugin_global.h"
+#include "../../Util/libaryparser.h"
 
 #include <string>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    SetupUI();
+    setupUI();
 }
 
 MainWindow::~MainWindow()
@@ -75,19 +76,14 @@ QWidget* CreateDetailViewWgt()
     h1->addWidget(lbl);
     h1->addSpacerItem(new QSpacerItem(10,10, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
-    /*QWidget* view = new QWidget();
-    view->setAutoFillBackground(true);
+    LibaryParser* parser = new LibaryParser();
+    QString path = "D:\\Work\\tm_platform_new\\source\\build-ui-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\PlugIns\\DetailViewPlugin\\debug\\DetailViewPlugin.dll";
+    if (!parser->parse(path))
+    {
+        return NULL;
+    }
 
-    QPalette palette;
-    palette.setColor(QPalette::Background, QColor(0,255,255));
-    view->setPalette(palette);*/
-
-    QLibrary * loader = new QLibrary("D:\\Work\\tm_platform_new\\source\\build-ui-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\PlugIns\\DetailViewPlugin\\debug\\DetailViewPlugin.dll");
-    //QLibrary * loader = new QLibrary("D:\\Work\\tm_platform_new\\source\\UI\\PlugIns\\DetailViewPlugin\\Debug\\DetailViewPlugin.dll");
-    loader->load();
-    fnCreatePlugin fn = (fnCreatePlugin)loader->resolve("createPlugin");
-
-    IPlugin * pPlugin = fn();
+    IPlugin * pPlugin = parser->getPlugin();
     pPlugin->init();
     QWidget* viewWgt = pPlugin->createWidget();
 
@@ -110,7 +106,18 @@ QWidget* CreateScopeViewWgt()
     palette.setColor(QPalette::Background, QColor(255,0,255));
     wgt->setPalette(palette);
 
-    return wgt;
+    LibaryParser* parser = new LibaryParser();
+    QString path = "D:\\Work\\tm_platform_new\\source\\build-ui-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\PlugIns\\ScopeViewPlugin\\debug\\ScopeViewPlugin.dll";
+    if (!parser->parse(path))
+    {
+        return NULL;
+    }
+
+    IPlugin * pPlugin = parser->getPlugin();
+    pPlugin->init();
+    QWidget* viewWgt = pPlugin->createWidget();
+
+    return viewWgt;
 }
 
 QWidget* CreateInteractionViewWgt()
@@ -125,7 +132,7 @@ QWidget* CreateInteractionViewWgt()
     return wgt;
 }
 
-void MainWindow::SetupUI()
+void MainWindow::setupUI()
 {
     mTitleWgt = CreateTitleWgt();
     mTitleWgt->setFixedHeight(60);

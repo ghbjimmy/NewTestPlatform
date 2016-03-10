@@ -1,5 +1,5 @@
 #include "scopeviewplugin.h"
-
+#include "scopeviewform.h"
 
 ScopeViewPlugin::ScopeViewPlugin()
 {
@@ -51,7 +51,7 @@ int ScopeViewPlugin::onMessage(const IMessage& msg)
 
 QWidget * ScopeViewPlugin::createWidget()
 {
-    _widget = new QWidget();
+    _widget = new ScopeviewForm();
     return _widget;
 }
 
