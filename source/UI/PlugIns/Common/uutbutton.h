@@ -14,6 +14,7 @@ public:
     explicit UutButton(int style, QWidget *parent = 0);
     virtual ~UutButton();
 
+    void setIndex(int index);
 
 protected:
     virtual void resizeEvent(QResizeEvent* evt);
@@ -25,7 +26,8 @@ private:
 private:
     QCheckBox* _box;
     QLabel* _txtLbl;
-   int _style;
+    int _style;
+    int _index;
 };
 
 #endif // SCOPEVIEWFORM_H

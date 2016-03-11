@@ -80,7 +80,7 @@ QWidget* createPanelWgt()
     panelWgt->setLayout(g1);
 
 
-    UIUtil::setColor(QPalette::Background, Qt::gray, panelWgt);
+    UIUtil::setBgColor(panelWgt, Qt::gray);
     return panelWgt;
 }
 

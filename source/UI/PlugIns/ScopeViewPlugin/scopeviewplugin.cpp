@@ -24,33 +24,8 @@ void ScopeViewPlugin::fini()
     }
 }
 
-// 消息解释
 int ScopeViewPlugin::onMessage(const IMessage& msg)
 {
-    switch(msg.messageID())
-    {
-    case PLUGIN_INIT:
-    {
-        //dosomethings
-        break;
-    }
-    case PLUGIN_GUI:
-    {
-        //dosomethings
-        break;
-    }
-    case PLUGIN_FINI:
-    {
-        //dosomethings
-        break;
-    }
-
-    default:
-    {
-        break;
-    }
-    };
-
     return 0;
 }
 

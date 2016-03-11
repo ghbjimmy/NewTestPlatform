@@ -69,7 +69,7 @@ QWidget* createDetailViewWgt()
 {
     QLabel* lbl = new QLabel();
     lbl->setFixedHeight(10);
-    lbl->setText("01");
+    lbl->setText("V1.0");
     QHBoxLayout* h1 = new QHBoxLayout();
     h1->addStretch(1);
     h1->addWidget(lbl);
@@ -98,13 +98,6 @@ QWidget* createDetailViewWgt()
 
 QWidget* createScopeViewWgt()
 {
-    QWidget* wgt = new QWidget();
-    wgt->setAutoFillBackground(true);
-
-    QPalette palette;
-    palette.setColor(QPalette::Background, QColor(255,0,255));
-    wgt->setPalette(palette);
-
     LibaryParser* parser = new LibaryParser();
     QString path = "D:\\Work\\tm_platform_new\\source\\build-ui-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\PlugIns\\ScopeViewPlugin\\debug\\ScopeViewPlugin.dll";
     if (!parser->parse(path))
@@ -121,14 +114,18 @@ QWidget* createScopeViewWgt()
 
 QWidget* createInteractionViewWgt()
 {
-    QWidget* wgt = new QWidget();
-    wgt->setAutoFillBackground(true);
+    LibaryParser* parser = new LibaryParser();
+    QString path = "D:\\Work\\tm_platform_new\\source\\build-ui-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\PlugIns\\InteractionViewPlugin\\debug\\InteractionViewPlugin.dll";
+    if (!parser->parse(path))
+    {
+        return NULL;
+    }
 
-    QPalette palette;
-    palette.setColor(QPalette::Background, QColor(255,255,0));
-    wgt->setPalette(palette);
+    IPlugin * pPlugin = parser->getPlugin();
+    pPlugin->init();
+    QWidget* viewWgt = pPlugin->createWidget();
 
-    return wgt;
+    return viewWgt;
 }
 
 void MainWindow::setupUI()
