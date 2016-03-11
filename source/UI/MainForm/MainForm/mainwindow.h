@@ -15,6 +15,9 @@ public:
 private:
     void setupUI();
 
+private slots:
+    void onMenuAction();
+
 private:
     QWidget* mTitleWgt;
 };

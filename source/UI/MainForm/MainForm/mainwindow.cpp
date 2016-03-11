@@ -5,6 +5,7 @@
 #include <QSpacerItem>
 #include <QSplitter>
 #include <QLibrary>
+#include <QMenuBar>
 
 #include "../../Util/libaryparser.h"
 
@@ -156,5 +157,14 @@ void MainWindow::setupUI()
     centralWgt->setLayout(v1);
     this->setCentralWidget(centralWgt);
 
+    QMenu* fileMenu = menuBar()->addMenu(tr("File"));
+    QAction* loadAction = new QAction("Load",this);
+    connect(loadAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
+    fileMenu->addAction(loadAction);
     this->resize(1024,768);
+}
+
+void MainWindow::onMenuAction()
+{
+
 }
