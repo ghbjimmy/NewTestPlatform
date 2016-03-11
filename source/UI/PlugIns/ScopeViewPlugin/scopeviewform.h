@@ -1,7 +1,7 @@
 #ifndef SCOPEVIEWFORM_H
 #define SCOPEVIEWFORM_H
 
-#include <QWidget>
+#include <QScrollArea>
 
 class ScopeviewForm : public QWidget
 {

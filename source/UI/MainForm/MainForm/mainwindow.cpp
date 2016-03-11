@@ -135,7 +135,7 @@ void MainWindow::setupUI()
     QWidget* mDetailViewWgt = createDetailViewWgt();
     QWidget* mScopeViewWgt = createScopeViewWgt();
     QWidget* mInteractionViewWgt = createInteractionViewWgt();
-    mInteractionViewWgt->setFixedWidth(300);
+    mInteractionViewWgt->setFixedWidth(250);
     mScopeViewWgt->setMinimumHeight(200);
     QSplitter* split = new QSplitter(Qt::Orientation::Vertical);
     split->addWidget(mDetailViewWgt);

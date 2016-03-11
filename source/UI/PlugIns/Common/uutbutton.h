@@ -16,12 +16,20 @@ public:
 
     void setIndex(int index);
 
+    bool isChecked();
+    void setChecked(bool flag);
+
+signals:
+    void signal_check(int);
+
 protected:
     virtual void resizeEvent(QResizeEvent* evt);
 
-
 private:
     void setupUI();
+
+private slots:
+    //void onStateChanged(int);
 
 private:
     QCheckBox* _box;

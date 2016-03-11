@@ -12,6 +12,8 @@
 ScopeviewForm::ScopeviewForm(QWidget *parent) : QWidget(parent)
 {
     setupUI();
+    //this->setWidgetResizable(true);
+    //this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 }
 
 ScopeviewForm::~ScopeviewForm()
@@ -65,8 +67,6 @@ QWidget* createPanelWgt()
 {
 
     QWidget* panelWgt = new QWidget();
-
-
     QGridLayout* g1 = new QGridLayout();
 
     for (int i = 0; i < 4; ++i)
@@ -78,8 +78,6 @@ QWidget* createPanelWgt()
     }
 
     panelWgt->setLayout(g1);
-
-
     UIUtil::setBgColor(panelWgt, Qt::gray);
     return panelWgt;
 }

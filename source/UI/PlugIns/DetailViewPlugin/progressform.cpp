@@ -2,9 +2,10 @@
 #include <QHBoxLayout>
 #include <QLabel>
 
-ProgressForm::ProgressForm(QWidget *parent) :QWidget(parent)
+ProgressForm::ProgressForm(QWidget *parent) : QScrollArea(parent)
 {
     setupUI();
+    this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 ProgressForm::~ProgressForm()
@@ -22,6 +23,7 @@ QHBoxLayout* createLayout(const QString& name, QProgressBar* bar)
     h1->addWidget(lbl);
     h1->addWidget(bar, 1);
     h1->setSpacing(10);
+
     return h1;
 }
 
@@ -43,7 +45,7 @@ void ProgressForm::setupUI()
     v1->addLayout(createLayout("UUT5:", _bar5));
     v1->addLayout(createLayout("UUT6:", _bar6));
     v1->addStretch(1);
-    v1->setSpacing(30);
+    v1->setSpacing(25);
 
     this->setLayout(v1);
 }

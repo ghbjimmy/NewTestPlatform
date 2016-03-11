@@ -1,11 +1,11 @@
 #ifndef PROGRESSFORM_H
 #define PROGRESSFORM_H
 
-#include <QWidget>
+#include <QScrollArea>
 #include <QProgressBar>
 
 
-class ProgressForm : public QWidget
+class ProgressForm : public QScrollArea
 {
     Q_OBJECT
 

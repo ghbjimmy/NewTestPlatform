@@ -9,6 +9,7 @@
 #include <QGridLayout>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QSet>
 
 InteractionViewForm::InteractionViewForm(QWidget *parent) : QWidget(parent)
 {
@@ -157,7 +158,7 @@ QWidget* createtResultWgt()
     wgt->setLayout(h1);
     UIUtil::setBgColor(wgt, Qt::gray);
 
-    wgt->setMinimumSize(250, 80);
+    wgt->setMinimumSize(200, 80);
     return wgt;
 }
 
@@ -209,6 +210,13 @@ void InteractionViewForm::setupUI()
     QHBoxLayout* h5 = createBtnLayout(_btn5, 5, "UUT5\nReady");
     QHBoxLayout* h6 = createBtnLayout(_btn6, 6, "UUT6\nReady");
 
+    connect(_btn1, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+    connect(_btn2, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+    connect(_btn3, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+    connect(_btn4, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+    connect(_btn5, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+    connect(_btn6, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+
     QVBoxLayout* v1 = new QVBoxLayout();
     v1->addLayout(h1);
     v1->addLayout(h2);
@@ -217,8 +225,9 @@ void InteractionViewForm::setupUI()
     v1->addLayout(h5);
     v1->addLayout(h6);
 
-    QCheckBox* _selBox = new QCheckBox();
+    _selBox = new QCheckBox();
     _selBox->setText("Select/Unselect All");
+    connect(_selBox, SIGNAL(stateChanged(int)), this, SLOT(onSelCheckStateChanged(int)));
     QHBoxLayout* hh1 = new QHBoxLayout();
     hh1->addStretch(1);
     hh1->addWidget(_selBox);
@@ -248,3 +257,60 @@ void InteractionViewForm::setupUI()
 
     this->setLayout(v1);
 }
+
+void InteractionViewForm::onBtnCheckBoxStatedChanged(int state)
+{
+    QSet<int> set;
+    set.insert(_btn1->isChecked() ? 1 : 0);
+    set.insert(_btn2->isChecked() ? 1 : 0);
+    set.insert(_btn3->isChecked() ? 1 : 0);
+    set.insert(_btn4->isChecked() ? 1 : 0);
+    set.insert(_btn5->isChecked() ? 1 : 0);
+    set.insert(_btn6->isChecked() ? 1 : 0);
+
+    disconnect(_selBox, SIGNAL(stateChanged(int)), this, SLOT(onSelCheckStateChanged(int)));
+    if (set.size() == 1)
+    {
+        bool flag = *set.begin() == 1 ? true : false;
+        _selBox->setChecked(flag);
+    }
+    else
+        _selBox->setCheckState(Qt::CheckState::PartiallyChecked);
+
+     connect(_selBox, SIGNAL(stateChanged(int)), this, SLOT(onSelCheckStateChanged(int)));
+    _selBox->update();
+}
+
+ void InteractionViewForm::onSelCheckStateChanged(int state)
+ {
+     if (state == 1)
+     {
+         _selBox->setChecked(true);
+         return;
+     }
+     disconnect(_btn1, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+     disconnect(_btn2, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+     disconnect(_btn3, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+     disconnect(_btn4, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+     disconnect(_btn5, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+     disconnect(_btn6, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+
+     bool flag = state == 0 ? false : true;
+
+     _btn1->setChecked(flag);
+     _btn2->setChecked(flag);
+     _btn3->setChecked(flag);
+     _btn4->setChecked(flag);
+     _btn5->setChecked(flag);
+     _btn6->setChecked(flag);
+
+
+     connect(_btn1, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+     connect(_btn2, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+     connect(_btn3, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+     connect(_btn4, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+     connect(_btn5, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+     connect(_btn6, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+
+ }
+

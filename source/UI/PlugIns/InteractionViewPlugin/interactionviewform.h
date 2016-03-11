@@ -19,6 +19,11 @@ private:
     void setupUI();
     QHBoxLayout* createBtnLayout(UutButton*& btn1, int index, const QString& text);
 
+private slots:
+    void onBtnCheckBoxStatedChanged(int state);
+
+    void onSelCheckStateChanged(int);
+
 private:
     UutButton* _btn1;
     UutButton* _btn2;
