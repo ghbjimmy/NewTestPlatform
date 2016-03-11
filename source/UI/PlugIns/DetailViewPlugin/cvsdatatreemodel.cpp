@@ -20,7 +20,7 @@ int CVSDataTreeModel::columnCount(const QModelIndex &parent) const
 
 QVariant CVSDataTreeModel::data(const QModelIndex &index, int role) const
 {
-    int row = index.row();
+    //int row = index.row();
     int column = index.column();
     if (role == Qt::TextAlignmentRole)
     {
