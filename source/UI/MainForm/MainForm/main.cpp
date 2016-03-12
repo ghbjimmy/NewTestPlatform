@@ -1,7 +1,5 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include <QLibrary>
-#include "../../plugins/Plugin_global.h"
 
 
 int main(int argc, char *argv[])

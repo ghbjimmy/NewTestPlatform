@@ -26,10 +26,17 @@ public:
 class TPLUGINSHARED_EXPORT IPlugin
 {
 public:
+    IPlugin() {_name = "unknown";}
+    virtual ~IPlugin(){}
+    virtual const QString& getName() const { return _name; }
     virtual int init() = 0;
     virtual void fini()  = 0;
-    virtual int onMessage(const IMessage& msg) = 0;
+    virtual int onMessage(const IMessage* msg) = 0;
+    virtual bool isHandleMessage(const IMessage* msg) = 0;
     virtual QWidget * createWidget() = 0;
+
+protected:
+    QString _name;
 };
 
 typedef IPlugin * (*fnCreatePlugin)();

@@ -1,7 +1,7 @@
 #ifndef LIBARYPARSER_H
 #define LIBARYPARSER_H
 
-#include "../plugins/Plugin_global.h"
+#include "plugin_global.h"
 
 class QLibrary;
 

@@ -14,9 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    ../../Util/libaryparser.cpp
+    ../../Util/libaryparser.cpp \
+    ../../Util/pluginSubjecter.cpp \
+    ../../Util/util.cpp
 
 HEADERS  += mainwindow.h \
-    ../../Util/libaryparser.h
+    ../../Util/libaryparser.h \
+    ../../Util/plugin_global.h \
+    ../../Util/pluginSubjecter.h \
+    ../../Util/util.h
 
 FORMS    +=

@@ -33,7 +33,8 @@ HEADERS += detailviewplugin.h\
     cvsdatatreenode.h \
     cvsdataadapter.h \
     progressform.h \
-    failform.h
+    failform.h \
+    ../../Util/plugin_global.h
 
 unix {
     target.path = /usr/lib

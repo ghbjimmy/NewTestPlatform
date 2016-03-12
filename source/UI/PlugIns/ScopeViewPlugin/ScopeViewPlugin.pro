@@ -19,7 +19,8 @@ SOURCES += scopeviewplugin.cpp \
 HEADERS += scopeviewplugin.h \
     scopeviewform.h \
     ../Common/uutbutton.h \
-    ../../Util/util.h
+    ../../Util/util.h \
+    ../../Util/plugin_global.h
 
 unix {
     target.path = /usr/lib

@@ -1,9 +1,11 @@
 #include "scopeviewplugin.h"
 #include "scopeviewform.h"
+#include "../../Util/const.h"
 
 ScopeViewPlugin::ScopeViewPlugin()
 {
     _widget = NULL;
+    _name = ScopeViewPluginName;
 }
 
 ScopeViewPlugin::~ScopeViewPlugin()
@@ -24,9 +26,14 @@ void ScopeViewPlugin::fini()
     }
 }
 
-int ScopeViewPlugin::onMessage(const IMessage& msg)
+int ScopeViewPlugin::onMessage(const IMessage* msg)
 {
     return 0;
+}
+
+bool ScopeViewPlugin::isHandleMessage(const IMessage* msg)
+{
+    return true;
 }
 
 QWidget * ScopeViewPlugin::createWidget()

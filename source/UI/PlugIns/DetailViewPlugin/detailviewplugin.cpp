@@ -1,8 +1,11 @@
 #include "detailviewplugin.h"
 #include "detailviewform.h"
+#include "../../Util/const.h"
 
 DetailViewPlugin::DetailViewPlugin()
 {
+    _widget = NULL;
+    _name = DetailViewPluginName;
 }
 
 int DetailViewPlugin::init()
@@ -12,16 +15,16 @@ int DetailViewPlugin::init()
 
 void DetailViewPlugin::fini()
 {
-    if(NULL!=mWidget)
+    if(NULL!= _widget)
     {
-        mWidget->setParent(NULL);
+        _widget->setParent(NULL);
     }
 }
 
 // 消息解释
-int DetailViewPlugin::onMessage(const IMessage& msg)
+int DetailViewPlugin::onMessage(const IMessage* msg)
 {
-    switch(msg.messageID())
+    switch(msg->messageID())
     {
     case PLUGIN_INIT:
     {
@@ -48,10 +51,15 @@ int DetailViewPlugin::onMessage(const IMessage& msg)
     return 0;
 }
 
+bool DetailViewPlugin::isHandleMessage(const IMessage* msg)
+{
+    return true;
+}
+
 QWidget * DetailViewPlugin::createWidget()
 {
-    mWidget = new DetailViewForm();
-    return mWidget;
+    _widget = new DetailViewForm();
+    return _widget;
 }
 
 extern "C" IPlugin * createPlugin()

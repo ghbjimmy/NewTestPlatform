@@ -1,7 +1,7 @@
 #ifndef SCOPEVIEWPLUGIN_H
 #define SCOPEVIEWPLUGIN_H
 
-#include "../Plugin_global.h"
+#include "../../Util/plugin_global.h"
 
 class TPLUGINSHARED_EXPORT ScopeViewPlugin : public IPlugin
 {
@@ -12,11 +12,9 @@ public:
 
 public:
     virtual int init();
-
     virtual void fini();
-
-    virtual int onMessage(const IMessage& msg);
-
+    virtual int onMessage(const IMessage* msg);
+    virtual bool isHandleMessage(const IMessage* msg);
     virtual QWidget * createWidget();
 
 private:

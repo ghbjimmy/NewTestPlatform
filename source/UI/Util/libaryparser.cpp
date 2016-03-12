@@ -11,10 +11,9 @@ LibaryParser::~LibaryParser()
     if (_loader != NULL && _loader->isLoaded())
     {
         _loader->unload();
+        delete _loader;
+        _loader = NULL;
     }
-
-    delete _loader;
-    _loader = NULL;
 }
 
 bool LibaryParser::parse(const QString& path)

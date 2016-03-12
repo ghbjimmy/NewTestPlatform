@@ -8,17 +8,42 @@
 #include <QMenuBar>
 
 #include "../../Util/libaryparser.h"
+#include "../../Util/pluginSubjecter.h"
+#include "../../Util/util.h"
 
-#include <string>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
+    _pluginSubjecter = new PluginSubjecter();
+
+    QString path = "D:\\Work\\tm_platform_new\\source\\build-ui-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\PlugIns\\DetailViewPlugin\\debug\\DetailViewPlugin.dll";
+
     setupUI();
 }
 
 MainWindow::~MainWindow()
 {
+    if (_pluginSubjecter != NULL)
+    {
+        delete _pluginSubjecter;
+        _pluginSubjecter = NULL;
+    }
+}
 
+bool MainWindow::loadLibary(const QString& path)
+{
+    LibaryParser* parser = new LibaryParser();
+    if (!parser->parse(path))
+        return false;
+
+    IPlugin * pPlugin = parser->getPlugin();
+    if (0 != pPlugin->init())
+        return false;
+
+    delete parser;
+    parser = NULL;
+
+    return true;
 }
 
 QWidget* createTitleWgt()
@@ -58,11 +83,7 @@ QWidget* createTitleWgt()
     v2->addLayout(h2);
     titleWgt->setLayout(v2);
 
-    titleWgt->setAutoFillBackground(true);
-
-    QPalette palette;
-    palette.setColor(QPalette::Background, QColor(192,253,123));
-    titleWgt->setPalette(palette);
+    UIUtil::setBgColor(titleWgt, QColor(192,253,123));
     return titleWgt;
 }
 

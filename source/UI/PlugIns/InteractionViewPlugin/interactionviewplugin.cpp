@@ -1,8 +1,11 @@
 #include "interactionviewplugin.h"
 #include "interactionviewform.h"
+#include "../../Util/const.h"
 
 InteractionViewPlugin::InteractionViewPlugin()
 {
+    _widget = NULL;
+    _name = InteractionViewPluginName;
 }
 
 int InteractionViewPlugin::init()
@@ -18,11 +21,15 @@ void InteractionViewPlugin::fini()
     }
 }
 
-int InteractionViewPlugin::onMessage(const IMessage& msg)
+int InteractionViewPlugin::onMessage(const IMessage* msg)
 {
     return 0;
 }
 
+bool InteractionViewPlugin::isHandleMessage(const IMessage* msg)
+{
+    return true;
+}
 
 QWidget * InteractionViewPlugin::createWidget()
 {

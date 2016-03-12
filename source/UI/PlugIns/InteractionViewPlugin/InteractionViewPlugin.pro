@@ -19,7 +19,8 @@ SOURCES += interactionviewplugin.cpp \
 HEADERS += interactionviewplugin.h\
     interactionviewform.h \
     ../Common/uutbutton.h \
-    ../../Util/util.h
+    ../../Util/util.h \
+    ../../Util/plugin_global.h
 
 unix {
     target.path = /usr/lib

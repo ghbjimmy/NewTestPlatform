@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+class PluginSubjecter;
 
 class MainWindow : public QMainWindow
 {
@@ -12,6 +13,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    bool loadLibary(const QString& path);
 private:
     void setupUI();
 
@@ -20,6 +22,7 @@ private slots:
 
 private:
     QWidget* mTitleWgt;
+    PluginSubjecter* _pluginSubjecter;
 };
 
 #endif // MAINWINDOW_H
