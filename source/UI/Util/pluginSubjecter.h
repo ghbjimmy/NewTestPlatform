@@ -10,6 +10,7 @@ public:
     PluginSubjecter();
     ~PluginSubjecter();
 
+    IPlugin* getPlugin(const QString& name);
     void attach(IPlugin* plugin);
     void detach(IPlugin* plugin);
     void notity(const IMessage* msg);

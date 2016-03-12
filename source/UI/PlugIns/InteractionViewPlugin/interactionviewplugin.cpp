@@ -15,7 +15,7 @@ int InteractionViewPlugin::init()
 
 void InteractionViewPlugin::fini()
 {
-    if(NULL!=_widget)
+    if(NULL != _widget)
     {
         _widget->setParent(NULL);
     }
@@ -28,7 +28,9 @@ int InteractionViewPlugin::onMessage(const IMessage* msg)
 
 bool InteractionViewPlugin::isHandleMessage(const IMessage* msg)
 {
-    return true;
+    if (msg->messageID() == 100)
+        return true;
+    return false;
 }
 
 QWidget * InteractionViewPlugin::createWidget()

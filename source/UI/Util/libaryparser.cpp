@@ -10,7 +10,7 @@ LibaryParser::~LibaryParser()
 {
     if (_loader != NULL && _loader->isLoaded())
     {
-        _loader->unload();
+        //_loader->unload();
         delete _loader;
         _loader = NULL;
     }

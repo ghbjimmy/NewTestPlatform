@@ -20,7 +20,7 @@ int ScopeViewPlugin::init()
 
 void ScopeViewPlugin::fini()
 {
-    if(NULL!=_widget)
+    if(NULL != _widget)
     {
         _widget->setParent(NULL);
     }
@@ -33,12 +33,12 @@ int ScopeViewPlugin::onMessage(const IMessage* msg)
 
 bool ScopeViewPlugin::isHandleMessage(const IMessage* msg)
 {
-    return true;
+    return false;
 }
 
 QWidget * ScopeViewPlugin::createWidget()
 {
-    _widget = new ScopeviewForm();
+    _widget = new ScopeviewForm(this);
     return _widget;
 }
 

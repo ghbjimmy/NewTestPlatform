@@ -10,15 +10,32 @@
 #include "../../Util/libaryparser.h"
 #include "../../Util/pluginSubjecter.h"
 #include "../../Util/util.h"
+#include "../../Util/const.h"
 
+
+static void sendMessageCallBack(const IMessage* msg)
+{
+    MainWindow::getInstance()->dispatchMessage(msg);
+}
+
+MainWindow* MainWindow::_instance = NULL;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     _pluginSubjecter = new PluginSubjecter();
 
+    bool flag = false;
     QString path = "D:\\Work\\tm_platform_new\\source\\build-ui-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\PlugIns\\DetailViewPlugin\\debug\\DetailViewPlugin.dll";
+    flag = loadLibary(path);
+
+    path = "D:\\Work\\tm_platform_new\\source\\build-ui-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\PlugIns\\ScopeViewPlugin\\debug\\ScopeViewPlugin.dll";
+    flag = loadLibary(path);
+
+    path = "D:\\Work\\tm_platform_new\\source\\build-ui-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\PlugIns\\InteractionViewPlugin\\debug\\InteractionViewPlugin.dll";
+    flag = loadLibary(path);
 
     setupUI();
+    _instance = this;
 }
 
 MainWindow::~MainWindow()
@@ -28,6 +45,19 @@ MainWindow::~MainWindow()
         delete _pluginSubjecter;
         _pluginSubjecter = NULL;
     }
+
+    foreach (LibaryParser* parser, _libParsers)
+    {
+        delete parser;
+        parser = NULL;
+    }
+
+    _libParsers.clear();
+}
+
+MainWindow* MainWindow::getInstance()
+{
+    return _instance;
 }
 
 bool MainWindow::loadLibary(const QString& path)
@@ -38,10 +68,15 @@ bool MainWindow::loadLibary(const QString& path)
 
     IPlugin * pPlugin = parser->getPlugin();
     if (0 != pPlugin->init())
+    {
+        delete parser;
+        parser = NULL;
         return false;
+    }
 
-    delete parser;
-    parser = NULL;
+    pPlugin->RegisterSendMsgCallBack(sendMessageCallBack);
+    _libParsers.append(parser);
+    _pluginSubjecter->attach(pPlugin);
 
     return true;
 }
@@ -87,7 +122,7 @@ QWidget* createTitleWgt()
     return titleWgt;
 }
 
-QWidget* createDetailViewWgt()
+QWidget* MainWindow::createDetailViewWgt()
 {
     QLabel* lbl = new QLabel();
     lbl->setFixedHeight(10);
@@ -97,16 +132,12 @@ QWidget* createDetailViewWgt()
     h1->addWidget(lbl);
     h1->addSpacerItem(new QSpacerItem(10,10, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
-    LibaryParser* parser = new LibaryParser();
-    QString path = "D:\\Work\\tm_platform_new\\source\\build-ui-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\PlugIns\\DetailViewPlugin\\debug\\DetailViewPlugin.dll";
-    if (!parser->parse(path))
-    {
-        return NULL;
-    }
-
-    IPlugin * pPlugin = parser->getPlugin();
-    pPlugin->init();
-    QWidget* viewWgt = pPlugin->createWidget();
+    QWidget* viewWgt = NULL;
+    IPlugin * pPlugin = _pluginSubjecter->getPlugin(DetailViewPluginName);
+    if (pPlugin == NULL)
+        viewWgt = new QWidget();
+    else
+        viewWgt = pPlugin->createWidget();
 
     QWidget* wgt = new QWidget();
     QVBoxLayout* v1 = new QVBoxLayout();
@@ -118,34 +149,26 @@ QWidget* createDetailViewWgt()
     return wgt;
 }
 
-QWidget* createScopeViewWgt()
+QWidget* MainWindow::createScopeViewWgt()
 {
-    LibaryParser* parser = new LibaryParser();
-    QString path = "D:\\Work\\tm_platform_new\\source\\build-ui-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\PlugIns\\ScopeViewPlugin\\debug\\ScopeViewPlugin.dll";
-    if (!parser->parse(path))
-    {
-        return NULL;
-    }
-
-    IPlugin * pPlugin = parser->getPlugin();
-    pPlugin->init();
-    QWidget* viewWgt = pPlugin->createWidget();
+    QWidget* viewWgt = NULL;
+    IPlugin * pPlugin = _pluginSubjecter->getPlugin(ScopeViewPluginName);
+    if (pPlugin == NULL)
+        viewWgt = new QWidget();
+    else
+        viewWgt = pPlugin->createWidget();
 
     return viewWgt;
 }
 
-QWidget* createInteractionViewWgt()
+QWidget* MainWindow::createInteractionViewWgt()
 {
-    LibaryParser* parser = new LibaryParser();
-    QString path = "D:\\Work\\tm_platform_new\\source\\build-ui-Desktop_Qt_5_5_1_MSVC2013_32bit-Debug\\PlugIns\\InteractionViewPlugin\\debug\\InteractionViewPlugin.dll";
-    if (!parser->parse(path))
-    {
-        return NULL;
-    }
-
-    IPlugin * pPlugin = parser->getPlugin();
-    pPlugin->init();
-    QWidget* viewWgt = pPlugin->createWidget();
+    QWidget* viewWgt = NULL;
+    IPlugin * pPlugin = _pluginSubjecter->getPlugin(InteractionViewPluginName);
+    if (pPlugin == NULL)
+        viewWgt = new QWidget();
+    else
+        viewWgt = pPlugin->createWidget();
 
     return viewWgt;
 }
@@ -188,4 +211,9 @@ void MainWindow::setupUI()
 void MainWindow::onMenuAction()
 {
 
+}
+
+void MainWindow::dispatchMessage(const IMessage* msg)
+{
+    _pluginSubjecter->notity(msg);
 }

@@ -14,13 +14,15 @@ DEFINES += TPLUGIN_LIBRARY
 SOURCES += scopeviewplugin.cpp \
     scopeviewform.cpp \
     ../Common/uutbutton.cpp \
-    ../../Util/util.cpp
+    ../../Util/util.cpp \
+    ../../Util/message.cpp
 
 HEADERS += scopeviewplugin.h \
     scopeviewform.h \
     ../Common/uutbutton.h \
     ../../Util/util.h \
-    ../../Util/plugin_global.h
+    ../../Util/plugin_global.h \
+    ../../Util/message.h
 
 unix {
     target.path = /usr/lib

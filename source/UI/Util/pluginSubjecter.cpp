@@ -17,6 +17,21 @@ PluginSubjecter::~PluginSubjecter()
     _plugins.clear();
 }
 
+IPlugin* PluginSubjecter::getPlugin(const QString& name)
+{
+    IPlugin* plugin = NULL;
+    foreach (IPlugin* plug, _plugins)
+    {
+        if (plug->getName() == name)
+        {
+            plugin = plug;
+            break;
+        }
+    }
+
+    return plugin;
+}
+
 void PluginSubjecter::attach(IPlugin* plugin)
 {
     if (!_plugins.contains(plugin))

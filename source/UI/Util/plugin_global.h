@@ -18,16 +18,22 @@ const int PLUGIN_GUI  = 10;      // 插件GUI相关消息
 class TPLUGINSHARED_EXPORT IMessage
 {
 public:
+    IMessage(){}
+    virtual ~IMessage(){}
     virtual int  messageID() const = 0;
     virtual void * context() const = 0;
     virtual int    length() const = 0;
 };
+
+typedef void (*fnSendMsg)(const IMessage* msg);
 
 class TPLUGINSHARED_EXPORT IPlugin
 {
 public:
     IPlugin() {_name = "unknown";}
     virtual ~IPlugin(){}
+
+    virtual void RegisterSendMsgCallBack(fnSendMsg callback) {_sendCallback = callback;}
     virtual const QString& getName() const { return _name; }
     virtual int init() = 0;
     virtual void fini()  = 0;
@@ -37,6 +43,7 @@ public:
 
 protected:
     QString _name;
+    fnSendMsg _sendCallback;
 };
 
 typedef IPlugin * (*fnCreatePlugin)();

@@ -15,7 +15,7 @@ int DetailViewPlugin::init()
 
 void DetailViewPlugin::fini()
 {
-    if(NULL!= _widget)
+    if(NULL != _widget)
     {
         _widget->setParent(NULL);
     }
@@ -53,7 +53,7 @@ int DetailViewPlugin::onMessage(const IMessage* msg)
 
 bool DetailViewPlugin::isHandleMessage(const IMessage* msg)
 {
-    return true;
+    return false;
 }
 
 QWidget * DetailViewPlugin::createWidget()

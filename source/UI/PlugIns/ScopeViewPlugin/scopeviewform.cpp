@@ -9,8 +9,9 @@
 #include "../common/uutbutton.h"
 #include "../../Util/util.h"
 
-ScopeviewForm::ScopeviewForm(QWidget *parent) : QWidget(parent)
+ScopeviewForm::ScopeviewForm(IPlugin* plugIn, QWidget *parent) : QWidget(parent)
 {
+    _plugIn = plugIn;
     setupUI();
     //this->setWidgetResizable(true);
     //this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -153,4 +154,9 @@ void ScopeviewForm::setupUI()
     v1->addWidget(createPanelWgt(), 1);
     v1->addWidget(createStatusWgt());
     this->setLayout(v1);
+}
+
+void ScopeviewForm::onBtnCheckBoxStatedChanged(int state)
+{
+
 }
