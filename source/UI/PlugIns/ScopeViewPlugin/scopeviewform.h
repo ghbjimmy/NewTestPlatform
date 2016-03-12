@@ -17,7 +17,7 @@ private:
 
 private slots:
     void onBtnCheckBoxStatedChanged(int state);
-
+    void onClicked();
 private:
     IPlugin* _plugIn;
 };

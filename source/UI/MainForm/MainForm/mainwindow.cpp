@@ -74,7 +74,7 @@ bool MainWindow::loadLibary(const QString& path)
         return false;
     }
 
-    pPlugin->RegisterSendMsgCallBack(sendMessageCallBack);
+    pPlugin->registerSendMsgCallBack(sendMessageCallBack);
     _libParsers.append(parser);
     _pluginSubjecter->attach(pPlugin);
 
@@ -83,7 +83,6 @@ bool MainWindow::loadLibary(const QString& path)
 
 QWidget* createTitleWgt()
 {
-
     QLabel* nameLabel = new QLabel();
     nameLabel->setText("Calibration");
     QPalette pal;
@@ -173,18 +172,93 @@ QWidget* MainWindow::createInteractionViewWgt()
     return viewWgt;
 }
 
+QLabel* createNumLabel(int num)
+{
+    QLabel* numlbl = new QLabel(QString::number(num));
+    QPalette palette;
+    palette.setColor(QPalette::Background, QColor(0,255,0));
+    numlbl->setPalette(palette);
+
+    numlbl->setAlignment(Qt::AlignCenter);
+    numlbl->setFixedSize(16, 16);
+    numlbl->setAutoFillBackground(true);
+
+    return numlbl;
+}
+
+QWidget* createStatusWgt()
+{
+    QWidget* statusWgt = new QWidget();
+    QHBoxLayout* h1 = new QHBoxLayout();
+    QLabel* seqLbl = new QLabel("Sequencer:");
+    h1->addWidget(seqLbl);
+
+    for (int i = 0; i < 6; ++i)
+    {
+        h1->addWidget(createNumLabel(i));
+    }
+
+    h1->addStretch(1);
+    h1->setContentsMargins(QMargins(0,0,0,0));
+
+
+    QHBoxLayout* h2 = new QHBoxLayout();
+    QLabel* engineLbl = new QLabel("Engine:");
+    h2->addWidget(engineLbl);
+    for (int i = 0; i < 6; ++i)
+    {
+        h2->addWidget(createNumLabel(i));
+    }
+
+    h2->addStretch(1);
+    h2->setContentsMargins(QMargins(0,0,0,0));
+
+
+    QLabel* machineLbl = new QLabel("StateMachine:");
+    QLabel* numLbl = createNumLabel(0);
+
+    QHBoxLayout* h3 = new QHBoxLayout();
+    h3->addWidget(machineLbl);
+    h3->addWidget(numLbl);
+    h3->addStretch(1);
+    h3->setContentsMargins(QMargins(0,0,0,0));
+
+    QHBoxLayout* h4 = new QHBoxLayout();
+    h4->addLayout(h1);
+    h4->addSpacerItem(new QSpacerItem(20,10, QSizePolicy::Expanding, QSizePolicy::Expanding));
+    h4->addLayout(h2);
+    h4->addSpacerItem(new QSpacerItem(20,10, QSizePolicy::Expanding, QSizePolicy::Expanding));
+    h4->addLayout(h3);
+    h4->addStretch(1);
+    h4->setContentsMargins(QMargins(0,0,0,0));
+
+    statusWgt->setLayout(h4);
+
+    return statusWgt;
+}
+
+
 void MainWindow::setupUI()
 {
     mTitleWgt = createTitleWgt();
     mTitleWgt->setFixedHeight(60);
     QWidget* mDetailViewWgt = createDetailViewWgt();
     QWidget* mScopeViewWgt = createScopeViewWgt();
+    QWidget* statWidget = createStatusWgt();
+    QVBoxLayout* v11 = new QVBoxLayout();
+    v11->addWidget(mScopeViewWgt, 1);
+    v11->addWidget(statWidget);
+    //v11->setContentsMargins(0,0,0,0);
+
+    QWidget* downWidget = new QWidget();
+    downWidget->setLayout(v11);
+
     QWidget* mInteractionViewWgt = createInteractionViewWgt();
     mInteractionViewWgt->setFixedWidth(250);
     mScopeViewWgt->setMinimumHeight(200);
     QSplitter* split = new QSplitter(Qt::Orientation::Vertical);
     split->addWidget(mDetailViewWgt);
-    split->addWidget(mScopeViewWgt);
+    split->addWidget(downWidget);
 
     split->setStretchFactor(0, 1);
 

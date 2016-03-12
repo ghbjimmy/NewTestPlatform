@@ -33,7 +33,8 @@ public:
     IPlugin() {_name = "unknown";}
     virtual ~IPlugin(){}
 
-    virtual void RegisterSendMsgCallBack(fnSendMsg callback) {_sendCallback = callback;}
+    virtual void registerSendMsgCallBack(fnSendMsg callback) {_sendCallback = callback;}
+    virtual void sendMessage(const IMessage* msg) {_sendCallback(msg);}
     virtual const QString& getName() const { return _name; }
     virtual int init() = 0;
     virtual void fini()  = 0;
