@@ -5,8 +5,7 @@
 #include "progressform.h"
 #include "failform.h"
 
-DetailViewForm::DetailViewForm(QWidget *parent) :
-    QWidget(parent)
+DetailViewForm::DetailViewForm(QWidget *parent) : QTabWidget(parent)
 {
     CVSDataTreeView* view = new CVSDataTreeView();
     setupUI();
@@ -19,20 +18,19 @@ DetailViewForm::~DetailViewForm()
 
 void DetailViewForm::setupUI()
 {
-    QHBoxLayout* h1 = new QHBoxLayout();
-    mTabWidget = new QTabWidget();
-    CVSDataTreeView* treeView = new CVSDataTreeView();
-    treeView->loadData();
+
+    _csvTreeView = new CVSDataTreeView();
+
 
     FailForm* failForm = new FailForm();
 
     ProgressForm* progressForm = new ProgressForm();
-    mTabWidget->addTab(treeView ,QString("Detail"));
-    mTabWidget->addTab(progressForm,QString("Progress"));
-    mTabWidget->addTab(failForm,QString("Fail Only"));
+    this->addTab(_csvTreeView ,QString("Detail"));
+    this->addTab(progressForm,QString("Progress"));
+    this->addTab(failForm,QString("Fail Only"));
+}
 
-    h1->addWidget(mTabWidget);
-
-
-    this->setLayout(h1);
+void DetailViewForm::loadCsvData()
+{
+    _csvTreeView->loadData();
 }

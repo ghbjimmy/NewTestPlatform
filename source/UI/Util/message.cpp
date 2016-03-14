@@ -4,7 +4,7 @@ ChannelStateMsg::ChannelStateMsg()
 {
     _id = 100;
     _context = NULL;
-    _length = 20;
+    _len = 20;
 }
 
 ChannelStateMsg::~ChannelStateMsg()
@@ -12,17 +12,26 @@ ChannelStateMsg::~ChannelStateMsg()
 
 }
 
-int ChannelStateMsg::messageID() const
+LoadCsvFileMsg::LoadCsvFileMsg()
 {
-    return _id;
+    _id = 120;
+    _context = NULL;
+    _len = 120;
 }
 
-void* ChannelStateMsg::context() const
+LoadCsvFileMsg::~LoadCsvFileMsg()
 {
-    return _context;
+
 }
 
-int ChannelStateMsg::length() const
+LoadScopeViewMsg::LoadScopeViewMsg()
 {
-    return _length;
+    _id = 130;
+    _context = NULL;
+    _len = 130;
+}
+
+LoadScopeViewMsg::~LoadScopeViewMsg()
+{
+
 }

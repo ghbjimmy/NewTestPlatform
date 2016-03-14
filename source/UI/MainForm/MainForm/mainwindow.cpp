@@ -6,12 +6,13 @@
 #include <QSplitter>
 #include <QLibrary>
 #include <QMenuBar>
+#include <QFileDialog>
 
 #include "../../Util/libaryparser.h"
 #include "../../Util/pluginSubjecter.h"
 #include "../../Util/util.h"
 #include "../../Util/const.h"
-
+#include "../../Util/message.h"
 
 static void sendMessageCallBack(const IMessage* msg)
 {
@@ -271,14 +272,34 @@ void MainWindow::setupUI()
     this->setCentralWidget(centralWgt);
 
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
-    QAction* loadAction = new QAction("Load",this);
+    QAction* loadAction = new QAction("Load CSV",this);
+    QAction* loadScopeAction = new QAction("Load ScopeView",this);
     connect(loadAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
+    connect(loadScopeAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
     fileMenu->addAction(loadAction);
+    fileMenu->addAction(loadScopeAction);
     this->resize(1024,768);
 }
 
 void MainWindow::onMenuAction()
 {
+    QAction* action = static_cast<QAction*>(sender());
+    if (NULL == action)
+        return;
+    if (action->text() == "Load CSV")
+    {
+        QString path = QFileDialog::getOpenFileName(this, tr("Open CSV File"), ".", tr("CSV Files(*.csv)"));
+       // if(path.length() == 0)
+       //     return;
+
+        LoadCsvFileMsg* loadcsv = new LoadCsvFileMsg();
+        dispatchMessage(loadcsv);
+    }
+    else if (action->text() == "Load ScopeView")
+    {
+        LoadScopeViewMsg* loadScopeViewMsg = new LoadScopeViewMsg();
+        dispatchMessage(loadScopeViewMsg);
+    }
 
 }
 

@@ -14,6 +14,7 @@ public:
     explicit ScopeviewForm(IPlugin* plugIn, QWidget *parent = 0);
     ~ScopeviewForm();
 
+    void loadData();
 protected:
     virtual void resizeEvent(QResizeEvent* evt);
 

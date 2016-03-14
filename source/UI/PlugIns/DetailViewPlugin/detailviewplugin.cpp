@@ -1,6 +1,7 @@
 #include "detailviewplugin.h"
 #include "detailviewform.h"
 #include "../../Util/const.h"
+#include "../../Util/message.h"
 
 DetailViewPlugin::DetailViewPlugin()
 {
@@ -24,28 +25,19 @@ void DetailViewPlugin::fini()
 // 消息解释
 int DetailViewPlugin::onMessage(const IMessage* msg)
 {
-    switch(msg->messageID())
+    int id = msg->messageID();
+    switch(id)
     {
-    case PLUGIN_INIT:
-    {
-        //dosomethings
-        break;
-    }
-    case PLUGIN_GUI:
-    {
-        //dosomethings
-        break;
-    }
-    case PLUGIN_FINI:
-    {
-        //dosomethings
-        break;
-    }
-
+        case 120:
+        {
+            if (_widget != NULL)
+            {
+                ((DetailViewForm*)_widget)->loadCsvData();
+                break;
+            }
+        }
     default:
-    {
-        break;
-    }
+        return 1;
     };
 
     return 0;
@@ -53,6 +45,14 @@ int DetailViewPlugin::onMessage(const IMessage* msg)
 
 bool DetailViewPlugin::isHandleMessage(const IMessage* msg)
 {
+    int id = msg->messageID();
+    switch(id)
+    {
+        case 120:
+        {
+            return true;
+        }
+    };
     return false;
 }
 

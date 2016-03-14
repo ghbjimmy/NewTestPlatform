@@ -15,16 +15,8 @@ const int PLUGIN_INIT = 0;       // 初始化插件
 const int PLUGIN_FINI = 1;      // 插件释放
 const int PLUGIN_GUI  = 10;      // 插件GUI相关消息
 
-class TPLUGINSHARED_EXPORT IMessage
-{
-public:
-    IMessage(){}
-    virtual ~IMessage(){}
-    virtual int  messageID() const = 0;
-    virtual void * context() const = 0;
-    virtual int    length() const = 0;
-};
 
+class IMessage;
 typedef void (*fnSendMsg)(const IMessage* msg);
 
 class TPLUGINSHARED_EXPORT IPlugin

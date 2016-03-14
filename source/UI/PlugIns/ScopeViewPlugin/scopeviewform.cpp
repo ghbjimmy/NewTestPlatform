@@ -80,13 +80,13 @@ void ScopeviewForm::setupUI()
     setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     this->setBackgroundBrush(QBrush(Qt::gray));
 
-    for (int i = 0; i < 8; ++i)
+   /* for (int i = 0; i < 8; ++i)
     {
         QGroupBox* gbox = createGroupBox(i + 1);
         _groupboxs.append(gbox);
 
         this->scene()->addWidget(gbox);
-    }
+    }*/
 
     updateSceneRect();
     updateSceneItemPos();
@@ -186,4 +186,18 @@ void ScopeviewForm::updateSceneItemPos()
         }
     }
     this->update();
+}
+
+void ScopeviewForm::loadData()
+{
+    for (int i = 0; i < 8; ++i)
+    {
+        QGroupBox* gbox = createGroupBox(i + 1);
+        _groupboxs.append(gbox);
+
+        this->scene()->addWidget(gbox);
+    }
+
+    updateSceneRect();
+    updateSceneItemPos();
 }

@@ -1,6 +1,7 @@
 #include "interactionviewplugin.h"
 #include "interactionviewform.h"
 #include "../../Util/const.h"
+#include "../../Util/message.h"
 
 InteractionViewPlugin::InteractionViewPlugin()
 {
