@@ -5,24 +5,14 @@
 #include <QLabel>
 #include <QGroupBox>
 #include <QGridLayout>
-
+#include <QResizeEvent>
+#include <QScrollBar>
 #include "../common/uutbutton.h"
 #include "../../Util/util.h"
 #include "../../Util/message.h"
 
-
-ScopeviewForm::ScopeviewForm(IPlugin* plugIn, QWidget *parent) : QWidget(parent)
-{
-    _plugIn = plugIn;
-    setupUI();
-    //this->setWidgetResizable(true);
-    //this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-}
-
-ScopeviewForm::~ScopeviewForm()
-{
-
-}
+int GWidth = 180;
+int GHeight = 140;
 
 QGroupBox* createGroupBox(int num)
 {
@@ -62,39 +52,47 @@ QGroupBox* createGroupBox(int num)
     gridLayout->addWidget(btn5,2,0,1,1);
     gridLayout->addWidget(btn6,2,1,1,1);
 
+    gbox->setFixedSize(180,140);
     gbox->setLayout(gridLayout);
+
+    UIUtil::setBgColor(gbox, QColor(Qt::gray));
     return gbox;
 }
 
-QWidget* createPanelWgt()
+ScopeviewForm::ScopeviewForm(IPlugin* plugIn, QWidget *parent) : QGraphicsView(parent)
+{
+    _plugIn = plugIn;
+
+    QGraphicsScene* scene = new QGraphicsScene(this);
+    scene->setItemIndexMethod(QGraphicsScene::NoIndex);
+    scene->setSceneRect(this->rect());
+    setScene(scene);
+    setCacheMode(QGraphicsView::CacheBackground);
+    setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+
+    this->setSceneRect(0,0,0,GHeight + 10);
+    this->setBackgroundBrush(QBrush(Qt::gray));
+
+    setupUI();
+}
+
+ScopeviewForm::~ScopeviewForm()
 {
 
-    QWidget* panelWgt = new QWidget();
-    QGridLayout* g1 = new QGridLayout();
-
-    for (int i = 0; i < 4; ++i)
-    {
-        QGroupBox* gbox = createGroupBox(i + 1);
-        g1->addWidget(gbox, 0, i, 1, 1);
-
-        gbox->setFixedSize(220, 140);
-    }
-
-    panelWgt->setLayout(g1);
-    UIUtil::setBgColor(panelWgt, Qt::gray);
-    return panelWgt;
 }
 
 void ScopeviewForm::setupUI()
 {
-    QVBoxLayout* v1 = new QVBoxLayout();
-    QPushButton* btn = new QPushButton();
-    btn->setText("SendTest");
-    connect(btn, SIGNAL(clicked()), this, SLOT(onClicked()));
-    //v1->addWidget(btn);
-    v1->addWidget(createPanelWgt(), 1);
-    //v1->addWidget(createStatusWgt());
-    this->setLayout(v1);
+    for (int i = 0; i < 8; ++i)
+    {
+        QGroupBox* gbox = createGroupBox(i + 1);
+        _groupboxs.append(gbox);
+
+        this->scene()->addWidget(gbox);
+    }
+
+    updateSceneRect();
+    updateSceneItemPos();
 }
 
 void ScopeviewForm::onBtnCheckBoxStatedChanged(int state)
@@ -106,4 +104,89 @@ void ScopeviewForm::onClicked()
 {
     ChannelStateMsg msg;
     _plugIn->sendMessage(&msg);
+}
+
+void ScopeviewForm::resizeEvent(QResizeEvent* evt)
+{
+    updateSceneRect();
+    updateSceneItemPos();
+    QGraphicsView::resizeEvent(evt);
+}
+
+void ScopeviewForm::updateSceneRect()
+{
+    if (_groupboxs.empty())
+    {
+        this->setSceneRect(0,0,0,GHeight + 10);
+        return;
+    }
+
+    int totalItemWidth = 0;
+    int totalItemHeight = 0;
+    for (int i = 0; i < _groupboxs.size(); i++)
+    {
+        totalItemWidth += _groupboxs.at(i)->size().width();
+        totalItemHeight += _groupboxs.at(i)->size().height();
+    }
+
+    int viewWidth = this->size().width();
+    int viewHeight = this->size().height();
+
+    if (viewHeight <= GHeight + 20)
+    {
+        this->setSceneRect(0, 0, totalItemWidth, 0);
+    }
+    else
+    {
+        int num = viewWidth / GWidth;
+        int sceneHeight = (_groupboxs.size() / num) * GHeight;
+        this->setSceneRect(0, 0, 0, sceneHeight);
+    }
+}
+
+void ScopeviewForm::updateSceneItemPos()
+{
+    if (_groupboxs.empty())
+        return;
+
+    int yoff = 0 - this->verticalScrollBar()->value();
+    int xoff = 0 - this->horizontalScrollBar()->value();
+    int viewWidth = this->size().width();
+    int viewHeight = this->size().height();
+    int count = _groupboxs.size();
+
+    if (viewHeight <= GHeight + 20)
+    {
+        for (int i = 0; i < count; ++i)
+        {
+            int x = xoff + i * _groupboxs.at(i)->size().width();
+            int y = yoff + 5;
+            QPointF point = mapToScene(x, y);
+            _groupboxs.at(i)->move(point.x() + i * 5, point.y());
+        }
+    }
+    else
+    {
+        int num = viewWidth / GWidth;
+        for (int i = 0; i < count; ++i)
+        {
+            int x = 0;
+            int y = 0;
+            if (i < num)
+            {
+                x = xoff + i * _groupboxs.at(i)->size().width() + i * 5;
+                y = yoff + 5;
+
+            }
+            else
+            {
+                x = xoff + (i % num) * _groupboxs.at(i)->size().width() + (i % num) * 5;
+                y = yoff + (i / num )* GHeight + (i / num ) * 5;
+            }
+
+            QPointF point = mapToScene(x, y);
+            _groupboxs.at(i)->move(point.x(), point.y());
+        }
+    }
+    this->update();
 }

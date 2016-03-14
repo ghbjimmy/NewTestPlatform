@@ -85,13 +85,15 @@ QWidget* createTitleWgt()
 {
     QLabel* nameLabel = new QLabel();
     nameLabel->setText("Calibration");
-    QPalette pal;
+    /*QPalette pal;
     pal.setColor(QPalette::WindowText,Qt::blue);
     nameLabel->setPalette(pal);
     QFont ft;
     ft.setPointSize(28);
-    nameLabel->setFont(ft);
+    nameLabel->setFont(ft);*/
 
+    UIUtil::setFontSize(nameLabel, 30, true);
+    UIUtil::setTextColor(nameLabel, Qt::blue);
     QLabel* imgLbl = new QLabel();
     QPixmap pix= QPixmap("D:\\Work\\tm_platform_new\\source\\UI\\MainForm\\MainForm\\image001.png");
     imgLbl->setPixmap(pix);
@@ -117,7 +119,7 @@ QWidget* createTitleWgt()
     v2->addLayout(h2);
     titleWgt->setLayout(v2);
 
-    UIUtil::setBgColor(titleWgt, QColor(192,253,123));
+    UIUtil::setBgColor(titleWgt, Qt::gray);
     return titleWgt;
 }
 
@@ -255,7 +257,7 @@ void MainWindow::setupUI()
 
     QWidget* mInteractionViewWgt = createInteractionViewWgt();
     mInteractionViewWgt->setFixedWidth(250);
-    mScopeViewWgt->setMinimumHeight(200);
+
     QSplitter* split = new QSplitter(Qt::Orientation::Vertical);
     split->addWidget(mDetailViewWgt);
     split->addWidget(downWidget);
