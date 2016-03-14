@@ -11,7 +11,7 @@
 #include <QPushButton>
 #include <QSet>
 
-InteractionViewForm::InteractionViewForm(QWidget *parent) : QWidget(parent)
+InteractionViewForm::InteractionViewForm(QWidget *parent) : QScrollArea(parent)
 {
     setupUI();
 }
@@ -47,6 +47,7 @@ QHBoxLayout* InteractionViewForm::createBtnLayout(UutButton*& btn, int index, co
     QHBoxLayout* h1 = new QHBoxLayout();
     h1->addWidget(btn, 1);
     h1->addLayout(v1);
+    h1->setSpacing(6);
     return h1;
 
 }
@@ -152,8 +153,6 @@ QWidget* createtResultWgt()
     h1->addLayout(v1);
     h1->addSpacerItem(new QSpacerItem(20,10));
 
-    //h1->setContentsMargins(QMargins(0,0,0,0));
-
     QWidget* wgt = new QWidget();
     wgt->setLayout(h1);
     UIUtil::setBgColor(wgt, Qt::gray);
@@ -217,14 +216,18 @@ void InteractionViewForm::setupUI()
     connect(_btn5, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
     connect(_btn6, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
 
-    QVBoxLayout* v1 = new QVBoxLayout();
-    v1->addLayout(h1);
-    v1->addLayout(h2);
-    v1->addLayout(h3);
-    v1->addLayout(h4);
-    v1->addLayout(h5);
-    v1->addLayout(h6);
+    QVBoxLayout* v2 = new QVBoxLayout();
 
+    v2->addLayout(h1);
+    v2->addLayout(h2);
+    v2->addLayout(h3);
+    v2->addLayout(h4);
+    v2->addLayout(h5);
+    v2->addLayout(h6);
+    v2->setSpacing(0);
+
+    QVBoxLayout* v1 = new QVBoxLayout();
+    v1->addLayout(v2);
     _selBox = new QCheckBox();
     _selBox->setText("Select/Unselect All");
     connect(_selBox, SIGNAL(stateChanged(int)), this, SLOT(onSelCheckStateChanged(int)));
@@ -237,13 +240,13 @@ void InteractionViewForm::setupUI()
     v1->addLayout(hh1);
     v1->addStretch(1);
 
-    QVBoxLayout* v2 = new QVBoxLayout();
-    v2->addWidget(createStationWgt());
-    v2->addWidget(createSNWgt());
-    v2->addWidget(createtResultWgt());
+    QVBoxLayout* v3 = new QVBoxLayout();
+    v3->addWidget(createStationWgt());
+    v3->addWidget(createSNWgt());
+    v3->addWidget(createtResultWgt());
 
     QHBoxLayout* hh2 = new QHBoxLayout();
-    hh2->addLayout(v2);
+    hh2->addLayout(v3);
     hh2->addStretch(1);
 
     v1->addLayout(hh2);
@@ -253,9 +256,16 @@ void InteractionViewForm::setupUI()
     v1->addSpacerItem(new QSpacerItem(10, 20));
    // v1->addStretch(1);
 
-    v1->setContentsMargins(QMargins(0,0,0,0));
+    v1->setContentsMargins(QMargins(0,10,0,0));
+    v1->setSpacing(6);
 
-    this->setLayout(v1);
+    QWidget* wgt = new QWidget();
+    wgt->setLayout(v1);
+
+    this->setStyleSheet("QScrollArea{border:none}");
+    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    this->setWidgetResizable(true);
+    this->setWidget(wgt);
 }
 
 void InteractionViewForm::onBtnCheckBoxStatedChanged(int state)

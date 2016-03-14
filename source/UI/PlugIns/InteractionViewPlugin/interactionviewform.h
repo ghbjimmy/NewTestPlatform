@@ -2,12 +2,12 @@
 #define INTERACTIONVIEWFORM_H
 
 #include <QWidget>
-
+#include <QScrollArea>
 class UutButton;
 class QHBoxLayout;
 class QCheckBox;
 
-class InteractionViewForm : public QWidget
+class InteractionViewForm : public QScrollArea
 {
     Q_OBJECT
 
