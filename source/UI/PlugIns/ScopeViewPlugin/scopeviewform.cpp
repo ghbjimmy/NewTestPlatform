@@ -62,17 +62,6 @@ QGroupBox* createGroupBox(int num)
 ScopeviewForm::ScopeviewForm(IPlugin* plugIn, QWidget *parent) : QGraphicsView(parent)
 {
     _plugIn = plugIn;
-
-    QGraphicsScene* scene = new QGraphicsScene(this);
-    scene->setItemIndexMethod(QGraphicsScene::NoIndex);
-    scene->setSceneRect(this->rect());
-    setScene(scene);
-    setCacheMode(QGraphicsView::CacheBackground);
-    setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-
-    this->setSceneRect(0,0,0,GHeight + 10);
-    this->setBackgroundBrush(QBrush(Qt::gray));
-
     setupUI();
 }
 
@@ -83,6 +72,14 @@ ScopeviewForm::~ScopeviewForm()
 
 void ScopeviewForm::setupUI()
 {
+    QGraphicsScene* scene = new QGraphicsScene(this);
+    scene->setItemIndexMethod(QGraphicsScene::NoIndex);
+    scene->setSceneRect(this->rect());
+    setScene(scene);
+    setCacheMode(QGraphicsView::CacheBackground);
+    setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+    this->setBackgroundBrush(QBrush(Qt::gray));
+
     for (int i = 0; i < 8; ++i)
     {
         QGroupBox* gbox = createGroupBox(i + 1);

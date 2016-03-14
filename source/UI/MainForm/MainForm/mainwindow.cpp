@@ -85,13 +85,6 @@ QWidget* createTitleWgt()
 {
     QLabel* nameLabel = new QLabel();
     nameLabel->setText("Calibration");
-    /*QPalette pal;
-    pal.setColor(QPalette::WindowText,Qt::blue);
-    nameLabel->setPalette(pal);
-    QFont ft;
-    ft.setPointSize(28);
-    nameLabel->setFont(ft);*/
-
     UIUtil::setFontSize(nameLabel, 30, true);
     UIUtil::setTextColor(nameLabel, Qt::blue);
     QLabel* imgLbl = new QLabel();

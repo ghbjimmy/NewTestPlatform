@@ -30,11 +30,11 @@ typedef void (*fnSendMsg)(const IMessage* msg);
 class TPLUGINSHARED_EXPORT IPlugin
 {
 public:
-    IPlugin() {_name = "unknown";}
+    IPlugin() {_name = "unknown"; _sendCallback = NULL;}
     virtual ~IPlugin(){}
 
     virtual void registerSendMsgCallBack(fnSendMsg callback) {_sendCallback = callback;}
-    virtual void sendMessage(const IMessage* msg) {_sendCallback(msg);}
+    virtual void sendMessage(const IMessage* msg) {if (_sendCallback != NULL) _sendCallback(msg);}
     virtual const QString& getName() const { return _name; }
     virtual int init() = 0;
     virtual void fini()  = 0;
