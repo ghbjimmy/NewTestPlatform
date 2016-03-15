@@ -22,6 +22,8 @@ public:
 
     void dispatchMessage(const IMessage* msg);
 
+    bool testZmq(const char* address);
+
 private:
     void setupUI();
     QWidget* createDetailViewWgt();

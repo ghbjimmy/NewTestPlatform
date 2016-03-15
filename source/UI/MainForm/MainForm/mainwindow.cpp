@@ -14,7 +14,11 @@
 #include "const.h"
 #include "message.h"
 #include "zmq.h"
+#include "qlog.h"
 
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 static void sendMessageCallBack(const IMessage* msg)
 {
@@ -39,8 +43,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setupUI();
     _instance = this;
-
-    //int handle = zmq_close(NULL);
 }
 
 MainWindow::~MainWindow()
@@ -310,4 +312,98 @@ void MainWindow::onMenuAction()
 void MainWindow::dispatchMessage(const IMessage* msg)
 {
     _pluginSubjecter->notity(msg);
+}
+
+
+bool MainWindow::testZmq(const char* address)
+{
+    void* m_context = zmq_ctx_new();
+    if (!m_context)
+    {
+        LogMsg(Error, "create context errro.");
+        return false;
+    }
+    void* m_socket = zmq_socket(m_context, ZMQ_REQ);
+    if (!m_socket)
+    {
+       LogMsg(Error, "failed to create requester socket! with error : %s", zmq_strerror(zmq_errno()));
+       return false;
+    }
+
+    int timeout = 5000;
+    int ret = zmq_setsockopt(m_socket, ZMQ_RCVTIMEO, &timeout, sizeof(timeout));
+
+    ret = zmq_connect(m_socket, address);
+    if (ret < 0)
+    {
+        LogMsg(Error, "connect failed. address : %s, error : %s", address, zmq_strerror(zmq_errno()));
+        return false;
+    }
+
+    //const char* json = "{\"function\": \"load\", \"params\": [\"/Users/mac/Desktop/test_plan__0121_14h.csv\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
+
+    const char* json = "{\"function\": \"list\", \"params\": [\"10\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
+
+
+
+    /*QString strJson = QString::fromStdString(json);
+    QJsonParseError json_error;
+    QJsonDocument doucment = QJsonDocument::fromJson(strJson.toLocal8Bit(), &json_error);
+    if(json_error.error != QJsonParseError::NoError)
+    {
+        LogMsg(Error, "Parse json failed.");
+        return false;
+    }
+
+    if (!doucment.isObject())
+    {
+        LogMsg(Error, "json format is error.");
+        return false;
+    }
+
+    QJsonObject obj = doucment.object();
+    if(obj.contains("function"))
+    {
+        QString value = obj.take("function").toString();
+        int i = 0;
+    }
+
+    if(obj.contains("params"))
+    {
+        QJsonArray value = obj.take("params").toArray();
+        QString val = value.at(0).toString();
+        int i = 0;
+    }*/
+
+    int length = strlen(json) + 1;
+    ret = zmq_send(m_socket, json, length, 0);
+    if (ret<0)
+    {
+        LogMsg(Error, "send data error : %s", zmq_strerror(zmq_errno()));
+        return false;
+    }
+
+    char buffer[1024];
+    long len;
+
+    zmq_msg_t msg;
+    zmq_msg_init(&msg);
+    ret = zmq_msg_recv(&msg, m_socket, 0);
+    if (ret >= 0 )
+    {
+        void * pbuffer = zmq_msg_data(&msg);
+        size_t len = zmq_msg_size(&msg);
+        memcpy(buffer, pbuffer, len);
+    }
+    else
+    {
+        LogMsg(Error, "receive failed: %s",zmq_strerror(zmq_errno()));
+        return false;
+    }
+
+    zmq_msg_close(&msg);
+
+    LogMsg(Debug, "recv: %s", buffer);
+
+    return ret;
 }

@@ -4,12 +4,14 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
-
+#include <QJsonArray>
 
 const QString& SEQUENCER_PORT = "SEQUENCER_PORT";
 const QString& SEQUENCER_PUB = "SEQUENCER_PUB";
 const QString& SM_PUB = "SM_PUB";
 const QString& SM_PORT = "SM_PORT";
+const QString& TEST_ENGINE_PORT = "TEST_ENGINE_PORT";
+const QString& TEST_ENGINE_PUB = "TEST_ENGINE_PUB";
 
 ZmqCfgParser::ZmqCfgParser()
 {
@@ -17,6 +19,8 @@ ZmqCfgParser::ZmqCfgParser()
     _seqPub = -1;
     _smPort = -1;
     _smPub = -1;
+    _testEnginePort = -1;
+    _testEnginePub = -1;
 }
 
 ZmqCfgParser::~ZmqCfgParser()
@@ -58,29 +62,41 @@ bool ZmqCfgParser::parse(const QString& path)
     }
 
     QJsonObject obj = doucment.object();
+    QJsonValue value;
     if(obj.contains(SEQUENCER_PORT))
     {
-        QJsonValue value = obj.take(SEQUENCER_PORT);
+        value = obj.take(SEQUENCER_PORT);
         _seqPort = value.toInt();
     }
 
     if(obj.contains(SEQUENCER_PUB))
     {
-        QJsonValue value = obj.take(SEQUENCER_PUB);
+        value = obj.take(SEQUENCER_PUB);
         _seqPub = value.toInt();
     }
 
     if(obj.contains(SM_PUB))
     {
-        QJsonValue value = obj.take(SM_PUB);
+        value = obj.take(SM_PUB);
         _smPub = value.toInt();
     }
 
     if(obj.contains(SM_PORT))
     {
-        QJsonValue value = obj.take(SM_PORT);
+        value = obj.take(SM_PORT);
         _smPort = value.toInt();
     }
 
+    if(obj.contains(TEST_ENGINE_PORT))
+    {
+        value = obj.take(TEST_ENGINE_PORT);
+        _testEnginePort = value.toInt();
+    }
+
+    if(obj.contains(TEST_ENGINE_PUB))
+    {
+        value = obj.take(TEST_ENGINE_PUB);
+        _testEnginePub = value.toInt();
+    }
     return true;
 }
