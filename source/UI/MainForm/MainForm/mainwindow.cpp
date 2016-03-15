@@ -8,11 +8,13 @@
 #include <QMenuBar>
 #include <QFileDialog>
 
-#include "../../Util/libaryparser.h"
-#include "../../Util/pluginSubjecter.h"
-#include "../../Util/util.h"
-#include "../../Util/const.h"
-#include "../../Util/message.h"
+#include "libaryparser.h"
+#include "pluginSubjecter.h"
+#include "util.h"
+#include "const.h"
+#include "message.h"
+#include "zmq.h"
+
 
 static void sendMessageCallBack(const IMessage* msg)
 {
@@ -37,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setupUI();
     _instance = this;
+
+    //int handle = zmq_close(NULL);
 }
 
 MainWindow::~MainWindow()
