@@ -93,7 +93,7 @@ QWidget* createTitleWgt()
     UIUtil::setFontSize(nameLabel, 30, true);
     UIUtil::setTextColor(nameLabel, Qt::blue);
     QLabel* imgLbl = new QLabel();
-    QPixmap pix= QPixmap("D:\\Work\\tm_platform_new\\source\\UI\\MainForm\\MainForm\\image001.png");
+    QPixmap pix= QPixmap(":/Resources/image001.png");
     imgLbl->setPixmap(pix);
 
     QLabel* text = new QLabel("1.29");

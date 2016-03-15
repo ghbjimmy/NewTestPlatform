@@ -38,3 +38,6 @@ HEADERS  += mainwindow.h \
     ../../Log/qlog.h
 
 FORMS    +=
+
+RESOURCES += \
+    mainform.qrc
