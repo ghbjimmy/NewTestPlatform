@@ -7,6 +7,7 @@
 class PluginSubjecter;
 class LibaryParser;
 class IMessage;
+class SequencerRpc;
 
 class MainWindow : public QMainWindow
 {
@@ -38,6 +39,8 @@ private:
     QWidget* mTitleWgt;
     PluginSubjecter* _pluginSubjecter;
     QVector<LibaryParser*> _libParsers;
+
+    SequencerRpc* _sequencerRpc;
 };
 
 #endif // MAINWINDOW_H

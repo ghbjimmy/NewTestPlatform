@@ -14,7 +14,9 @@ TEMPLATE = app
 
 INCLUDEPATH += ../../Util \
                 ../../ZmqCtrl/ZeroMQ/include \
-                ../../Log
+                ../../Log \
+                ../../Interface \
+                ../../ZmqCtrl
 
 LIBS += D:/Work/tm_platform_new/source/UI/ZmqCtrl/ZeroMQ/lib/libzmq-v120-mt-4_0_4.lib
 
@@ -28,7 +30,8 @@ SOURCES += main.cpp\
     ../../ZmqCtrl/zmqsocket.cpp \
     ../../ZmqCtrl/buffer.cpp \
     ../../ZmqCtrl/zmqcfgparser.cpp \
-    ../../ZmqCtrl/command.cpp
+    ../../ZmqCtrl/command.cpp \
+    ../../ZmqCtrl/sequencerrpc.cpp \
 
 HEADERS  += mainwindow.h \
     ../../Util/libaryparser.h \
@@ -41,7 +44,9 @@ HEADERS  += mainwindow.h \
     ../../ZmqCtrl/zmqsocket.h \
     ../../ZmqCtrl/buffer.h \
     ../../ZmqCtrl/zmqcfgparser.h \
-    ../../ZmqCtrl/command.h
+    ../../ZmqCtrl/command.h \
+    ../../ZmqCtrl/sequencerrpc.h \
+    ../../Interface/structdefine.h
 
 FORMS    +=
 

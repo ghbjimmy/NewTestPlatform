@@ -2,6 +2,10 @@
 #define COMMAND_H
 
 #include "buffer.h"
+#include <QString>
+#include <QVector>
+
+class TCsvDataItem;
 
 class CommandBase
 {
@@ -25,8 +29,10 @@ public:
     bool encode(Buffer& buf);
     bool decode(const Buffer& buf);
 
-private:
+    void setParam(const QString& param);
 
+private:
+    QString _param;
 };
 
 class LoadCsvCmdRsp : public CommandBase
@@ -37,6 +43,9 @@ public:
 
     bool encode(Buffer& buf);
     bool decode(const Buffer& buf);
+
+private:
+
 };
 
 class ListCmdReq : public CommandBase
@@ -47,6 +56,11 @@ public:
 
     bool encode(Buffer& buf);
     bool decode(const Buffer& buf);
+
+    void setParam(const QString& param);
+
+private:
+    QString _param;
 };
 
 class ListCmdRsp : public CommandBase
@@ -57,6 +71,9 @@ public:
 
     bool encode(Buffer& buf);
     bool decode(const Buffer& buf);
+
+private:
+    QVector<TCsvDataItem*> _items;
 };
 
 #endif // COMMAND_H

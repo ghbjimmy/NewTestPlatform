@@ -57,7 +57,7 @@ void QLog::writeLogMsg(LogLevel level, const char* msg)
 
 void LogMsg(LogLevel level, const char* format, ...)
 {
-    char szBuf[2048];
+    char szBuf[8096];
     va_list arglist;
     va_start(arglist, format);
     vsprintf(szBuf, format, arglist);

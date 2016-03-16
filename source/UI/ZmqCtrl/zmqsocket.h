@@ -4,9 +4,7 @@
 #include <string>
 #include "buffer.h"
 
-#define ZMQ_POLLIN 1
-#define ZMQ_POLLOUT 2
-#define ZMQ_POLLERR 4
+#include "zmq.h"
 
 class ZmqSocket
 {
@@ -23,6 +21,10 @@ public:
     int setSendTimeOut(int timeout);
 
     int select(int evt, int timeout = -1);
+
+    inline int getSockType() const {return _type;}
+    inline const std::string& getIp() const {return _ip;}
+    inline int getPort() const {return _port;}
 
 private:
     void* _context;

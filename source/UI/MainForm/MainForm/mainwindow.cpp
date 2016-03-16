@@ -16,6 +16,8 @@
 #include "zmq.h"
 #include "qlog.h"
 
+#include "command.h"
+
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -331,6 +333,7 @@ bool MainWindow::testZmq(const char* address)
     }
 
     int timeout = 5000;
+   // int ret = -1;
     int ret = zmq_setsockopt(m_socket, ZMQ_RCVTIMEO, &timeout, sizeof(timeout));
 
     ret = zmq_connect(m_socket, address);
@@ -342,8 +345,18 @@ bool MainWindow::testZmq(const char* address)
 
     //const char* json = "{\"function\": \"load\", \"params\": [\"/Users/mac/Desktop/test_plan__0121_14h.csv\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
 
-    const char* json = "{\"function\": \"list\", \"params\": [\"10\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
+    const char* json = "{\"function\": \"load\", \"params\": [\"/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
 
+    //const char* json = "{\"function\": \"list\", \"params\": [\"10\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
+
+
+    LoadCsvCmdReq req;
+    req.setParam("/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv");
+    Buffer buf;
+    bool ff = req.encode(buf);
+
+    std::string str = std::string(buf.getBuf(),buf.getLen());
+    //const char* json = str.c_str();
 
 
     /*QString strJson = QString::fromStdString(json);
@@ -375,7 +388,7 @@ bool MainWindow::testZmq(const char* address)
         int i = 0;
     }*/
 
-    int length = strlen(json) + 1;
+    int length = strlen(json);
     ret = zmq_send(m_socket, json, length, 0);
     if (ret<0)
     {
@@ -403,7 +416,36 @@ bool MainWindow::testZmq(const char* address)
 
     zmq_msg_close(&msg);
 
-    LogMsg(Debug, "recv: %s", buffer);
+    const char* json1 = "{\"function\": \"list\", \"params\": [\"all\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
+
+    int length1 = strlen(json1);
+    ret = zmq_send(m_socket, json1, length1, 0);
+    if (ret<0)
+    {
+        LogMsg(Error, "send data error : %s", zmq_strerror(zmq_errno()));
+        return false;
+    }
+
+    char buffer1[10240];
+    long len1;
+
+    zmq_msg_t msg1;
+    zmq_msg_init(&msg1);
+    ret = zmq_msg_recv(&msg1, m_socket, 0);
+    if (ret >= 0 )
+    {
+        void * pbuffer = zmq_msg_data(&msg1);
+        size_t len1 = zmq_msg_size(&msg1);
+        memcpy(buffer1, pbuffer, len1);
+    }
+    else
+    {
+        LogMsg(Error, "receive failed: %s",zmq_strerror(zmq_errno()));
+        return false;
+    }
+
+    zmq_msg_close(&msg1);
+    LogMsg(Debug, "recv: %s", buffer1);
 
     return ret;
 }

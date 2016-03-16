@@ -1,6 +1,5 @@
 #include "zmqsocket.h"
 #include "qlog.h"
-#include "zmq.h"
 
 ZmqSocket::ZmqSocket(int type)
 {
@@ -86,6 +85,16 @@ int ZmqSocket::bind(const char* szSvrIp, int port)
     return true;
 }
 
+int ZmqSocket::setRecvTimeOut(int timeout)
+{
+    return zmq_setsockopt(_socket, ZMQ_RCVTIMEO, &timeout, sizeof(timeout));
+}
+
+int ZmqSocket::setSendTimeOut(int timeout)
+{
+    return zmq_setsockopt(_socket, ZMQ_SNDTIMEO, &timeout, sizeof(timeout));
+}
+
 int ZmqSocket::sendData(const Buffer& buf)
 {
     int ret = zmq_send(_socket, buf.getBuf(), buf.getLen(), 0);
@@ -132,3 +141,4 @@ int ZmqSocket::select(int evt, int timeout)
 
     return rc;//0：超时; >0:有消息
 }
+
