@@ -21,7 +21,8 @@ SOURCES += detailviewplugin.cpp \
     cvsdatatreenode.cpp \
     cvsdataadapter.cpp \
     progressform.cpp \
-    failform.cpp
+    failform.cpp \
+    cvsdatatreedelegate.cpp
 
 HEADERS += detailviewplugin.h\
     detailviewform.h \
@@ -34,7 +35,8 @@ HEADERS += detailviewplugin.h\
     cvsdataadapter.h \
     progressform.h \
     failform.h \
-    ../../Util/plugin_global.h
+    ../../Util/plugin_global.h \
+    cvsdatatreedelegate.h
 
 unix {
     target.path = /usr/lib

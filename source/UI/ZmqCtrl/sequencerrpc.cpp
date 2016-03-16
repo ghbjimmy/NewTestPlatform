@@ -3,12 +3,33 @@
 #include "qlog.h"
 #include "command.h"
 
+#include <thread>
+
 const int& TIME_OUT = 3000;
 
-SequencerRpc::SequencerRpc()
+static void sub_recvFun(void* obj)
 {
-    _pubSocket = NULL;
+    SequencerRpc* seqRpc = (SequencerRpc*)obj;
+
+    while(1)
+    {
+        ZmqSocket* subSocket = seqRpc->getSubSocket();
+        if (subSocket->select(ZMQ_POLLIN, -1) <= 0)
+        {
+            LogMsg(Error, "sub socket select failed.");
+            continue;
+        }
+
+
+    }
+}
+
+SequencerRpc::SequencerRpc(int index)
+{
+    _index = index;
+    _subSocket = NULL;
     _reqSocket = NULL;
+    _subThread = NULL;
 }
 
 SequencerRpc::~SequencerRpc()
@@ -19,24 +40,19 @@ SequencerRpc::~SequencerRpc()
         _reqSocket = NULL;
     }
 
-    if (_pubSocket != NULL)
+    if (_subSocket != NULL)
     {
-        delete _pubSocket;
-        _pubSocket = NULL;
+        delete _subSocket;
+        _subSocket = NULL;
     }
 }
 
-bool SequencerRpc::init()
+bool SequencerRpc::init(const char *subIp, int subPort, const char *reqIp, int reqPort)
 {
-    return true;
-}
-
-bool SequencerRpc::start(const char *pubIp, int pubPort, const char *reqIp, int reqPort)
-{
-    _pubSocket = new ZmqSocket(ZMQ_SUB);
-    if (!_pubSocket->connect(pubIp, pubPort))
+    _subSocket = new ZmqSocket(ZMQ_SUB);
+    if (!_subSocket->connect(subIp, subPort))
     {
-        LogMsg(Error, "connet sequencer pub failed. ip:%s port %d", pubIp, pubPort);
+        LogMsg(Error, "connet sequencer pub failed. ip:%s port %d", subIp, subPort);
         return false;
     }
 
@@ -52,23 +68,25 @@ bool SequencerRpc::start(const char *pubIp, int pubPort, const char *reqIp, int 
     return true;
 }
 
+bool SequencerRpc::start()
+{
+
+
+    _subThread = new std::thread(sub_recvFun, this);
+    return true;
+}
+
 void SequencerRpc::stop()
 {
 
 }
 
-bool SequencerRpc::loadProfile(const char* csvFilePath, std::string& contentJson)
+bool SequencerRpc::loadProfile(const char* csvFilePath)
 {
     LoadCsvCmdReq* req = new LoadCsvCmdReq();
     req->setParam(csvFilePath);
     Buffer sendbuf;
-    if (!req->encode(sendbuf))
-    {
-        LogMsg(Error, "loadProfile failed. error is : LoadCsvCmdReq encode failed. path:%s", csvFilePath);
-        delete req;
-        req = NULL;
-        return false;
-    }
+    req->encode(sendbuf);
 
     delete req;
     req = NULL;
@@ -96,8 +114,52 @@ bool SequencerRpc::loadProfile(const char* csvFilePath, std::string& contentJson
     if (!rsp->decode(recvbuf))
     {
         LogMsg(Error, "loadProfile failed. error is : LoadCsvCmdRsp decode failed.");
+        delete rsp;
+        rsp = NULL;
         return false;
     }
+
+    delete rsp;
+    rsp = NULL;
+    return true;
+}
+
+bool SequencerRpc::getContent(QVector<TCsvDataItem*>& items)
+{
+    ListCmdReq* req = new ListCmdReq();
+    Buffer sendbuf;
+    req->encode(sendbuf);
+
+    if (_reqSocket->sendData(sendbuf) < 0)
+    {
+        LogMsg(Error, "getContent failed. error is : send data failed");
+        return false;
+    }
+
+    if (_reqSocket->select(ZMQ_POLLIN, TIME_OUT) == 0)
+    {
+        LogMsg(Error, "getContent failed. error is : recv data over time.");
+        return false;
+    }
+
+    Buffer recvbuf;
+    if (_reqSocket->recvData(recvbuf) < 0)
+    {
+        LogMsg(Error, "getContent failed. error is : recv data failed.");
+        return false;
+    }
+
+    ListCmdRsp* rsp = new ListCmdRsp();
+    if (!rsp->decode(recvbuf))
+    {
+        LogMsg(Error, "getContent failed. error is : LoadCsvCmdRsp decode failed.");
+        delete rsp;
+        rsp = NULL;
+        return false;
+    }
+
+    delete rsp;
+    rsp = NULL;
 
     return true;
 }

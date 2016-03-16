@@ -16,6 +16,7 @@ public:
     inline int getSmPub() const {return _smPub;}
     inline int getTestEnginePort() const {return _testEnginePort;}
     inline int getTestEnginePub() const {return _testEnginePub;}
+
 private:
     int _seqPort;
     int _seqPub;

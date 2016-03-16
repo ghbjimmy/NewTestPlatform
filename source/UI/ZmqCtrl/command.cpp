@@ -1,5 +1,4 @@
 #include "command.h"
-#include "structdefine.h"
 #include "qlog.h"
 
 #include <QJsonDocument>
@@ -258,5 +257,45 @@ bool ListCmdRsp::decode(const Buffer& buf)
         }
     }
 
+    return true;
+}
+
+GetItemStartSub::GetItemStartSub()
+{
+
+}
+
+GetItemStartSub::~GetItemStartSub()
+{
+
+}
+
+bool GetItemStartSub::encode(Buffer& buf)
+{
+    return true;
+}
+
+bool GetItemStartSub::decode(const Buffer& buf)
+{
+    return true;
+}
+
+GetItemEndSub::GetItemEndSub()
+{
+
+}
+
+GetItemEndSub::~GetItemEndSub()
+{
+
+}
+
+bool GetItemEndSub::encode(Buffer& buf)
+{
+    return true;
+}
+
+bool GetItemEndSub::decode(const Buffer& buf)
+{
     return true;
 }

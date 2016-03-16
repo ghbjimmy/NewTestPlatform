@@ -3,10 +3,12 @@
 #include "cvsdataadapter.h"
 #include "cvsdatatreemodel.h"
 #include "cvsdatatreenode.h"
+#include "cvsdatatreedelegate.h"
 
 CVSDataTreeView::CVSDataTreeView(QWidget *parent) : QTreeView(parent)
 {
-
+    CVSDataTreeDelegate* delegate = new CVSDataTreeDelegate(this);
+    this->setItemDelegate(delegate);
 }
 
 CVSDataTreeView::~CVSDataTreeView()

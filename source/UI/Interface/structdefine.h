@@ -2,6 +2,7 @@
 #define STRUCTDEFINE_H
 
 #include <QString>
+
 struct TCsvDataItem
 {
     QString group;
@@ -16,6 +17,25 @@ struct TCsvDataItem
     QString key;
     QString val;
     QString tid;
+};
+
+struct TItemStart
+{
+    QString group;
+    QString tid;
+    QString unit;
+    QString low;
+    QString high;
+    QString pdca;
+};
+
+struct TItemEnd
+{
+    QString tid;
+    QString value;
+    QString result;
+    QString error;
+    QString pdca;
 };
 
 #endif // STRUCTDEFINE_H
