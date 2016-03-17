@@ -11,7 +11,11 @@ TEMPLATE = lib
 
 DEFINES += TPLUGIN_LIBRARY
 
-INCLUDEPATH += ../
+INCLUDEPATH += ../ \
+                ../common \
+                ../../Util \
+                ../../Interface
+
 SOURCES += detailviewplugin.cpp \
     detailviewform.cpp \
     cvsdatatreeview.cpp \
@@ -22,13 +26,14 @@ SOURCES += detailviewplugin.cpp \
     cvsdataadapter.cpp \
     progressform.cpp \
     failform.cpp \
-    cvsdatatreedelegate.cpp
+    cvsdatatreedelegate.cpp \
+    ../../Util/message.cpp \
+    ../../Interface/structdefine.cpp
 
 HEADERS += detailviewplugin.h\
     detailviewform.h \
     cvsdatatreeview.h \
     cvsdatatreemodel.h \
-    ../detailviewsinterface.h \
     ../Common/datatreemodel.h \
     ../Common/datatreenode.h \
     cvsdatatreenode.h \
@@ -36,7 +41,10 @@ HEADERS += detailviewplugin.h\
     progressform.h \
     failform.h \
     ../../Util/plugin_global.h \
-    cvsdatatreedelegate.h
+    cvsdatatreedelegate.h \
+    ../../Util/message.h \
+    detailviewsinterface.h \
+    ../../Interface/structdefine.h
 
 unix {
     target.path = /usr/lib

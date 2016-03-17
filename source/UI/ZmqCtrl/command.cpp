@@ -68,7 +68,7 @@ void LoadCsvCmdReq::setParam(const QString& param)
 
 LoadCsvCmdRsp::LoadCsvCmdRsp()
 {
-
+    _isSuccess = false;
 }
 
 LoadCsvCmdRsp::~LoadCsvCmdRsp()
@@ -83,6 +83,31 @@ bool LoadCsvCmdRsp::encode(Buffer& buf)
 
 bool LoadCsvCmdRsp::decode(const Buffer& buf)
 {
+    if (!buf.isValid())
+        return false;
+
+    QByteArray array(buf.getBuf(), buf.getLen());
+    QJsonParseError json_error;
+    QJsonDocument document = QJsonDocument::fromJson(array, &json_error);
+
+    if(json_error.error != QJsonParseError::NoError)
+    {
+        LogMsg(Error, "Parse json failed.");
+        return false;
+    }
+
+    QJsonObject obj = document.object();
+    if(obj.contains("result"))
+    {
+        _result = obj.take("result").toString();
+        _isSuccess = true;
+    }
+    else if (obj.contains("error"))
+    {
+        _result = obj.take("error").toString();
+        _isSuccess = false;
+    }
+
     return true;
 }
 
@@ -119,75 +144,12 @@ ListCmdRsp::ListCmdRsp()
 
 ListCmdRsp::~ListCmdRsp()
 {
-
+    _items.clear();
 }
 
 bool ListCmdRsp::encode(Buffer& buf)
 {
     return true;
-}
-
-static void parseCsvItem(QJsonObject& obj,TCsvDataItem* item)
-{
-    if (obj.contains("FUNCTION"))
-    {
-        item->function = obj.take("FUNCTION").toString();
-    }
-
-    if (obj.contains("PARAM1"))
-    {
-        item->param1 = obj.take("PARAM1").toString();
-    }
-
-    if (obj.contains("GROUP"))
-    {
-        item->group = obj.take("GROUP").toString();
-    }
-
-    if (obj.contains("DESCRIPTION"))
-    {
-        item->desc = obj.take("DESCRIPTION").toString();
-    }
-
-    if (obj.contains("VAL"))
-    {
-        item->val = obj.take("VAL").toString();
-    }
-
-    if (obj.contains("HIGH"))
-    {
-        item->high = obj.take("HIGH").toString();
-    }
-
-    if (obj.contains("TIMEOUT"))
-    {
-        item->timeout = obj.take("TIMEOUT").toString();
-    }
-
-    if (obj.contains("PARAM2"))
-    {
-        item->param2 = obj.take("PARAM2").toString();
-    }
-
-    if (obj.contains("KEY"))
-    {
-        item->key = obj.take("KEY").toString();
-    }
-
-    if (obj.contains("TID"))
-    {
-        item->tid = obj.take("TID").toString();
-    }
-
-    if (obj.contains("UNIT"))
-    {
-        item->unit = obj.take("UNIT").toString();
-    }
-
-    if (obj.contains("LOW"))
-    {
-        item->low = obj.take("LOW").toString();
-    }
 }
 
 bool ListCmdRsp::decode(const Buffer& buf)
@@ -247,12 +209,8 @@ bool ListCmdRsp::decode(const Buffer& buf)
                 }
 
                 int index = dataArr.at(0).toInt();
-                QJsonObject itemObj = dataArr.at(1).toObject();
-
-                TCsvDataItem* item = new TCsvDataItem();
-                parseCsvItem(itemObj, item);
-
-                _items.push_back(item);
+                QString str = dataArr.at(1).toString();
+                _items.push_back(str);
             }
         }
     }

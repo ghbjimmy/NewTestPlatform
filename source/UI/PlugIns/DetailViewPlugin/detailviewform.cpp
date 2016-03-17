@@ -18,10 +18,7 @@ DetailViewForm::~DetailViewForm()
 
 void DetailViewForm::setupUI()
 {
-
     _csvTreeView = new CVSDataTreeView();
-
-
     FailForm* failForm = new FailForm();
 
     ProgressForm* progressForm = new ProgressForm();
@@ -30,7 +27,8 @@ void DetailViewForm::setupUI()
     this->addTab(failForm,QString("Fail Only"));
 }
 
-void DetailViewForm::loadCsvData()
+void DetailViewForm::listCsvData(const QVector<QString>& datas)
 {
-    _csvTreeView->loadData();
+    _csvTreeView->setData(datas);
 }
+

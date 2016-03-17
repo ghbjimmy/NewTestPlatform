@@ -25,13 +25,13 @@ void CVSDataTreeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     if (node->getIndex().toInt() % 2 == 0)
     {
         {
-            painter->fillRect(opt.rect, Qt::red);
+           // painter->fillRect(opt.rect, Qt::red);
         }
 
     }
     else
     {
-        painter->fillRect(opt.rect, Qt::green);
+       // painter->fillRect(opt.rect, Qt::green);
     }
 
     QStyledItemDelegate::paint(painter, opt, index);

@@ -10,17 +10,25 @@ const int& TIME_OUT = 3000;
 static void sub_recvFun(void* obj)
 {
     SequencerRpc* seqRpc = (SequencerRpc*)obj;
-
+    int index = 0;
     while(1)
     {
         ZmqSocket* subSocket = seqRpc->getSubSocket();
-        if (subSocket->select(ZMQ_POLLIN, -1) <= 0)
+        if (subSocket->select(ZMQ_POLLIN, 5000) == 0)
         {
-            LogMsg(Error, "sub socket select failed.");
+            LogMsg(Error, "sub socket select over time.");
+            index++;
+            if (index >= 2)
+            {
+
+            }
             continue;
         }
 
-
+        index = 0;
+        Buffer rcvBuff;
+        int ret = subSocket->recvData(rcvBuff);
+        int j = 0;
     }
 }
 
@@ -47,31 +55,32 @@ SequencerRpc::~SequencerRpc()
     }
 }
 
-bool SequencerRpc::init(const char *subIp, int subPort, const char *reqIp, int reqPort)
+bool SequencerRpc::init(const QString&  pubIp, int pubPort, const QString&  reqIp, int reqPort)
 {
-    _subSocket = new ZmqSocket(ZMQ_SUB);
-    if (!_subSocket->connect(subIp, subPort))
+    _subSocket = new ZmqSocket(ZMQ_SUB);  
+    if (!_subSocket->connect(pubIp.toStdString().c_str(), pubPort))
     {
-        LogMsg(Error, "connet sequencer pub failed. ip:%s port %d", subIp, subPort);
+        LogMsg(Error, "connet sequencer pub failed. ip:%s port %d", pubIp.toStdString().c_str(), pubPort);
         return false;
     }
 
+    _subSocket->setSockOpt(ZMQ_SUBSCRIBE, "0", 0);
+
     _reqSocket = new ZmqSocket(ZMQ_REQ);
-    _reqSocket->setSendTimeOut(TIME_OUT);
-    _reqSocket->setRecvTimeOut(TIME_OUT);
-    if (!_reqSocket->connect(reqIp, reqPort))
+    if (!_reqSocket->connect(reqIp.toStdString().c_str(), reqPort))
     {
-        LogMsg(Error, "connet sequencer req failed. ip:%s port %d", reqIp, reqPort);
+        LogMsg(Error, "connet sequencer req failed. ip:%s port %d", reqIp.toStdString().c_str(), reqPort);
         return false;
     }
+
+    _reqSocket->setSockOpt(ZMQ_RCVTIMEO, (void*)&TIME_OUT, sizeof(int));
+    _reqSocket->setSockOpt(ZMQ_SNDTIMEO, (void*)&TIME_OUT, sizeof(int));
 
     return true;
 }
 
 bool SequencerRpc::start()
 {
-
-
     _subThread = new std::thread(sub_recvFun, this);
     return true;
 }
@@ -81,7 +90,7 @@ void SequencerRpc::stop()
 
 }
 
-bool SequencerRpc::loadProfile(const char* csvFilePath)
+bool SequencerRpc::loadProfile(const QString& csvFilePath)
 {
     LoadCsvCmdReq* req = new LoadCsvCmdReq();
     req->setParam(csvFilePath);
@@ -124,7 +133,7 @@ bool SequencerRpc::loadProfile(const char* csvFilePath)
     return true;
 }
 
-bool SequencerRpc::getContent(QVector<TCsvDataItem*>& items)
+bool SequencerRpc::getContent(QVector<QString>& items)
 {
     ListCmdReq* req = new ListCmdReq();
     Buffer sendbuf;
@@ -157,6 +166,8 @@ bool SequencerRpc::getContent(QVector<TCsvDataItem*>& items)
         rsp = NULL;
         return false;
     }
+
+    items = rsp->getItems();
 
     delete rsp;
     rsp = NULL;

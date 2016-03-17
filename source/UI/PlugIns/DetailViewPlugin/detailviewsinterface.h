@@ -1,7 +1,7 @@
 #ifndef DETAILVIEWPINTERFACE_H
 #define DETAILVIEWPINTERFACE_H
 
-#include <string>
+#include <QString>
 
 struct TDetailViewItem
 {
@@ -9,6 +9,7 @@ struct TDetailViewItem
     QString testKey;
     QString destcription;
 	QString time;
+	QString unit;
 	QString lower;
 	QString upper;
     QString uut1;

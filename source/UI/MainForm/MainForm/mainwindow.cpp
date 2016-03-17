@@ -17,6 +17,9 @@
 #include "qlog.h"
 
 #include "command.h"
+#include "sequencermgr.h"
+#include "zmqcfgparser.h"
+
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -67,6 +70,31 @@ MainWindow::~MainWindow()
 MainWindow* MainWindow::getInstance()
 {
     return _instance;
+}
+
+bool MainWindow::init()
+{
+    _zmqCfgParse = new ZmqCfgParser();
+    if (!_zmqCfgParse->parse("D:\\Work\\tm_platform_v2_1\\LuaDriver\\Driver\\config\\zmqports.json"))
+    {
+        LogMsg(Error, "parse config file failed.");
+        return false;
+    }
+
+    _sequencerMgr = new SequencerMgr();
+    if (!_sequencerMgr->initByCfg(_zmqCfgParse))
+    {
+        LogMsg(Error, "init by  config file failed.");
+        return false;
+    }
+
+    if (!_sequencerMgr->startAll())
+    {
+        LogMsg(Error, "start all sequencer failed.");
+        return false;
+    }
+
+    return true;
 }
 
 bool MainWindow::loadLibary(const QString& path)
@@ -300,8 +328,27 @@ void MainWindow::onMenuAction()
        // if(path.length() == 0)
        //     return;
 
-        LoadCsvFileMsg* loadcsv = new LoadCsvFileMsg();
-        dispatchMessage(loadcsv);
+        //load 命令
+        QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv");
+        if (!failVecs.empty())
+        {
+            LogMsg(Error, "load profile failed. failed count is %d", failVecs.size());
+            return;
+        }
+
+        //list 命令
+        ListCsvFileMsg* listCsvMsg = new ListCsvFileMsg();
+        if (!_sequencerMgr->getContent(listCsvMsg->dataItems))
+        {
+            LogMsg(Error, "get content failed. %d");
+            delete listCsvMsg;
+            return;
+        }
+
+        //发送结果到插件
+        dispatchMessage(listCsvMsg);
+        delete listCsvMsg;
+
     }
     else if (action->text() == "Load ScopeView")
     {
@@ -319,7 +366,6 @@ void MainWindow::dispatchMessage(const IMessage* msg)
 
 bool MainWindow::testZmq(const char* address)
 {
-    return true;
     void* m_context = zmq_ctx_new();
     if (!m_context)
     {
@@ -346,7 +392,7 @@ bool MainWindow::testZmq(const char* address)
 
     //const char* json = "{\"function\": \"load\", \"params\": [\"/Users/mac/Desktop/test_plan__0121_14h.csv\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
 
-    const char* json = "{\"function\": \"load\", \"params\": [\"/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
+    //const char* json = "{\"function\": \"load\", \"params\": [\"/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
 
     //const char* json = "{\"function\": \"list\", \"params\": [\"10\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
 
@@ -357,7 +403,7 @@ bool MainWindow::testZmq(const char* address)
     bool ff = req.encode(buf);
 
     std::string str = std::string(buf.getBuf(),buf.getLen());
-    //const char* json = str.c_str();
+    const char* json = str.c_str();
 
 
     /*QString strJson = QString::fromStdString(json);

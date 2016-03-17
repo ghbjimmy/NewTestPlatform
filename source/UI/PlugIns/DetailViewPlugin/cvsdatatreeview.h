@@ -2,6 +2,9 @@
 #define CVSDATATREEVIEW_H
 
 #include <QTreeView>
+#include <QVector>
+
+class CVSDataAdapter;
 
 class CVSDataTreeView : public QTreeView
 {
@@ -11,8 +14,11 @@ public:
     explicit CVSDataTreeView(QWidget *parent = 0);
     ~CVSDataTreeView();
 
-    int loadData();
+    bool setData(const QVector<QString>& datas);
 
+private:
+    QVector<QString> _datas;
+    CVSDataAdapter* _adapter;
 };
 
 #endif

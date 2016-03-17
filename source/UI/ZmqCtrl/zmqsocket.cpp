@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "zmqsocket.h"
 #include "qlog.h"
 
@@ -41,6 +43,7 @@ bool ZmqSocket::connect(const char* szSvrIp, int port)
        return false;
     }
 
+    //int ret = zmq_setsockopt(_socket, ZMQ_SUBSCRIBE, "0", 0);
     _ip = std::string(szSvrIp);
     _port = port;
 
@@ -85,14 +88,9 @@ int ZmqSocket::bind(const char* szSvrIp, int port)
     return true;
 }
 
-int ZmqSocket::setRecvTimeOut(int timeout)
+int ZmqSocket::setSockOpt(int sockOpt, void* val, int len)
 {
-    return zmq_setsockopt(_socket, ZMQ_RCVTIMEO, &timeout, sizeof(timeout));
-}
-
-int ZmqSocket::setSendTimeOut(int timeout)
-{
-    return zmq_setsockopt(_socket, ZMQ_SNDTIMEO, &timeout, sizeof(timeout));
+    return zmq_setsockopt(_socket, sockOpt, val, len);
 }
 
 int ZmqSocket::sendData(const Buffer& buf)
@@ -109,6 +107,7 @@ int ZmqSocket::sendData(const Buffer& buf)
 
 int ZmqSocket::recvData(Buffer& buf)
 {
+    std::vector<char> data_buffer;
     zmq_msg_t msg;
     zmq_msg_init(&msg);
     int ret = zmq_msg_recv(&msg, _socket, 0);
@@ -116,7 +115,10 @@ int ZmqSocket::recvData(Buffer& buf)
     {
         void * pbuffer = zmq_msg_data(&msg);
         size_t len = zmq_msg_size(&msg);
-        buf.setBuf((char*)pbuffer, len);
+        for (size_t i = 0; i < len; i++)
+        {
+            data_buffer.push_back(((char *)pbuffer)[i]);
+        }
     }
     else
     {
@@ -126,8 +128,41 @@ int ZmqSocket::recvData(Buffer& buf)
 
     zmq_msg_close(&msg);
 
+    while (true)
+    {
+        long more;
+        size_t more_len = sizeof(more);
+        int ret = zmq_getsockopt(_socket, ZMQ_RCVMORE, &more, &more_len);
+        if (ret < 0)
+        {
+            LogMsg(Error, "Get More data failed! error is : %s", zmq_strerror(zmq_errno()));
+            return -1;
+        }
+        if (!more)
+        {
+           // data_buffer.push_back(0);
+            break;
+        }
+
+        zmq_msg_t part;
+        zmq_msg_init(&part);
+        zmq_msg_recv(&part, _socket, 0);
+        void * pbuffer = zmq_msg_data(&part);
+        size_t len = zmq_msg_size(&part);
+
+        data_buffer.push_back('!');//seperator
+        data_buffer.push_back('@');
+        data_buffer.push_back('#');
+        for (size_t i = 0; i < len; i++)
+        {
+            data_buffer.push_back(((char *)pbuffer)[i]);
+        }
+
+        zmq_msg_close(&part);
+    }
     //LogMsg(Debug, "recv: %s", buf.getBuf());
 
+    buf.setBuf(&data_buffer[0], data_buffer.size());
     return buf.getLen();
 }
 

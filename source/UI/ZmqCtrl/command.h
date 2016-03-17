@@ -44,8 +44,12 @@ public:
     bool encode(Buffer& buf);
     bool decode(const Buffer& buf);
 
-private:
+    inline bool isSuccess() const {return _isSuccess;}
+    inline const QString& getResult() const {return _result;}
 
+private:
+    QString _result;
+    bool _isSuccess;
 };
 
 class ListCmdReq : public CommandBase
@@ -72,8 +76,10 @@ public:
     bool encode(Buffer& buf);
     bool decode(const Buffer& buf);
 
+    const QVector<QString>& getItems() const {return _items;}
+
 private:
-    QVector<TCsvDataItem*> _items;
+    QVector<QString> _items;
 };
 
 class GetItemStartSub : public CommandBase

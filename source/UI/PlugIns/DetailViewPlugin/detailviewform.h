@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTabWidget>
+#include <QVector>
 
 class CVSDataTreeView;
 class DetailViewForm : public QTabWidget
@@ -13,7 +14,7 @@ public:
     explicit DetailViewForm(QWidget *parent = 0);
     ~DetailViewForm();
 
-    void loadCsvData();
+    void listCsvData(const QVector<QString>& datas);
 
 private:
     void setupUI();

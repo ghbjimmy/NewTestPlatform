@@ -12,14 +12,14 @@ ChannelStateMsg::~ChannelStateMsg()
 
 }
 
-LoadCsvFileMsg::LoadCsvFileMsg()
+ListCsvFileMsg::ListCsvFileMsg()
 {
-    _id = 120;
+    _id = LIST_CSV_MSG;
     _context = NULL;
-    _len = 120;
+    _len = 0;
 }
 
-LoadCsvFileMsg::~LoadCsvFileMsg()
+ListCsvFileMsg::~ListCsvFileMsg()
 {
 
 }

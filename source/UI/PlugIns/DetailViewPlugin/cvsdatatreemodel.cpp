@@ -57,7 +57,7 @@ QVariant CVSDataTreeModel::data(const QModelIndex &index, int role) const
             }
             case 3:
             {
-                node->getTime();
+                return node->getTime();
             }
             case 4:
             {

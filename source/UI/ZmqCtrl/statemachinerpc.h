@@ -1,7 +1,7 @@
 #ifndef STATEMACHINERPC_H
 #define STATEMACHINERPC_H
 
-
+#include <QString>
 class ZmqSocket;
 
 class StateMachineRpc
@@ -10,7 +10,7 @@ public:
     StateMachineRpc();
     ~StateMachineRpc();
 
-    bool init(const char *subIp, int subPort, const char *reqIp, int reqPort);
+    bool init(const QString& pubIp, int pubPort, const QString& reqIp, int reqPort);
     bool start();
     void stop();
 

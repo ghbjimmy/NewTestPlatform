@@ -2,6 +2,7 @@
 #define CVSDATAADAPTER_H
 
 #include <QString>
+#include <QVector>
 
 class CVSDataTreeNode;
 
@@ -12,7 +13,7 @@ public:
     CVSDataAdapter();
     ~CVSDataAdapter();
 
-    int init(void* data, int len);
+    bool convertData(const QVector<QString>& items);
 
     inline CVSDataTreeNode* getRootNode() const { return _rootNode; }
 

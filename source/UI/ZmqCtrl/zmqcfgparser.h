@@ -10,6 +10,10 @@ public:
     ~ZmqCfgParser();
     bool parse(const QString& path);
 
+    inline const QString& getSeqIp() const {return _seqIp;}
+    inline const QString& getTestEngineIp() const {return _engineIp;}
+    inline const QString& getSmIp() const {return _smIp;}
+
     inline int getSeqPort() const {return _seqPort;}
     inline int getSeqPub() const {return _seqPub;}
     inline int getSmPort() const {return _smPort;}
@@ -18,6 +22,10 @@ public:
     inline int getTestEnginePub() const {return _testEnginePub;}
 
 private:
+    QString _seqIp;
+    QString _engineIp;
+    QString _smIp;
+
     int _seqPort;
     int _seqPub;
     int _smPort;

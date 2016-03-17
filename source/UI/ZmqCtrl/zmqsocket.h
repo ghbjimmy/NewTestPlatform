@@ -17,8 +17,7 @@ public:
     int sendData(const Buffer& buf);
     int recvData(Buffer& buf);
 
-    int setRecvTimeOut(int timeout);
-    int setSendTimeOut(int timeout);
+    int setSockOpt(int sockOpt, void* val, int len); //ZMQ_RCVTIMEO ZMQ_SNDTIMEO ZMQ_SUBSCRIBE
 
     int select(int evt, int timeout = -1);
 

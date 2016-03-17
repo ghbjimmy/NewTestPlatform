@@ -48,20 +48,20 @@ bool ZmqCfgParser::parse(const QString& path)
     file->close();
 
     QJsonParseError json_error;
-    QJsonDocument doucment = QJsonDocument::fromJson(byteArray, &json_error);
+    QJsonDocument document = QJsonDocument::fromJson(byteArray, &json_error);
     if(json_error.error != QJsonParseError::NoError)
     {
         LogMsg(Error, "Parse json failed.");
         return false;
     }
 
-    if (!doucment.isObject())
+    if (!document.isObject())
     {
         LogMsg(Error, "json format is error.");
         return false;
     }
 
-    QJsonObject obj = doucment.object();
+    QJsonObject obj = document.object();
     QJsonValue value;
     if(obj.contains(SEQUENCER_PORT))
     {
@@ -98,5 +98,11 @@ bool ZmqCfgParser::parse(const QString& path)
         value = obj.take(TEST_ENGINE_PUB);
         _testEnginePub = value.toInt();
     }
+
+    static const char* ip = "172.15.3.78";
+    _seqIp = ip;
+    _engineIp = ip;
+    _smIp = ip;
+
     return true;
 }

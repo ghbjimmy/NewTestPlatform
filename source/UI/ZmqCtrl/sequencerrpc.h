@@ -1,11 +1,10 @@
 #ifndef SEQUENCERRPC_H
 #define SEQUENCERRPC_H
 
-#include <string>
+
 #include <QVector>
 
 class ZmqSocket;
-class TCsvDataItem;
 
 namespace std
 {
@@ -18,15 +17,15 @@ public:
     SequencerRpc(int index);
     ~SequencerRpc();
 
-    bool init(const char *subIp, int subPort, const char *reqIp, int reqPort);
+    bool init(const QString& pubIp, int pubPort, const QString& reqIp, int reqPort);
     bool start();
     void stop();
 
     //加载csv
-    bool loadProfile(const char* csvFilePath);
+    bool loadProfile(const QString& csvFilePath);
 
     //获取csv内存
-    bool getContent(QVector<TCsvDataItem*>& items);
+    bool getContent(QVector<QString>& items);
 
     //检测心跳
     bool isAlive();

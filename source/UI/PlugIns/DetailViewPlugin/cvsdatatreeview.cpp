@@ -1,9 +1,10 @@
 
 #include "cvsdatatreeview.h"
-#include "cvsdataadapter.h"
 #include "cvsdatatreemodel.h"
 #include "cvsdatatreenode.h"
 #include "cvsdatatreedelegate.h"
+#include "cvsdataadapter.h"
+
 
 CVSDataTreeView::CVSDataTreeView(QWidget *parent) : QTreeView(parent)
 {
@@ -16,14 +17,19 @@ CVSDataTreeView::~CVSDataTreeView()
 
 }
 
-int CVSDataTreeView::loadData()
+bool CVSDataTreeView::setData(const QVector<QString>& datas)
 {
-    CVSDataAdapter* mgr = new CVSDataAdapter();
-    mgr->init(NULL, 0);
+    _datas = datas;
+    _adapter = new CVSDataAdapter();
+    if (!_adapter->convertData(_datas))
+        return false;
 
+    CVSDataTreeNode* rootNode = _adapter->getRootNode();
     CVSDataTreeModel* model = new CVSDataTreeModel();
-    model->setRootNode(mgr->getRootNode());
+    model->setRootNode(rootNode);
     this->setModel(model);
-	this->expandAll();
-    return 0;
+    this->expandAll();
+
+    return true;
 }
+

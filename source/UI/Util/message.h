@@ -4,6 +4,8 @@
 
 #include "plugin_global.h"
 
+const int LIST_CSV_MSG = 1000;
+
 class IMessage
 {
 public:
@@ -43,11 +45,14 @@ public:
     ~ChannelStateMsg();
 };
 
-class LoadCsvFileMsg : public IMessage
+class ListCsvFileMsg : public IMessage
 {
 public:
-    LoadCsvFileMsg();
-    ~LoadCsvFileMsg();
+    ListCsvFileMsg();
+    ~ListCsvFileMsg();
+
+public:
+    QVector<QString> dataItems;
 };
 
 class LoadScopeViewMsg : public IMessage

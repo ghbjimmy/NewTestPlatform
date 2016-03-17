@@ -7,7 +7,8 @@
 class PluginSubjecter;
 class LibaryParser;
 class IMessage;
-class SequencerRpc;
+class SequencerMgr;
+class ZmqCfgParser;
 
 class MainWindow : public QMainWindow
 {
@@ -17,6 +18,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    bool init();
     bool loadLibary(const QString& path);
 
     static MainWindow* getInstance();
@@ -40,7 +42,8 @@ private:
     PluginSubjecter* _pluginSubjecter;
     QVector<LibaryParser*> _libParsers;
 
-    SequencerRpc* _sequencerRpc;
+    SequencerMgr* _sequencerMgr;
+    ZmqCfgParser* _zmqCfgParse;
 };
 
 #endif // MAINWINDOW_H

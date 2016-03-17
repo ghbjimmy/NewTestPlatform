@@ -25,6 +25,8 @@ public:
     void insertChild(int index, DataTreeNode* child);
     DataTreeNode* removeChild(int index);
 
+    inline int childCount() const {return _children.size();}
+
 private:
     DataTreeNode* _parent;
     QList<DataTreeNode*> _children;

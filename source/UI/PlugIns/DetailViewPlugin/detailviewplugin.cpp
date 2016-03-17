@@ -1,7 +1,7 @@
 #include "detailviewplugin.h"
 #include "detailviewform.h"
-#include "../../Util/const.h"
-#include "../../Util/message.h"
+#include "const.h"
+#include "message.h"
 
 DetailViewPlugin::DetailViewPlugin()
 {
@@ -25,16 +25,17 @@ void DetailViewPlugin::fini()
 // 消息解释
 int DetailViewPlugin::onMessage(const IMessage* msg)
 {
+    if (_widget == NULL)
+        return -1;
+
     int id = msg->messageID();
     switch(id)
     {
-        case 120:
+        case LIST_CSV_MSG:
         {
-            if (_widget != NULL)
-            {
-                ((DetailViewForm*)_widget)->loadCsvData();
-                break;
-            }
+           // ((DetailViewForm*)_widget)->loadCsvData();
+            const ListCsvFileMsg* listcsvMsg = (const ListCsvFileMsg*)msg;
+            ((DetailViewForm*)_widget)->listCsvData(listcsvMsg->dataItems);
         }
     default:
         return 1;
@@ -48,7 +49,7 @@ bool DetailViewPlugin::isHandleMessage(const IMessage* msg)
     int id = msg->messageID();
     switch(id)
     {
-        case 120:
+        case LIST_CSV_MSG:
         {
             return true;
         }
