@@ -5,6 +5,7 @@
 #include "plugin_global.h"
 
 const int LIST_CSV_MSG = 1000;
+const int PROC_ITEMSTATE_MSG = 1001;
 
 class IMessage
 {
@@ -45,14 +46,18 @@ public:
     ~ChannelStateMsg();
 };
 
+//处理csv内容消息
 class ListCsvFileMsg : public IMessage
 {
 public:
     ListCsvFileMsg();
     ~ListCsvFileMsg();
 
-public:
-    QVector<QString> dataItems;
+    void setData(const QVector<QString>& items) {_dataItems = items;}
+    inline const QVector<QString>& getItems() const {return _dataItems;}
+
+private:
+    QVector<QString> _dataItems;
 };
 
 class LoadScopeViewMsg : public IMessage
@@ -60,6 +65,24 @@ class LoadScopeViewMsg : public IMessage
 public:
     LoadScopeViewMsg();
     ~LoadScopeViewMsg();
+};
+
+//处理进度消息
+class ProcItemStateMsg : public IMessage
+{
+public:
+    ProcItemStateMsg();
+    ~ProcItemStateMsg();
+
+    void setData(bool isStart, int index, const QString& data);
+    inline bool isItemStart() const {return _itemStart;}
+    inline int getIndex() const {return _index;}
+    inline const QString& getData() const {return _data;}
+
+private:
+    bool _itemStart;
+    int _index;
+    QString _data;
 };
 
 #endif

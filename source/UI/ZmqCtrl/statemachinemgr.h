@@ -20,7 +20,7 @@ public:
     void stopAll();
 
 signals:
-    void smIsAliveSignal(int id, bool isAlive, bool isShow);
+    void isAliveSignal(int id, bool isAlive, bool isShow);
 
 private:
     StateMachineRpc* _sms[SM_NUM]; //SM_NUM默认1

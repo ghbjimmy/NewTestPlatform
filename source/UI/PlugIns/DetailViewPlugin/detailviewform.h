@@ -15,6 +15,8 @@ public:
     ~DetailViewForm();
 
     void listCsvData(const QVector<QString>& datas);
+    void procItemStart(int index, const QString& data);
+    void procItemEnd(int index, const QString& data);
 
 private:
     void setupUI();

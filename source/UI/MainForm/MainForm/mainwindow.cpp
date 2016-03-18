@@ -97,6 +97,9 @@ bool MainWindow::init()
     }
 
     connect(_sequencerMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onSeqIsAlive(int,bool,bool)));
+    connect(_sequencerMgr, SIGNAL(itemStartSignal(int,const QString&)), this, SLOT(onItemStart(int,const QString&)));
+    connect(_sequencerMgr, SIGNAL(itemEndSignal(int,const QString&)), this, SLOT(onItemEnd(int,const QString&)));
+
     _engineMgr = new TestEngineMgr();
     if (!_engineMgr->initByCfg(_zmqCfgParse))
     {
@@ -351,18 +354,19 @@ void MainWindow::onMenuAction()
         if (!failVecs.empty())
         {
             LogMsg(Error, "load profile failed. failed count is %d", failVecs.size());
-            return;
+            //return;
         }
 
         //list 命令
         ListCsvFileMsg* listCsvMsg = new ListCsvFileMsg();
-        if (!_sequencerMgr->getCsvContent(listCsvMsg->dataItems))
+        QVector<QString> items;
+        if (!_sequencerMgr->getCsvContent(items))
         {
             LogMsg(Error, "get content failed. %d");
             delete listCsvMsg;
             return;
         }
-
+        listCsvMsg->setData(items);
         //发送结果到插件
         dispatchMessage(listCsvMsg);
         delete listCsvMsg;
@@ -447,4 +451,26 @@ void MainWindow::onEngIsAlive(int index, bool isAlive, bool isShow)
     }
 
     this->update();
+}
+
+void MainWindow::onItemStart(int index, const QString& itemJson)
+{
+    //item_start
+    ProcItemStateMsg* procItemStateMsg = new ProcItemStateMsg();
+    procItemStateMsg->setData(true, index, itemJson);
+
+    //发送结果到插件
+    dispatchMessage(procItemStateMsg);
+    delete procItemStateMsg;
+}
+
+void MainWindow::onItemEnd(int index, const QString& itemJson)
+{
+    //item_start
+    ProcItemStateMsg* procItemStateMsg = new ProcItemStateMsg();
+    procItemStateMsg->setData(false, index, itemJson);
+
+    //发送结果到插件
+    dispatchMessage(procItemStateMsg);
+    delete procItemStateMsg;
 }

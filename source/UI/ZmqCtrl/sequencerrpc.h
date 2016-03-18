@@ -7,6 +7,7 @@
 
 class SequencerRpc : public BaseRpc
 {
+    Q_OBJECT
 public:
     SequencerRpc(int index);
     ~SequencerRpc();
@@ -15,7 +16,7 @@ public:
     bool loadProfile(const QString& csvFilePath);
 
     //获取csv内存
-    bool getContent(QVector<QString>& items);
+    bool getCsvContent(QVector<QString>& items);
 
     //获取进度数据
     bool getProcData();
@@ -27,6 +28,10 @@ public:
     bool procItemEnd(const QString& msg);
 
     bool procSubRecvMsg(const QString& msg);
+
+signals:
+    void itemStartSignal(int index, const QString& itemJson);
+    void itemEndSignal(int index, const QString& itemJson);
 
 };
 

@@ -14,7 +14,8 @@ DEFINES += TPLUGIN_LIBRARY
 INCLUDEPATH += ../ \
                 ../common \
                 ../../Util \
-                ../../Interface
+                ../../Interface \
+                ../../Log
 
 SOURCES += detailviewplugin.cpp \
     detailviewform.cpp \
@@ -28,7 +29,8 @@ SOURCES += detailviewplugin.cpp \
     failform.cpp \
     cvsdatatreedelegate.cpp \
     ../../Util/message.cpp \
-    ../../Interface/structdefine.cpp
+    ../../Interface/structdefine.cpp \
+    ../../Log/qlog.cpp
 
 HEADERS += detailviewplugin.h\
     detailviewform.h \
@@ -44,7 +46,8 @@ HEADERS += detailviewplugin.h\
     cvsdatatreedelegate.h \
     ../../Util/message.h \
     detailviewsinterface.h \
-    ../../Interface/structdefine.h
+    ../../Interface/structdefine.h \
+    ../../Log/qlog.h
 
 unix {
     target.path = /usr/lib

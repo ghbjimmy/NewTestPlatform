@@ -31,6 +31,8 @@ public:
 
 signals:
     void isAliveSignal(int id, bool isAlive, bool isShow);
+    void itemStartSignal(int index, const QString& itemJson);
+    void itemEndSignal(int index, const QString& itemJson);
 
 private:
     SequencerRpc* _sequencers[SEQ_NUM];

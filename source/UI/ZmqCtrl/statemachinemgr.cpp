@@ -29,7 +29,7 @@ bool StateMachineMgr::initByCfg(ZmqCfgParser* cfg)
             return false;
         }
 
-        connect(_sms[i], SIGNAL(isAliveSignal(int,bool,bool)), this, SIGNAL(smIsAliveSignal(int,bool,bool)));
+        connect(_sms[i], SIGNAL(isAliveSignal(int,bool,bool)), this, SIGNAL(isAliveSignal(int,bool,bool)));
     }
 
     return true;
@@ -39,7 +39,7 @@ bool StateMachineMgr::startAll()
 {
     for (int i = 0; i < SM_NUM; ++i)
     {
-        //_sms[i]->start();
+        _sms[i]->start();
     }
 
     return true;
@@ -49,6 +49,6 @@ void StateMachineMgr::stopAll()
 {
     for (int i = 0; i < SM_NUM; ++i)
     {
-       // _sms[i]->stop();
+        _sms[i]->stop();
     }
 }

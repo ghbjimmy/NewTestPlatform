@@ -75,7 +75,7 @@ QVector<int> SequencerMgr::loadProfile(const QString& csvFilePath)
 bool SequencerMgr::getCsvContent(QVector<QString>& items)
 {
     //目前只需从第一个那里获取结果就行
-    return _sequencers[0]->getContent(items);
+    return _sequencers[0]->getCsvContent(items);
 }
 
 bool SequencerMgr::getSequenceIsAlive(int index)

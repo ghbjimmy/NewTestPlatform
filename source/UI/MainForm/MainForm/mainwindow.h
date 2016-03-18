@@ -48,6 +48,9 @@ private slots:
     void onSeqIsAlive(int index, bool isAlive, bool isShow);
     void onEngIsAlive(int index, bool isAlive, bool isShow);
 
+    void onItemStart(int index, const QString& itemJson);
+    void onItemEnd(int index, const QString& itemJson);
+
 private:
     static MainWindow* _instance;
 

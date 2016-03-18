@@ -28,14 +28,26 @@ int DetailViewPlugin::onMessage(const IMessage* msg)
     if (_widget == NULL)
         return -1;
 
+    DetailViewForm* form = ((DetailViewForm*)_widget);
     int id = msg->messageID();
     switch(id)
     {
         case LIST_CSV_MSG:
         {
-           // ((DetailViewForm*)_widget)->loadCsvData();
             const ListCsvFileMsg* listcsvMsg = (const ListCsvFileMsg*)msg;
-            ((DetailViewForm*)_widget)->listCsvData(listcsvMsg->dataItems);
+            form->listCsvData(listcsvMsg->getItems());
+        }
+        case PROC_ITEMSTATE_MSG:
+        {
+            const ProcItemStateMsg* itemStateMsg = (const ProcItemStateMsg*)msg;
+            if (itemStateMsg->isItemStart())
+            {
+                form->procItemStart(itemStateMsg->getIndex(), itemStateMsg->getData());
+            }
+            else
+            {
+                form->procItemEnd(itemStateMsg->getIndex(), itemStateMsg->getData());
+            }
         }
     default:
         return 1;
@@ -50,9 +62,11 @@ bool DetailViewPlugin::isHandleMessage(const IMessage* msg)
     switch(id)
     {
         case LIST_CSV_MSG:
+        case PROC_ITEMSTATE_MSG:
         {
             return true;
         }
+
     };
     return false;
 }

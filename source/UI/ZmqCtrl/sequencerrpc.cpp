@@ -10,14 +10,10 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-//获取消息的类型 0:心跳； 1: item_start; 2: item_end; -1:unknown
+//获取消息的类型 1: item_start; 2: item_end; -1:unknown
 static int getMsgType(const QString& msg)
 {
-    if (msg.contains("FCT_HEARTBEAT"))
-    {
-        return 0;
-    }
-    else if (msg.contains("group") && msg.contains("tid"))
+    if (msg.contains("group") && msg.contains("tid"))
     {
         return 1;
     }
@@ -82,7 +78,7 @@ bool SequencerRpc::loadProfile(const QString& csvFilePath)
     return true;
 }
 
-bool SequencerRpc::getContent(QVector<QString>& items)
+bool SequencerRpc::getCsvContent(QVector<QString>& items)
 {
     ListCmdReq* req = new ListCmdReq();
     Buffer sendbuf;
@@ -126,56 +122,27 @@ bool SequencerRpc::getContent(QVector<QString>& items)
 
 bool SequencerRpc::procSubRecvMsg(const QString& msg)
 {
-    return true;
+    int msgType = getMsgType(msg);
+    if (msgType == 1)
+    {
+        return procItemStart(msg);
+    }
+    else if (msgType == 2)
+    {
+        return procItemEnd(msg);
+    }
+
+    return false;
 }
 
 bool SequencerRpc::procItemStart(const QString& msg)
 {
-    QJsonParseError json_error;
-    QJsonDocument document = QJsonDocument::fromJson(msg.toUtf8(), &json_error);
-    if(json_error.error != QJsonParseError::NoError)
-    {
-        LogMsg(Error, "Parse ItemStart json failed. %s", msg.toStdString().c_str());
-        return false;
-    }
-
-    if (!document.isObject())
-    {
-        LogMsg(Error, "Parse ItemStar json format is error. %s", msg.toStdString().c_str());
-        return false;
-    }
-
-    TItemStart itemStart;
-    QJsonObject obj = document.object();
-    if(obj.contains("group"))
-    {
-        itemStart.group = obj.take("group").toString();
-    }
-    if (obj.contains("tid"))
-    {
-        itemStart.tid = obj.take("tid").toString();
-    }
-    if (obj.contains("unit"))
-    {
-        itemStart.unit = obj.take("unit").toString();
-    }
-    if (obj.contains("low"))
-    {
-        itemStart.low = obj.take("low").toString();
-    }
-    if (obj.contains("high"))
-    {
-        itemStart.high = obj.take("high").toString();
-    }
-    if (obj.contains("pdca"))
-    {
-        itemStart.pdca = obj.take("pdca").toString();
-    }
-
+    emit itemStartSignal(_index, msg);
     return true;
 }
 
 bool SequencerRpc::procItemEnd(const QString& msg)
 {
+    emit itemEndSignal(_index, msg);
     return true;
 }

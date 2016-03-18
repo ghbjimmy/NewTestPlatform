@@ -2,7 +2,6 @@
 #define COMMAND_H
 
 #include "buffer.h"
-#include "structdefine.h"
 
 #include <QString>
 #include <QVector>
@@ -82,30 +81,5 @@ private:
     QVector<QString> _items;
 };
 
-class GetItemStartSub : public CommandBase
-{
-public:
-    GetItemStartSub();
-    ~GetItemStartSub();
-
-    bool encode(Buffer& buf);
-    bool decode(const Buffer& buf);
-
-private:
-    TItemStart* _itemStart;
-};
-
-class GetItemEndSub : public CommandBase
-{
-public:
-    GetItemEndSub();
-    ~GetItemEndSub();
-
-    bool encode(Buffer& buf);
-    bool decode(const Buffer& buf);
-
-private:
-    TItemEnd* _itemEnd;
-};
 
 #endif // COMMAND_H

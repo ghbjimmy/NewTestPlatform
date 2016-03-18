@@ -1,9 +1,13 @@
 #include <QMap>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 #include "cvsdataadapter.h"
 #include "cvsdatatreenode.h"
 #include "detailviewsinterface.h"
-#include "structdefine.h"
+#include "qlog.h"
+
 
 CVSDataAdapter::CVSDataAdapter()
 {
@@ -130,8 +134,6 @@ bool CVSDataAdapter::convertData(const QVector<QString>& items)
         childItem->unit = cvsItem.unit;
         childItem->time = cvsItem.timeout;
 
-        if (i % 2 == 0)
-            childItem->uut1 = "error";
         childNode->setData(childItem, sizeof(TDetailViewItem));
         childNode->setParent(parentNode);
     }
@@ -139,4 +141,53 @@ bool CVSDataAdapter::convertData(const QVector<QString>& items)
     return true;
 }
 
+bool CVSDataAdapter::convertItemStart(const QString& itemJson, TItemStart* itemStart)
+{
+    QJsonParseError json_error;
+    QJsonDocument document = QJsonDocument::fromJson(itemJson.toUtf8(), &json_error);
+    if(json_error.error != QJsonParseError::NoError)
+    {
+        LogMsg(Error, "Parse ItemStart json failed. %s", itemJson.toStdString().c_str());
+        return false;
+    }
+
+    if (!document.isObject())
+    {
+        LogMsg(Error, "Parse ItemStar json format is error. %s", itemJson.toStdString().c_str());
+        return false;
+    }
+
+    QJsonObject obj = document.object();
+    if(obj.contains("group"))
+    {
+        itemStart->group = obj.take("group").toString();
+    }
+    if (obj.contains("tid"))
+    {
+        itemStart->tid = obj.take("tid").toString();
+    }
+    if (obj.contains("unit"))
+    {
+        itemStart->unit = obj.take("unit").toString();
+    }
+    if (obj.contains("low"))
+    {
+        itemStart->low = obj.take("low").toString();
+    }
+    if (obj.contains("high"))
+    {
+        itemStart->high = obj.take("high").toString();
+    }
+    if (obj.contains("pdca"))
+    {
+        itemStart->pdca = obj.take("pdca").toString();
+    }
+
+    return true;
+}
+
+bool CVSDataAdapter::convertItemEnd(const QString& itemJson, TItemEnd* itemStart)
+{
+    return true;
+}
 

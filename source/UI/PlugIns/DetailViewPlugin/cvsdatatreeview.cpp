@@ -10,6 +10,8 @@ CVSDataTreeView::CVSDataTreeView(QWidget *parent) : QTreeView(parent)
 {
     CVSDataTreeDelegate* delegate = new CVSDataTreeDelegate(this);
     this->setItemDelegate(delegate);
+
+     _adapter = new CVSDataAdapter();
 }
 
 CVSDataTreeView::~CVSDataTreeView()
@@ -20,7 +22,6 @@ CVSDataTreeView::~CVSDataTreeView()
 bool CVSDataTreeView::setData(const QVector<QString>& datas)
 {
     _datas = datas;
-    _adapter = new CVSDataAdapter();
     if (!_adapter->convertData(_datas))
         return false;
 
@@ -31,5 +32,20 @@ bool CVSDataTreeView::setData(const QVector<QString>& datas)
     this->expandAll();
 
     return true;
+}
+
+void CVSDataTreeView::procItemStart(int index, const QString& data)
+{
+    TItemStart itemStart;
+    if (!_adapter->convertItemStart(data, &itemStart))
+        return;
+}
+
+void CVSDataTreeView::procItemEnd(int index, const QString& data)
+{
+    TItemEnd itemEnd;
+    if (!_adapter->convertItemEnd(data, &itemEnd))
+        return;
+
 }
 

@@ -32,3 +32,12 @@ void DetailViewForm::listCsvData(const QVector<QString>& datas)
     _csvTreeView->setData(datas);
 }
 
+void DetailViewForm::procItemStart(int index, const QString& data)
+{
+    _csvTreeView->procItemStart(index, data);
+}
+
+void DetailViewForm::procItemEnd(int index, const QString& data)
+{
+    _csvTreeView->procItemEnd(index, data);
+}

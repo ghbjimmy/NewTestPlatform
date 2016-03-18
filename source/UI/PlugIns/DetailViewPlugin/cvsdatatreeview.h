@@ -16,6 +16,9 @@ public:
 
     bool setData(const QVector<QString>& datas);
 
+    void procItemStart(int index, const QString& data);
+    void procItemEnd(int index, const QString& data);
+
 private:
     QVector<QString> _datas;
     CVSDataAdapter* _adapter;
