@@ -21,6 +21,7 @@
 #include "sequencermgr.h"
 #include "zmqcfgparser.h"
 #include "testenginemgr.h"
+#include "statemachinemgr.h"
 
 #include <thread>
 #include <QJsonDocument>
@@ -115,6 +116,20 @@ bool MainWindow::init()
 
     connect(_engineMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onEngIsAlive(int,bool,bool)));
 
+    _smMgr = new StateMachineMgr();
+    if (!_smMgr->initByCfg(_zmqCfgParse))
+    {
+        LogMsg(Error, "init by  config file failed.");
+        return false;
+    }
+
+    if (!_smMgr->startAll())
+    {
+        LogMsg(Error, "start all enginer failed.");
+        return false;
+    }
+
+    connect(_smMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onSmIsAlive(int,bool,bool)));
     return true;
 }
 
@@ -451,6 +466,11 @@ void MainWindow::onEngIsAlive(int index, bool isAlive, bool isShow)
     }
 
     this->update();
+}
+
+void MainWindow::onSmIsAlive(int index, bool isAlive, bool isShow)
+{
+
 }
 
 void MainWindow::onItemStart(int index, const QString& itemJson)

@@ -19,6 +19,9 @@ public:
     void procItemStart(int index, const QString& data);
     void procItemEnd(int index, const QString& data);
 
+signals:
+    void itemFailed(int index, int slotNum, void* viewItem); //通知失败情况
+
 private:
     QVector<QString> _datas;
     CVSDataAdapter* _adapter;
