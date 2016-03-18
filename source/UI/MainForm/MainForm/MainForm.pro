@@ -35,7 +35,9 @@ SOURCES += main.cpp\
     ../../ZmqCtrl/testenginerpc.cpp \
     ../../ZmqCtrl/statemachinerpc.cpp \
     ../../ZmqCtrl/sequencermgr.cpp \
-    ../../ZmqCtrl/testenginemgr.cpp
+    ../../ZmqCtrl/testenginemgr.cpp \
+    ../../ZmqCtrl/statemachinemgr.cpp \
+    ../../ZmqCtrl/baserpc.cpp
 
 HEADERS  += mainwindow.h \
     ../../Util/libaryparser.h \
@@ -54,7 +56,9 @@ HEADERS  += mainwindow.h \
     ../../ZmqCtrl/testenginerpc.h \
     ../../ZmqCtrl/statemachinerpc.h \
     ../../ZmqCtrl/sequencermgr.h \
-    ../../ZmqCtrl/testenginemgr.h
+    ../../ZmqCtrl/testenginemgr.h \
+    ../../ZmqCtrl/statemachinemgr.h \
+    ../../ZmqCtrl/baserpc.h
 
 FORMS    +=
 

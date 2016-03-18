@@ -12,7 +12,11 @@ TestEngineMgr::TestEngineMgr()
 
 TestEngineMgr::~TestEngineMgr()
 {
-
+    for (int i = 0; i < ENG_NUM; ++i)
+    {
+        delete _engines[i];
+        _engines[i] = NULL;
+    }
 }
 
 bool TestEngineMgr::initByCfg(ZmqCfgParser* cfg)

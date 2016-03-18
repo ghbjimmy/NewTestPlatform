@@ -29,19 +29,15 @@ QHBoxLayout* createLayout(const QString& name, QProgressBar* bar)
 
 void ProgressForm::setupUI()
 {
+    QVBoxLayout* v1 = new QVBoxLayout();
+    v1->addSpacerItem(new QSpacerItem(10,10, QSizePolicy::Minimum, QSizePolicy::Minimum));
     for (int i = 0; i < SEQ_NUM; ++i)
     {
         _bar[i] = new QProgressBar();
+        QString name = "UUT" + QString::number(i + 1) + ":";
+        v1->addLayout(createLayout(name, _bar[i]));
     }
 
-    QVBoxLayout* v1 = new QVBoxLayout();
-    v1->addSpacerItem(new QSpacerItem(10,10, QSizePolicy::Minimum, QSizePolicy::Minimum));
-    v1->addLayout(createLayout("UUT1:", _bar[0]));
-    v1->addLayout(createLayout("UUT2:", _bar[1]));
-    v1->addLayout(createLayout("UUT3:", _bar[2]));
-    v1->addLayout(createLayout("UUT4:", _bar[3]));
-    v1->addLayout(createLayout("UUT5:", _bar[4]));
-    v1->addLayout(createLayout("UUT6:", _bar[5]));
     v1->addStretch(1);
     v1->setSpacing(25);
 

@@ -10,7 +10,11 @@ SequencerMgr::SequencerMgr() : QObject()
 
 SequencerMgr::~SequencerMgr()
 {
-
+    for (int i = 0; i < SEQ_NUM; ++i)
+    {
+        delete _sequencers[i];
+        _sequencers[i] = NULL;
+    }
 }
 
 bool SequencerMgr::initByCfg(ZmqCfgParser* cfg)

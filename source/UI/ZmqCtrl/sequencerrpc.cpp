@@ -3,9 +3,31 @@
 #include "qlog.h"
 #include "command.h"
 #include "const.h"
+#include "structdefine.h"
 
 #include <thread>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
+//获取消息的类型 0:心跳； 1: item_start; 2: item_end; -1:unknown
+static int getMsgType(const QString& msg)
+{
+    if (msg.contains("FCT_HEARTBEAT"))
+    {
+        return 0;
+    }
+    else if (msg.contains("group") && msg.contains("tid"))
+    {
+        return 1;
+    }
+    else if (msg.contains("tid") && msg.contains("value"))
+    {
+        return 2;
+    }
+
+    return -1;
+}
 
 static void sub_recvData(void* obj)
 {
@@ -29,13 +51,34 @@ static void sub_recvData(void* obj)
             Buffer rcvBuff;
             int cnt = subSocket->recvData(rcvBuff);
             QString recvMsg = QString::fromLocal8Bit(rcvBuff.getBuf(), rcvBuff.getLen());
-            if (recvMsg.contains("FCT_HEARTBEAT"))
+            int msgType = getMsgType(recvMsg);
+            switch (msgType)
             {
-                seqRpc->setAlive(true);
-                timeoutNum = 0;
+                case 0:
+                {
+                    seqRpc->setAlive(true);
+                    timeoutNum = 0;
+                    break;
+                }
+                case 1:
+                {
+                    seqRpc->procItemStart(recvMsg);
+                    break;
+                }
+                case 2:
+                {
+                    seqRpc->procItemEnd(recvMsg);
+                    break;
+                }
+                default:
+                {
+                    LogMsg(Error, "recv unknwon msg type : %s", recvMsg.toStdString().c_str());
+                    break;
+                }
             }
         }
 
+        //控制心跳指示灯闪
         sendHeartBeatNum++;
         if (sendHeartBeatNum == 4)
         {
@@ -72,6 +115,12 @@ SequencerRpc::~SequencerRpc()
     {
         delete _subSocket;
         _subSocket = NULL;
+    }
+
+    if (_subThread != NULL)
+    {
+        delete _subThread;
+        _subThread = NULL;
     }
 }
 
@@ -211,4 +260,55 @@ void SequencerRpc::aliveNoity(bool isShow)
 {
     if (_aliveFlag != 0)
         emit isAliveSignal(_index, isAlive(), isShow);
+}
+
+bool SequencerRpc::procItemStart(const QString& msg)
+{
+    QJsonParseError json_error;
+    QJsonDocument document = QJsonDocument::fromJson(msg.toUtf8(), &json_error);
+    if(json_error.error != QJsonParseError::NoError)
+    {
+        LogMsg(Error, "Parse ItemStart json failed. %s", msg.toStdString().c_str());
+        return false;
+    }
+
+    if (!document.isObject())
+    {
+        LogMsg(Error, "Parse ItemStar json format is error. %s", msg.toStdString().c_str());
+        return false;
+    }
+
+    TItemStart itemStart;
+    QJsonObject obj = document.object();
+    if(obj.contains("group"))
+    {
+        itemStart.group = obj.take("group").toString();
+    }
+    if (obj.contains("tid"))
+    {
+        itemStart.tid = obj.take("tid").toString();
+    }
+    if (obj.contains("unit"))
+    {
+        itemStart.unit = obj.take("unit").toString();
+    }
+    if (obj.contains("low"))
+    {
+        itemStart.low = obj.take("low").toString();
+    }
+    if (obj.contains("high"))
+    {
+        itemStart.high = obj.take("high").toString();
+    }
+    if (obj.contains("pdca"))
+    {
+        itemStart.pdca = obj.take("pdca").toString();
+    }
+
+    return true;
+}
+
+bool SequencerRpc::procItemEnd(const QString& msg)
+{
+    return true;
 }

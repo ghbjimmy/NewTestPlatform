@@ -23,6 +23,8 @@ public:
     bool start();
     void stop();
     inline bool isStop() const {return _isStop;}
+    inline ZmqSocket* getSubSocket() const {return _subSocket;}
+
     //加载csv
     bool loadProfile(const QString& csvFilePath);
 
@@ -32,12 +34,19 @@ public:
     //由定时线程设置是否活着
     void setAlive(bool flag);
     bool isAlive();
+
     //获取进度数据
     bool getProcData();
 
+    //心跳通知
     void aliveNoity(bool isShow);
 
-    inline ZmqSocket* getSubSocket() const {return _subSocket;}
+    //处理item_start
+    bool procItemStart(const QString& msg);
+
+    //处理item_end
+    bool procItemEnd(const QString& msg);
+
 
 signals:
     void isAliveSignal(int id, bool isAlive, bool isShow);
@@ -48,10 +57,10 @@ private:
 
     ZmqSocket* _subSocket;
     ZmqSocket* _reqSocket;
-
+    bool _isStop;
     std::thread* _subThread;
 
-    bool _isStop;
+
 };
 
 #endif // SEQUENCERRPC_H

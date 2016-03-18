@@ -8,6 +8,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include "structdefine.h"
 
 
 void testDecode()
@@ -23,6 +24,12 @@ void testDecode()
 
 int main(int argc, char *argv[])
 {
+    TItemStart itemStart;
+    int ss1 = sizeof(TItemStart);
+
+    itemStart.group = "1234";
+    itemStart.tid = "abdef";
+    int ss2 = sizeof(TItemStart);
     //testDecode();
    // return 1;
     const char* sbuf = "{\"jsonrpc\": \"1.0\", \"id\": \"{3ecdd30a-8040-4084-b582-25dbac813e3a}\", \"result\": \"/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv has been loaded\"}";
