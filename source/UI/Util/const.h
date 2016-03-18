@@ -3,8 +3,14 @@
 
 #include <QString>
 
-const QString& InteractionViewPluginName = "InteractionViewPlugin";
-const QString& DetailViewPluginName = "DetailViewPlugin";
-const QString& ScopeViewPluginName = "ScopeViewPlugin";
+static const QString& InteractionViewPluginName = "InteractionViewPlugin";
+static const QString& DetailViewPluginName = "DetailViewPlugin";
+static const QString& ScopeViewPluginName = "ScopeViewPlugin";
+
+static const int SEQ_NUM = 1;
+static const int ENG_NUM = 1;
+static const int SM_NUM = 1;
+
+static const int& TIME_OUT = 3000;
 
 #endif

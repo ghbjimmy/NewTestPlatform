@@ -1,5 +1,5 @@
 #include <QSize>
-
+#include <QColor>
 #include "cvsdatatreemodel.h"
 #include "cvsdatatreenode.h"
 
@@ -30,9 +30,21 @@ QVariant CVSDataTreeModel::data(const QModelIndex &index, int role) const
         }
     }
 
+    if (role == Qt::ForegroundRole)
+    {
+        if (column == 6)
+        {
+            CVSDataTreeNode* node = static_cast<CVSDataTreeNode*>(index.internalPointer());
+            if (node->getUUT1() == "error")
+                return QColor(Qt::red);
+        }
+        //else
+        return QColor(Qt::black);
+    }
+
     if (role == Qt::SizeHintRole)
     {//这里可以指定tree每行的高度
-        return QSize(60, 18);
+        return QSize(60, 20);
     }
     if (role == Qt::DisplayRole || role == Qt::EditRole)
     {

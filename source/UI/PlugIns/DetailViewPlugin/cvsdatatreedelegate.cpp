@@ -22,10 +22,11 @@ void CVSDataTreeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     if (node == NULL)
         return;
     QStyleOptionViewItem opt(option);
-    if (node->getIndex().toInt() % 2 == 0)
+    if (node->getUUT1() == "error")
     {
+        int i = 0;
         {
-           // painter->fillRect(opt.rect, Qt::red);
+            //painter->drawText(opt.rect, Qt::red);
         }
 
     }

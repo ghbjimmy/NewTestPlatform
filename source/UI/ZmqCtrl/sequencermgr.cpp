@@ -3,7 +3,7 @@
 #include "sequencerrpc.h"
 #include "qlog.h"
 
-SequencerMgr::SequencerMgr()
+SequencerMgr::SequencerMgr() : QObject()
 {
 
 }
@@ -27,6 +27,8 @@ bool SequencerMgr::initByCfg(ZmqCfgParser* cfg)
             LogMsg(Error, "SequencerMgr::initByCfg failed.");
             return false;
         }
+
+        connect(_sequencers[i], SIGNAL(isAliveSignal(int,bool,bool)), this, SIGNAL(sequenceIsAliveSignal(int,bool,bool)));
     }
 
     return true;
@@ -70,4 +72,9 @@ bool SequencerMgr::getContent(QVector<QString>& items)
 {
     //目前只需从第一个那里获取结果就行
     return _sequencers[0]->getContent(items);
+}
+
+bool SequencerMgr::getSequenceIsAlive(int index)
+{
+    return _sequencers[index]->isAlive();
 }

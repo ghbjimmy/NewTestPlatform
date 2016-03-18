@@ -3,12 +3,21 @@
 
 #include <QMainWindow>
 #include <QVector>
+#include "const.h"
 
 class PluginSubjecter;
 class LibaryParser;
 class IMessage;
 class SequencerMgr;
 class ZmqCfgParser;
+class TestEngineMgr;
+
+class QLabel;
+
+namespace std
+{
+    class thread;
+}
 
 class MainWindow : public QMainWindow
 {
@@ -25,25 +34,34 @@ public:
 
     void dispatchMessage(const IMessage* msg);
 
-    bool testZmq(const char* address);
-
 private:
     void setupUI();
     QWidget* createDetailViewWgt();
     QWidget* createScopeViewWgt();
     QWidget* createInteractionViewWgt();
 
+    QWidget* createStatusWgt();
+
 private slots:
     void onMenuAction();
 
+    void onSeqIsAlive(int index, bool isAlive, bool isShow);
+    void onEngIsAlive(int index, bool isAlive, bool isShow);
+
 private:
     static MainWindow* _instance;
+
     QWidget* mTitleWgt;
     PluginSubjecter* _pluginSubjecter;
     QVector<LibaryParser*> _libParsers;
 
-    SequencerMgr* _sequencerMgr;
     ZmqCfgParser* _zmqCfgParse;
+
+    SequencerMgr* _sequencerMgr;    
+    QLabel* _seqLbl[6];
+
+    TestEngineMgr* _engineMgr;
+    QLabel* _engineLbl[6];
 };
 
 #endif // MAINWINDOW_H

@@ -29,23 +29,34 @@ QHBoxLayout* createLayout(const QString& name, QProgressBar* bar)
 
 void ProgressForm::setupUI()
 {
-    _bar1 = new QProgressBar();
-    _bar2 = new QProgressBar();
-    _bar3 = new QProgressBar();
-    _bar4 = new QProgressBar();
-    _bar5 = new QProgressBar();
-    _bar6 = new QProgressBar();
+    for (int i = 0; i < SEQ_NUM; ++i)
+    {
+        _bar[i] = new QProgressBar();
+    }
 
     QVBoxLayout* v1 = new QVBoxLayout();
     v1->addSpacerItem(new QSpacerItem(10,10, QSizePolicy::Minimum, QSizePolicy::Minimum));
-    v1->addLayout(createLayout("UUT1:", _bar1));
-    v1->addLayout(createLayout("UUT2:", _bar2));
-    v1->addLayout(createLayout("UUT3:", _bar3));
-    v1->addLayout(createLayout("UUT4:", _bar4));
-    v1->addLayout(createLayout("UUT5:", _bar5));
-    v1->addLayout(createLayout("UUT6:", _bar6));
+    v1->addLayout(createLayout("UUT1:", _bar[0]));
+    v1->addLayout(createLayout("UUT2:", _bar[1]));
+    v1->addLayout(createLayout("UUT3:", _bar[2]));
+    v1->addLayout(createLayout("UUT4:", _bar[3]));
+    v1->addLayout(createLayout("UUT5:", _bar[4]));
+    v1->addLayout(createLayout("UUT6:", _bar[5]));
     v1->addStretch(1);
     v1->setSpacing(25);
 
     this->setLayout(v1);
+}
+
+void ProgressForm::setBarMaxSize(int size)
+{
+    for (int i = 0; i < SEQ_NUM; ++i)
+    {
+        _bar[i]->setRange(0, size);
+    }
+}
+
+void ProgressForm::setBarValue(int index, int value)
+{
+
 }

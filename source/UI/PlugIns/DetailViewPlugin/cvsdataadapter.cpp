@@ -130,6 +130,8 @@ bool CVSDataAdapter::convertData(const QVector<QString>& items)
         childItem->unit = cvsItem.unit;
         childItem->time = cvsItem.timeout;
 
+        if (i % 2 == 0)
+            childItem->uut1 = "error";
         childNode->setData(childItem, sizeof(TDetailViewItem));
         childNode->setParent(parentNode);
     }

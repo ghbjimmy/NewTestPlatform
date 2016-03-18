@@ -2,42 +2,62 @@
 #include "zmqsocket.h"
 #include "qlog.h"
 #include "command.h"
+#include "const.h"
 
 #include <thread>
 
-const int& TIME_OUT = 3000;
 
-static void sub_recvFun(void* obj)
+static void sub_recvData(void* obj)
 {
     SequencerRpc* seqRpc = (SequencerRpc*)obj;
-    int index = 0;
-    while(1)
+    int timeoutNum = 0;
+    int sendHeartBeatNum = 0;
+    while(!seqRpc->isStop())
     {
         ZmqSocket* subSocket = seqRpc->getSubSocket();
-        if (subSocket->select(ZMQ_POLLIN, 5000) == 0)
+        if (subSocket->select(ZMQ_POLLIN, 500) == 0)
         {
-            LogMsg(Error, "sub socket select over time.");
-            index++;
-            if (index >= 2)
+            timeoutNum++;
+            if (timeoutNum >= 16)
             {
-
+                seqRpc->setAlive(false);
+                timeoutNum = 0;
             }
-            continue;
+        }
+        else
+        {
+            Buffer rcvBuff;
+            int cnt = subSocket->recvData(rcvBuff);
+            QString recvMsg = QString::fromLocal8Bit(rcvBuff.getBuf(), rcvBuff.getLen());
+            if (recvMsg.contains("FCT_HEARTBEAT"))
+            {
+                seqRpc->setAlive(true);
+                timeoutNum = 0;
+            }
         }
 
-        index = 0;
-        Buffer rcvBuff;
-        int ret = subSocket->recvData(rcvBuff);
-        int j = 0;
+        sendHeartBeatNum++;
+        if (sendHeartBeatNum == 4)
+        {
+            seqRpc->aliveNoity(true);
+        }
+        else if (sendHeartBeatNum == 5)
+        {
+            seqRpc->aliveNoity(false);
+            sendHeartBeatNum = 0;
+        }
     }
 }
 
-SequencerRpc::SequencerRpc(int index)
+
+SequencerRpc::SequencerRpc(int index) : QObject()
 {
     _index = index;
     _subSocket = NULL;
     _reqSocket = NULL;
     _subThread = NULL;
+    _aliveFlag = 0;
+    _isStop = false;
 }
 
 SequencerRpc::~SequencerRpc()
@@ -64,7 +84,7 @@ bool SequencerRpc::init(const QString&  pubIp, int pubPort, const QString&  reqI
         return false;
     }
 
-    _subSocket->setSockOpt(ZMQ_SUBSCRIBE, "0", 0);
+    _subSocket->setSockOpt(ZMQ_SUBSCRIBE, "", 0);
 
     _reqSocket = new ZmqSocket(ZMQ_REQ);
     if (!_reqSocket->connect(reqIp.toStdString().c_str(), reqPort))
@@ -81,13 +101,14 @@ bool SequencerRpc::init(const QString&  pubIp, int pubPort, const QString&  reqI
 
 bool SequencerRpc::start()
 {
-    _subThread = new std::thread(sub_recvFun, this);
+    _subThread = new std::thread(sub_recvData, this);
     return true;
 }
 
 void SequencerRpc::stop()
 {
-
+    _isStop = true;
+    _subThread->join();
 }
 
 bool SequencerRpc::loadProfile(const QString& csvFilePath)
@@ -173,4 +194,21 @@ bool SequencerRpc::getContent(QVector<QString>& items)
     rsp = NULL;
 
     return true;
+}
+
+void SequencerRpc::setAlive(bool flag)
+{
+    _aliveFlag = (flag ? 1 : 2);
+}
+
+bool SequencerRpc::isAlive()
+{
+    return _aliveFlag == 1 ? true : false;
+}
+
+
+void SequencerRpc::aliveNoity(bool isShow)
+{
+    if (_aliveFlag != 0)
+        emit isAliveSignal(_index, isAlive(), isShow);
 }

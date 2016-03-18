@@ -2,14 +2,17 @@
 #define SEQUENCERMGR_H
 
 #include <QVector>
+#include <QObject>
+#include "const.h"
 
 class SequencerRpc;
 class ZmqCfgParser;
 
-const int SEQ_NUM = 1;
 //sequencer 管理器
-class SequencerMgr
+class SequencerMgr : public QObject
 {
+    Q_OBJECT
+
 public:
     SequencerMgr();
     ~SequencerMgr();
@@ -23,6 +26,11 @@ public:
 
     //获取csv内存
     bool getContent(QVector<QString>& items);
+
+    bool getSequenceIsAlive(int index);
+
+signals:
+    void sequenceIsAliveSignal(int id, bool isAlive, bool isShow);
 
 private:
     SequencerRpc* _sequencers[SEQ_NUM];

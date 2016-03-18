@@ -3,7 +3,7 @@
 
 #include <QScrollArea>
 #include <QProgressBar>
-
+#include "const.h"
 
 class ProgressForm : public QScrollArea
 {
@@ -13,16 +13,15 @@ public:
     explicit ProgressForm(QWidget *parent = 0);
     ~ProgressForm();
 
+    void setBarMaxSize(int size);
+
+    void setBarValue(int index, int value);
+
 private:
     void setupUI();
 
 private:
-    QProgressBar* _bar1;
-    QProgressBar* _bar2;
-    QProgressBar* _bar3;
-    QProgressBar* _bar4;
-    QProgressBar* _bar5;
-    QProgressBar* _bar6;
+    QProgressBar* _bar[SEQ_NUM];
 };
 
 #endif // DETAILVIEWFORM_H

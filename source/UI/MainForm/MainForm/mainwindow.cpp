@@ -7,6 +7,7 @@
 #include <QLibrary>
 #include <QMenuBar>
 #include <QFileDialog>
+#include <QApplication>
 
 #include "libaryparser.h"
 #include "pluginSubjecter.h"
@@ -19,8 +20,9 @@
 #include "command.h"
 #include "sequencermgr.h"
 #include "zmqcfgparser.h"
+#include "testenginemgr.h"
 
-
+#include <thread>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -93,6 +95,22 @@ bool MainWindow::init()
         LogMsg(Error, "start all sequencer failed.");
         return false;
     }
+
+    connect(_sequencerMgr, SIGNAL(sequenceIsAliveSignal(int,bool,bool)), this, SLOT(onSeqIsAlive(int,bool,bool)));
+    _engineMgr = new TestEngineMgr();
+    if (!_engineMgr->initByCfg(_zmqCfgParse))
+    {
+        LogMsg(Error, "init by  config file failed.");
+        return false;
+    }
+
+    if (!_engineMgr->startAll())
+    {
+        LogMsg(Error, "start all enginer failed.");
+        return false;
+    }
+
+    connect(_engineMgr, SIGNAL(engineIsAliveSignal(int,bool,bool)), this, SLOT(onEngIsAlive(int,bool,bool)));
 
     return true;
 }
@@ -207,9 +225,7 @@ QWidget* MainWindow::createInteractionViewWgt()
 QLabel* createNumLabel(int num)
 {
     QLabel* numlbl = new QLabel(QString::number(num));
-    QPalette palette;
-    palette.setColor(QPalette::Background, QColor(0,255,0));
-    numlbl->setPalette(palette);
+    UIUtil::setBgColor(numlbl, QColor(0,255,0));
 
     numlbl->setAlignment(Qt::AlignCenter);
     numlbl->setFixedSize(16, 16);
@@ -218,7 +234,7 @@ QLabel* createNumLabel(int num)
     return numlbl;
 }
 
-QWidget* createStatusWgt()
+QWidget* MainWindow::createStatusWgt()
 {
     QWidget* statusWgt = new QWidget();
     QHBoxLayout* h1 = new QHBoxLayout();
@@ -227,7 +243,8 @@ QWidget* createStatusWgt()
 
     for (int i = 0; i < 6; ++i)
     {
-        h1->addWidget(createNumLabel(i));
+        _seqLbl[i] = createNumLabel(i);
+        h1->addWidget(_seqLbl[i]);
     }
 
     h1->addStretch(1);
@@ -239,7 +256,8 @@ QWidget* createStatusWgt()
     h2->addWidget(engineLbl);
     for (int i = 0; i < 6; ++i)
     {
-        h2->addWidget(createNumLabel(i));
+        _engineLbl[i] = createNumLabel(i);
+        h2->addWidget(_engineLbl[i]);
     }
 
     h2->addStretch(1);
@@ -364,135 +382,69 @@ void MainWindow::dispatchMessage(const IMessage* msg)
 }
 
 
-bool MainWindow::testZmq(const char* address)
+void MainWindow::onSeqIsAlive(int index, bool isAlive, bool isShow)
 {
-    void* m_context = zmq_ctx_new();
-    if (!m_context)
+    if (isAlive)
     {
-        LogMsg(Error, "create context errro.");
-        return false;
-    }
-    void* m_socket = zmq_socket(m_context, ZMQ_REQ);
-    if (!m_socket)
-    {
-       LogMsg(Error, "failed to create requester socket! with error : %s", zmq_strerror(zmq_errno()));
-       return false;
-    }
+        if (!isShow)
+        {
+            _seqLbl[index]->setText(QString::number(index));
+            UIUtil::setBgColor(_seqLbl[index], Qt::green);
 
-    int timeout = 5000;
-   // int ret = -1;
-    int ret = zmq_setsockopt(m_socket, ZMQ_RCVTIMEO, &timeout, sizeof(timeout));
+        }
+        else
+        {
+            _seqLbl[index]->setText("");
+            UIUtil::setBgColor(_seqLbl[index], Qt::gray);
+        }
 
-    ret = zmq_connect(m_socket, address);
-    if (ret < 0)
-    {
-        LogMsg(Error, "connect failed. address : %s, error : %s", address, zmq_strerror(zmq_errno()));
-        return false;
-    }
-
-    //const char* json = "{\"function\": \"load\", \"params\": [\"/Users/mac/Desktop/test_plan__0121_14h.csv\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
-
-    //const char* json = "{\"function\": \"load\", \"params\": [\"/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
-
-    //const char* json = "{\"function\": \"list\", \"params\": [\"10\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
-
-
-    LoadCsvCmdReq req;
-    req.setParam("/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv");
-    Buffer buf;
-    bool ff = req.encode(buf);
-
-    std::string str = std::string(buf.getBuf(),buf.getLen());
-    const char* json = str.c_str();
-
-
-    /*QString strJson = QString::fromStdString(json);
-    QJsonParseError json_error;
-    QJsonDocument doucment = QJsonDocument::fromJson(strJson.toLocal8Bit(), &json_error);
-    if(json_error.error != QJsonParseError::NoError)
-    {
-        LogMsg(Error, "Parse json failed.");
-        return false;
-    }
-
-    if (!doucment.isObject())
-    {
-        LogMsg(Error, "json format is error.");
-        return false;
-    }
-
-    QJsonObject obj = doucment.object();
-    if(obj.contains("function"))
-    {
-        QString value = obj.take("function").toString();
-        int i = 0;
-    }
-
-    if(obj.contains("params"))
-    {
-        QJsonArray value = obj.take("params").toArray();
-        QString val = value.at(0).toString();
-        int i = 0;
-    }*/
-
-    int length = strlen(json);
-    ret = zmq_send(m_socket, json, length, 0);
-    if (ret<0)
-    {
-        LogMsg(Error, "send data error : %s", zmq_strerror(zmq_errno()));
-        return false;
-    }
-
-    char buffer[1024];
-    long len;
-
-    zmq_msg_t msg;
-    zmq_msg_init(&msg);
-    ret = zmq_msg_recv(&msg, m_socket, 0);
-    if (ret >= 0 )
-    {
-        void * pbuffer = zmq_msg_data(&msg);
-        size_t len = zmq_msg_size(&msg);
-        memcpy(buffer, pbuffer, len);
+        LogMsg(Debug, "sequence %d is alvie : %d", index, isShow);
     }
     else
     {
-        LogMsg(Error, "receive failed: %s",zmq_strerror(zmq_errno()));
-        return false;
+        if (_seqLbl[index]->palette().background().color() != Qt::red)
+        {
+            _seqLbl[index]->setText(" ");
+            UIUtil::setBgColor(_seqLbl[index], Qt::red);
+
+            this->update();
+            _seqLbl[index]->setText(QString::number(index));
+        }
     }
 
-    zmq_msg_close(&msg);
+    this->update();
+   // QApplication::processEvents();
+}
 
-    const char* json1 = "{\"function\": \"list\", \"params\": [\"all\"], \"jsonrpc\": \"1.0\", \"id\": \"1c3356a6ea4611e59cffacbc32d422bf\"}";
-
-    int length1 = strlen(json1);
-    ret = zmq_send(m_socket, json1, length1, 0);
-    if (ret<0)
+void MainWindow::onEngIsAlive(int index, bool isAlive, bool isShow)
+{
+    if (isAlive)
     {
-        LogMsg(Error, "send data error : %s", zmq_strerror(zmq_errno()));
-        return false;
-    }
+        if (!isShow)
+        {
+            _engineLbl[index]->setText(QString::number(index));
+            UIUtil::setBgColor(_engineLbl[index], Qt::green);
 
-    char buffer1[10240];
-    long len1;
+        }
+        else
+        {
+            _engineLbl[index]->setText("");
+            UIUtil::setBgColor(_seqLbl[index], Qt::gray);
+        }
 
-    zmq_msg_t msg1;
-    zmq_msg_init(&msg1);
-    ret = zmq_msg_recv(&msg1, m_socket, 0);
-    if (ret >= 0 )
-    {
-        void * pbuffer = zmq_msg_data(&msg1);
-        size_t len1 = zmq_msg_size(&msg1);
-        memcpy(buffer1, pbuffer, len1);
+        LogMsg(Debug, "engine %d is alvie : %d", index, isShow);
     }
     else
     {
-        LogMsg(Error, "receive failed: %s",zmq_strerror(zmq_errno()));
-        return false;
+        if (_engineLbl[index]->palette().background().color() != Qt::red)
+        {
+            _engineLbl[index]->setText(" ");
+            UIUtil::setBgColor(_engineLbl[index], Qt::red);
+
+            this->update();
+            _engineLbl[index]->setText(QString::number(index));
+        }
     }
 
-    zmq_msg_close(&msg1);
-    LogMsg(Debug, "recv: %s", buffer1);
-
-    return ret;
+    this->update();
 }
