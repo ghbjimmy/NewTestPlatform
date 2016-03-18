@@ -25,12 +25,12 @@ public:
     QVector<int> loadProfile(const QString& csvFilePath);
 
     //获取csv内存
-    bool getContent(QVector<QString>& items);
+    bool getCsvContent(QVector<QString>& items);
 
     bool getSequenceIsAlive(int index);
 
 signals:
-    void sequenceIsAliveSignal(int id, bool isAlive, bool isShow);
+    void isAliveSignal(int id, bool isAlive, bool isShow);
 
 private:
     SequencerRpc* _sequencers[SEQ_NUM];

@@ -1,28 +1,16 @@
 #ifndef STATEMACHINERPC_H
 #define STATEMACHINERPC_H
 
-#include <QObject>
-#include <QString>
-class ZmqSocket;
+#include "baserpc.h"
 
-class StateMachineRpc : public QObject
+class StateMachineRpc : public BaseRpc
 {
-    Q_OBJECT
 public:
     StateMachineRpc(int index);
     ~StateMachineRpc();
 
-    bool init(const QString& pubIp, int pubPort, const QString& reqIp, int reqPort);
-   // bool start();
-   // void stop();
+    bool procSubRecvMsg(const QString& msg);
 
-  //  inline ZmqSocket* getSubSocket() const {return _subSocket;}
-
-signals:
-    void isAliveSignal(int id, bool isAlive, bool isShow);
-
-private:
-    ZmqSocket* _subSocket;
 };
 
 #endif // STATEMACHINERPC_H

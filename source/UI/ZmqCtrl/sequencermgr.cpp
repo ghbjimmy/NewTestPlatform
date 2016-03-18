@@ -32,7 +32,7 @@ bool SequencerMgr::initByCfg(ZmqCfgParser* cfg)
             return false;
         }
 
-        connect(_sequencers[i], SIGNAL(isAliveSignal(int,bool,bool)), this, SIGNAL(sequenceIsAliveSignal(int,bool,bool)));
+        connect(_sequencers[i], SIGNAL(isAliveSignal(int,bool,bool)), this, SIGNAL(isAliveSignal(int,bool,bool)));
     }
 
     return true;
@@ -72,7 +72,7 @@ QVector<int> SequencerMgr::loadProfile(const QString& csvFilePath)
 }
 
 
-bool SequencerMgr::getContent(QVector<QString>& items)
+bool SequencerMgr::getCsvContent(QVector<QString>& items)
 {
     //目前只需从第一个那里获取结果就行
     return _sequencers[0]->getContent(items);

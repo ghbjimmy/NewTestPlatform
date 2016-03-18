@@ -26,13 +26,13 @@ bool TestEngineMgr::initByCfg(ZmqCfgParser* cfg)
     for (int i = 0; i < ENG_NUM; ++i)
     {
         _engines[i] = new TestEngineRpc(i);
-        if (!_engines[i]->init(cfg->getTestEngineIp(), basePubPort + i))
+        if (!_engines[i]->init(cfg->getTestEngineIp(), basePubPort + i, "", -1))
         {
             LogMsg(Error, "TestEngineMgr::initByCfg failed.");
             return false;
         }
 
-        connect(_engines[i], SIGNAL(isAliveSignal(int,bool,bool)), this, SIGNAL(engineIsAliveSignal(int,bool,bool)));
+        connect(_engines[i], SIGNAL(isAliveSignal(int,bool,bool)), this, SIGNAL(isAliveSignal(int,bool,bool)));
     }
 
     return true;

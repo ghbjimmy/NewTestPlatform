@@ -96,7 +96,7 @@ bool MainWindow::init()
         return false;
     }
 
-    connect(_sequencerMgr, SIGNAL(sequenceIsAliveSignal(int,bool,bool)), this, SLOT(onSeqIsAlive(int,bool,bool)));
+    connect(_sequencerMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onSeqIsAlive(int,bool,bool)));
     _engineMgr = new TestEngineMgr();
     if (!_engineMgr->initByCfg(_zmqCfgParse))
     {
@@ -110,7 +110,7 @@ bool MainWindow::init()
         return false;
     }
 
-    connect(_engineMgr, SIGNAL(engineIsAliveSignal(int,bool,bool)), this, SLOT(onEngIsAlive(int,bool,bool)));
+    connect(_engineMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onEngIsAlive(int,bool,bool)));
 
     return true;
 }
@@ -356,7 +356,7 @@ void MainWindow::onMenuAction()
 
         //list 命令
         ListCsvFileMsg* listCsvMsg = new ListCsvFileMsg();
-        if (!_sequencerMgr->getContent(listCsvMsg->dataItems))
+        if (!_sequencerMgr->getCsvContent(listCsvMsg->dataItems))
         {
             LogMsg(Error, "get content failed. %d");
             delete listCsvMsg;

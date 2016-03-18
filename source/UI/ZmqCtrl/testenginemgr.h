@@ -20,7 +20,7 @@ public:
     void stopAll();
 
 signals:
-    void engineIsAliveSignal(int id, bool isAlive, bool isShow);
+    void isAliveSignal(int id, bool isAlive, bool isShow);
 
 private:
     TestEngineRpc* _engines[ENG_NUM];
