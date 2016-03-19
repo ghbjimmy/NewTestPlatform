@@ -70,7 +70,7 @@ void UutButton::setChecked(bool flag)
     _box->setChecked(flag);
 }
 
-/*void UutButton::onStateChanged(int state)
+void UutButton::showColor(bool flag)
 {
-    emit signal_check(state);
-}*/
+    UIUtil::setBgColor(this, flag ? Qt::red : QColor(0,128,255));
+}

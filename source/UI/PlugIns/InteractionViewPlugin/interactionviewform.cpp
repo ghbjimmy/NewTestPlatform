@@ -162,22 +162,25 @@ QWidget* createtResultWgt()
     return wgt;
 }
 
-QHBoxLayout* createCtrlWgt()
+QHBoxLayout* InteractionViewForm::createCtrlWgt()
 {
-    QPushButton* startBtn = new QPushButton();
-    startBtn->setText("Start(F5)");
+    _startBtn = new QPushButton();
+    _startBtn->setText("Start(F5)");
+    connect(_startBtn, SIGNAL(clicked()), this, SLOT(onStart()));
 
-    QPushButton* stopBtn = new QPushButton();
-    stopBtn->setText("Stop(F6)");
+    _stopBtn = new QPushButton();
+    _stopBtn->setText("Stop(F6)");
+    _stopBtn->setEnabled(false);
+    connect(_stopBtn, SIGNAL(clicked()), this, SLOT(onStop()));
 
     QCheckBox* dbgBox = new QCheckBox();
     dbgBox->setEnabled(false);
     dbgBox->setText("Debug(COF)");
 
     QHBoxLayout* h1 = new QHBoxLayout();
-    h1->addWidget(startBtn);
+    h1->addWidget(_startBtn);
     h1->addStretch(1);
-    h1->addWidget(stopBtn);
+    h1->addWidget(_stopBtn);
     h1->addWidget(dbgBox);
     h1->setSpacing(10);
     h1->setContentsMargins(QMargins(0,0,0,0));
@@ -201,30 +204,24 @@ QHBoxLayout* createUserWgt()
     return h1;
 }
 
+void InteractionViewForm::connectBtnSignal(UutButton* btn, bool isConnect)
+{
+    if (isConnect)
+        connect(btn, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+    else
+        disconnect(btn, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+}
+
 void InteractionViewForm::setupUI()
 {
-    QHBoxLayout* h1 = createBtnLayout(_btn1, 1, "UUT1\nReady");
-    QHBoxLayout* h2 = createBtnLayout(_btn2, 2, "UUT2\nReady");
-    QHBoxLayout* h3 = createBtnLayout(_btn3, 3, "UUT3\nReady");
-    QHBoxLayout* h4 = createBtnLayout(_btn4, 4, "UUT4\nReady");
-    QHBoxLayout* h5 = createBtnLayout(_btn5, 5, "UUT5\nReady");
-    QHBoxLayout* h6 = createBtnLayout(_btn6, 6, "UUT6\nReady");
-
-    connect(_btn1, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-    connect(_btn2, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-    connect(_btn3, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-    connect(_btn4, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-    connect(_btn5, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-    connect(_btn6, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-
     QVBoxLayout* v2 = new QVBoxLayout();
+    for (int i = 0; i < 6; ++i)
+    {
+        QString name = "UUT" + QString::number(i + 1) + "\nReady";
+        v2->addLayout(createBtnLayout(_btn[i], i, name));
+        connectBtnSignal(_btn[i], true);
+    }
 
-    v2->addLayout(h1);
-    v2->addLayout(h2);
-    v2->addLayout(h3);
-    v2->addLayout(h4);
-    v2->addLayout(h5);
-    v2->addLayout(h6);
     v2->setSpacing(0);
 
     QVBoxLayout* v1 = new QVBoxLayout();
@@ -255,7 +252,7 @@ void InteractionViewForm::setupUI()
     v1->addLayout(createCtrlWgt());
     v1->addLayout(createUserWgt());
     v1->addSpacerItem(new QSpacerItem(10, 20));
-   // v1->addStretch(1);
+    // v1->addStretch(1);
 
     v1->setContentsMargins(QMargins(0,10,0,0));
     v1->setSpacing(6);
@@ -272,12 +269,10 @@ void InteractionViewForm::setupUI()
 void InteractionViewForm::onBtnCheckBoxStatedChanged(int state)
 {
     QSet<int> set;
-    set.insert(_btn1->isChecked() ? 1 : 0);
-    set.insert(_btn2->isChecked() ? 1 : 0);
-    set.insert(_btn3->isChecked() ? 1 : 0);
-    set.insert(_btn4->isChecked() ? 1 : 0);
-    set.insert(_btn5->isChecked() ? 1 : 0);
-    set.insert(_btn6->isChecked() ? 1 : 0);
+    for (int i = 0; i < 6; ++i)
+    {
+        set.insert(_btn[i]->isChecked() ? 1 : 0);
+    }
 
     disconnect(_selBox, SIGNAL(stateChanged(int)), this, SLOT(onSelCheckStateChanged(int)));
     if (set.size() == 1)
@@ -288,43 +283,44 @@ void InteractionViewForm::onBtnCheckBoxStatedChanged(int state)
     else
         _selBox->setCheckState(Qt::CheckState::PartiallyChecked);
 
-     connect(_selBox, SIGNAL(stateChanged(int)), this, SLOT(onSelCheckStateChanged(int)));
+    connect(_selBox, SIGNAL(stateChanged(int)), this, SLOT(onSelCheckStateChanged(int)));
     _selBox->update();
 }
 
- void InteractionViewForm::onSelCheckStateChanged(int state)
- {
-     if (state == 1)
-     {
-         _selBox->setChecked(true);
-         return;
-     }
-     disconnect(_btn1, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-     disconnect(_btn2, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-     disconnect(_btn3, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-     disconnect(_btn4, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-     disconnect(_btn5, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-     disconnect(_btn6, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
+void InteractionViewForm::onSelCheckStateChanged(int state)
+{
+    if (state == 1)
+    {
+        _selBox->setChecked(true);
+        return;
+    }
 
-     bool flag = state == 0 ? false : true;
+    for (int i = 0; i < 6; ++i)
+    {
+        connectBtnSignal(_btn[0], false);
+    }
 
-     _btn1->setChecked(flag);
-     _btn2->setChecked(flag);
-     _btn3->setChecked(flag);
-     _btn4->setChecked(flag);
-     _btn5->setChecked(flag);
-     _btn6->setChecked(flag);
+    bool flag = state == 0 ? false : true;
+    for (int i = 0; i < 6; ++i)
+    {
+        _btn[i]->setChecked(flag);
+        connectBtnSignal(_btn[0], true);
+    }
+}
 
+void InteractionViewForm::onChanelStateMsg(int index, int result)
+{
+    _btn[index]->showColor(result == -1 ? true : false);
+}
 
-     connect(_btn1, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-     connect(_btn2, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-     connect(_btn3, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-     connect(_btn4, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-     connect(_btn5, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-     connect(_btn6, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
- }
+void InteractionViewForm::onStart()
+{
+    _startBtn->setEnabled(false);
+    _stopBtn->setEnabled(true);
+}
 
- bool InteractionViewForm::onChanelStateMsg(int index, int result)
- {
-    return true;
- }
+void InteractionViewForm::onStop()
+{
+    _startBtn->setEnabled(true);
+    _stopBtn->setEnabled(false);
+}

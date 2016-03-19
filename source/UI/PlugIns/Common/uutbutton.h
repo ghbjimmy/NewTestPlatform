@@ -19,6 +19,8 @@ public:
     bool isChecked();
     void setChecked(bool flag);
 
+    void showColor(bool isError);
+
 signals:
     void signal_check(int);
 
