@@ -6,6 +6,7 @@
 struct TDetailViewItem
 {
     QString index;
+    QString group;
     QString testKey;
     QString destcription;
 	QString time;

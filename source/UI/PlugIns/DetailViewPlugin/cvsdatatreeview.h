@@ -4,7 +4,11 @@
 #include <QTreeView>
 #include <QVector>
 
-class CVSDataAdapter;
+class CVSDataTreeNode;
+class CVSDataTreeModel;
+class TItemStart;
+class TItemEnd;
+class TDetailViewItem;
 
 class CVSDataTreeView : public QTreeView
 {
@@ -14,17 +18,16 @@ public:
     explicit CVSDataTreeView(QWidget *parent = 0);
     ~CVSDataTreeView();
 
-    bool setData(const QVector<QString>& datas);
+    void setRootNode(CVSDataTreeNode* rootNode);
 
-    void procItemStart(int index, const QString& data);
-    void procItemEnd(int index, const QString& data);
+    void procItemStart(int index, const TItemStart* data, TDetailViewItem* viewItem);
+    void procItemEnd(int index, const TItemEnd* itemEnd, TDetailViewItem* viewItem);
 
 signals:
     void itemFailed(int index, int slotNum, void* viewItem); //通知失败情况
 
 private:
-    QVector<QString> _datas;
-    CVSDataAdapter* _adapter;
+    CVSDataTreeModel* _model;
 };
 
 #endif

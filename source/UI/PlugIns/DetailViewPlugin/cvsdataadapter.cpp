@@ -9,17 +9,6 @@
 #include "qlog.h"
 
 
-CVSDataAdapter::CVSDataAdapter()
-{
-    _rootNode = NULL;
-}
-
-CVSDataAdapter::~CVSDataAdapter()
-{
-
-}
-
-
 static bool parseCsvItem(const QString& str, TCsvDataItem* item)
 {
     QString data = str.mid(1, str.size() - 2);
@@ -97,17 +86,18 @@ CVSDataTreeNode* getTreeNodeByGroupName(const QString groupName, QMap<QString, C
     return node;
 }
 
-bool CVSDataAdapter::convertData(const QVector<QString>& items)
+CVSDataTreeNode* CVSDataAdapter::convertData(const QVector<QString>& items, QVector<TDetailViewItem*>& viewItems)
 {
     QMap<QString, CVSDataTreeNode*> groupMap;
-    _rootNode = new CVSDataTreeNode();
+    CVSDataTreeNode* rootNode = new CVSDataTreeNode();
     int size = items.size();
     for (int i = 0; i < size; ++i)
     {
         TCsvDataItem cvsItem;
         if (!parseCsvItem(items[i], &cvsItem))
         {
-            return false;
+            delete rootNode;
+            return NULL;
         }
 
 
@@ -117,16 +107,18 @@ bool CVSDataAdapter::convertData(const QVector<QString>& items)
             parentNode = new CVSDataTreeNode();
             TDetailViewItem* parentItem = new TDetailViewItem();
             parentItem->index = cvsItem.group;
+            parentItem->group = cvsItem.group;
             parentNode->setData(parentItem, sizeof(TDetailViewItem));
 
             groupMap[cvsItem.group] = parentNode;
-            parentNode->setParent(_rootNode);
+            parentNode->setParent(rootNode);
         }
 
         CVSDataTreeNode* childNode = new CVSDataTreeNode();
         TDetailViewItem* childItem = new TDetailViewItem();
 
         childItem->index = QString::number(i + 1);
+        childItem->group = cvsItem.group;
         childItem->testKey = cvsItem.tid;
         childItem->destcription = cvsItem.desc;
         childItem->lower = cvsItem.low;
@@ -136,27 +128,30 @@ bool CVSDataAdapter::convertData(const QVector<QString>& items)
 
         childNode->setData(childItem, sizeof(TDetailViewItem));
         childNode->setParent(parentNode);
+
+        viewItems.push_back(childItem);
     }
 
-    return true;
+    return rootNode;
 }
 
-bool CVSDataAdapter::convertItemStart(const QString& itemJson, TItemStart* itemStart)
+TItemStart* CVSDataAdapter::convertItemStart(const QString& itemJson)
 {
     QJsonParseError json_error;
     QJsonDocument document = QJsonDocument::fromJson(itemJson.toUtf8(), &json_error);
     if(json_error.error != QJsonParseError::NoError)
     {
         LogMsg(Error, "Parse ItemStart json failed. %s", itemJson.toStdString().c_str());
-        return false;
+        return NULL;
     }
 
     if (!document.isObject())
     {
         LogMsg(Error, "Parse ItemStar json format is error. %s", itemJson.toStdString().c_str());
-        return false;
+        return NULL;
     }
 
+    TItemStart* itemStart = new TItemStart();
     QJsonObject obj = document.object();
     if(obj.contains("group"))
     {
@@ -183,11 +178,13 @@ bool CVSDataAdapter::convertItemStart(const QString& itemJson, TItemStart* itemS
         itemStart->pdca = obj.take("pdca").toString();
     }
 
-    return true;
+    return itemStart;
 }
 
-bool CVSDataAdapter::convertItemEnd(const QString& itemJson, TItemEnd* itemStart)
+TItemEnd* CVSDataAdapter::convertItemEnd(const QString& itemJson)
 {
-    return true;
+    TItemEnd* itemEnd = new TItemEnd();
+
+    return itemEnd;
 }
 

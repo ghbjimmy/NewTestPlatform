@@ -16,7 +16,8 @@ DataTreeModel::~DataTreeModel()
 
 void DataTreeModel::setRootNode(DataTreeNode *node)
 {
-    delete _rootNode;
+    if (_rootNode != NULL)
+        delete _rootNode;
     _rootNode = node;
     //reset();
 }

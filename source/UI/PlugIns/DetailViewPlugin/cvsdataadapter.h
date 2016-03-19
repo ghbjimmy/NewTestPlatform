@@ -7,22 +7,19 @@
 #include "structdefine.h"
 
 class CVSDataTreeNode;
+class TDetailViewItem;
 
 //负责把数据适配
 class CVSDataAdapter
 {
 public:
-    CVSDataAdapter();
-    ~CVSDataAdapter();
-
-    bool convertData(const QVector<QString>& items);
-    bool convertItemStart(const QString& itemJson, TItemStart* itemStart);
-    bool convertItemEnd(const QString& itemJson, TItemEnd* itemStart);
-
-    inline CVSDataTreeNode* getRootNode() const { return _rootNode; }
+    static CVSDataTreeNode* convertData(const QVector<QString>& items, QVector<TDetailViewItem*>& viewItems);
+    static TItemStart* convertItemStart(const QString& itemJson);
+    static TItemEnd* convertItemEnd(const QString& itemJson);
 
 private:
-    CVSDataTreeNode* _rootNode;
+    CVSDataAdapter();
+
 };
 
 #endif

@@ -16,6 +16,7 @@ public:
     void setBarMaxSize(int size);
 
     void setBarValue(int index, int value);
+    void increaseBarValue(int index);
 
 private:
     void setupUI();

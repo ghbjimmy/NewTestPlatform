@@ -54,5 +54,16 @@ void ProgressForm::setBarMaxSize(int size)
 
 void ProgressForm::setBarValue(int index, int value)
 {
+    if (_bar[index]->maximum() < value)
+        return;
+    _bar[index]->setValue(value);
+}
 
+void ProgressForm::increaseBarValue(int index)
+{
+    int curVal = _bar[index]->value();
+    if (_bar[index]->maximum() >=curVal)
+    {
+        _bar[index]->setValue(curVal + 1);
+    }
 }

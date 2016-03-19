@@ -119,3 +119,37 @@ DataTreeNode* DataTreeNode::removeChild(int index)
 
     return node;
 }
+
+//获取节点下所有的子孙节点
+void DataTreeNode::allChildNode(DataTreeNode* parent, QList<DataTreeNode*>& children)
+{
+    if (NULL == parent)
+        return;
+
+    QList<DataTreeNode*> childs = parent->children();
+    for (int i = 0; i < childs.size(); ++i)
+    {
+        DataTreeNode* node = childs.at(i);
+        if (!node->children().isEmpty())
+        {
+            allChildNode(node, children);
+        }
+
+        children.push_back(node);
+    }
+
+}
+
+//获取节点所有的父节点
+void DataTreeNode::allParentNode(DataTreeNode* child, QList<DataTreeNode*>& parents)
+{
+    if (NULL == child)
+        return;
+
+    DataTreeNode* parent = child->parent();
+    while (parent)
+    {
+        parents.push_back(parent);
+        parent = parent->parent();
+    }
+}

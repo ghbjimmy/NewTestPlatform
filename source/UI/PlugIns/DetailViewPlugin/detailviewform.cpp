@@ -4,6 +4,8 @@
 #include "cvsdatatreeview.h"
 #include "progressform.h"
 #include "failform.h"
+#include "cvsdataadapter.h"
+#include "detailviewsinterface.h"
 
 DetailViewForm::DetailViewForm(QWidget *parent) : QTabWidget(parent)
 {
@@ -19,25 +21,71 @@ DetailViewForm::~DetailViewForm()
 void DetailViewForm::setupUI()
 {
     _csvTreeView = new CVSDataTreeView();
-    FailForm* failForm = new FailForm();
+    _failForm = new FailForm();
 
-    ProgressForm* progressForm = new ProgressForm();
-    this->addTab(_csvTreeView ,QString("Detail"));
-    this->addTab(progressForm,QString("Progress"));
-    this->addTab(failForm,QString("Fail Only"));
+    _progressForm = new ProgressForm();
+    this->addTab(_csvTreeView , QString("Detail"));
+    this->addTab(_progressForm, QString("Progress"));
+    this->addTab(_failForm, QString("Fail Only"));
 }
 
-void DetailViewForm::listCsvData(const QVector<QString>& datas)
+bool DetailViewForm::listCsvData(const QVector<QString>& datas)
 {
-    _csvTreeView->setData(datas);
+    CVSDataTreeNode* rootNode = CVSDataAdapter::convertData(datas, _vieItems);
+    if (NULL == rootNode)
+        return false;
+    _csvTreeView->setRootNode(rootNode);
+    _progressForm->setBarMaxSize(_vieItems.size());
+    return true;
 }
 
-void DetailViewForm::procItemStart(int index, const QString& data)
+bool DetailViewForm::procItemStart(int index, const QString& data)
 {
-    _csvTreeView->procItemStart(index, data);
+    TItemStart* itemStart = CVSDataAdapter::convertItemStart(data);
+    if (NULL == itemStart)
+        return false;
+
+    TDetailViewItem* viewItem = NULL;
+    for (int i = 0; i < _vieItems.size(); ++i)
+    {
+        if (itemStart->group == _vieItems[i]->group && itemStart->tid == _vieItems[i]->testKey)
+        {
+            viewItem = _vieItems[i];
+            break;
+        }
+    }
+
+    if (viewItem != NULL)
+        _csvTreeView->procItemStart(index, itemStart, viewItem);
+
+    delete itemStart;
+    return true;
 }
 
-void DetailViewForm::procItemEnd(int index, const QString& data)
+bool DetailViewForm::procItemEnd(int index, const QString& data)
 {
-    _csvTreeView->procItemEnd(index, data);
+    TItemEnd* itemEnd = CVSDataAdapter::convertItemEnd(data);
+    if (NULL == itemEnd)
+        return false;
+
+    TDetailViewItem* viewItem = NULL;
+    for (int i = 0; i < _vieItems.size(); ++i)
+    {
+        if (itemEnd->tid == _vieItems[i]->testKey)
+        {
+            viewItem = _vieItems[i];
+            break;
+        }
+    }
+
+    if (NULL != viewItem)
+    {
+        _csvTreeView->procItemEnd(index, itemEnd, viewItem);
+        _failForm->procItemEnd(index, itemEnd, viewItem);
+
+        _progressForm->increaseBarValue(index);
+    }
+
+    delete itemEnd;
+    return true;
 }

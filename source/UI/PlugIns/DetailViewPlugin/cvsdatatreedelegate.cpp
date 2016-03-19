@@ -21,21 +21,8 @@ void CVSDataTreeDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     CVSDataTreeNode* node = static_cast<CVSDataTreeNode*>(index.internalPointer());
     if (node == NULL)
         return;
-    QStyleOptionViewItem opt(option);
-    if (node->getUUT1() == "error")
-    {
-        int i = 0;
-        {
-            //painter->drawText(opt.rect, Qt::red);
-        }
 
-    }
-    else
-    {
-       // painter->fillRect(opt.rect, Qt::green);
-    }
-
-    QStyledItemDelegate::paint(painter, opt, index);
+    QStyledItemDelegate::paint(painter, option, index);
 }
 
 

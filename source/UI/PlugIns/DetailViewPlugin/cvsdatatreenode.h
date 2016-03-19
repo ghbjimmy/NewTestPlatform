@@ -1,8 +1,6 @@
 #ifndef CVSDataTreeNode_H
 #define CVSDataTreeNode_H
 
-#include <QList>
-#include <QDateTime>
 #include "datatreenode.h"
 #include "detailviewsinterface.h"
 

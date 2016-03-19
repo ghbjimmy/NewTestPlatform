@@ -1,25 +1,36 @@
 #include "failform.h"
-#include <QHBoxLayout>
-#include <QLabel>
-
-#include "cvsdataadapter.h"
 #include "cvsdatatreemodel.h"
 #include "cvsdatatreenode.h"
+#include "cvsdatatreedelegate.h"
+#include "structdefine.h"
 
 FailForm::FailForm(QWidget *parent) :QTreeView(parent)
 {
-    CVSDataAdapter* mgr = new CVSDataAdapter();
-   // mgr->init(NULL, 0);
+    //CVSDataTreeDelegate* delegate = new CVSDataTreeDelegate(this);
+    //this->setItemDelegate(delegate);
 
-    CVSDataTreeModel* model = new CVSDataTreeModel();
-    model->setRootNode(mgr->getRootNode());
-    this->setModel(model);
-    this->expandAll();
+    _model = new CVSDataTreeModel();
+    _rootNode = new CVSDataTreeNode();
+    _model->setRootNode(_rootNode);
+    this->setModel(_model);
 }
 
 FailForm::~FailForm()
 {
 
+}
+
+void FailForm::procItemEnd(int index, const TItemEnd *itemEnd, TDetailViewItem* viewItem)
+{
+    if (itemEnd->result == "-1")
+    {
+        TDetailViewItem* selfItem = new TDetailViewItem();
+        *selfItem = *viewItem;
+
+        CVSDataTreeNode* childNode = new CVSDataTreeNode();
+        childNode->setData(selfItem, sizeof(TDetailViewItem));
+        childNode->setParent(_rootNode);
+    }
 }
 
 

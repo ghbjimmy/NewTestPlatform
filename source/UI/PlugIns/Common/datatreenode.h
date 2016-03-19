@@ -27,6 +27,12 @@ public:
 
     inline int childCount() const {return _children.size();}
 
+    //获取节点下所有的子孙节点
+    static void allChildNode(DataTreeNode* parent, QList<DataTreeNode*>& children);
+
+    //获取节点所有的父节点
+    static void allParentNode(DataTreeNode* child, QList<DataTreeNode*>& parents);
+
 private:
     DataTreeNode* _parent;
     QList<DataTreeNode*> _children;
