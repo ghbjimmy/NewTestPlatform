@@ -2,9 +2,9 @@
 #define PROGRESSFORM_H
 
 #include <QScrollArea>
-#include <QProgressBar>
 #include "const.h"
 
+class QProgressBar;
 class ProgressForm : public QScrollArea
 {
     Q_OBJECT

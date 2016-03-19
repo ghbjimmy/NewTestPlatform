@@ -7,9 +7,9 @@
 #include <QGridLayout>
 #include <QResizeEvent>
 #include <QScrollBar>
-#include "../common/uutbutton.h"
-#include "../../Util/util.h"
-#include "../../Util/message.h"
+#include "uutbutton.h"
+#include "util.h"
+#include "message.h"
 
 int GWidth = 180;
 int GHeight = 140;
@@ -90,11 +90,6 @@ void ScopeviewForm::setupUI()
 
     updateSceneRect();
     updateSceneItemPos();
-}
-
-void ScopeviewForm::onBtnCheckBoxStatedChanged(int state)
-{
-
 }
 
 void ScopeviewForm::onClicked()

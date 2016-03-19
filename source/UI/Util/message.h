@@ -6,14 +6,13 @@
 
 const int LIST_CSV_MSG = 1000;
 const int PROC_ITEMSTATE_MSG = 1001;
+const int CHANEL_STATE_MSG = 1002;
 
 class IMessage
 {
 public:
     IMessage() {
         _id = -1;
-        _context = NULL;
-        _len = -1;
     }
 
     virtual ~IMessage(){}
@@ -23,28 +22,17 @@ public:
         return _id;
     }
 
-    virtual void* context() const
-    {
-        return _context;
-    }
-
-    virtual int length() const
-    {
-        return _len;
-    }
-
 protected:
     int _id;
-    void* _context;
-    int _len;
 };
 
-class ChannelStateMsg : public IMessage
+class LoadScopeViewMsg : public IMessage
 {
 public:
-    ChannelStateMsg();
-    ~ChannelStateMsg();
+    LoadScopeViewMsg();
+    ~LoadScopeViewMsg();
 };
+
 
 //处理csv内容消息
 class ListCsvFileMsg : public IMessage
@@ -58,13 +46,6 @@ public:
 
 private:
     QVector<QString> _dataItems;
-};
-
-class LoadScopeViewMsg : public IMessage
-{
-public:
-    LoadScopeViewMsg();
-    ~LoadScopeViewMsg();
 };
 
 //处理进度消息
@@ -85,4 +66,19 @@ private:
     QString _data;
 };
 
+
+class ChannelStateMsg : public IMessage
+{
+public:
+    ChannelStateMsg();
+    ~ChannelStateMsg();
+
+    void setData(int index, int result = -1);
+    inline int getIndex() const {return _index;}
+    inline int getResult() const {return _result;}
+
+private:
+    int _index;
+    int _result;
+};
 #endif

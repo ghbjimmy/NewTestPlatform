@@ -6,10 +6,12 @@
 #include "failform.h"
 #include "cvsdataadapter.h"
 #include "detailviewsinterface.h"
+#include "detailviewplugin.h"
+#include "message.h"
 
-DetailViewForm::DetailViewForm(QWidget *parent) : QTabWidget(parent)
+DetailViewForm::DetailViewForm(IPlugin* plugIn, QWidget *parent) : QTabWidget(parent)
 {
-    CVSDataTreeView* view = new CVSDataTreeView();
+     _plugIn = plugIn;;
     setupUI();
 }
 
@@ -84,6 +86,13 @@ bool DetailViewForm::procItemEnd(int index, const QString& data)
         _failForm->procItemEnd(index, itemEnd, viewItem);
 
         _progressForm->increaseBarValue(index);
+
+        if (itemEnd->result == "-1")//出现错误，要往外发通知其他插件结果
+        {
+            ChannelStateMsg msg;
+            msg.setData(index, -1);
+            _plugIn->sendMessage(&msg);
+        }
     }
 
     delete itemEnd;

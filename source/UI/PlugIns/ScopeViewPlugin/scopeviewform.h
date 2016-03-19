@@ -4,8 +4,8 @@
 #include <QScrollArea>
 #include <QVector>
 #include <QGraphicsView>
-class IPlugin;
 
+class IPlugin;
 class QGroupBox;
 class ScopeviewForm : public QGraphicsView
 {
@@ -24,8 +24,8 @@ private:
     void updateSceneItemPos();
 
 private slots:
-    void onBtnCheckBoxStatedChanged(int state);
     void onClicked();
+
 private:
     IPlugin* _plugIn;
 

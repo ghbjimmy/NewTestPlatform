@@ -2,7 +2,6 @@
 #define CVSDATATREEVIEW_H
 
 #include <QTreeView>
-#include <QVector>
 
 class CVSDataTreeNode;
 class CVSDataTreeModel;

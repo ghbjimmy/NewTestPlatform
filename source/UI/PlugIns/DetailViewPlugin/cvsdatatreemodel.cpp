@@ -1,5 +1,6 @@
 #include <QSize>
 #include <QColor>
+
 #include "cvsdatatreemodel.h"
 #include "cvsdatatreenode.h"
 

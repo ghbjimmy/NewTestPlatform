@@ -1,4 +1,6 @@
 #include "progressform.h"
+
+#include <QProgressBar>
 #include <QHBoxLayout>
 #include <QLabel>
 

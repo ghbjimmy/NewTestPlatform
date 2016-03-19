@@ -11,18 +11,26 @@ TEMPLATE = lib
 
 DEFINES += TPLUGIN_LIBRARY
 
+INCLUDEPATH += ../ \
+                ../common \
+                ../../Util \
+                ../../Interface \
+                ../../Log
+
 SOURCES += scopeviewplugin.cpp \
     scopeviewform.cpp \
     ../Common/uutbutton.cpp \
     ../../Util/util.cpp \
-    ../../Util/message.cpp
+    ../../Util/message.cpp \
+    ../../Log/qlog.cpp
 
 HEADERS += scopeviewplugin.h \
     scopeviewform.h \
     ../Common/uutbutton.h \
     ../../Util/util.h \
     ../../Util/plugin_global.h \
-    ../../Util/message.h
+    ../../Util/message.h \
+    ../../Log/qlog.h
 
 unix {
     target.path = /usr/lib

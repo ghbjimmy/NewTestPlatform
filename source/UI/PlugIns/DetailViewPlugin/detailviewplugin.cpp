@@ -25,6 +25,7 @@ void DetailViewPlugin::fini()
 // 消息解释
 int DetailViewPlugin::onMessage(const IMessage* msg)
 {
+    int ret = 0;
     if (_widget == NULL)
         return -1;
 
@@ -32,48 +33,57 @@ int DetailViewPlugin::onMessage(const IMessage* msg)
     int id = msg->messageID();
     switch(id)
     {
-        case LIST_CSV_MSG:
+    case LIST_CSV_MSG:
+    {
+        const ListCsvFileMsg* listcsvMsg = (const ListCsvFileMsg*)msg;
+        form->listCsvData(listcsvMsg->getItems());
+        break;
+    }
+    case PROC_ITEMSTATE_MSG:
+    {
+        const ProcItemStateMsg* itemStateMsg = (const ProcItemStateMsg*)msg;
+        if (itemStateMsg->isItemStart())
         {
-            const ListCsvFileMsg* listcsvMsg = (const ListCsvFileMsg*)msg;
-            form->listCsvData(listcsvMsg->getItems());
+            form->procItemStart(itemStateMsg->getIndex(), itemStateMsg->getData());
         }
-        case PROC_ITEMSTATE_MSG:
+        else
         {
-            const ProcItemStateMsg* itemStateMsg = (const ProcItemStateMsg*)msg;
-            if (itemStateMsg->isItemStart())
-            {
-                form->procItemStart(itemStateMsg->getIndex(), itemStateMsg->getData());
-            }
-            else
-            {
-                form->procItemEnd(itemStateMsg->getIndex(), itemStateMsg->getData());
-            }
+            form->procItemEnd(itemStateMsg->getIndex(), itemStateMsg->getData());
         }
+        break;
+    }
     default:
-        return 1;
+    {
+        ret = -1;
+        break;
+    }
     };
 
-    return 0;
+    return ret;
 }
 
 bool DetailViewPlugin::isHandleMessage(const IMessage* msg)
 {
+    bool ret = false;
     int id = msg->messageID();
     switch(id)
     {
-        case LIST_CSV_MSG:
-        case PROC_ITEMSTATE_MSG:
-        {
-            return true;
-        }
-
+    case LIST_CSV_MSG:
+    case PROC_ITEMSTATE_MSG:
+    {
+        ret = true;
+        break;
+    }
+    default:
+        ret = false;
+        break;
     };
-    return false;
+    return ret;
 }
 
 QWidget * DetailViewPlugin::createWidget()
 {
-    _widget = new DetailViewForm();
+    _widget = new DetailViewForm(this);
     return _widget;
 }
 

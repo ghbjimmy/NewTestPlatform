@@ -1,7 +1,7 @@
 #include "interactionviewplugin.h"
 #include "interactionviewform.h"
-#include "../../Util/const.h"
-#include "../../Util/message.h"
+#include "const.h"
+#include "message.h"
 
 InteractionViewPlugin::InteractionViewPlugin()
 {
@@ -24,19 +24,53 @@ void InteractionViewPlugin::fini()
 
 int InteractionViewPlugin::onMessage(const IMessage* msg)
 {
-    return 0;
+    int ret = 0;
+    if (_widget == NULL)
+        return -1;
+
+    InteractionViewForm* form = ((InteractionViewForm*)_widget);
+    int id = msg->messageID();
+    switch(id)
+    {
+    case CHANEL_STATE_MSG:
+    {
+        const ChannelStateMsg* statevMsg = (const ChannelStateMsg*)msg;
+        form->onChanelStateMsg(statevMsg->getIndex(), statevMsg->getResult());
+        break;
+    }
+    default:
+    {
+        ret = -1;
+        break;
+    }
+
+    };
+    return ret;
 }
 
 bool InteractionViewPlugin::isHandleMessage(const IMessage* msg)
 {
-    if (msg->messageID() == 100)
-        return true;
-    return false;
+    bool ret = false;
+    int id = msg->messageID();
+    switch(id)
+    {
+    case CHANEL_STATE_MSG:
+    {
+        ret = true;
+        break;
+    }
+    default:
+    {
+        ret = false;
+        break;
+    }
+    };
+    return ret;
 }
 
 QWidget * InteractionViewPlugin::createWidget()
 {
-    _widget = new InteractionViewForm();
+    _widget = new InteractionViewForm(this);
     return _widget;
 }
 

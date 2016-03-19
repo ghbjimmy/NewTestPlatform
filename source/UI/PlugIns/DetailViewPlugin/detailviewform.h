@@ -1,7 +1,6 @@
 #ifndef DETAILVIEWFORM1_H
 #define DETAILVIEWFORM1_H
 
-#include <QWidget>
 #include <QTabWidget>
 #include <QVector>
 
@@ -9,13 +8,14 @@ class CVSDataTreeView;
 class ProgressForm;
 class FailForm;
 class TDetailViewItem;
+class IPlugin;
 
 class DetailViewForm : public QTabWidget
 {
     Q_OBJECT
 
 public:
-    explicit DetailViewForm(QWidget *parent = 0);
+    explicit DetailViewForm(IPlugin* plugIn, QWidget *parent = 0);
     ~DetailViewForm();
 
     bool listCsvData(const QVector<QString>& datas);
@@ -26,6 +26,7 @@ private:
     void setupUI();
 
 private:
+    IPlugin* _plugIn;
     CVSDataTreeView* _csvTreeView;
     ProgressForm* _progressForm;
     FailForm* _failForm;

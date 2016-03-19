@@ -2,7 +2,7 @@
 #define DETAILVIEWPLUGIN_H
 
 #include <QWidget>
-#include "../../Util/plugin_global.h"
+#include "plugin_global.h"
 
 class TPLUGINSHARED_EXPORT DetailViewPlugin : public IPlugin
 {

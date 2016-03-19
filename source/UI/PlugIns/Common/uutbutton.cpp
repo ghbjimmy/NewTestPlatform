@@ -3,7 +3,7 @@
 #include <QLabel>
 #include <QPalette>
 #include <QPainter>
-#include "../../Util/util.h"
+#include "util.h"
 
 UutButton::UutButton(int style, QWidget *parent) : QPushButton(parent)
 {

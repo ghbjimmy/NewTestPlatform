@@ -1,7 +1,7 @@
 #ifndef CVSDATATREEMODEL_H
 #define CVSDATATREEMODEL_H
 
-#include "../common/datatreemodel.h"
+#include "datatreemodel.h"
 
 
 class CVSDataTreeModel : public DataTreeModel

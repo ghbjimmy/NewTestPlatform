@@ -1,6 +1,6 @@
 #include "interactionviewform.h"
-#include "../common/uutbutton.h"
-#include "../../Util/util.h"
+#include "uutbutton.h"
+#include "util.h"
 
 #include <QHBoxLayout>
 #include <QProgressBar>
@@ -11,8 +11,9 @@
 #include <QPushButton>
 #include <QSet>
 
-InteractionViewForm::InteractionViewForm(QWidget *parent) : QScrollArea(parent)
+InteractionViewForm::InteractionViewForm(IPlugin* plugIn, QWidget *parent) : QScrollArea(parent)
 {
+    _plugIn = plugIn;
     setupUI();
 }
 
@@ -321,6 +322,9 @@ void InteractionViewForm::onBtnCheckBoxStatedChanged(int state)
      connect(_btn4, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
      connect(_btn5, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
      connect(_btn6, SIGNAL(signal_check(int)), this, SLOT(onBtnCheckBoxStatedChanged(int)));
-
  }
 
+ bool InteractionViewForm::onChanelStateMsg(int index, int result)
+ {
+    return true;
+ }

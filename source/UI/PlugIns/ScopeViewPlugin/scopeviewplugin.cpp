@@ -1,7 +1,7 @@
 #include "scopeviewplugin.h"
 #include "scopeviewform.h"
-#include "../../Util/const.h"
-#include "../../Util/message.h"
+#include "const.h"
+#include "message.h"
 
 ScopeViewPlugin::ScopeViewPlugin()
 {
@@ -29,35 +29,44 @@ void ScopeViewPlugin::fini()
 
 int ScopeViewPlugin::onMessage(const IMessage* msg)
 {
+    int ret = 0;
     int id = msg->messageID();
     switch(id)
     {
-        case 130:
+    case 130:
+    {
+        if (_widget != NULL)
         {
-            if (_widget != NULL)
-            {
-                ((ScopeviewForm*)_widget)->loadData();
-                break;
-            }
+            ((ScopeviewForm*)_widget)->loadData();
+            break;
         }
+    }
     default:
-        return 1;
+        ret = -1;
+        break;
     };
 
-    return 0;
+    return ret;
 }
 
 bool ScopeViewPlugin::isHandleMessage(const IMessage* msg)
 {
+    bool ret =false;
     int id = msg->messageID();
     switch(id)
     {
-        case 130:
-        {
-            return true;
-        }
+    case 130:
+    {
+        ret = true;
+        break;
+    }
+    default:
+    {
+        ret = false;
+        break;
+    }
     };
-    return false;
+    return ret;
 }
 
 QWidget * ScopeViewPlugin::createWidget()

@@ -1,7 +1,7 @@
 #ifndef SCOPEVIEWPLUGIN_H
 #define SCOPEVIEWPLUGIN_H
 
-#include "../../Util/plugin_global.h"
+#include "plugin_global.h"
 
 class TPLUGINSHARED_EXPORT ScopeViewPlugin : public IPlugin
 {
