@@ -94,11 +94,6 @@ bool MainWindow::init()
     connect(_sequencerMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onSeqIsAlive(int,bool,bool)));
     connect(_sequencerMgr, SIGNAL(itemStartSignal(int,const QString&)), this, SLOT(onItemStart(int,const QString&)));
     connect(_sequencerMgr, SIGNAL(itemEndSignal(int,const QString&)), this, SLOT(onItemEnd(int,const QString&)));
-    if (!_sequencerMgr->startAll())
-    {
-        LogMsg(Error, "start all sequencer failed.");
-        return false;
-    }
 
     _engineMgr = new TestEngineMgr();
     if (!_engineMgr->initByCfg(_zmqCfgParse))
@@ -108,11 +103,6 @@ bool MainWindow::init()
     }
 
     connect(_engineMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onEngIsAlive(int,bool,bool)));
-    if (!_engineMgr->startAll())
-    {
-        LogMsg(Error, "start all enginer failed.");
-        return false;
-    }
 
     _smMgr = new StateMachineMgr();
     if (!_smMgr->initByCfg(_zmqCfgParse))
@@ -122,6 +112,19 @@ bool MainWindow::init()
     }
 
     connect(_smMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onSmIsAlive(int,bool,bool)));
+
+    if (!_engineMgr->startAll())
+    {
+        LogMsg(Error, "start all enginer failed.");
+        return false;
+    }
+
+    if (!_sequencerMgr->startAll())
+    {
+        LogMsg(Error, "start all sequencer failed.");
+        return false;
+    }
+
     if (!_smMgr->startAll())
     {
         LogMsg(Error, "start all enginer failed.");
@@ -364,7 +367,8 @@ void MainWindow::onMenuAction()
        //     return;
 
         //load 命令
-        QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv");
+        //QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv");
+        QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/test_plan__0121_14h.csv");
         if (!failVecs.empty())
         {
             LogMsg(Error, "load profile failed. failed count is %d", failVecs.size());
@@ -394,9 +398,21 @@ void MainWindow::onMenuAction()
 
 }
 
+void MainWindow::prcoMsgBySelf(const IMessage* msg)
+{
+    if (msg->messageID() == START_TEST_MSG) //开始测试
+    {
+        if (!_smMgr->StartTest())
+        {
+            LogMsg(Error, "start to test failed.");
+        }
+    }
+}
+
 void MainWindow::dispatchMessage(const IMessage* msg)
 {
-    _pluginSubjecter->notity(msg);
+    prcoMsgBySelf(msg);//判断是否自己需要处理的消息
+    _pluginSubjecter->notity(msg); //插件处理消息
 }
 
 void showStateColor(QLabel* lbl, const QString& typeName, int index, bool isAlive, bool isShow)
@@ -415,7 +431,7 @@ void showStateColor(QLabel* lbl, const QString& typeName, int index, bool isAliv
             UIUtil::setBgColor(lbl, Qt::gray);
         }
 
-        LogMsg(Debug, "%s %d is alvie : %d", typeName.toStdString().c_str(), index, isShow);
+        //LogMsg(Debug, "%s %d is alvie : %d", typeName.toStdString().c_str(), index, isShow);
     }
     else
     {
@@ -447,24 +463,24 @@ void MainWindow::onSmIsAlive(int index, bool isAlive, bool isShow)
     showStateColor(_smLbl, "StateMachine", index, isAlive, isShow);
 }
 
-void MainWindow::onItemStart(int index, const QString& itemJson)
+void MainWindow::onItemStart(int index, const QString& item)
 {
     //item_start
-    ProcItemStateMsg* procItemStateMsg = new ProcItemStateMsg();
-    procItemStateMsg->setData(true, index, itemJson);
+    ProcItemStateMsg* procItemStarteMsg = new ProcItemStateMsg();
+    procItemStarteMsg->setData(true, index, item);
 
     //发送结果到插件
-    dispatchMessage(procItemStateMsg);
-    delete procItemStateMsg;
+    dispatchMessage(procItemStarteMsg);
+    delete procItemStarteMsg;
 }
 
-void MainWindow::onItemEnd(int index, const QString& itemJson)
+void MainWindow::onItemEnd(int index, const QString& item)
 {
     //item_start
-    ProcItemStateMsg* procItemStateMsg = new ProcItemStateMsg();
-    procItemStateMsg->setData(false, index, itemJson);
+    ProcItemStateMsg* procItemEndMsg = new ProcItemStateMsg();
+    procItemEndMsg->setData(false, index, item);
 
     //发送结果到插件
-    dispatchMessage(procItemStateMsg);
-    delete procItemStateMsg;
+    dispatchMessage(procItemEndMsg);
+    delete procItemEndMsg;
 }

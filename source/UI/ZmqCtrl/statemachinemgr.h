@@ -19,6 +19,8 @@ public:
     bool startAll();
     void stopAll();
 
+    bool StartTest(); //开始测试
+
 signals:
     void isAliveSignal(int id, bool isAlive, bool isShow);
 

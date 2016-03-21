@@ -2,11 +2,10 @@
 #define CVSDATATREEVIEW_H
 
 #include <QTreeView>
+#include "structdefine.h"
 
 class CVSDataTreeNode;
 class CVSDataTreeModel;
-class TItemStart;
-class TItemEnd;
 class TDetailViewItem;
 
 class CVSDataTreeView : public QTreeView
@@ -19,8 +18,8 @@ public:
 
     void setRootNode(CVSDataTreeNode* rootNode);
 
-    void procItemStart(int index, const TItemStart* data, TDetailViewItem* viewItem);
-    void procItemEnd(int index, const TItemEnd* itemEnd, TDetailViewItem* viewItem);
+    void procItemStart(int index, const TItemStart& data, TDetailViewItem* viewItem);
+    void procItemEnd(int index, const TItemEnd& itemEnd, TDetailViewItem* viewItem);
 
 signals:
     void itemFailed(int index, int slotNum, void* viewItem); //通知失败情况

@@ -41,7 +41,7 @@ bool DetailViewForm::listCsvData(const QVector<QString>& datas)
     return true;
 }
 
-bool DetailViewForm::procItemStart(int index, const QString& data)
+bool DetailViewForm::procItemStart(int index,  const QString& data)
 {
     TItemStart* itemStart = CVSDataAdapter::convertItemStart(data);
     if (NULL == itemStart)
@@ -58,7 +58,7 @@ bool DetailViewForm::procItemStart(int index, const QString& data)
     }
 
     if (viewItem != NULL)
-        _csvTreeView->procItemStart(index, itemStart, viewItem);
+        _csvTreeView->procItemStart(index, *itemStart, viewItem);
 
     delete itemStart;
     return true;
@@ -82,8 +82,8 @@ bool DetailViewForm::procItemEnd(int index, const QString& data)
 
     if (NULL != viewItem)
     {
-        _csvTreeView->procItemEnd(index, itemEnd, viewItem);
-        _failForm->procItemEnd(index, itemEnd, viewItem);
+        _csvTreeView->procItemEnd(index, *itemEnd, viewItem);
+        _failForm->procItemEnd(index, *itemEnd, viewItem);
 
         _progressForm->increaseBarValue(index);
 
@@ -96,5 +96,6 @@ bool DetailViewForm::procItemEnd(int index, const QString& data)
     }
 
     delete itemEnd;
+
     return true;
 }

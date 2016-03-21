@@ -20,9 +20,9 @@ FailForm::~FailForm()
 
 }
 
-void FailForm::procItemEnd(int index, const TItemEnd *itemEnd, TDetailViewItem* viewItem)
+void FailForm::procItemEnd(int index, const TItemEnd& itemEnd, TDetailViewItem* viewItem)
 {
-    if (itemEnd->result == "-1")
+    if (itemEnd.result == "-1")
     {
         TDetailViewItem* selfItem = new TDetailViewItem();
         *selfItem = *viewItem;

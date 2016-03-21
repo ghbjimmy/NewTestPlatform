@@ -64,6 +64,8 @@ void ProgressForm::setBarValue(int index, int value)
 void ProgressForm::increaseBarValue(int index)
 {
     int curVal = _bar[index]->value();
+    if (curVal == -1)
+        curVal = 0;
     if (_bar[index]->maximum() >=curVal)
     {
         _bar[index]->setValue(curVal + 1);

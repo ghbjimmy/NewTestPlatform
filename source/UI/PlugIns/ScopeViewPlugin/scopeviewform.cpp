@@ -10,6 +10,7 @@
 #include "uutbutton.h"
 #include "util.h"
 #include "message.h"
+#include "plugin_global.h"
 
 int GWidth = 180;
 int GHeight = 140;

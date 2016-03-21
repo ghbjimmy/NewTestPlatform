@@ -12,12 +12,16 @@ StateMachineMgr::StateMachineMgr()
 
 StateMachineMgr::~StateMachineMgr()
 {
-
+    for (int i = 0; i < SM_NUM; ++i)
+    {
+        delete _sms[i];
+        _sms[i] = NULL;
+    }
 }
 
 bool StateMachineMgr::initByCfg(ZmqCfgParser* cfg)
 {
-    int basePubPort = cfg->getSmPub();
+    int basePubPort = cfg->getSmHeartBeat();
     int baseReqPort = cfg->getSmPort();
     for (int i = 0; i < SM_NUM; ++i)
     {
@@ -51,4 +55,15 @@ void StateMachineMgr::stopAll()
     {
         _sms[i]->stop();
     }
+}
+
+bool StateMachineMgr::StartTest()
+{
+    bool ret = false;
+    for (int i = 0; i < SM_NUM; ++i)
+    {
+        ret = _sms[i]->StartTest();
+    }
+
+    return true;
 }

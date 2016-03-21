@@ -6,6 +6,15 @@
 
 #include <thread>
 
+QString getRecvData(const QString& recvMsg)
+{
+    QStringList list = recvMsg.split("!@#");
+    if (list.size() != 5)
+        return QString();
+
+    return list[4];
+}
+
 static void sub_recvData(void* obj)
 {
     BaseRpc* seqRpc = (BaseRpc*)obj;
@@ -23,9 +32,10 @@ static void sub_recvData(void* obj)
         if (subSocket->select(ZMQ_POLLIN, 500) == 0)
         {
             timeoutNum++;
-            if (timeoutNum >= 16)
+            if (timeoutNum >= 12)
             {
                 seqRpc->setAlive(false);
+                seqRpc->aliveNoity(false);
                 timeoutNum = 0;
             }
         }
@@ -34,14 +44,16 @@ static void sub_recvData(void* obj)
             Buffer rcvBuff;
             int cnt = subSocket->recvData(rcvBuff);
             QString recvMsg = QString::fromLocal8Bit(rcvBuff.getBuf(), rcvBuff.getLen());
-            if (recvMsg.contains("FCT_HEARTBEAT"))
+            QString data = getRecvData(recvMsg);
+            if (data == "FCT_HEARTBEAT")
             {
                 seqRpc->setAlive(true);
+                seqRpc->aliveNoity(true);
                 timeoutNum = 0;
             }
             else
             {
-                seqRpc->procSubRecvMsg(recvMsg);
+                seqRpc->procSubRecvMsg(data);
             }
         }
 

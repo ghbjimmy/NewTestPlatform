@@ -24,6 +24,7 @@ void testDecode()
 
 int main(int argc, char *argv[])
 {
+    LogMsg(Error, "fadaf");
     TItemStart itemStart;
     int ss1 = sizeof(TItemStart);
 

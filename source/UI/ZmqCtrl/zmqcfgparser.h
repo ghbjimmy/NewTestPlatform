@@ -18,6 +18,7 @@ public:
     inline int getSeqPub() const {return _seqPub;}
     inline int getSmPort() const {return _smPort;}
     inline int getSmPub() const {return _smPub;}
+    inline int getSmHeartBeat() const {return _smHeartBeat;}
     inline int getTestEnginePort() const {return _testEnginePort;}
     inline int getTestEnginePub() const {return _testEnginePub;}
 
@@ -30,6 +31,7 @@ private:
     int _seqPub;
     int _smPort;
     int _smPub;
+    int _smHeartBeat;
     int _testEnginePort;
     int _testEnginePub;
 };

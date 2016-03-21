@@ -57,28 +57,30 @@ void setText(int index, const QString& text, TDetailViewItem *viewItem)
     }
 }
 
-void CVSDataTreeView::procItemStart(int index, const TItemStart *data, TDetailViewItem *viewItem)
+void CVSDataTreeView::procItemStart(int index, const TItemStart& data, TDetailViewItem *viewItem)
 {
     setText(index, TESTING, viewItem);
+    this->update();
 }
 
-void CVSDataTreeView::procItemEnd(int index, const TItemEnd *itemEnd, TDetailViewItem* viewItem)
+void CVSDataTreeView::procItemEnd(int index, const TItemEnd& itemEnd, TDetailViewItem* viewItem)
 {
     QString text = "";
-    if (itemEnd->result == "-1")
+    if (itemEnd.result == "-1")
     {
-        text = itemEnd->error;
+        text = itemEnd.error;
     }
-    else if (itemEnd->result == "pass")
+    else if (itemEnd.result == "True")
     {
-        if (!itemEnd->value.isEmpty())
-            text = itemEnd->value;
+        if (!itemEnd.value.isEmpty())
+            text = itemEnd.value;
         else
-            text = itemEnd->value;
+            text = itemEnd.value;
     }
     else
-        text = itemEnd->result;
+        text = itemEnd.result;
 
     setText(index, text, viewItem);
+    this->update();
 }
 

@@ -3,6 +3,7 @@
 
 #include <QTabWidget>
 #include <QVector>
+#include "structdefine.h"
 
 class CVSDataTreeView;
 class ProgressForm;
@@ -19,8 +20,8 @@ public:
     ~DetailViewForm();
 
     bool listCsvData(const QVector<QString>& datas);
-    bool procItemStart(int index, const QString& data);
-    bool procItemEnd(int index, const QString& data);
+    bool procItemStart(int index, const QString& itemStart);
+    bool procItemEnd(int index, const QString& itemEnd);
 
 private:
     void setupUI();

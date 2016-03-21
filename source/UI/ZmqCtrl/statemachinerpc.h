@@ -11,7 +11,7 @@ public:
 
     bool procSubRecvMsg(const QString& msg);
 
-    void StartTest();
+    bool StartTest();
 };
 
 #endif // STATEMACHINERPC_H

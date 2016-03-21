@@ -81,5 +81,33 @@ private:
     QVector<QString> _items;
 };
 
+class StartTestCmdReq : public CommandBase
+{
+public:
+    StartTestCmdReq();
+    ~StartTestCmdReq();
 
+    bool encode(Buffer& buf);
+    bool decode(const Buffer& buf);
+
+    inline void setStartFun(const QString& func) {_funcName = func;}
+
+private:
+    QString _funcName;
+};
+
+class StartTestCmdRsp : public CommandBase
+{
+public:
+    StartTestCmdRsp();
+    ~StartTestCmdRsp();
+
+    bool encode(Buffer& buf);
+    bool decode(const Buffer& buf);
+
+    inline bool isSuccess() const {return _isSuccess;}
+
+private:
+     bool _isSuccess;
+};
 #endif // COMMAND_H

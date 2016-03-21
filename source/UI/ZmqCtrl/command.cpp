@@ -218,3 +218,80 @@ bool ListCmdRsp::decode(const Buffer& buf)
     return true;
 }
 
+StartTestCmdReq::StartTestCmdReq()
+{
+
+}
+
+StartTestCmdReq::~StartTestCmdReq()
+{
+
+}
+
+bool StartTestCmdReq::encode(Buffer& buf)
+{
+    QVariantMap cmdMap;
+    cmdMap.insert("function", _funcName);
+
+    QJsonDocument document = QJsonDocument::fromVariant(cmdMap);
+    QByteArray array = document.toJson();
+
+    QString str(array);
+    str = str.remove('\n');
+    str = str.remove(' ');
+    buf.setBuf(str.toLocal8Bit().data(), str.length());
+    return true;
+}
+
+bool StartTestCmdReq::decode(const Buffer& buf)
+{
+    return true;
+}
+
+StartTestCmdRsp::StartTestCmdRsp()
+{
+
+}
+
+StartTestCmdRsp::~StartTestCmdRsp()
+{
+
+}
+
+bool StartTestCmdRsp::encode(Buffer& buf)
+{
+    return true;
+}
+
+bool StartTestCmdRsp::decode(const Buffer& buf)
+{
+    if (!buf.isValid())
+        return false;
+
+    QByteArray byteArray(buf.getBuf(), buf.getLen());
+
+    QJsonParseError json_error;
+    QJsonDocument doucment = QJsonDocument::fromJson(byteArray, &json_error);
+    if(json_error.error != QJsonParseError::NoError)
+    {
+        LogMsg(Error, "Parse json failed.");
+        return false;
+    }
+
+    if (!doucment.isObject())
+    {
+        LogMsg(Error, "json format is error.");
+        return false;
+    }
+
+    QJsonObject obj = doucment.object();
+    QString result = "";
+    if(obj.contains("status"))
+    {
+        result = obj.take("status").toString();
+    }
+
+    if (result != "ok")
+        return false;
+    return true;
+}

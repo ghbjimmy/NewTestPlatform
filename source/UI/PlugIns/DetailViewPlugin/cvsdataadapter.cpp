@@ -20,7 +20,8 @@ static bool parseCsvItem(const QString& str, TCsvDataItem* item)
             return false;
 
         const QString& sFirst = itemList[0];
-        const QString& sSecond = itemList[1].remove("'");
+        QString sSecond = itemList[1].remove("'");
+        sSecond = sSecond.trimmed();
         if (sFirst.contains("FUNCTION"))
         {
             item->function = sSecond;
@@ -183,7 +184,43 @@ TItemStart* CVSDataAdapter::convertItemStart(const QString& itemJson)
 
 TItemEnd* CVSDataAdapter::convertItemEnd(const QString& itemJson)
 {
+    QJsonParseError json_error;
+    QJsonDocument document = QJsonDocument::fromJson(itemJson.toUtf8(), &json_error);
+    if(json_error.error != QJsonParseError::NoError)
+    {
+        LogMsg(Error, "Parse ItemStart json failed. %s", itemJson.toStdString().c_str());
+        return NULL;
+    }
+
+    if (!document.isObject())
+    {
+        LogMsg(Error, "Parse ItemStar json format is error. %s", itemJson.toStdString().c_str());
+        return NULL;
+    }
+
     TItemEnd* itemEnd = new TItemEnd();
+
+    QJsonObject obj = document.object();
+    if (obj.contains("tid"))
+    {
+        itemEnd->tid = obj.take("tid").toString();
+    }
+    if (obj.contains("value"))
+    {
+        itemEnd->value = obj.take("value").toString();
+    }
+    if (obj.contains("result"))
+    {
+        itemEnd->result = obj.take("result").toBool() ? "True" : "False";
+    }
+    if (obj.contains("error"))
+    {
+        itemEnd->error = obj.take("error").toString();
+    }
+    if (obj.contains("pdca"))
+    {
+        itemEnd->pdca = obj.take("pdca").toString();
+    }
 
     return itemEnd;
 }

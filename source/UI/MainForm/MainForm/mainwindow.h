@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QVector>
 #include "const.h"
+#include "structdefine.h"
 
 class PluginSubjecter;
 class LibaryParser;
@@ -43,6 +44,8 @@ private:
 
     QWidget* createStatusWgt();
 
+    void prcoMsgBySelf(const IMessage* msg);
+
 private slots:
     void onMenuAction();
 
@@ -50,8 +53,8 @@ private slots:
     void onEngIsAlive(int index, bool isAlive, bool isShow);
     void onSmIsAlive(int index, bool isAlive, bool isShow);
 
-    void onItemStart(int index, const QString& itemJson);
-    void onItemEnd(int index, const QString& itemJson);
+    void onItemStart(int index, const QString& item);
+    void onItemEnd(int index, const QString& item);
 
 private:
     static MainWindow* _instance;

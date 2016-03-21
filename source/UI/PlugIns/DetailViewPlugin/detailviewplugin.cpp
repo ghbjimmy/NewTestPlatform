@@ -41,15 +41,16 @@ int DetailViewPlugin::onMessage(const IMessage* msg)
     }
     case PROC_ITEMSTATE_MSG:
     {
-        const ProcItemStateMsg* itemStateMsg = (const ProcItemStateMsg*)msg;
-        if (itemStateMsg->isItemStart())
+        const ProcItemStateMsg* itemMsg = (const ProcItemStateMsg*)msg;
+        if (itemMsg->isItemStart())
         {
-            form->procItemStart(itemStateMsg->getIndex(), itemStateMsg->getData());
+            form->procItemStart(itemMsg->getIndex(), itemMsg->getData());
         }
         else
         {
-            form->procItemEnd(itemStateMsg->getIndex(), itemStateMsg->getData());
+            form->procItemEnd(itemMsg->getIndex(), itemMsg->getData());
         }
+
         break;
     }
     default:

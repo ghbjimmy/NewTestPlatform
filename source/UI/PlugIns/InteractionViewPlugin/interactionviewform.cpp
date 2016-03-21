@@ -1,6 +1,7 @@
 #include "interactionviewform.h"
 #include "uutbutton.h"
 #include "util.h"
+#include "message.h"
 
 #include <QHBoxLayout>
 #include <QProgressBar>
@@ -315,6 +316,9 @@ void InteractionViewForm::onChanelStateMsg(int index, int result)
 
 void InteractionViewForm::onStart()
 {
+    StartTestMsg msg;
+    _plugIn->sendMessage(&msg);
+
     _startBtn->setEnabled(false);
     _stopBtn->setEnabled(true);
 }

@@ -9,6 +9,7 @@
 const QString& SEQUENCER_PORT = "SEQUENCER_PORT";
 const QString& SEQUENCER_PUB = "SEQUENCER_PUB";
 const QString& SM_PUB = "SM_PUB";
+const QString& SM_HEARTBEAT = "SM_HEARTBEAT";
 const QString& SM_PORT = "SM_PORT";
 const QString& TEST_ENGINE_PORT = "TEST_ENGINE_PORT";
 const QString& TEST_ENGINE_PUB = "TEST_ENGINE_PUB";
@@ -87,6 +88,12 @@ bool ZmqCfgParser::parse(const QString& path)
         _smPort = value.toInt();
     }
 
+    if(obj.contains(SM_HEARTBEAT))
+    {
+        value = obj.take(SM_HEARTBEAT);
+        _smHeartBeat = value.toInt();
+    }
+
     if(obj.contains(TEST_ENGINE_PORT))
     {
         value = obj.take(TEST_ENGINE_PORT);
@@ -99,11 +106,12 @@ bool ZmqCfgParser::parse(const QString& path)
         _testEnginePub = value.toInt();
     }
 
-    static const char* ip = "172.15.3.78";
-    //_seqIp = ip;
-    _seqIp = "127.0.0.1";
-    _engineIp = "127.0.0.1";
-    //_engineIp = ip;
+    //static const char* ip = "172.15.3.78";
+    //static const char* ip = "127.0.0.1";
+    //static const char* ip = "172.22.0.60";
+    static const char* ip = "172.15.2.246";
+    _seqIp = ip;
+    _engineIp = ip;
     _smIp = ip;
 
     return true;

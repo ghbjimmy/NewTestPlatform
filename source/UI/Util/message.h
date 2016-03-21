@@ -1,12 +1,13 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-
-#include "plugin_global.h"
+#include <QVector>
+#include "structdefine.h"
 
 const int LIST_CSV_MSG = 1000;
 const int PROC_ITEMSTATE_MSG = 1001;
 const int CHANEL_STATE_MSG = 1002;
+const int START_TEST_MSG = 1003;
 
 class IMessage
 {
@@ -66,7 +67,7 @@ private:
     QString _data;
 };
 
-
+//指定定通道的状态变化消息
 class ChannelStateMsg : public IMessage
 {
 public:
@@ -81,4 +82,17 @@ private:
     int _index;
     int _result;
 };
+
+
+//开始测试命令消息
+class StartTestMsg : public IMessage
+{
+public:
+    StartTestMsg();
+    ~StartTestMsg();
+
+private:
+
+};
+
 #endif

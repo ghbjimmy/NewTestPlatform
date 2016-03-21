@@ -5,6 +5,8 @@
 #include <QObject>
 #include "const.h"
 
+#include "structdefine.h"
+
 class SequencerRpc;
 class ZmqCfgParser;
 
@@ -31,8 +33,8 @@ public:
 
 signals:
     void isAliveSignal(int id, bool isAlive, bool isShow);
-    void itemStartSignal(int index, const QString& itemJson);
-    void itemEndSignal(int index, const QString& itemJson);
+    void itemStartSignal(int index, const QString& item);
+    void itemEndSignal(int index, const QString& item);
 
 private:
     SequencerRpc* _sequencers[SEQ_NUM];

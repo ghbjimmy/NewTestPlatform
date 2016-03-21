@@ -3,26 +3,48 @@
 #include "qlog.h"
 #include "command.h"
 #include "const.h"
-#include "structdefine.h"
 
 #include <thread>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 
+const int ITEM_START = 2;
+const int ITEM_FINISH = 3;
+
 //获取消息的类型 1: item_start; 2: item_end; -1:unknown
-static int getMsgType(const QString& msg)
+static int getMsgType(const QString& msg, QString& data)
 {
-    if (msg.contains("group") && msg.contains("tid"))
+    int ret = -1;
+    QJsonParseError json_error;
+    QJsonDocument document = QJsonDocument::fromJson(msg.toUtf8(), &json_error);
+    if(json_error.error != QJsonParseError::NoError)
     {
-        return 1;
-    }
-    else if (msg.contains("tid") && msg.contains("value"))
-    {
-        return 2;
+        LogMsg(Error, "Parse msg json failed. %s", msg.toStdString().c_str());
+        return ret;
     }
 
-    return -1;
+    if (!document.isObject())
+    {
+        LogMsg(Error, "Parse msg json format is error. %s", msg.toStdString().c_str());
+        return ret;
+    }
+
+    QJsonObject obj = document.object();
+    if (obj.contains("event"))
+    {
+        ret = obj.take("event").toInt();
+
+        if (!obj.contains("data"))
+        {
+            return -1;
+        }
+
+        QJsonObject jsonObject = obj.take("data").toObject();;
+        data = QJsonDocument(jsonObject).toJson();
+    }
+
+    return ret;
 }
 
 SequencerRpc::SequencerRpc(int index) : BaseRpc(index)
@@ -73,9 +95,10 @@ bool SequencerRpc::loadProfile(const QString& csvFilePath)
         return false;
     }
 
+    bool ret = rsp->isSuccess();
     delete rsp;
     rsp = NULL;
-    return true;
+    return ret;
 }
 
 bool SequencerRpc::getCsvContent(QVector<QString>& items)
@@ -122,27 +145,22 @@ bool SequencerRpc::getCsvContent(QVector<QString>& items)
 
 bool SequencerRpc::procSubRecvMsg(const QString& msg)
 {
-    int msgType = getMsgType(msg);
-    if (msgType == 1)
+    if (msg.isEmpty())
+        return false;
+
+    QString data;
+    int msgType = getMsgType(msg, data);
+    if (msgType == ITEM_START)
     {
-        return procItemStart(msg);
+        emit itemStartSignal(_index, data);
+        return true;
     }
-    else if (msgType == 2)
+    else if (msgType == ITEM_FINISH)
     {
-        return procItemEnd(msg);
+        emit itemEndSignal(_index, data);
+        return true;
     }
 
     return false;
 }
 
-bool SequencerRpc::procItemStart(const QString& msg)
-{
-    emit itemStartSignal(_index, msg);
-    return true;
-}
-
-bool SequencerRpc::procItemEnd(const QString& msg)
-{
-    emit itemEndSignal(_index, msg);
-    return true;
-}

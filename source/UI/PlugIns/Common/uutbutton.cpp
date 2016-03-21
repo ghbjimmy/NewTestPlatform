@@ -51,7 +51,7 @@ void UutButton::setupUI()
 void UutButton::setIndex(int index)
 {
     _index = index;
-    _txtLbl->setText(QString::number(_index));
+    _txtLbl->setText(QString::number(_index + 1));
 }
 
 void UutButton::resizeEvent(QResizeEvent* evt)

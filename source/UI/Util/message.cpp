@@ -40,6 +40,7 @@ void ProcItemStateMsg::setData(bool isStart, int index, const QString& data)
     _data = data;
 }
 
+
 ChannelStateMsg::ChannelStateMsg()
 {
     _id = CHANEL_STATE_MSG;
@@ -54,4 +55,15 @@ void ChannelStateMsg::setData(int index, int result)
 {
     _index = index;
     _result = result;
+}
+
+
+StartTestMsg::StartTestMsg()
+{
+    _id = START_TEST_MSG;
+}
+
+StartTestMsg::~StartTestMsg()
+{
+
 }

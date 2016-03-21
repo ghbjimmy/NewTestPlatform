@@ -35,7 +35,7 @@ QLog::~QLog()
 
 std::string getNowTime()
 {
-    QString qstr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+    QString qstr = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz");
     return qstr.toStdString();
 }
 
@@ -46,8 +46,8 @@ void QLog::writeLogMsg(LogLevel level, const char* msg)
 
 
     int len = strlen(msg);
-    char* szLogMsg = new char[len + 64];
-    sprintf(szLogMsg, "%s [%s] %s", getNowTime().c_str(), LOG_PREFIX[level], msg);
+    char* szLogMsg = new char[len + 256];
+    sprintf(szLogMsg, "%s [%s] [%s:L%d] %s", getNowTime().c_str(), LOG_PREFIX[level],__FUNCTION__,__LINE__, msg);
 
     qDebug() << szLogMsg;
 

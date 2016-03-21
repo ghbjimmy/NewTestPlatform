@@ -4,6 +4,7 @@
 
 #include <QVector>
 #include "baserpc.h"
+#include "structdefine.h"
 
 class SequencerRpc : public BaseRpc
 {
@@ -18,20 +19,14 @@ public:
     //获取csv内存
     bool getCsvContent(QVector<QString>& items);
 
-    //获取进度数据
-    bool getProcData();
-
-    //处理item_start
-    bool procItemStart(const QString& msg);
-
-    //处理item_end
-    bool procItemEnd(const QString& msg);
 
     bool procSubRecvMsg(const QString& msg);
 
 signals:
-    void itemStartSignal(int index, const QString& itemJson);
-    void itemEndSignal(int index, const QString& itemJson);
+    void itemStartSignal(int index, const QString& item);
+    void itemEndSignal(int index, const QString& item);
+
+private:
 
 };
 
