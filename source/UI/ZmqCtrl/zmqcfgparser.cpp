@@ -100,7 +100,8 @@ bool ZmqCfgParser::parse(const QString& path)
     }
 
     static const char* ip = "172.15.3.78";
-    _seqIp = ip;
+    //_seqIp = ip;
+    _seqIp = "127.0.0.1";
     _engineIp = "127.0.0.1";
     //_engineIp = ip;
     _smIp = ip;

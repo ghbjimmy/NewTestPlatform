@@ -91,15 +91,14 @@ bool MainWindow::init()
         return false;
     }
 
+    connect(_sequencerMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onSeqIsAlive(int,bool,bool)));
+    connect(_sequencerMgr, SIGNAL(itemStartSignal(int,const QString&)), this, SLOT(onItemStart(int,const QString&)));
+    connect(_sequencerMgr, SIGNAL(itemEndSignal(int,const QString&)), this, SLOT(onItemEnd(int,const QString&)));
     if (!_sequencerMgr->startAll())
     {
         LogMsg(Error, "start all sequencer failed.");
         return false;
     }
-
-    connect(_sequencerMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onSeqIsAlive(int,bool,bool)));
-    connect(_sequencerMgr, SIGNAL(itemStartSignal(int,const QString&)), this, SLOT(onItemStart(int,const QString&)));
-    connect(_sequencerMgr, SIGNAL(itemEndSignal(int,const QString&)), this, SLOT(onItemEnd(int,const QString&)));
 
     _engineMgr = new TestEngineMgr();
     if (!_engineMgr->initByCfg(_zmqCfgParse))
@@ -108,13 +107,12 @@ bool MainWindow::init()
         return false;
     }
 
+    connect(_engineMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onEngIsAlive(int,bool,bool)));
     if (!_engineMgr->startAll())
     {
         LogMsg(Error, "start all enginer failed.");
         return false;
     }
-
-    connect(_engineMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onEngIsAlive(int,bool,bool)));
 
     _smMgr = new StateMachineMgr();
     if (!_smMgr->initByCfg(_zmqCfgParse))
@@ -123,13 +121,14 @@ bool MainWindow::init()
         return false;
     }
 
+    connect(_smMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onSmIsAlive(int,bool,bool)));
     if (!_smMgr->startAll())
     {
         LogMsg(Error, "start all enginer failed.");
         return false;
     }
 
-    connect(_smMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onSmIsAlive(int,bool,bool)));
+
     return true;
 }
 
@@ -283,11 +282,11 @@ QWidget* MainWindow::createStatusWgt()
 
 
     QLabel* machineLbl = new QLabel("StateMachine:");
-    QLabel* numLbl = createNumLabel(0);
+    _smLbl = createNumLabel(0);
 
     QHBoxLayout* h3 = new QHBoxLayout();
     h3->addWidget(machineLbl);
-    h3->addWidget(numLbl);
+    h3->addWidget(_smLbl);
     h3->addStretch(1);
     h3->setContentsMargins(QMargins(0,0,0,0));
 
@@ -400,77 +399,52 @@ void MainWindow::dispatchMessage(const IMessage* msg)
     _pluginSubjecter->notity(msg);
 }
 
-
-void MainWindow::onSeqIsAlive(int index, bool isAlive, bool isShow)
+void showStateColor(QLabel* lbl, const QString& typeName, int index, bool isAlive, bool isShow)
 {
     if (isAlive)
     {
         if (!isShow)
         {
-            _seqLbl[index]->setText(QString::number(index));
-            UIUtil::setBgColor(_seqLbl[index], Qt::green);
+            lbl->setText(QString::number(index));
+            UIUtil::setBgColor(lbl, Qt::green);
 
         }
         else
         {
-            _seqLbl[index]->setText("");
-            UIUtil::setBgColor(_seqLbl[index], Qt::gray);
+            lbl->setText("");
+            UIUtil::setBgColor(lbl, Qt::gray);
         }
 
-        LogMsg(Debug, "sequence %d is alvie : %d", index, isShow);
+        LogMsg(Debug, "%s %d is alvie : %d", typeName.toStdString().c_str(), index, isShow);
     }
     else
     {
-        if (_seqLbl[index]->palette().background().color() != Qt::red)
+        if (lbl->palette().background().color() != Qt::red)
         {
-            _seqLbl[index]->setText(" ");
-            UIUtil::setBgColor(_seqLbl[index], Qt::red);
+            lbl->setText(" ");
+            UIUtil::setBgColor(lbl, Qt::red);
 
-            this->update();
-            _seqLbl[index]->setText(QString::number(index));
+            lbl->update();
+            lbl->setText(QString::number(index));
         }
     }
 
-    this->update();
-   // QApplication::processEvents();
+    lbl->update();
+}
+
+void MainWindow::onSeqIsAlive(int index, bool isAlive, bool isShow)
+{
+    showStateColor(_seqLbl[index], "Sequence", index, isAlive, isShow);
 }
 
 void MainWindow::onEngIsAlive(int index, bool isAlive, bool isShow)
 {
-    if (isAlive)
-    {
-        if (!isShow)
-        {
-            _engineLbl[index]->setText(QString::number(index));
-            UIUtil::setBgColor(_engineLbl[index], Qt::green);
-
-        }
-        else
-        {
-            _engineLbl[index]->setText("");
-            UIUtil::setBgColor(_seqLbl[index], Qt::gray);
-        }
-
-        LogMsg(Debug, "engine %d is alvie : %d", index, isShow);
-    }
-    else
-    {
-        if (_engineLbl[index]->palette().background().color() != Qt::red)
-        {
-            _engineLbl[index]->setText(" ");
-            UIUtil::setBgColor(_engineLbl[index], Qt::red);
-
-            this->update();
-            _engineLbl[index]->setText(QString::number(index));
-        }
-    }
-
-    this->update();
+    showStateColor(_engineLbl[index], "Engine", index, isAlive, isShow);
 }
 
 void MainWindow::onSmIsAlive(int index, bool isAlive, bool isShow)
 {
-
+    showStateColor(_smLbl, "StateMachine", index, isAlive, isShow);
 }
 
 void MainWindow::onItemStart(int index, const QString& itemJson)

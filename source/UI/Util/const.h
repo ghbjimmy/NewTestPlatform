@@ -11,6 +11,6 @@ static const int SEQ_NUM = 6;
 static const int ENG_NUM = 6;
 static const int SM_NUM = 1;
 
-static const int& TIME_OUT = 2000;
+static const int& TIME_OUT = 3000;
 
 #endif

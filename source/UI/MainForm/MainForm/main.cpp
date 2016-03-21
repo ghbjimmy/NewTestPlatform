@@ -55,10 +55,7 @@ int main(int argc, char *argv[])
     Buffer buf;
     bool ff = req.encode(buf);
 
-    std::string str = std::string(buf.getBuf(),buf.getLen());
-    QString path = "../../";
-    LogMsg(Error, "open file failed.[%s]", path.toStdString().c_str());
-    LogMsg(Error, "open file failed1.[%s]", path.toStdString().c_str());
+
     QApplication a(argc, argv);
     MainWindow w;
 
