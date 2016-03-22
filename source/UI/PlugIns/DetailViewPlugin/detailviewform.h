@@ -3,7 +3,6 @@
 
 #include <QTabWidget>
 #include <QVector>
-#include "structdefine.h"
 
 class CVSDataTreeView;
 class ProgressForm;

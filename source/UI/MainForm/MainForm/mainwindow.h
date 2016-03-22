@@ -6,6 +6,7 @@
 #include "const.h"
 #include "structdefine.h"
 
+class IPlugin;
 class PluginSubjecter;
 class LibaryParser;
 class IMessage;
@@ -30,7 +31,7 @@ public:
     ~MainWindow();
 
     bool init();
-    bool loadLibary(const QString& path);
+    IPlugin*  loadLibary(const QString& path);
 
     static MainWindow* getInstance();
 
@@ -43,6 +44,8 @@ private:
     QWidget* createInteractionViewWgt();
 
     QWidget* createStatusWgt();
+
+    void createMenu();
 
     void prcoMsgBySelf(const IMessage* msg);
 

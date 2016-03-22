@@ -17,12 +17,12 @@ QString getRecvData(const QString& recvMsg)
 
 static void sub_recvData(void* obj)
 {
-    BaseRpc* seqRpc = (BaseRpc*)obj;
+    BaseRpc* rpc = (BaseRpc*)obj;
     int timeoutNum = 0;
     int sendHeartBeatNum = 0;
-    while(!seqRpc->isStop())
+    while(!rpc->isStop())
     {
-        ZmqSocket* subSocket = seqRpc->getSubSocket();
+        ZmqSocket* subSocket = rpc->getSubSocket();
         if (subSocket == NULL)
         {
             LogMsg(Error, "sub socket is null, can not procss sub msg.");
@@ -34,8 +34,8 @@ static void sub_recvData(void* obj)
             timeoutNum++;
             if (timeoutNum >= 12)
             {
-                seqRpc->setAlive(false);
-                seqRpc->aliveNoity(false);
+                rpc->setAlive(false);
+                rpc->aliveNoity(false);
                 timeoutNum = 0;
             }
         }
@@ -47,13 +47,13 @@ static void sub_recvData(void* obj)
             QString data = getRecvData(recvMsg);
             if (data == "FCT_HEARTBEAT")
             {
-                seqRpc->setAlive(true);
-                seqRpc->aliveNoity(true);
+                rpc->setAlive(true);
+                rpc->aliveNoity(true);
                 timeoutNum = 0;
             }
             else
             {
-                seqRpc->procSubRecvMsg(data);
+                rpc->procSubRecvMsg(data);
             }
         }
 
@@ -61,11 +61,11 @@ static void sub_recvData(void* obj)
         sendHeartBeatNum++;
         if (sendHeartBeatNum == 4)
         {
-            seqRpc->aliveNoity(true);
+            rpc->aliveNoity(true);
         }
         else if (sendHeartBeatNum == 5)
         {
-            seqRpc->aliveNoity(false);
+            rpc->aliveNoity(false);
             sendHeartBeatNum = 0;
         }
     }

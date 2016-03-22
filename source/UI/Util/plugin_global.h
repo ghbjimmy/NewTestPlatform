@@ -11,11 +11,6 @@
 #endif
 
 
-const int PLUGIN_INIT = 0;       // 初始化插件
-const int PLUGIN_FINI = 1;      // 插件释放
-const int PLUGIN_GUI  = 10;      // 插件GUI相关消息
-
-
 class IMessage;
 typedef void (*fnSendMsg)(const IMessage* msg);
 

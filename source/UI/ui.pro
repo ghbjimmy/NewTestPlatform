@@ -1,5 +1,7 @@
 TEMPLATE    = subdirs
 SUBDIRS     = MainForm/MainForm \
+    PlugIns/DutViewPlugin \
+    PlugIns/FctViewPlugin
 
 
 

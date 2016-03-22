@@ -2,6 +2,7 @@
 #include "uutbutton.h"
 #include "util.h"
 #include "message.h"
+#include "plugin_global.h"
 
 #include <QHBoxLayout>
 #include <QProgressBar>

@@ -8,6 +8,7 @@ class TPLUGINSHARED_EXPORT DetailViewPlugin : public IPlugin
 {
 public:
     DetailViewPlugin();
+    ~DetailViewPlugin();
 
 public:
     virtual int init();

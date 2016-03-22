@@ -66,7 +66,7 @@ void CVSDataTreeView::procItemStart(int index, const TItemStart& data, TDetailVi
 void CVSDataTreeView::procItemEnd(int index, const TItemEnd& itemEnd, TDetailViewItem* viewItem)
 {
     QString text = "";
-    if (itemEnd.result == "-1")
+    if (itemEnd.result == "False")
     {
         text = itemEnd.error;
     }

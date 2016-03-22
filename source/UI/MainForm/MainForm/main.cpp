@@ -22,8 +22,7 @@ void testDecode()
 }
 
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
     LogMsg(Error, "fadaf");
     TItemStart itemStart;
     int ss1 = sizeof(TItemStart);
@@ -52,7 +51,7 @@ int main(int argc, char *argv[])
 
 
     LoadCsvCmdReq req;
-    req.setParam("/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv");
+    req.setParam("/Users/mac/Desktop/Hantest_plan__0322_11h.csv");
     Buffer buf;
     bool ff = req.encode(buf);
 

@@ -9,6 +9,11 @@ DetailViewPlugin::DetailViewPlugin()
     _name = DetailViewPluginName;
 }
 
+DetailViewPlugin::~DetailViewPlugin()
+{
+
+}
+
 int DetailViewPlugin::init()
 {
     return 0;

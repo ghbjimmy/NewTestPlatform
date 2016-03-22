@@ -27,6 +27,10 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QDialog>
+
+static const QString& FCT_PANNEL = "FCT Pannel";
+static const QString& DUT_PANNEL = "Dut Pannel";
 
 static void sendMessageCallBack(const IMessage* msg)
 {
@@ -39,15 +43,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     _pluginSubjecter = new PluginSubjecter();
 
-    bool flag = false;
+    IPlugin* plugin = NULL;
     QString path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\DetailViewPlugin\\debug\\DetailViewPlugin.dll";
-    flag = loadLibary(path);
+    plugin = loadLibary(path);
 
     path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\ScopeViewPlugin\\debug\\ScopeViewPlugin.dll";
-    flag = loadLibary(path);
+    plugin = loadLibary(path);
 
     path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\InteractionViewPlugin\\debug\\InteractionViewPlugin.dll";
-    flag = loadLibary(path);
+    plugin = loadLibary(path);
 
     setupUI();
     _instance = this;
@@ -135,25 +139,25 @@ bool MainWindow::init()
     return true;
 }
 
-bool MainWindow::loadLibary(const QString& path)
+IPlugin* MainWindow::loadLibary(const QString& path)
 {
     LibaryParser* parser = new LibaryParser();
     if (!parser->parse(path))
-        return false;
+        return NULL;
 
     IPlugin * pPlugin = parser->getPlugin();
     if (0 != pPlugin->init())
     {
         delete parser;
         parser = NULL;
-        return false;
+        return NULL;
     }
 
     pPlugin->registerSendMsgCallBack(sendMessageCallBack);
     _libParsers.append(parser);
     _pluginSubjecter->attach(pPlugin);
 
-    return true;
+    return pPlugin;
 }
 
 QWidget* createTitleWgt()
@@ -307,6 +311,27 @@ QWidget* MainWindow::createStatusWgt()
     return statusWgt;
 }
 
+void MainWindow::createMenu()
+{
+    QMenu* fileMenu = menuBar()->addMenu("File");
+    QAction* loadAction = new QAction("Load CSV",this);
+    QAction* loadScopeAction = new QAction("Load ScopeView",this);
+    connect(loadAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
+    connect(loadScopeAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
+    fileMenu->addAction(loadAction);
+    fileMenu->addAction(loadScopeAction);
+
+    QMenu* debugMenu = menuBar()->addMenu("Debug");
+
+    QAction* loadDutAction = new QAction(DUT_PANNEL,this);
+    QAction* loadFctAction = new QAction(FCT_PANNEL,this);
+
+    connect(loadDutAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
+    connect(loadFctAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
+
+    debugMenu->addAction(loadDutAction);
+    debugMenu->addAction(loadFctAction);
+}
 
 void MainWindow::setupUI()
 {
@@ -345,13 +370,7 @@ void MainWindow::setupUI()
     centralWgt->setLayout(v1);
     this->setCentralWidget(centralWgt);
 
-    QMenu* fileMenu = menuBar()->addMenu(tr("File"));
-    QAction* loadAction = new QAction("Load CSV",this);
-    QAction* loadScopeAction = new QAction("Load ScopeView",this);
-    connect(loadAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
-    connect(loadScopeAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
-    fileMenu->addAction(loadAction);
-    fileMenu->addAction(loadScopeAction);
+   createMenu();
     this->resize(1024,768);
 }
 
@@ -368,7 +387,7 @@ void MainWindow::onMenuAction()
 
         //load 命令
         //QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv");
-        QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/test_plan__0121_14h.csv");
+        QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/Hantest_plan__0322_11h.csv");
         if (!failVecs.empty())
         {
             LogMsg(Error, "load profile failed. failed count is %d", failVecs.size());
@@ -395,7 +414,30 @@ void MainWindow::onMenuAction()
         LoadScopeViewMsg* loadScopeViewMsg = new LoadScopeViewMsg();
         dispatchMessage(loadScopeViewMsg);
     }
+    else if (action->text() == DUT_PANNEL)
+    {
+        QString path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\DutViewPlugin\\debug\\DutViewPlugin.dll";
+        IPlugin* plugin = loadLibary(path);
+        if (plugin != NULL)
+        {
+            QDialog* dutDlg = new QDialog();
+            dutDlg->setModal(false);
+            dutDlg->setWindowTitle("Dut Debug Pannel");
+            QVBoxLayout* v1 = new QVBoxLayout();
+            v1->addWidget(plugin->createWidget());
+            v1->setContentsMargins(0,0,0,0);
+            dutDlg->setLayout(v1);
 
+            int i = plugin->init();
+            dutDlg->resize(640, 480);
+            dutDlg->show();
+        }
+
+    }
+    else if (action->text() == FCT_PANNEL)
+    {
+
+    }
 }
 
 void MainWindow::prcoMsgBySelf(const IMessage* msg)
