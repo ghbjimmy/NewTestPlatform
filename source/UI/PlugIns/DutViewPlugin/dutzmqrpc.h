@@ -2,6 +2,7 @@
 #define DUTZMQRPC_H
 
 #include <QString>
+#include <QObject>
 
 class ZmqSocket;
 namespace std
@@ -10,8 +11,9 @@ namespace std
 }
 
 
-class DutZmqRpc
+class DutZmqRpc : public QObject
 {
+    Q_OBJECT
 public:
     DutZmqRpc(int index);
     ~DutZmqRpc();
@@ -22,6 +24,14 @@ public:
     void stop();
     inline bool isStop() const {return _isStop;}
     inline ZmqSocket* getSubSocket() const {return _subSocket;}
+
+
+    bool sendCommand(const QString& sendMsg, QString& recvMsg);
+
+    bool procSubRecvMsg(const QString& msg);
+
+signals:
+    void dutMsgSignal(int index, const QString& msg);
 
 private:
     int _index;

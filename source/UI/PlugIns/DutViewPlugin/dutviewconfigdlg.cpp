@@ -42,7 +42,7 @@ void DutViewConfigDlg::setupUI()
     h1->addWidget(okBtn);
     h1->addWidget(cancelBtn);
 
-    connect(okBtn, SIGNAL(clicked()), this, SLOT(onOk()));
+    connect(okBtn, SIGNAL(clicked()), this, SLOT(onOK()));
     connect(cancelBtn, SIGNAL(clicked()), this, SLOT(onCancel()));
 
     QVBoxLayout* v1 = new QVBoxLayout();

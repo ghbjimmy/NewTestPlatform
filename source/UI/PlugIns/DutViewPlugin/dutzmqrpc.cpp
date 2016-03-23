@@ -28,6 +28,7 @@ static void sub_recvData(void* obj)
             Buffer rcvBuff;
             int cnt = subSocket->recvData(rcvBuff);
             QString recvMsg = QString::fromLocal8Bit(rcvBuff.getBuf(), rcvBuff.getLen());
+            rpc->procSubRecvMsg(recvMsg);
         }
     }
 
@@ -103,4 +104,35 @@ void DutZmqRpc::stop()
 {
     _isStop = true;
     _subThread->join();
+}
+
+bool DutZmqRpc::procSubRecvMsg(const QString& msg)
+{
+    emit dutMsgSignal(_index, msg);
+    return true;
+}
+
+bool DutZmqRpc::sendCommand(const QString& sendMsg, QString& recvMsg)
+{
+    int len = _reqSocket->sendData(sendMsg.toStdString().c_str(), sendMsg.length());
+    if (len < 0)
+        return false;
+
+    if (_reqSocket->select(ZMQ_POLLIN, TIME_OUT) == 0)
+    {
+        LogMsg(Error, "sendCommand failed. error is : recv data over time.");
+        return false;
+    }
+
+    Buffer recvbuf;
+    if (_reqSocket->recvData(recvbuf) < 0)
+    {
+        LogMsg(Error, "sendCommand failed. error is : recv data failed.");
+        return false;
+    }
+
+    QByteArray array(recvbuf.getBuf(), recvbuf.getLen());
+    recvMsg = QString(array);
+
+    return true;
 }

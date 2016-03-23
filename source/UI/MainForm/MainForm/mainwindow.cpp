@@ -420,7 +420,7 @@ void MainWindow::onMenuAction()
         IPlugin* plugin = loadLibary(path);
         if (plugin != NULL)
         {
-            QDialog* dutDlg = new QDialog();
+            QDialog* dutDlg = new QDialog(this);
             dutDlg->setModal(false);
             dutDlg->setWindowTitle("Dut Debug Pannel");
             QVBoxLayout* v1 = new QVBoxLayout();

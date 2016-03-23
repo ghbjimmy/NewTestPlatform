@@ -4,6 +4,7 @@
 #include "qlog.h"
 
 #include "command.h"
+#include "ZmqSocket.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -23,6 +24,41 @@ void testDecode()
 
 
 int main(int argc, char *argv[]){
+
+
+    void *context = zmq_ctx_new ();
+    void *zsocket = zmq_socket(context, ZMQ_REQ);
+
+    int ret1 = zmq_connect(zsocket, "tcp://127.0.0.1:5560");
+
+    zmq_setsockopt(zsocket, ZMQ_RCVTIMEO, (void*)&TIME_OUT, sizeof(int));
+
+    char buffer [255];
+    char *send_s = "Hello";
+    int len11 = zmq_send (zsocket, send_s, strlen(send_s), 0);
+
+    char szBuf1[1024];
+    int len4 = zmq_recv(zsocket, &szBuf1, sizeof(szBuf1), 0);
+
+    zmq_close (zsocket);
+    zmq_ctx_shutdown (context);
+
+    ZmqSocket* reqSocket = new ZmqSocket(ZMQ_REQ);
+    if (!reqSocket->connect("127.0.0.1", 9950))
+    {
+        //LogMsg(Error, "connet sequencer req failed. ip:%s port %d", reqIp.toStdString().c_str(), reqPort);
+        return false;
+    }
+
+    reqSocket->setSockOpt(ZMQ_RCVTIMEO, (void*)&TIME_OUT, sizeof(int));
+    reqSocket->setSockOpt(ZMQ_SNDTIMEO, (void*)&TIME_OUT, sizeof(int));
+    reqSocket->sendData("fad", 3);
+
+    Buffer rbuf;
+    int ret = reqSocket->recvData(rbuf);
+    delete reqSocket;
+
+
     LogMsg(Error, "fadaf");
     TItemStart itemStart;
     int ss1 = sizeof(TItemStart);

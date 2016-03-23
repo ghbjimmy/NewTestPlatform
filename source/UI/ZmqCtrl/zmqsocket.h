@@ -15,6 +15,9 @@ public:
     bool connect(const char* szSvrIp, int port);
     int bind(const char* szSvrIp, int port);
     int sendData(const Buffer& buf);
+
+    int sendData(const char* szData, int len);
+
     int recvData(Buffer& buf);
 
     int setSockOpt(int sockOpt, void* val, int len); //ZMQ_RCVTIMEO ZMQ_SNDTIMEO ZMQ_SUBSCRIBE

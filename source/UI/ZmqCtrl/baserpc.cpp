@@ -32,7 +32,7 @@ static void sub_recvData(void* obj)
         if (subSocket->select(ZMQ_POLLIN, 500) == 0)
         {
             timeoutNum++;
-            if (timeoutNum >= 12)
+            if (timeoutNum >= 18)
             {
                 rpc->setAlive(false);
                 rpc->aliveNoity(false);

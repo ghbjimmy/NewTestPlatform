@@ -12,11 +12,14 @@
 #include <QListWidget>
 #include <QFile>
 #include <QDomDocument>
-
+#include <QLineEdit>
+#include <QSpacerItem>
+#include <QMessageBox>
 
 static const QString& DUT_CONFIG = "dutconfig.xml";
 DutViewForm::DutViewForm(IPlugin* plugIn, QWidget *parent) : QWidget(parent)
 {
+    _isAutoScroll = true;
     _plugIn = plugIn;
     setupUI();
 }
@@ -29,10 +32,10 @@ DutViewForm::~DutViewForm()
 QToolBar* DutViewForm::createToolBar()
 {
     QToolBar* bar = new QToolBar();
-    QToolButton* tBtn = new QToolButton();
-    connect(tBtn, SIGNAL(clicked()), this, SLOT(onConfig()));
-    tBtn->setText("Config");
-    bar->addWidget(tBtn);
+    _tConfigBtn = new QToolButton();
+    connect(_tConfigBtn, SIGNAL(clicked()), this, SLOT(onConfig()));
+    _tConfigBtn->setText("Config");
+    bar->addWidget(_tConfigBtn);
 
     _tStartBtn = new QToolButton();
     connect(_tStartBtn, SIGNAL(clicked()), this, SLOT(onStart()));
@@ -45,39 +48,52 @@ QToolBar* DutViewForm::createToolBar()
     _tStopBtn->setText("Stop");
     bar->addWidget(_tStopBtn);
 
+
+    _tClearMsgBtn = new QToolButton();
+    connect(_tClearMsgBtn, SIGNAL(clicked()), this, SLOT(onClear()));
+    _tClearMsgBtn->setText("Clear");
+    bar->addWidget(_tClearMsgBtn);
+
+    _tSelAutoScrollBtn = new QToolButton();
+    connect(_tSelAutoScrollBtn, SIGNAL(clicked()), this, SLOT(onScroll()));
+    _tSelAutoScrollBtn->setText("AutoScroll");
+    bar->addWidget(_tSelAutoScrollBtn);
     return bar;
 }
 
 void DutViewForm::setupUI()
 { 
     QToolBar* bar = createToolBar();
-    QComboBox* cbx = new QComboBox();
+    _cbx = new QComboBox();
+    _cbxListWgt = new QListWidget();
+    _cbx->setModel(_cbxListWgt->model());
+    _cbx->setView(_cbxListWgt);
+    _cbx->setEditable(true);
 
-    QListWidget* list_widget = new QListWidget();
-    cbx->setModel(list_widget->model());
-    cbx->setView(list_widget);
-    cbx->setEditable(true);
+    _sendBtn = new QPushButton();
+    _sendBtn->setText("Send");
+    _sendBtn->setEnabled(false);
+    connect(_sendBtn, SIGNAL(clicked()), this, SLOT(onSend()));
 
-    for (int i = 0; i < 6; i++)
-    {
-        list_widget->addItem("QQ" + QString::number(i));
-    }
-
-
-    QPushButton* btn = new QPushButton();
-    btn->setText("Send");
     QHBoxLayout* h1 = new QHBoxLayout();
-    h1->addWidget(cbx, 1);
-    h1->addWidget(btn);
+    h1->addWidget(_cbx, 1);
+    h1->addWidget(_sendBtn);
     h1->setContentsMargins(0,0,0,0);
 
     _tabWgt = new QTabWidget();
+
+    _recvDataEdit = new QLineEdit();
+    QHBoxLayout* h2 = new QHBoxLayout();
+    h2->addWidget(_recvDataEdit, 1);
+    h2->addSpacerItem(new QSpacerItem(80,10, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    h2->setContentsMargins(0,0,0,0);
 
     QVBoxLayout* v1 = new QVBoxLayout();
     v1->addWidget(bar);
     v1->addWidget(_tabWgt, 1);
     v1->addLayout(h1);
-    v1->setContentsMargins(3,3,3,3);
+    v1->addLayout(h2);
+    //v1->setContentsMargins(3,3,3,3);
 
     this->setLayout(v1);
 
@@ -90,10 +106,12 @@ bool DutViewForm::LoadCfg(const QString& path)
     if (ret)
     {
         const QVector<TSlotConfig>& datas = _cfgDlg->getData();
-        for (int i = 0; i < datas.size(); ++i)
+        int size = datas.size();
+        for (int i = 0; i < size; ++i)
         {
             QListWidget* listwgt = new QListWidget();
             _tabWgt->addTab(listwgt, "UUT" + QString::number(i+1));
+            _msgList.push_back(listwgt);
         }
     }
 
@@ -118,12 +136,15 @@ void DutViewForm::onStart()
             continue;
         }
 
+        connect(rpc, SIGNAL(dutMsgSignal(int, const QString&)), this, SLOT(onDutRecvMsg(int,const QString&)));
         rpc->start();
         dutRpcs.push_back(rpc);
     }
 
+    _tConfigBtn->setEnabled(false);
     _tStartBtn->setEnabled(false);
     _tStopBtn->setEnabled(true);
+    _sendBtn->setEnabled(true);
 }
 
 void DutViewForm::onStop()
@@ -136,6 +157,80 @@ void DutViewForm::onStop()
 
     dutRpcs.clear();
 
+    _tConfigBtn->setEnabled(true);
     _tStartBtn->setEnabled(true);
     _tStopBtn->setEnabled(false);
+    _sendBtn->setEnabled(false);
+}
+
+void DutViewForm::onClear()
+{
+    int size = _msgList.size();
+    for (int i = 0; i < size; ++i)
+    {
+        _msgList[i]->clear();
+    }
+}
+
+void DutViewForm::onScroll()
+{
+    _isAutoScroll = !_isAutoScroll;
+
+    _tSelAutoScrollBtn->setText(_isAutoScroll ? "AutoScroll" : "NoScroll");
+}
+
+void DutViewForm::onSend()
+{
+    QString curCmd = _cbx->currentText();
+    if (curCmd.isEmpty())
+    {
+        QMessageBox::warning(this, "Send Data", "Please Input Command Data.");
+        return;
+    }
+
+    int index = _tabWgt->currentIndex();
+    DutZmqRpc* curRpc = dutRpcs[index];
+
+    QString recvData;
+    if (!curRpc->sendCommand(curCmd,recvData))
+    {
+        _recvDataEdit->setText("error:recvOverTime.");
+    }
+    else
+    {
+        _recvDataEdit->setText(recvData);
+
+        bool existFlag = false;
+        int cnt = _cbxListWgt->count();
+        for (int i = 0; i < cnt; ++i)
+        {
+            if (curCmd == _cbxListWgt->item(i)->text())
+            {
+                existFlag = true;
+                break;
+            }
+        }
+        if (!existFlag)
+        {
+            _cbxListWgt->addItem(curCmd);
+            if (cnt > 10)
+            {
+                QListWidgetItem* item = _cbxListWgt->takeItem(0);
+                _cbxListWgt->removeItemWidget(item);
+            }
+        }
+    }
+}
+
+void DutViewForm::onDutRecvMsg(int index, const QString& msg)
+{
+    if (index < _msgList.size())
+    {
+        _msgList[index]->addItem(msg);
+        if (_isAutoScroll)
+        {
+            int size = _msgList[index]->count();
+            _msgList[index]->setCurrentRow(size - 1);
+        }
+    }
 }

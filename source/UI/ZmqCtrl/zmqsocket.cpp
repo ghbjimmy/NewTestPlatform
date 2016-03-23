@@ -14,10 +14,16 @@ ZmqSocket::ZmqSocket(int type)
 ZmqSocket::~ZmqSocket()
 {
     if (_socket != NULL)
+    {
         zmq_close(_socket);
+        _socket = NULL;
+    }
 
     if (_context != NULL)
-        zmq_ctx_destroy(_context);
+    {
+       // zmq_ctx_destroy(_context);
+       // _context = NULL;
+    }
 }
 
 std::string createAddress(const char* ip, int port)
@@ -100,6 +106,18 @@ int ZmqSocket::sendData(const Buffer& buf)
     {
         LogMsg(Error, "send data error : %s", zmq_strerror(zmq_errno()));
         return false;
+    }
+
+    return ret;
+}
+
+int ZmqSocket::sendData(const char* szData, int len)
+{
+    int ret = zmq_send(_socket, szData, len, 0);
+    if (ret < 0)
+    {
+       LogMsg(Error, "send data error : %s", zmq_strerror(zmq_errno()));
+       return false;
     }
 
     return ret;
