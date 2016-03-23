@@ -416,23 +416,28 @@ void MainWindow::onMenuAction()
     }
     else if (action->text() == DUT_PANNEL)
     {
-        QString path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\DutViewPlugin\\debug\\DutViewPlugin.dll";
-        IPlugin* plugin = loadLibary(path);
-        if (plugin != NULL)
+        static bool isLoad = false;
+        if (!isLoad)
         {
-            QDialog* dutDlg = new QDialog(this);
-            dutDlg->setModal(false);
-            dutDlg->setWindowTitle("Dut Debug Pannel");
-            QVBoxLayout* v1 = new QVBoxLayout();
-            v1->addWidget(plugin->createWidget());
-            v1->setContentsMargins(0,0,0,0);
-            dutDlg->setLayout(v1);
+            QString path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\DutViewPlugin\\debug\\DutViewPlugin.dll";
+            IPlugin* plugin = loadLibary(path);
+            if (plugin != NULL)
+            {
+                QDialog* dutDlg = new QDialog(this);
+                dutDlg->setModal(false);
+                dutDlg->setWindowTitle("Dut Debug Pannel");
+                QVBoxLayout* v1 = new QVBoxLayout();
+                v1->addWidget(plugin->createWidget());
+                v1->setContentsMargins(0,0,0,0);
+                dutDlg->setLayout(v1);
 
-            int i = plugin->init();
-            dutDlg->resize(640, 480);
-            dutDlg->show();
+                int i = plugin->init();
+                dutDlg->resize(640, 480);
+                dutDlg->show();
+            }
+
+            isLoad = true;
         }
-
     }
     else if (action->text() == FCT_PANNEL)
     {

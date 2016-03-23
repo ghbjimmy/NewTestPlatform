@@ -211,7 +211,7 @@ TItemEnd* CVSDataAdapter::convertItemEnd(const QString& itemJson)
     }
     if (obj.contains("result"))
     {
-        itemEnd->result = obj.take("result").toBool() ? "True" : "False";
+        itemEnd->result = obj.take("result").toInt();
     }
     if (obj.contains("error"))
     {

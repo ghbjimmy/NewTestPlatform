@@ -37,7 +37,9 @@ SOURCES += main.cpp\
     ../../ZmqCtrl/sequencermgr.cpp \
     ../../ZmqCtrl/testenginemgr.cpp \
     ../../ZmqCtrl/statemachinemgr.cpp \
-    ../../ZmqCtrl/baserpc.cpp
+    ../../ZmqCtrl/baserpc.cpp \
+    startloaderform.cpp \
+    startloadermgr.cpp
 
 HEADERS  += mainwindow.h \
     ../../Util/libaryparser.h \
@@ -58,7 +60,9 @@ HEADERS  += mainwindow.h \
     ../../ZmqCtrl/sequencermgr.h \
     ../../ZmqCtrl/testenginemgr.h \
     ../../ZmqCtrl/statemachinemgr.h \
-    ../../ZmqCtrl/baserpc.h
+    ../../ZmqCtrl/baserpc.h \
+    startloaderform.h \
+    startloadermgr.h
 
 FORMS    +=
 

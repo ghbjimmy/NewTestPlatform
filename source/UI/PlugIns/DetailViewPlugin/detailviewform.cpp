@@ -87,7 +87,7 @@ bool DetailViewForm::procItemEnd(int index, const QString& data)
 
         _progressForm->increaseBarValue(index);
 
-        if (itemEnd->result == "False")//出现错误，要往外发通知其他插件结果
+        if (itemEnd->result == "-1")//出现错误，要往外发通知其他插件结果
         {
             ChannelStateMsg msg;
             msg.setData(index, -1);

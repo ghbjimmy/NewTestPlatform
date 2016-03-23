@@ -11,6 +11,11 @@
 #include <QJsonArray>
 #include "structdefine.h"
 
+#include <QSplashScreen>
+#include <QDesktopWidget>
+#include "startloaderform.h"
+
+#include <thread>
 
 void testDecode()
 {
@@ -22,8 +27,21 @@ void testDecode()
     rsp->decode(buffer);
 }
 
+void test()
+{
+    // a.exec();
+    //return 0;
 
-int main(int argc, char *argv[]){
+    QPixmap pixmap("D:\\Work\\tm_platform_new\\source\\UI\\MainForm\\MainForm\\Resources\\start.jpg");
+    QSplashScreen splash(pixmap);
+    splash.show();
+
+
+    splash.showMessage("hahahahddddddddxxxxxx",  Qt::AlignRight | Qt::AlignTop);
+    splash.showMessage("111hahahahddddddddxxxxxx", Qt::AlignRight | Qt::AlignTop);
+    splash.showMessage("22222hahahahddddddddxxxxxx", Qt::AlignRight | Qt::AlignTop);
+    splash.showMessage("3333hahahahddddddddxxxxxx", Qt::AlignRight | Qt::AlignTop);
+    splash.showMessage("4444hahahahddddddddxxxxxx", Qt::AlignRight | Qt::AlignTop);
 
 
     void *context = zmq_ctx_new ();
@@ -47,7 +65,7 @@ int main(int argc, char *argv[]){
     if (!reqSocket->connect("127.0.0.1", 9950))
     {
         //LogMsg(Error, "connet sequencer req failed. ip:%s port %d", reqIp.toStdString().c_str(), reqPort);
-        return false;
+        return;
     }
 
     reqSocket->setSockOpt(ZMQ_RCVTIMEO, (void*)&TIME_OUT, sizeof(int));
@@ -67,7 +85,7 @@ int main(int argc, char *argv[]){
     itemStart.tid = "abdef";
     int ss2 = sizeof(TItemStart);
     //testDecode();
-   // return 1;
+    // return 1;
     const char* sbuf = "{\"jsonrpc\": \"1.0\", \"id\": \"{3ecdd30a-8040-4084-b582-25dbac813e3a}\", \"result\": \"/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv has been loaded\"}";
     int len = strlen(sbuf);
     char* szBuf = new char[len + 1];
@@ -82,26 +100,47 @@ int main(int argc, char *argv[]){
     if (!document.isObject())
     {
         delete szBuf;
-        return false;
+        return;
     }
-
 
     LoadCsvCmdReq req;
     req.setParam("/Users/mac/Desktop/Hantest_plan__0322_11h.csv");
     Buffer buf;
     bool ff = req.encode(buf);
+}
 
+int main(int argc, char *argv[]){
 
     QApplication a(argc, argv);
+
+
+    int isFinish = 0;
+
+    StartLoaderForm startLoadForm(isFinish);
+    startLoadForm.show();
+    startLoadForm.move ((QApplication::desktop()->width() - startLoadForm.width())/2,
+                        (QApplication::desktop()->height() - startLoadForm.height())/2);
+
+
+    startLoadForm.start();
+
+    while(isFinish == 0)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        a.processEvents();
+    }
+
+    startLoadForm.close();
+
+
+
+
     MainWindow w;
 
-   // const char* ip = "tcp://172.15.3.106:5555";
-    //const char* ip = "tcp://127.0.0.1:6200";
-    //const char* ip = "tcp://172.15.3.78:6200";
-    //bool flag = w.testZmq(ip);
     w.init();
     w.show();
 
+    //splash.finish(&w);
     a.exec();
 
     return 0;
