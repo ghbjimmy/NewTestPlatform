@@ -67,3 +67,13 @@ StartTestMsg::~StartTestMsg()
 {
 
 }
+
+StopTestMsg::StopTestMsg()
+{
+    _id = STOP_TEST_MSG;
+}
+
+StopTestMsg::~StopTestMsg()
+{
+
+}

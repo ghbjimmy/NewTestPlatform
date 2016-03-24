@@ -81,11 +81,11 @@ private:
     QVector<QString> _items;
 };
 
-class StartTestCmdReq : public CommandBase
+class SimpleFuncCmdReq : public CommandBase
 {
 public:
-    StartTestCmdReq();
-    ~StartTestCmdReq();
+    SimpleFuncCmdReq();
+    ~SimpleFuncCmdReq();
 
     bool encode(Buffer& buf);
     bool decode(const Buffer& buf);
@@ -96,11 +96,11 @@ private:
     QString _funcName;
 };
 
-class StartTestCmdRsp : public CommandBase
+class SimpleFuncCmdRsp : public CommandBase
 {
 public:
-    StartTestCmdRsp();
-    ~StartTestCmdRsp();
+    SimpleFuncCmdRsp();
+    ~SimpleFuncCmdRsp();
 
     bool encode(Buffer& buf);
     bool decode(const Buffer& buf);

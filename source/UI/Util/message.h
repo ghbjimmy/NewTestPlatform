@@ -8,6 +8,7 @@ const int LIST_CSV_MSG = 1000;
 const int PROC_ITEMSTATE_MSG = 1001;
 const int CHANEL_STATE_MSG = 1002;
 const int START_TEST_MSG = 1003;
+const int STOP_TEST_MSG = 1004;
 
 class IMessage
 {
@@ -90,6 +91,17 @@ class StartTestMsg : public IMessage
 public:
     StartTestMsg();
     ~StartTestMsg();
+
+private:
+
+};
+
+//停止测试命令
+class StopTestMsg : public IMessage
+{
+public:
+    StopTestMsg();
+    ~StopTestMsg();
 
 private:
 

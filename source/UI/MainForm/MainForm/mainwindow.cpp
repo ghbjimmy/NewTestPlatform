@@ -478,11 +478,21 @@ void MainWindow::onMenuAction()
 
 void MainWindow::prcoMsgBySelf(const IMessage* msg)
 {
-    if (msg->messageID() == START_TEST_MSG) //开始测试
+    int msgId = msg->messageID();
+    if (msgId == START_TEST_MSG) //开始测试
     {
-        if (!_smMgr->StartTest())
+        if (!_smMgr->startTest())
         {
             LogMsg(Error, "start to test failed.");
+            return;
+        }
+    }
+    else if (msgId == STOP_TEST_MSG)
+    {
+        if (!_smMgr->stopTest())
+        {
+            LogMsg(Error, "stop to test failed.");
+            return;
         }
     }
 }

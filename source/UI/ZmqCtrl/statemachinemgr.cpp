@@ -57,12 +57,12 @@ void StateMachineMgr::stopAll()
     }
 }
 
-bool StateMachineMgr::StartTest()
+bool StateMachineMgr::startTest()
 {
     bool ret = false;
     for (int i = 0; i < SM_NUM; ++i)
     {
-        ret = _sms[i]->StartTest();
+        ret = _sms[i]->startTest();
     }
 
     return true;

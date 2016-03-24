@@ -326,6 +326,9 @@ void InteractionViewForm::onStart()
 
 void InteractionViewForm::onStop()
 {
+    StopTestMsg msg;
+    _plugIn->sendMessage(&msg);
+
     _startBtn->setEnabled(true);
     _stopBtn->setEnabled(false);
 }

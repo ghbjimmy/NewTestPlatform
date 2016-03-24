@@ -11,7 +11,12 @@ public:
 
     bool procSubRecvMsg(const QString& msg);
 
-    bool StartTest();
+    bool startTest();
+    bool stopTest();
+
+private:
+    bool execFunc(const QString& func);
+
 };
 
 #endif // STATEMACHINERPC_H

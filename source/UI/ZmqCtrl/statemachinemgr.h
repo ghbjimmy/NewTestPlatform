@@ -19,7 +19,7 @@ public:
     bool startAll();
     void stopAll();
 
-    bool StartTest(); //开始测试
+    bool startTest(); //开始测试
     bool stopTest(); //停止测试
 
 signals:

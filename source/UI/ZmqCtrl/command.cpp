@@ -218,17 +218,17 @@ bool ListCmdRsp::decode(const Buffer& buf)
     return true;
 }
 
-StartTestCmdReq::StartTestCmdReq()
+SimpleFuncCmdReq::SimpleFuncCmdReq()
 {
 
 }
 
-StartTestCmdReq::~StartTestCmdReq()
+SimpleFuncCmdReq::~SimpleFuncCmdReq()
 {
 
 }
 
-bool StartTestCmdReq::encode(Buffer& buf)
+bool SimpleFuncCmdReq::encode(Buffer& buf)
 {
     QVariantMap cmdMap;
     cmdMap.insert("function", _funcName);
@@ -243,27 +243,27 @@ bool StartTestCmdReq::encode(Buffer& buf)
     return true;
 }
 
-bool StartTestCmdReq::decode(const Buffer& buf)
+bool SimpleFuncCmdReq::decode(const Buffer& buf)
 {
     return true;
 }
 
-StartTestCmdRsp::StartTestCmdRsp()
+SimpleFuncCmdRsp::SimpleFuncCmdRsp()
 {
 
 }
 
-StartTestCmdRsp::~StartTestCmdRsp()
+SimpleFuncCmdRsp::~SimpleFuncCmdRsp()
 {
 
 }
 
-bool StartTestCmdRsp::encode(Buffer& buf)
+bool SimpleFuncCmdRsp::encode(Buffer& buf)
 {
     return true;
 }
 
-bool StartTestCmdRsp::decode(const Buffer& buf)
+bool SimpleFuncCmdRsp::decode(const Buffer& buf)
 {
     if (!buf.isValid())
         return false;
