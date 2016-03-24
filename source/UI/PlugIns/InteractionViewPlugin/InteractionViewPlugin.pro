@@ -9,6 +9,8 @@ QT       += widgets
 TARGET = InteractionViewPlugin
 TEMPLATE = lib
 
+CONFIG += c++11
+
 DEFINES += TPLUGIN_LIBRARY
 
 INCLUDEPATH += ../ \

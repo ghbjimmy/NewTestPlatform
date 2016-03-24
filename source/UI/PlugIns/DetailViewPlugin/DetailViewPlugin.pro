@@ -9,6 +9,7 @@ QT       += widgets
 TARGET = DetailViewPlugin
 TEMPLATE = lib
 
+CONFIG += c++11
 DEFINES += TPLUGIN_LIBRARY
 
 INCLUDEPATH += ../ \

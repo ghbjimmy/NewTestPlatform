@@ -9,6 +9,8 @@ QT       += widgets xml
 TARGET = FctViewPlugin
 TEMPLATE = lib
 
+CONFIG += c++11
+
 DEFINES += FCTVIEWPLUGIN_LIBRARY
 
 INCLUDEPATH += ../ \

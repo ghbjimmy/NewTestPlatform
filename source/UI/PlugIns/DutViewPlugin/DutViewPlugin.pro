@@ -9,6 +9,8 @@ QT       += widgets xml
 TARGET = DutViewPlugin
 TEMPLATE = lib
 
+CONFIG += c++11
+
 DEFINES += TPLUGIN_LIBRARY
 
 LIBS += D:/Work/tm_platform_new/source/UI/ZmqCtrl/ZeroMQ/lib/libzmq-v120-mt-4_0_4.lib
