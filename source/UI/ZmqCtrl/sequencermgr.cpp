@@ -63,9 +63,9 @@ QVector<int> SequencerMgr::loadProfile(const QString& csvFilePath)
     QVector<int> failVecs;
     for (int i = 0; i < SEQ_NUM; ++i)
     {
-        if (!_sequencers[i]->isAlive())
+        if (!_sequencers[i]->getAliveState() == 2)
             continue;
-
+        
         if (!_sequencers[i]->loadProfile(csvFilePath))
         {
             LogMsg(Error, "sequencers[%d] load loadProfile failed.", i);
@@ -82,16 +82,11 @@ bool SequencerMgr::getCsvContent(QVector<QString>& items)
     //目前只需从第一个活的那里获取结果就行
     for (int i = 0; i < SEQ_NUM; ++i)
     {
-        if (!_sequencers[i]->isAlive())
+        if (!_sequencers[i]->getAliveState() != 1)
             continue;
 
         return _sequencers[i]->getCsvContent(items);
     }
 
     return false;
-}
-
-bool SequencerMgr::getSequenceIsAlive(int index)
-{
-    return _sequencers[index]->isAlive();
 }

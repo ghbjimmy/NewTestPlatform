@@ -20,6 +20,7 @@ public:
     void stopAll();
 
     bool StartTest(); //开始测试
+    bool stopTest(); //停止测试
 
 signals:
     void isAliveSignal(int id, bool isAlive, bool isShow);

@@ -4,7 +4,6 @@
 
 #include <QVector>
 #include "baserpc.h"
-#include "structdefine.h"
 
 class SequencerRpc : public BaseRpc
 {

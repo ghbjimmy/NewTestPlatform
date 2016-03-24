@@ -29,7 +29,6 @@ public:
     //获取csv内存
     bool getCsvContent(QVector<QString>& items);
 
-    bool getSequenceIsAlive(int index);
 
 signals:
     void isAliveSignal(int id, bool isAlive, bool isShow);

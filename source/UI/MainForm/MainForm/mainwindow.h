@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QVector>
 #include "const.h"
-#include "structdefine.h"
 
 class IPlugin;
 class PluginSubjecter;
@@ -31,18 +30,20 @@ public:
     ~MainWindow();
 
     bool init();
-    IPlugin*  loadLibary(const QString& path);
+
+    void startLoadFile();
+    void startHeartBeat();
 
     static MainWindow* getInstance();
-
     void dispatchMessage(const IMessage* msg);
 
 private:
+    bool initPlugin();
+
+    IPlugin*  loadLibary(const QString& path);
+
     void setupUI();
     QWidget* createDetailViewWgt();
-    QWidget* createScopeViewWgt();
-    QWidget* createInteractionViewWgt();
-
     QWidget* createStatusWgt();
 
     void createMenu();
@@ -63,6 +64,11 @@ private:
     static MainWindow* _instance;
 
     QWidget* mTitleWgt;
+    QWidget* _detailViewWgt;
+    QWidget* _scopeViewWgt;
+    QWidget* _interViewWgt;
+    QLabel* _csvVersionlbl;
+
     PluginSubjecter* _pluginSubjecter;
     QVector<LibaryParser*> _libParsers;
 

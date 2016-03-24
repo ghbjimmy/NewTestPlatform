@@ -67,3 +67,8 @@ bool StateMachineMgr::StartTest()
 
     return true;
 }
+
+bool StateMachineMgr::stopTest()
+{
+    return true;
+}

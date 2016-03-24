@@ -4,8 +4,6 @@
 #include "command.h"
 #include "const.h"
 
-#include <thread>
-
 QString getRecvData(const QString& recvMsg)
 {
     QStringList list = recvMsg.split("!@#");
@@ -77,7 +75,7 @@ BaseRpc::BaseRpc(int index)
     _subSocket = NULL;
     _reqSocket = NULL;
     _subThread = NULL;
-    _aliveFlag = 0;
+    _aliveState = 0;
     _isStop = false;
 }
 
@@ -146,19 +144,22 @@ void BaseRpc::stop()
 
 void BaseRpc::setAlive(bool flag)
 {
-    _aliveFlag = (flag ? 1 : 2);
+    _aliveState = flag ? 1 : 2;
 }
 
-bool BaseRpc::isAlive()
+int BaseRpc::getAliveState()
 {
-    return _aliveFlag == 1 ? true : false;
+    return _aliveState;
 }
 
 
 void BaseRpc::aliveNoity(bool isShow)
 {
-    if (_aliveFlag != 0)
-        emit isAliveSignal(_index, isAlive(), isShow);
+    if (_aliveState != 0)
+    {
+        bool flag = _aliveState == 1 ? true : false;
+        emit isAliveSignal(_index, flag, isShow);
+    }
 }
 
 bool BaseRpc::procSubRecvMsg(const QString& msg)

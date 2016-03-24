@@ -70,12 +70,14 @@ bool SequencerRpc::loadProfile(const QString& csvFilePath)
     if (_reqSocket->sendData(sendbuf) < 0)
     {
         LogMsg(Error, "loadProfile failed. error is : send data failed");
+        setAlive(false);
         return false;
     }
 
     if (_reqSocket->select(ZMQ_POLLIN, TIME_OUT) == 0)
     {
         LogMsg(Error, "loadProfile failed. error is : recv data over time.");
+        setAlive(false);
         return false;
     }
 
@@ -83,6 +85,7 @@ bool SequencerRpc::loadProfile(const QString& csvFilePath)
     if (_reqSocket->recvData(recvbuf) < 0)
     {
         LogMsg(Error, "loadProfile failed. error is : recv data failed.");
+        setAlive(false);
         return false;
     }
 
@@ -90,6 +93,7 @@ bool SequencerRpc::loadProfile(const QString& csvFilePath)
     if (!rsp->decode(recvbuf))
     {
         LogMsg(Error, "loadProfile failed. error is : LoadCsvCmdRsp decode failed.");
+        setAlive(false);
         delete rsp;
         rsp = NULL;
         return false;
@@ -98,6 +102,7 @@ bool SequencerRpc::loadProfile(const QString& csvFilePath)
     bool ret = rsp->isSuccess();
     delete rsp;
     rsp = NULL;
+
     return ret;
 }
 

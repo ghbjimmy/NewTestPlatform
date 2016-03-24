@@ -116,21 +116,21 @@ int main(int argc, char *argv[]){
 
     int isFinish = 0;
 
-    StartLoaderForm startLoadForm(isFinish);
-    startLoadForm.show();
-    startLoadForm.move ((QApplication::desktop()->width() - startLoadForm.width())/2,
-                        (QApplication::desktop()->height() - startLoadForm.height())/2);
+    //StartLoaderForm startLoadForm(isFinish);
+    //startLoadForm.show();
+    //startLoadForm.move ((QApplication::desktop()->width() - startLoadForm.width())/2,
+    //                    (QApplication::desktop()->height() - startLoadForm.height())/2);
 
 
-    startLoadForm.start();
+    //startLoadForm.start();
 
-    while(isFinish == 0)
-    {
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        a.processEvents();
-    }
+   // while(isFinish == 0)
+    //{
+    //    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    //    a.processEvents();
+   // }
 
-    startLoadForm.close();
+   // startLoadForm.close();
 
 
 
@@ -139,8 +139,18 @@ int main(int argc, char *argv[]){
 
     w.init();
     w.show();
+    a.processEvents();
+    a.processEvents();
 
-    //splash.finish(&w);
+    QPixmap pixmap("D:\\Work\\tm_platform_new\\source\\UI\\MainForm\\MainForm\\Resources\\start1.png");
+    QSplashScreen splash(pixmap);
+    splash.show();
+
+    splash.showMessage("Load File........",  Qt::AlignRight | Qt::AlignBottom);
+    w.startLoadFile();
+    splash.finish(&w);
+
+    w.startHeartBeat();
     a.exec();
 
     return 0;

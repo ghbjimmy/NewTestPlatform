@@ -3,13 +3,9 @@
 
 #include <QString>
 #include <QObject>
+#include <thread>
 
 class ZmqSocket;
-namespace std
-{
-    class thread;
-}
-
 
 class DutZmqRpc : public QObject
 {

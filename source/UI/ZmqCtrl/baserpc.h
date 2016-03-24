@@ -2,12 +2,10 @@
 #define BASERPC_H
 
 #include <QObject>
+#include <thread>
 
 class ZmqSocket;
-namespace std
-{
-    class thread;
-}
+
 
 //通信对象基类，主要处理心跳流程，其它消息由子类处理
 
@@ -27,7 +25,7 @@ public:
 
     //由定时线程设置是否活着
     void setAlive(bool flag);
-    bool isAlive();
+    int getAliveState(); // 0 : 未知状态 1：活着 2:死亡
 
     //心跳通知
     void aliveNoity(bool isShow);
@@ -39,7 +37,7 @@ signals:
 
 protected:
     int _index;
-    int _aliveFlag;
+    int _aliveState;
 
     ZmqSocket* _subSocket;
     ZmqSocket* _reqSocket;

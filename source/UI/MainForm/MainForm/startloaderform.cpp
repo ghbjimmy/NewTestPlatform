@@ -4,7 +4,6 @@
 #include <QListWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <thread>
 
 static void startFun(void* obj)
 {

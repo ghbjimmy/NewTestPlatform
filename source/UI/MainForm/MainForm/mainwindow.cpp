@@ -28,6 +28,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDialog>
+#include <QMessageBox>
 
 static const QString& FCT_PANNEL = "FCT Pannel";
 static const QString& DUT_PANNEL = "Dut Pannel";
@@ -42,16 +43,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     _pluginSubjecter = new PluginSubjecter();
-
-    IPlugin* plugin = NULL;
-    QString path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\DetailViewPlugin\\debug\\DetailViewPlugin.dll";
-    plugin = loadLibary(path);
-
-    path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\ScopeViewPlugin\\debug\\ScopeViewPlugin.dll";
-    plugin = loadLibary(path);
-
-    path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\InteractionViewPlugin\\debug\\InteractionViewPlugin.dll";
-    plugin = loadLibary(path);
 
     setupUI();
     _instance = this;
@@ -81,6 +72,12 @@ MainWindow* MainWindow::getInstance()
 
 bool MainWindow::init()
 {
+    if (!initPlugin())
+    {
+        LogMsg(Error, "init Plugin failed.");
+        return false;
+    }
+
     _zmqCfgParse = new ZmqCfgParser();
     if (!_zmqCfgParse->parse("D:\\Work\\tm_platform_v2_1\\LuaDriver\\Driver\\config\\zmqports.json"))
     {
@@ -117,26 +114,82 @@ bool MainWindow::init()
 
     connect(_smMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onSmIsAlive(int,bool,bool)));
 
-    if (!_engineMgr->startAll())
+    return true;
+}
+
+bool MainWindow::initPlugin()
+{
+    IPlugin* plugin = NULL;
+    QString path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\DetailViewPlugin\\debug\\DetailViewPlugin.dll";
+    plugin = loadLibary(path);
+
+    if (NULL != plugin)
     {
-        LogMsg(Error, "start all enginer failed.");
-        return false;
+        QHBoxLayout* h1 = new QHBoxLayout();
+        h1->addWidget(plugin->createWidget());
+        h1->setContentsMargins(0,0,0,0);
+        _detailViewWgt->setLayout(h1);
     }
 
-    if (!_sequencerMgr->startAll())
+    path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\ScopeViewPlugin\\debug\\ScopeViewPlugin.dll";
+    plugin = loadLibary(path);
+    if (NULL != plugin)
     {
-        LogMsg(Error, "start all sequencer failed.");
-        return false;
+        QHBoxLayout* h1 = new QHBoxLayout();
+        h1->addWidget(plugin->createWidget());
+        h1->setContentsMargins(0,0,0,0);
+        _scopeViewWgt->setLayout(h1);
+        _scopeViewWgt->setMinimumHeight(0);
     }
 
-    if (!_smMgr->startAll())
-    {
-        LogMsg(Error, "start all enginer failed.");
-        return false;
-    }
 
+    path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\InteractionViewPlugin\\debug\\InteractionViewPlugin.dll";
+    plugin = loadLibary(path);
+    if (NULL != plugin)
+    {
+        QHBoxLayout* h1 = new QHBoxLayout();
+        h1->addWidget(plugin->createWidget());
+        h1->setContentsMargins(0,0,0,0);
+        _interViewWgt->setLayout(h1);
+    }
 
     return true;
+}
+
+void MainWindow::startLoadFile()
+{
+    QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/Hantest_plan__0322_11h.csv");
+    if (!failVecs.empty())
+    {
+        LogMsg(Error, "load profile failed. failed count is %d", failVecs.size());
+        //return;
+
+        QMessageBox::warning(this, "load file", "Load File failed. num=" + QString::number(failVecs.size()));
+    }
+
+    //list 命令
+    QVector<QString> items;
+    if (!_sequencerMgr->getCsvContent(items))
+    {
+        LogMsg(Error, "get content failed.");
+        return;
+    }
+
+    if (!items.isEmpty())
+    {
+        ListCsvFileMsg* listCsvMsg = new ListCsvFileMsg();
+        listCsvMsg->setData(items);
+        //发送结果到插件
+        dispatchMessage(listCsvMsg);
+        delete listCsvMsg;
+    }
+}
+
+void MainWindow::startHeartBeat()
+{
+    _engineMgr->startAll();
+    _sequencerMgr->startAll();
+    _smMgr->startAll();
 }
 
 IPlugin* MainWindow::loadLibary(const QString& path)
@@ -197,53 +250,23 @@ QWidget* createTitleWgt()
 
 QWidget* MainWindow::createDetailViewWgt()
 {
-    QLabel* lbl = new QLabel();
-    lbl->setFixedHeight(10);
-    lbl->setText("V1.0");
+    _csvVersionlbl = new QLabel();
+    _csvVersionlbl->setFixedHeight(10);
+    _csvVersionlbl->setText("V1.0");
     QHBoxLayout* h1 = new QHBoxLayout();
     h1->addStretch(1);
-    h1->addWidget(lbl);
+    h1->addWidget(_csvVersionlbl);
     h1->addSpacerItem(new QSpacerItem(10,10, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
-    QWidget* viewWgt = NULL;
-    IPlugin * pPlugin = _pluginSubjecter->getPlugin(DetailViewPluginName);
-    if (pPlugin == NULL)
-        viewWgt = new QWidget();
-    else
-        viewWgt = pPlugin->createWidget();
-
+    _detailViewWgt = new QWidget();
     QWidget* wgt = new QWidget();
     QVBoxLayout* v1 = new QVBoxLayout();
     v1->addLayout(h1);
-    v1->addWidget(viewWgt);
+    v1->addWidget(_detailViewWgt);
     wgt->setLayout(v1);
     v1->setSpacing(1);
     v1->setContentsMargins(QMargins(0,0,0,0));
     return wgt;
-}
-
-QWidget* MainWindow::createScopeViewWgt()
-{
-    QWidget* viewWgt = NULL;
-    IPlugin * pPlugin = _pluginSubjecter->getPlugin(ScopeViewPluginName);
-    if (pPlugin == NULL)
-        viewWgt = new QWidget();
-    else
-        viewWgt = pPlugin->createWidget();
-
-    return viewWgt;
-}
-
-QWidget* MainWindow::createInteractionViewWgt()
-{
-    QWidget* viewWgt = NULL;
-    IPlugin * pPlugin = _pluginSubjecter->getPlugin(InteractionViewPluginName);
-    if (pPlugin == NULL)
-        viewWgt = new QWidget();
-    else
-        viewWgt = pPlugin->createWidget();
-
-    return viewWgt;
 }
 
 QLabel* createNumLabel(int num)
@@ -263,6 +286,7 @@ QWidget* MainWindow::createStatusWgt()
     QWidget* statusWgt = new QWidget();
     QHBoxLayout* h1 = new QHBoxLayout();
     QLabel* seqLbl = new QLabel("Sequencer:");
+    h1->addSpacerItem(new QSpacerItem(10,10));
     h1->addWidget(seqLbl);
 
     for (int i = 0; i < 6; ++i)
@@ -337,40 +361,47 @@ void MainWindow::setupUI()
 {
     mTitleWgt = createTitleWgt();
     mTitleWgt->setFixedHeight(60);
+
     QWidget* mDetailViewWgt = createDetailViewWgt();
-    QWidget* mScopeViewWgt = createScopeViewWgt();
+    _scopeViewWgt = new QWidget();
+    UIUtil::setBgColor(_scopeViewWgt, Qt::gray);
+    _scopeViewWgt->setMinimumHeight(200);
+
     QWidget* statWidget = createStatusWgt();
     QVBoxLayout* v11 = new QVBoxLayout();
-    v11->addWidget(mScopeViewWgt, 1);
+    v11->addWidget(_scopeViewWgt, 1);
     v11->addWidget(statWidget);
-    //v11->setContentsMargins(0,0,0,0);
+    v11->setContentsMargins(0,0,0,6);
 
     QWidget* downWidget = new QWidget();
     downWidget->setLayout(v11);
 
-    QWidget* mInteractionViewWgt = createInteractionViewWgt();
-    mInteractionViewWgt->setFixedWidth(250);
+    _interViewWgt = new QWidget();
+    UIUtil::setBgColor(_interViewWgt, Qt::yellow);
+    _interViewWgt->setFixedWidth(250);
 
     QSplitter* split = new QSplitter(Qt::Orientation::Vertical);
     split->addWidget(mDetailViewWgt);
     split->addWidget(downWidget);
 
     split->setStretchFactor(0, 1);
+    split->setStretchFactor(1, 0);
 
     QHBoxLayout* h1 = new QHBoxLayout();
-    h1->addWidget(split,3);
-    h1->addWidget(mInteractionViewWgt,1);
+    h1->addWidget(split,1);
+    h1->addWidget(_interViewWgt);
 
     QVBoxLayout* v1 = new QVBoxLayout();
     v1->addWidget(mTitleWgt);
     v1->addLayout(h1);
 
-    v1->setContentsMargins(QMargins(0,0,0,0));
+    v1->setContentsMargins(QMargins(3,0,3,0));
     QWidget* centralWgt = new QWidget();
     centralWgt->setLayout(v1);
     this->setCentralWidget(centralWgt);
 
    createMenu();
+
     this->resize(1024,768);
 }
 

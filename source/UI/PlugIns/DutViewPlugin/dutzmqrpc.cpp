@@ -4,9 +4,6 @@
 #include "command.h"
 #include "const.h"
 
-#include <thread>
-
-
 static void sub_recvData(void* obj)
 {
     DutZmqRpc* rpc = (DutZmqRpc*)obj;
