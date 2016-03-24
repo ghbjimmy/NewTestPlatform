@@ -51,6 +51,7 @@ int InteractionViewPlugin::onMessage(const IMessage* msg)
             form->onSeqEnd(itemMsg->getIndex(), itemMsg->getData());
         }
 
+
         break;
     }
     default:

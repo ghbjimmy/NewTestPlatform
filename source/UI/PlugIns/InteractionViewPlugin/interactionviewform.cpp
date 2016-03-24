@@ -317,7 +317,7 @@ void InteractionViewForm::onSelCheckStateChanged(int state)
 
 void InteractionViewForm::onChanelStateMsg(int index, int result)
 {
-    //_btn[index]->showColor(result == -1 ? true : false);
+    _btn[index]->showColor(Qt::red);
 }
 
 void InteractionViewForm::onSeqStart(int index, const QString& data)

@@ -111,7 +111,7 @@ bool BaseRpc::init(const QString&  pubIp, int pubPort, const QString&  reqIp, in
             return false;
         }
 
-        _subSocket->setSockOpt(ZMQ_SUBSCRIBE, "", 0);
+        _subSocket->setSockOpt(ZMQ_SUBSCRIBE, (void*)"", 0);
     }
 
     if (!reqIp.isEmpty() && reqPort > 0)

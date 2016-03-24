@@ -87,17 +87,38 @@ bool DetailViewForm::procItemEnd(int index, const QString& data)
 
         _progressForm->increaseBarValue(index);
 
-        ChannelStateMsg msg; //失败活着出现错误，要往外发通知其他插件结果
-        if (itemEnd->result == 0)
+        if (itemEnd->result == 0 || itemEnd->result == -1)//失败或着出现错误，要往外发通知其他插件结果
         {
-            msg.setData(index, 0);
-        }
-        else if (itemEnd->result == -1)
-        {
-            msg.setData(index, -1);
+            ChannelStateMsg msg;
+             msg.setData(index, itemEnd->result);
+            _plugIn->sendMessage(&msg);
         }
 
-        _plugIn->sendMessage(&msg);
+        //结果状态标识
+        if (index == 0)
+        {
+            viewItem->uut1State = itemEnd->result;
+        }
+        else if (index == 1)
+        {
+            viewItem->uut2State = itemEnd->result;
+        }
+        else if (index == 2)
+        {
+            viewItem->uut3State = itemEnd->result;
+        }
+        else if (index == 3)
+        {
+            viewItem->uut4State = itemEnd->result;
+        }
+        else if (index == 4)
+        {
+            viewItem->uut5State = itemEnd->result;
+        }
+        else if (index == 5)
+        {
+            viewItem->uut6State = itemEnd->result;
+        }
     }
 
     delete itemEnd;

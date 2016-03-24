@@ -50,7 +50,7 @@ private:
     QVector<QString> _dataItems;
 };
 
-//处理seq事件消息
+//处理seq事件消息 itemStart itemEnd seqStart seqEnd
 class ProcItemStateMsg : public IMessage
 {
 public:
@@ -75,7 +75,7 @@ public:
     ChannelStateMsg();
     ~ChannelStateMsg();
 
-    void setData(int index, int result = -1);
+    void setData(int index, int result);
     inline int getIndex() const {return _index;}
     inline int getResult() const {return _result;}
 
