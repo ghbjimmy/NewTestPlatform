@@ -20,6 +20,9 @@ public:
 
     void onChanelStateMsg(int index, int result);
 
+    void onSeqStart(int index, const QString& data);
+    void onSeqEnd(int index, const QString& data);
+
 private:
     void setupUI();
     QHBoxLayout* createBtnLayout(UutButton*& btn1, int index, const QString& text);

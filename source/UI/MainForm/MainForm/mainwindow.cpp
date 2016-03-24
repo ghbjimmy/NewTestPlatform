@@ -93,8 +93,7 @@ bool MainWindow::init()
     }
 
     connect(_sequencerMgr, SIGNAL(isAliveSignal(int,bool,bool)), this, SLOT(onSeqIsAlive(int,bool,bool)));
-    connect(_sequencerMgr, SIGNAL(itemStartSignal(int,const QString&)), this, SLOT(onItemStart(int,const QString&)));
-    connect(_sequencerMgr, SIGNAL(itemEndSignal(int,const QString&)), this, SLOT(onItemEnd(int,const QString&)));
+    connect(_sequencerMgr, SIGNAL(eventSignal(int,int, const QString&)), this, SLOT(onSeqEvent(int,int, const QString&)));
 
     _engineMgr = new TestEngineMgr();
     if (!_engineMgr->initByCfg(_zmqCfgParse))
@@ -551,24 +550,13 @@ void MainWindow::onSmIsAlive(int index, bool isAlive, bool isShow)
     showStateColor(_smLbl, "StateMachine", index, isAlive, isShow);
 }
 
-void MainWindow::onItemStart(int index, const QString& item)
+void MainWindow::onSeqEvent(int index, int evt, const QString& item)
 {
-    //item_start
+    //item_start item_end seq_start seq_end
     ProcItemStateMsg* procItemStarteMsg = new ProcItemStateMsg();
-    procItemStarteMsg->setData(true, index, item);
+    procItemStarteMsg->setData(index, evt, item);
 
     //发送结果到插件
     dispatchMessage(procItemStarteMsg);
     delete procItemStarteMsg;
-}
-
-void MainWindow::onItemEnd(int index, const QString& item)
-{
-    //item_start
-    ProcItemStateMsg* procItemEndMsg = new ProcItemStateMsg();
-    procItemEndMsg->setData(false, index, item);
-
-    //发送结果到插件
-    dispatchMessage(procItemEndMsg);
-    delete procItemEndMsg;
 }

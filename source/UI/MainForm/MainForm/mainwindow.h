@@ -57,8 +57,7 @@ private slots:
     void onEngIsAlive(int index, bool isAlive, bool isShow);
     void onSmIsAlive(int index, bool isAlive, bool isShow);
 
-    void onItemStart(int index, const QString& item);
-    void onItemEnd(int index, const QString& item);
+    void onSeqEvent(int index, int evt, const QString& item);
 
 private:
     static MainWindow* _instance;

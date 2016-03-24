@@ -22,7 +22,7 @@ FailForm::~FailForm()
 
 void FailForm::procItemEnd(int index, const TItemEnd& itemEnd, TDetailViewItem* viewItem)
 {
-    if (itemEnd.result == "0")
+    if (itemEnd.result == 0)
     {
         TDetailViewItem* selfItem = new TDetailViewItem();
         *selfItem = *viewItem;

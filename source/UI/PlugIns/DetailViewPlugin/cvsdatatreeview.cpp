@@ -66,18 +66,18 @@ void CVSDataTreeView::procItemStart(int index, const TItemStart& data, TDetailVi
 void CVSDataTreeView::procItemEnd(int index, const TItemEnd& itemEnd, TDetailViewItem* viewItem)
 {
     QString text = "";
-    if (itemEnd.result == "False")
+    if (itemEnd.result == -1)
     {
         text = itemEnd.error;
     }
-    else if (itemEnd.result == "True")
+    else if (itemEnd.result == 1)
     {
         if (!itemEnd.value.isEmpty())
-            text = itemEnd.value;
+            text = "PASS";
         else
             text = itemEnd.value;
     }
-    else
+    else//失败
         text = itemEnd.result;
 
     setText(index, text, viewItem);

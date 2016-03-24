@@ -22,8 +22,7 @@ public:
     bool procSubRecvMsg(const QString& msg);
 
 signals:
-    void itemStartSignal(int index, const QString& item);
-    void itemEndSignal(int index, const QString& item);
+    void eventSignal(int index, int evt, const QString& item);
 
 private:
 

@@ -50,20 +50,20 @@ private:
     QVector<QString> _dataItems;
 };
 
-//处理进度消息
+//处理seq事件消息
 class ProcItemStateMsg : public IMessage
 {
 public:
     ProcItemStateMsg();
     ~ProcItemStateMsg();
 
-    void setData(bool isStart, int index, const QString& data);
-    inline bool isItemStart() const {return _itemStart;}
+    void setData(int index, int evt, const QString& data);
+    inline int getEventId() const {return _evtId;}
     inline int getIndex() const {return _index;}
     inline const QString& getData() const {return _data;}
 
 private:
-    bool _itemStart;
+    int _evtId;
     int _index;
     QString _data;
 };

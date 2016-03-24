@@ -47,11 +47,12 @@ int DetailViewPlugin::onMessage(const IMessage* msg)
     case PROC_ITEMSTATE_MSG:
     {
         const ProcItemStateMsg* itemMsg = (const ProcItemStateMsg*)msg;
-        if (itemMsg->isItemStart())
+        int evtId = itemMsg->getEventId();
+        if (evtId == 2) //item start
         {
             form->procItemStart(itemMsg->getIndex(), itemMsg->getData());
         }
-        else
+        else if (evtId == 3) //item end
         {
             form->procItemEnd(itemMsg->getIndex(), itemMsg->getData());
         }

@@ -38,6 +38,21 @@ int InteractionViewPlugin::onMessage(const IMessage* msg)
         form->onChanelStateMsg(statevMsg->getIndex(), statevMsg->getResult());
         break;
     }
+    case PROC_ITEMSTATE_MSG:
+    {
+        const ProcItemStateMsg* itemMsg = (const ProcItemStateMsg*)msg;
+        int evtId = itemMsg->getEventId();
+        if (evtId == 0) //seq start
+        {
+            form->onSeqStart(itemMsg->getIndex(), itemMsg->getData());
+        }
+        else if (evtId == 1) //seq end
+        {
+            form->onSeqEnd(itemMsg->getIndex(), itemMsg->getData());
+        }
+
+        break;
+    }
     default:
     {
         ret = -1;
@@ -55,6 +70,7 @@ bool InteractionViewPlugin::isHandleMessage(const IMessage* msg)
     switch(id)
     {
     case CHANEL_STATE_MSG:
+    case PROC_ITEMSTATE_MSG:
     {
         ret = true;
         break;

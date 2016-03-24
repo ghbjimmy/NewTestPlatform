@@ -19,7 +19,7 @@ public:
     bool isChecked();
     void setChecked(bool flag);
 
-    void showColor(bool isError);
+    void showColor(const QColor& color);
 
 signals:
     void signal_check(int);

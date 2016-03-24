@@ -24,7 +24,7 @@ ProcItemStateMsg::ProcItemStateMsg()
 {
     _id = PROC_ITEMSTATE_MSG;
 
-    _itemStart = true;
+    _evtId = -1;
     _index = -1;
 }
 
@@ -33,9 +33,9 @@ ProcItemStateMsg::~ProcItemStateMsg()
 
 }
 
-void ProcItemStateMsg::setData(bool isStart, int index, const QString& data)
+void ProcItemStateMsg::setData(int index, int evt, const QString& data)
 {
-    _itemStart = isStart;
+    _evtId = evt;
     _index = index;
     _data = data;
 }

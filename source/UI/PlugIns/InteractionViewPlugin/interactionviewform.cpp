@@ -3,6 +3,7 @@
 #include "util.h"
 #include "message.h"
 #include "plugin_global.h"
+#include "qlog.h"
 
 #include <QHBoxLayout>
 #include <QProgressBar>
@@ -12,6 +13,10 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QSet>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+
 
 InteractionViewForm::InteractionViewForm(IPlugin* plugIn, QWidget *parent) : QScrollArea(parent)
 {
@@ -312,7 +317,45 @@ void InteractionViewForm::onSelCheckStateChanged(int state)
 
 void InteractionViewForm::onChanelStateMsg(int index, int result)
 {
-    _btn[index]->showColor(result == -1 ? true : false);
+    //_btn[index]->showColor(result == -1 ? true : false);
+}
+
+void InteractionViewForm::onSeqStart(int index, const QString& data)
+{
+    _btn[index]->showColor(Qt::blue);
+}
+
+void InteractionViewForm::onSeqEnd(int index, const QString& data)
+{
+    QJsonParseError json_error;
+    QJsonDocument document = QJsonDocument::fromJson(data.toUtf8(), &json_error);
+    if(json_error.error != QJsonParseError::NoError)
+    {
+        LogMsg(Error, "Parse Seq End json failed. %s", data.toStdString().c_str());
+        return;
+    }
+
+    if (!document.isObject())
+    {
+        LogMsg(Error, "Parse Seq End json format is error. %s", data.toStdString().c_str());
+        return;
+    }
+
+    int ret = -9999;
+    QJsonObject obj = document.object();
+    if (obj.contains("result"))
+    {
+       ret = obj.take("result").toInt();
+    }
+
+    if (ret == 1)
+    {
+        _btn[index]->showColor(Qt::green);
+    }
+    else
+    {
+        _btn[index]->showColor(Qt::red);
+    }
 }
 
 void InteractionViewForm::onStart()

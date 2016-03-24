@@ -34,7 +34,7 @@ void UutButton::setupUI()
 
     if (_style == 0)
     {
-        QString btn_style = "QPushButton{background:rgb(0,128,255);}";
+        QString btn_style = "QPushButton{background:rgb(128,128,128);}";
         this->setStyleSheet(btn_style);
         QString label_style="QLabel{background-color:yellow;}";
         _txtLbl->setStyleSheet(label_style);
@@ -42,7 +42,7 @@ void UutButton::setupUI()
     else
     {
         //QString btn_style = "QPushButton{background:rgb(178,216,253);font-size:12px}";
-        QString btn_style = "QPushButton{background:rgb(0,128,255);font-size:12px;border: 0px;}";
+        QString btn_style = "QPushButton{background:rgb(128,128,128);font-size:12px;border: 0px;}";
         this->setStyleSheet(btn_style);
         _txtLbl->hide();
     }
@@ -70,7 +70,7 @@ void UutButton::setChecked(bool flag)
     _box->setChecked(flag);
 }
 
-void UutButton::showColor(bool flag)
+void UutButton::showColor(const QColor &color)
 {
-    UIUtil::setBgColor(this, flag ? Qt::red : QColor(0,128,255));
+    UIUtil::setBgColor(this, color);
 }

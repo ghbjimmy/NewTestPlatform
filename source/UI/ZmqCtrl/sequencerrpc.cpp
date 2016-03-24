@@ -11,8 +11,10 @@
 
 const int ITEM_START = 2;
 const int ITEM_FINISH = 3;
+const int SEQ_START = 0;
+const int SEQ_END = 1;
 
-//获取消息的类型 1: item_start; 2: item_end; -1:unknown
+//获取消息的类型 0:seqStart 1: seqEnd  2: item_start; 3: item_end; -1:unknown
 static int getMsgType(const QString& msg, QString& data)
 {
     int ret = -1;
@@ -155,17 +157,22 @@ bool SequencerRpc::procSubRecvMsg(const QString& msg)
 
     QString data;
     int msgType = getMsgType(msg, data);
-    if (msgType == ITEM_START)
+    switch(msgType)
     {
-        emit itemStartSignal(_index, data);
-        return true;
+    case ITEM_START:
+    case ITEM_FINISH:
+    case SEQ_START:
+    case SEQ_END:
+    {
+        emit eventSignal(_index, msgType, data);
+        break;
     }
-    else if (msgType == ITEM_FINISH)
+    default:
     {
-        emit itemEndSignal(_index, data);
-        return true;
+        return false;
+    }
     }
 
-    return false;
+    return true;
 }
 

@@ -33,8 +33,7 @@ bool SequencerMgr::initByCfg(ZmqCfgParser* cfg)
         }
 
         connect(_sequencers[i], SIGNAL(isAliveSignal(int,bool,bool)), this, SIGNAL(isAliveSignal(int,bool,bool)));
-        connect(_sequencers[i], SIGNAL(itemStartSignal(int,const QString&)), this, SIGNAL(itemStartSignal(int,const QString&)));
-        connect(_sequencers[i], SIGNAL(itemEndSignal(int,const QString&)), this, SIGNAL(itemEndSignal(int,const QString&)));
+        connect(_sequencers[i], SIGNAL(eventSignal(int,int,const QString&)), this, SIGNAL(eventSignal(int,int,const QString&)));
     }
 
     return true;

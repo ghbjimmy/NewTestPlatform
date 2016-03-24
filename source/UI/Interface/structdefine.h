@@ -33,9 +33,21 @@ struct TItemEnd
 {
     QString tid;
     QString value;
-    QString result;
+    int result;
     QString error;
     QString pdca;
+};
+
+struct TSeqStart
+{
+    QString name;
+    QString version;
+};
+
+struct TSeqEnd
+{
+    int result;
+    QString error;
 };
 
 #endif // STRUCTDEFINE_H
