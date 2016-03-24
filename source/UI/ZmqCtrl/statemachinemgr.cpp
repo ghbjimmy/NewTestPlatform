@@ -65,10 +65,16 @@ bool StateMachineMgr::startTest()
         ret = _sms[i]->startTest();
     }
 
-    return true;
+    return ret;
 }
 
 bool StateMachineMgr::stopTest()
 {
-    return true;
+    bool ret = false;
+    for (int i = 0; i < SM_NUM; ++i)
+    {
+        ret = _sms[i]->stopTest();
+    }
+
+    return ret;
 }
