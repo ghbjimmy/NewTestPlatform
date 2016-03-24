@@ -9,6 +9,13 @@ class ZmqSocket;
 
 //通信对象基类，主要处理心跳流程，其它消息由子类处理
 
+enum ERpcState
+{
+    unknown = 0,
+    Alive,
+    Dead
+};
+
 class BaseRpc : public QObject
 {
     Q_OBJECT
@@ -25,7 +32,7 @@ public:
 
     //由定时线程设置是否活着
     void setAlive(bool flag);
-    int getAliveState(); // 0 : 未知状态 1：活着 2:死亡
+    ERpcState getAliveState(); // 0 : 未知状态 1：活着 2:死亡
 
     //心跳通知
     void aliveNoity(bool isShow);
@@ -37,7 +44,7 @@ signals:
 
 protected:
     int _index;
-    int _aliveState;
+    ERpcState _aliveState;
 
     ZmqSocket* _subSocket;
     ZmqSocket* _reqSocket;

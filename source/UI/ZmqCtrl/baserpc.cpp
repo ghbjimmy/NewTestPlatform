@@ -75,7 +75,7 @@ BaseRpc::BaseRpc(int index)
     _subSocket = NULL;
     _reqSocket = NULL;
     _subThread = NULL;
-    _aliveState = 0;
+    _aliveState = unknown;
     _isStop = false;
 }
 
@@ -144,10 +144,10 @@ void BaseRpc::stop()
 
 void BaseRpc::setAlive(bool flag)
 {
-    _aliveState = flag ? 1 : 2;
+    _aliveState = flag ? Alive : Dead;
 }
 
-int BaseRpc::getAliveState()
+ERpcState BaseRpc::getAliveState()
 {
     return _aliveState;
 }
@@ -155,9 +155,9 @@ int BaseRpc::getAliveState()
 
 void BaseRpc::aliveNoity(bool isShow)
 {
-    if (_aliveState != 0)
+    if (_aliveState != unknown)
     {
-        bool flag = _aliveState == 1 ? true : false;
+        bool flag = _aliveState == Alive ? true : false;
         emit isAliveSignal(_index, flag, isShow);
     }
 }
