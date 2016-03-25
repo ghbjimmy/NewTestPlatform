@@ -287,5 +287,5 @@ void ConfigForm::setupUI()
     v1 ->addLayout(h1);
 
     this->setLayout(v1);
-    this->resize(600, 350);
+    this->setFixedSize(600, 350);
 }

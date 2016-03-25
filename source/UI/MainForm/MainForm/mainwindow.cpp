@@ -23,6 +23,7 @@
 #include "testenginemgr.h"
 #include "statemachinemgr.h"
 #include "configform.h"
+#include "loadcsvform.h"
 
 #include <thread>
 #include <QJsonDocument>
@@ -39,10 +40,16 @@ static void sendMessageCallBack(const IMessage* msg)
     MainWindow::getInstance()->dispatchMessage(msg);
 }
 
+static void LoadFileFunc(void* obj)
+{
+    MainWindow::getInstance()->loadFile();
+}
+
 MainWindow* MainWindow::_instance = NULL;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
+    _isLoadFileEnd = false;
     _pluginSubjecter = new PluginSubjecter();
 
     setupUI();
@@ -183,7 +190,7 @@ void MainWindow::fillPluginWgt()
     }
 }
 
-void MainWindow::startLoadFile()
+void MainWindow::loadFile()
 {
     QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/Hantest_plan__0322_11h.csv");
     if (!failVecs.empty())
@@ -191,7 +198,7 @@ void MainWindow::startLoadFile()
         LogMsg(Error, "load profile failed. failed count is %d", failVecs.size());
         //return;
 
-        QMessageBox::warning(this, "load file", "Load File failed. num=" + QString::number(failVecs.size()));
+        //QMessageBox::warning(this, "load file", "Load File failed. num=" + QString::number(failVecs.size()));
     }
 
     //list 命令
@@ -210,6 +217,16 @@ void MainWindow::startLoadFile()
         dispatchMessage(listCsvMsg);
         delete listCsvMsg;
     }
+
+    _isLoadFileEnd = true;
+}
+
+void MainWindow::startLoadFile()
+{
+    _isLoadFileEnd = false;
+    _loadFileThread = new std::thread(LoadFileFunc, this);
+    LoadCsvForm* loadForm = new LoadCsvForm(this);
+    loadForm->exec();
 }
 
 void MainWindow::startHeartBeat()
@@ -483,7 +500,7 @@ void MainWindow::onMenuAction()
         {
             QString path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\DutViewPlugin\\debug\\DutViewPlugin.dll";
             plugin = loadLibary(path);
-            if (NULL != plugin)
+            if (NULL == plugin)
             {
                 LogMsg(Error, "Load DutViewPlugin libary failed.");
                 QMessageBox::critical(this, "Load Libary", "Load DutViewPlugin failed.");
@@ -502,6 +519,9 @@ void MainWindow::onMenuAction()
         int i = plugin->init();
         dutDlg->resize(640, 480);
         dutDlg->show();
+
+        //关闭后要处理指针。
+
     }
     else if (action->text() == FCT_PANNEL)
     {
@@ -594,3 +614,4 @@ void MainWindow::onSeqEvent(int index, int evt, const QString& item)
     dispatchMessage(procItemStarteMsg);
     delete procItemStarteMsg;
 }
+

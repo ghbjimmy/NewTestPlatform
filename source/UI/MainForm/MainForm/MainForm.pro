@@ -41,7 +41,8 @@ SOURCES += main.cpp\
     ../../ZmqCtrl/baserpc.cpp \
     startloaderform.cpp \
     startloadermgr.cpp \
-    configform.cpp
+    configform.cpp \
+    loadcsvform.cpp
 
 HEADERS  += mainwindow.h \
     ../../Util/libaryparser.h \
@@ -65,7 +66,8 @@ HEADERS  += mainwindow.h \
     ../../ZmqCtrl/baserpc.h \
     startloaderform.h \
     startloadermgr.h \
-    configform.h
+    configform.h \
+    loadcsvform.h
 
 FORMS    +=
 

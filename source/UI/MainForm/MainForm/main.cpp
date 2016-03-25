@@ -146,13 +146,13 @@ int main(int argc, char *argv[]){
     a.processEvents();
     a.processEvents();
 
-    QPixmap pixmap("D:\\Work\\tm_platform_new\\source\\UI\\MainForm\\MainForm\\Resources\\start1.png");
+  /*  QPixmap pixmap("D:\\Work\\tm_platform_new\\source\\UI\\MainForm\\MainForm\\Resources\\start1.png");
     QSplashScreen splash(pixmap);
     splash.show();
 
-    splash.showMessage("Load File........",  Qt::AlignRight | Qt::AlignBottom);
-    //w.startLoadFile();
-    splash.finish(&w);
+    splash.showMessage("Load File........",  Qt::AlignRight | Qt::AlignBottom);*/
+    w.startLoadFile();
+   // splash.finish(&w);
 
     w.startHeartBeat();
     a.exec();
