@@ -42,7 +42,9 @@ SOURCES += main.cpp\
     startloaderform.cpp \
     startloadermgr.cpp \
     configform.cpp \
-    loadcsvform.cpp
+    loadcsvform.cpp \
+    loginform.cpp \
+    userctrl.cpp
 
 HEADERS  += mainwindow.h \
     ../../Util/libaryparser.h \
@@ -67,7 +69,9 @@ HEADERS  += mainwindow.h \
     startloaderform.h \
     startloadermgr.h \
     configform.h \
-    loadcsvform.h
+    loadcsvform.h \
+    loginform.h \
+    userctrl.h
 
 FORMS    +=
 

@@ -16,6 +16,8 @@ public:
     static void setTextColor(QWidget* wgt, const QColor& color);
 
     static QString getNowTime();//获取当前时间 精确到毫秒
+
+    static void moveToScreenCenter(QWidget* wgt); //移到屏幕中央
 private:
     UIUtil(){}
 

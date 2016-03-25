@@ -49,6 +49,13 @@ private:
 
     void prcoMsgBySelf(const IMessage* msg);
 
+    void showConfigForm();
+    void showLoadCsvForm();
+    void showLoadScopeView();
+    void showDutForm();
+    void showFctForm();
+    void showLoginForm();
+
 private slots:
     void onMenuAction();
 

@@ -15,6 +15,8 @@
 #include "statemachinemgr.h"
 #include "configform.h"
 #include "loadcsvform.h"
+#include "loginform.h"
+#include "userctrl.h"
 
 #include <QLabel>
 #include <QHBoxLayout>
@@ -228,10 +230,6 @@ void MainWindow::startLoadFile()
     connect(_sequencerMgr, SIGNAL(loadCompleteSignal()), loadForm, SLOT(onClose()));
 
     std::thread* loadFileThread = new std::thread(LoadFileFunc, this);
-
-    loadForm->move ((QApplication::desktop()->width() - loadForm->width())/2,
-                        (QApplication::desktop()->height() - loadForm->height())/2);
-
     loadForm->exec();
 
     loadFileThread->join();
@@ -407,6 +405,11 @@ void MainWindow::createMenu()
 
     debugMenu->addAction(loadDutAction);
     debugMenu->addAction(loadFctAction);
+
+    QMenu* userMenu = menuBar()->addMenu("User");
+    QAction* loginAction = new QAction("Login",this);
+    userMenu->addAction(loginAction);
+    connect(loginAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
 }
 
 void MainWindow::setupUI()
@@ -464,78 +467,112 @@ void MainWindow::onMenuAction()
         return;
     if (action->text() == "Config")
     {
-        _configForm = new ConfigForm();
-        _configForm->exec();
+       showConfigForm();
     }
     else if (action->text() == "Load CSV")
     {
-        QString path = QFileDialog::getOpenFileName(this, tr("Open CSV File"), ".", tr("CSV Files(*.csv)"));
-       // if(path.length() == 0)
-       //     return;
-
-        //load 命令
-        //QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv");
-        QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/Hantest_plan__0322_11h.csv");
-        if (!failVecs.empty())
-        {
-            LogMsg(Error, "load profile failed. failed count is %d", failVecs.size());
-            //return;
-        }
-
-        //list 命令
-        ListCsvFileMsg* listCsvMsg = new ListCsvFileMsg();
-        QVector<QString> items;
-        if (!_sequencerMgr->getCsvContent(items))
-        {
-            LogMsg(Error, "get content failed. %d");
-            delete listCsvMsg;
-            return;
-        }
-        listCsvMsg->setData(items);
-        //发送结果到插件
-        dispatchMessage(listCsvMsg);
-        delete listCsvMsg;
-
+        showLoadCsvForm();
     }
     else if (action->text() == "Load ScopeView")
     {
-        LoadScopeViewMsg* loadScopeViewMsg = new LoadScopeViewMsg();
-        dispatchMessage(loadScopeViewMsg);
+        showLoadScopeView();
     }
     else if (action->text() == DUT_PANNEL)
     {
-        IPlugin* plugin = _pluginSubjecter->getPlugin(DutViewPluginName);
-        if (plugin == NULL)
-        {
-            QString path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\DutViewPlugin\\debug\\DutViewPlugin.dll";
-            plugin = loadLibary(path);
-            if (NULL == plugin)
-            {
-                LogMsg(Error, "Load DutViewPlugin libary failed.");
-                QMessageBox::critical(this, "Load Libary", "Load DutViewPlugin failed.");
-                return;
-            }
-        }
-
-        QDialog* dutDlg = new QDialog(this);
-        dutDlg->setModal(false);
-        dutDlg->setWindowTitle("Dut Debug Pannel");
-        QVBoxLayout* v1 = new QVBoxLayout();
-        v1->addWidget(plugin->createWidget());
-        v1->setContentsMargins(0,0,0,0);
-        dutDlg->setLayout(v1);
-
-        int i = plugin->init();
-        dutDlg->resize(640, 480);
-        dutDlg->show();
-
-        //关闭后要处理指针。
-
+        showDutForm();
     }
     else if (action->text() == FCT_PANNEL)
     {
-
+        showFctForm();
     }
+    else if (action->text() == "Login")
+    {
+        showLoginForm();
+    }
+}
+
+void MainWindow::showLoginForm()
+{
+    LoginForm* form = new LoginForm();
+    form->exec();
+    delete form;
+}
+
+void MainWindow::showDutForm()
+{
+    IPlugin* plugin = _pluginSubjecter->getPlugin(DutViewPluginName);
+    if (plugin == NULL)
+    {
+        QString path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\DutViewPlugin\\debug\\DutViewPlugin.dll";
+        plugin = loadLibary(path);
+        if (NULL == plugin)
+        {
+            LogMsg(Error, "Load DutViewPlugin libary failed.");
+            QMessageBox::critical(this, "Load Libary", "Load DutViewPlugin failed.");
+            return;
+        }
+    }
+
+    QDialog* dutDlg = new QDialog(this);
+    dutDlg->setModal(false);
+    dutDlg->setWindowTitle("Dut Debug Pannel");
+    QVBoxLayout* v1 = new QVBoxLayout();
+    v1->addWidget(plugin->createWidget());
+    v1->setContentsMargins(0,0,0,0);
+    dutDlg->setLayout(v1);
+
+    int i = plugin->init();
+    dutDlg->resize(640, 480);
+    dutDlg->show();
+
+    //关闭后要处理指针。
+}
+
+void MainWindow::showFctForm()
+{
+
+}
+
+void MainWindow::showLoadScopeView()
+{
+    LoadScopeViewMsg* loadScopeViewMsg = new LoadScopeViewMsg();
+    dispatchMessage(loadScopeViewMsg);
+}
+
+void MainWindow::showConfigForm()
+{
+    _configForm = new ConfigForm();
+    _configForm->exec();
+}
+
+void MainWindow::showLoadCsvForm()
+{
+    QString path = QFileDialog::getOpenFileName(this, tr("Open CSV File"), ".", tr("CSV Files(*.csv)"));
+   // if(path.length() == 0)
+   //     return;
+
+    //load 命令
+    //QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv");
+    QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/Hantest_plan__0322_11h.csv");
+    if (!failVecs.empty())
+    {
+        LogMsg(Error, "load profile failed. failed count is %d", failVecs.size());
+        //return;
+    }
+
+    //list 命令
+    ListCsvFileMsg* listCsvMsg = new ListCsvFileMsg();
+    QVector<QString> items;
+    if (!_sequencerMgr->getCsvContent(items))
+    {
+        LogMsg(Error, "get content failed. %d");
+        delete listCsvMsg;
+        return;
+    }
+    listCsvMsg->setData(items);
+    //发送结果到插件
+    dispatchMessage(listCsvMsg);
+    delete listCsvMsg;
 }
 
 void MainWindow::prcoMsgBySelf(const IMessage* msg)

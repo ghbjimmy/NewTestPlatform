@@ -8,11 +8,18 @@
 #include <QTextEdit>
 #include <QMessageBox>
 
+
 LoadCsvForm::LoadCsvForm(QWidget *parent) : QDialog(parent)
 {
     setupUI();
     //this->setWindowFlags(Qt::FramelessWindowHint);
     this->setWindowTitle("Loading File");
+
+    Qt::WindowFlags flags=Qt::Dialog;
+    flags |=Qt::CustomizeWindowHint;
+    this->setWindowFlags(flags);
+
+    UIUtil::moveToScreenCenter(this);
 }
 
 LoadCsvForm::~LoadCsvForm()

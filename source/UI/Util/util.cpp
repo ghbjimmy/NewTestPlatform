@@ -1,6 +1,10 @@
 #include "util.h"
+
 #include <QHBoxLayout>
 #include <QDateTime>
+#include <QDesktopWidget>
+#include <QApplication>
+#include <QSize>
 
 void UIUtil::setBgColor(QWidget* wgt, const QColor &color)
 {
@@ -37,4 +41,12 @@ void UIUtil::setTextColor(QWidget* wgt, const QColor& color)
 QString UIUtil::getNowTime()
 {
     return  QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz");
+}
+
+void UIUtil::moveToScreenCenter(QWidget* wgt)
+{
+    QDesktopWidget *desk = QApplication::desktop();
+    int wd = desk->width();
+    int ht = desk->height();
+    wgt->move((wd - wgt->width()) / 2,(ht - wgt->height()) / 2);
 }
