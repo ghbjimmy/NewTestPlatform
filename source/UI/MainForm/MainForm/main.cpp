@@ -16,7 +16,7 @@
 #include "startloaderform.h"
 
 #include <thread>
-
+#include <QMessageBox>
 void testDecode()
 {
     const char* json = "{\"jsonrpc\": \"1.0\", \"id\": \"6bb7cfe8ea4611e5b3abacbc32d422bf\", \"result\": [[0, 0, 6], [1, \"{'FUNCTION': 'station', 'PARAM1': '', 'GROUP': 'INTELLIGENT GROUNDHOG', 'DESCRIPTION': 'Get Station Type', 'VAL': '', 'HIGH': '', 'TIMEOUT': '', 'PARAM2': '{{stationName}}', 'KEY': '', 'TID': 'INTEL_HOG_100_STAT_UNITSTAGE', 'UNIT': '', 'LOW': ''}\"]]}";
@@ -137,7 +137,11 @@ int main(int argc, char *argv[]){
 
     MainWindow w;
 
-    w.init();
+    if (!w.init())
+    {
+        QMessageBox::critical(NULL, "Init Failed.","Main Form Init Failed.");
+        return -1;
+    }
     w.show();
     a.processEvents();
     a.processEvents();
@@ -147,7 +151,7 @@ int main(int argc, char *argv[]){
     splash.show();
 
     splash.showMessage("Load File........",  Qt::AlignRight | Qt::AlignBottom);
-    w.startLoadFile();
+    //w.startLoadFile();
     splash.finish(&w);
 
     w.startHeartBeat();

@@ -15,11 +15,7 @@ class TestEngineMgr;
 class StateMachineMgr;
 
 class QLabel;
-
-namespace std
-{
-    class thread;
-}
+class ConfigForm;
 
 class MainWindow : public QMainWindow
 {
@@ -39,6 +35,7 @@ public:
 
 private:
     bool initPlugin();
+    void fillPluginWgt();
 
     IPlugin*  loadLibary(const QString& path);
 
@@ -81,6 +78,8 @@ private:
 
     StateMachineMgr* _smMgr;
     QLabel* _smLbl;
+
+    ConfigForm* _configForm;
 };
 
 #endif // MAINWINDOW_H

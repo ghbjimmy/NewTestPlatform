@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = MainForm
 TEMPLATE = app
 
+CONFIG += c++11
 
 INCLUDEPATH += ../../Util \
                 ../../ZmqCtrl/ZeroMQ/include \
@@ -39,7 +40,8 @@ SOURCES += main.cpp\
     ../../ZmqCtrl/statemachinemgr.cpp \
     ../../ZmqCtrl/baserpc.cpp \
     startloaderform.cpp \
-    startloadermgr.cpp
+    startloadermgr.cpp \
+    configform.cpp
 
 HEADERS  += mainwindow.h \
     ../../Util/libaryparser.h \
@@ -62,7 +64,8 @@ HEADERS  += mainwindow.h \
     ../../ZmqCtrl/statemachinemgr.h \
     ../../ZmqCtrl/baserpc.h \
     startloaderform.h \
-    startloadermgr.h
+    startloadermgr.h \
+    configform.h
 
 FORMS    +=
 

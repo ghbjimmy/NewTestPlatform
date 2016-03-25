@@ -1,11 +1,14 @@
 #include "dutviewplugin.h"
 #include "dutviewform.h"
 #include "message.h"
+#include "const.h"
+
 #include <QApplication>
 
 DutViewPlugin::DutViewPlugin()
 {
     _widget = NULL;
+    _name = DutViewPluginName;
 }
 
 DutViewPlugin::~DutViewPlugin()
@@ -38,6 +41,12 @@ bool DutViewPlugin::isHandleMessage(const IMessage* msg)
 
 QWidget* DutViewPlugin::createWidget()
 {
+    if (_widget != NULL)
+    {
+        delete _widget;
+        _widget = NULL;
+    }
+
     _widget = new DutViewForm(this);
     QString runPath = QApplication::applicationDirPath();
     if (!((DutViewForm*)_widget)->LoadCfg(runPath))

@@ -6,6 +6,8 @@
 static const QString& InteractionViewPluginName = "InteractionViewPlugin";
 static const QString& DetailViewPluginName = "DetailViewPlugin";
 static const QString& ScopeViewPluginName = "ScopeViewPlugin";
+static const QString& DutViewPluginName = "DutViewPlugin";
+static const QString& FctViewPluginName = "DutViewPlugin";
 
 static const int SEQ_NUM = 6;
 static const int ENG_NUM = 6;
