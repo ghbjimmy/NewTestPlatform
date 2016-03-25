@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QVector>
 #include "const.h"
-#include <thread>
 
 class IPlugin;
 class PluginSubjecter;
@@ -34,7 +33,6 @@ public:
     static MainWindow* getInstance();
     void dispatchMessage(const IMessage* msg);
 
-    inline bool isLoadFileEnd() {return _isLoadFileEnd;}
     void loadFile();
 
 private:
@@ -62,9 +60,6 @@ private slots:
 
 private:
     static MainWindow* _instance;
-
-    bool _isLoadFileEnd;
-    std::thread* _loadFileThread;
 
     QWidget* mTitleWgt;
     QWidget* _detailViewWgt;

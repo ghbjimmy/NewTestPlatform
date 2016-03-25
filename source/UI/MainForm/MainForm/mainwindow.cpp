@@ -1,13 +1,4 @@
 #include "mainwindow.h"
-#include <QLabel>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QSpacerItem>
-#include <QSplitter>
-#include <QLibrary>
-#include <QMenuBar>
-#include <QFileDialog>
-#include <QApplication>
 
 #include "libaryparser.h"
 #include "pluginSubjecter.h"
@@ -25,12 +16,22 @@
 #include "configform.h"
 #include "loadcsvform.h"
 
+#include <QLabel>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QSpacerItem>
+#include <QSplitter>
+#include <QLibrary>
+#include <QMenuBar>
+#include <QFileDialog>
+#include <QApplication>
 #include <thread>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDialog>
 #include <QMessageBox>
+#include <QDesktopWidget>
 
 static const QString& FCT_PANNEL = "FCT Pannel";
 static const QString& DUT_PANNEL = "Dut Pannel";
@@ -49,7 +50,6 @@ MainWindow* MainWindow::_instance = NULL;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    _isLoadFileEnd = false;
     _pluginSubjecter = new PluginSubjecter();
 
     setupUI();
@@ -217,16 +217,25 @@ void MainWindow::loadFile()
         dispatchMessage(listCsvMsg);
         delete listCsvMsg;
     }
-
-    _isLoadFileEnd = true;
 }
 
 void MainWindow::startLoadFile()
 {
-    _isLoadFileEnd = false;
-    _loadFileThread = new std::thread(LoadFileFunc, this);
     LoadCsvForm* loadForm = new LoadCsvForm(this);
+    loadForm->setProgressMaxSize(_sequencerMgr->getSeqSize());
+    connect(_sequencerMgr, SIGNAL(showLoadingInfoSignal(const QString&, int)),
+            loadForm, SLOT(onAppendText(const QString&, int)));
+    connect(_sequencerMgr, SIGNAL(loadCompleteSignal()), loadForm, SLOT(onClose()));
+
+    std::thread* loadFileThread = new std::thread(LoadFileFunc, this);
+
+    loadForm->move ((QApplication::desktop()->width() - loadForm->width())/2,
+                        (QApplication::desktop()->height() - loadForm->height())/2);
+
     loadForm->exec();
+
+    loadFileThread->join();
+    delete loadFileThread;
 }
 
 void MainWindow::startHeartBeat()

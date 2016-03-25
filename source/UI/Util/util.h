@@ -15,6 +15,7 @@ public:
     static void setFontSize(QWidget* wgt, int size = -1, bool isBold = false);
     static void setTextColor(QWidget* wgt, const QColor& color);
 
+    static QString getNowTime();//获取当前时间 精确到毫秒
 private:
     UIUtil(){}
 

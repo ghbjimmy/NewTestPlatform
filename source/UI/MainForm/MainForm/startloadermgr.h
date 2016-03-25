@@ -3,15 +3,21 @@
 
 #include <QObject>
 
-class StartLoaderMgr
+class StartLoaderMgr : public QObject
 {
+    Q_OBJECT
+
 public:
     StartLoaderMgr();
     ~StartLoaderMgr();
 
+    bool init();
     bool startSeq();
     bool startEng();
     bool startSM();
+
+signals:
+    void showStartingInfoSignal(const QString& text, int state);
 
 private:
 

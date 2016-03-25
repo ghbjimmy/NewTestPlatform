@@ -4,6 +4,9 @@
 #include <QWidget>
 #include <thread>
 
+class QTextEdit;
+class StartLoaderMgr;
+
 class StartLoaderForm : public QWidget
 {
     Q_OBJECT
@@ -15,12 +18,18 @@ public:
     bool start();
     bool run();
 
+public slots:
+    void onAppendText(const QString& text, int state);
+
 private:
     void setupUI();
 
 private:
     int& _isFinish;
     std::thread* _thread;
+    QTextEdit* _textEdit;
+    StartLoaderMgr* _startLoaderMgr;
+
 };
 
 #endif // STARTLOADERFORM_H

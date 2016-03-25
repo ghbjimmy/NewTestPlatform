@@ -116,21 +116,25 @@ int main(int argc, char *argv[]){
 
     int isFinish = 0;
 
-    //StartLoaderForm startLoadForm(isFinish);
-    //startLoadForm.show();
-    //startLoadForm.move ((QApplication::desktop()->width() - startLoadForm.width())/2,
-    //                    (QApplication::desktop()->height() - startLoadForm.height())/2);
+    StartLoaderForm startLoadForm(isFinish);
+    startLoadForm.show();
+    startLoadForm.move ((QApplication::desktop()->width() - startLoadForm.width())/2,
+                        (QApplication::desktop()->height() - startLoadForm.height())/2);
 
 
-    //startLoadForm.start();
+    if (!startLoadForm.start())
+    {
+        QMessageBox::critical(NULL, "Start progress.","Start progress failed.");
+        return -1;
+    }
 
-   // while(isFinish == 0)
-    //{
-    //    std::this_thread::sleep_for(std::chrono::milliseconds(50));
-    //    a.processEvents();
-   // }
+    while(isFinish == 0)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        a.processEvents();
+    }
 
-   // startLoadForm.close();
+    startLoadForm.close();
 
 
 
@@ -139,20 +143,14 @@ int main(int argc, char *argv[]){
 
     if (!w.init())
     {
-        QMessageBox::critical(NULL, "Init Failed.","Main Form Init Failed.");
+        QMessageBox::critical(NULL, "Init.","Main Form Init Failed.");
         return -1;
     }
     w.show();
     a.processEvents();
     a.processEvents();
 
-  /*  QPixmap pixmap("D:\\Work\\tm_platform_new\\source\\UI\\MainForm\\MainForm\\Resources\\start1.png");
-    QSplashScreen splash(pixmap);
-    splash.show();
-
-    splash.showMessage("Load File........",  Qt::AlignRight | Qt::AlignBottom);*/
     w.startLoadFile();
-   // splash.finish(&w);
 
     w.startHeartBeat();
     a.exec();

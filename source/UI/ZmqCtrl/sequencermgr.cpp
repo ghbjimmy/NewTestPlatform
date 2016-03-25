@@ -2,6 +2,7 @@
 #include "zmqcfgparser.h"
 #include "sequencerrpc.h"
 #include "qlog.h"
+#include "util.h"
 
 SequencerMgr::SequencerMgr() : QObject()
 {
@@ -62,15 +63,28 @@ QVector<int> SequencerMgr::loadProfile(const QString& csvFilePath)
     QVector<int> failVecs;
     for (int i = 0; i < SEQ_NUM; ++i)
     {
+
+        emit showLoadingInfoSignal(QString("%1  Sequence %2 start loading...").arg(UIUtil::getNowTime()).arg(i), 0);
         if (_sequencers[i]->getAliveState() == Dead)
+        {
+            emit showLoadingInfoSignal(QString("%1  Sequence %2 is not runing, no need to load file").arg(UIUtil::getNowTime()).arg(i), 2);
             continue;
+        }
+
         
         if (!_sequencers[i]->loadProfile(csvFilePath))
         {
             LogMsg(Error, "sequencers[%d] load loadProfile failed.", i);
             failVecs.push_back(i);
+
+            emit showLoadingInfoSignal(QString("%1  Sequence %2 load file failed").arg(UIUtil::getNowTime()).arg(i), -1);
+            continue;
         }
+
+        emit showLoadingInfoSignal(QString("%1  Sequence %2 load file success").arg(UIUtil::getNowTime()).arg(i), 1);
     }
+
+    emit loadCompleteSignal();
 
     return failVecs;
 }
@@ -88,4 +102,9 @@ bool SequencerMgr::getCsvContent(QVector<QString>& items)
     }
 
     return false;
+}
+
+int SequencerMgr::getSeqSize()
+{
+    return SEQ_NUM;
 }

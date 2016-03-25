@@ -4,7 +4,7 @@
 #include <QDialog>
 
 class QProgressBar;
-class QListWidget;
+class QTextEdit;
 
 class LoadCsvForm : public QDialog
 {
@@ -13,12 +13,18 @@ public:
     LoadCsvForm(QWidget *parent = 0);
     ~LoadCsvForm();
 
+    void setProgressMaxSize(int maxSize);
+
+public slots:
+    void onAppendText(const QString& text, int state);
+    void onClose();
+
 private:
     void setupUI();
 
 private:
     QProgressBar* _bar;
-    QListWidget* _listWgt;
+    QTextEdit* _textEdit;
 };
 
 #endif // LOADCSVFORM_H

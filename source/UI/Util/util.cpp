@@ -1,5 +1,6 @@
 #include "util.h"
 #include <QHBoxLayout>
+#include <QDateTime>
 
 void UIUtil::setBgColor(QWidget* wgt, const QColor &color)
 {
@@ -31,4 +32,9 @@ void UIUtil::setTextColor(QWidget* wgt, const QColor& color)
     brush.setStyle(Qt::SolidPattern);
     palette.setBrush(QPalette::Active, QPalette::WindowText, brush);
     palette.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
+}
+
+QString UIUtil::getNowTime()
+{
+    return  QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz");
 }
