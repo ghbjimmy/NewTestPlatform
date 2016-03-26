@@ -56,6 +56,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setupUI();
     _instance = this;
+
+    this->resize(1280,720);
 }
 
 MainWindow::~MainWindow()
@@ -455,9 +457,7 @@ void MainWindow::setupUI()
     centralWgt->setLayout(v1);
     this->setCentralWidget(centralWgt);
 
-   createMenu();
-
-    this->resize(1024,768);
+    createMenu();
 }
 
 void MainWindow::onMenuAction()
@@ -467,7 +467,7 @@ void MainWindow::onMenuAction()
         return;
     if (action->text() == "Config")
     {
-       showConfigForm();
+        showConfigForm();
     }
     else if (action->text() == "Load CSV")
     {
@@ -511,26 +511,53 @@ void MainWindow::showDutForm()
             QMessageBox::critical(this, "Load Libary", "Load DutViewPlugin failed.");
             return;
         }
+
+        int i = plugin->init();
     }
 
-    QDialog* dutDlg = new QDialog(this);
-    dutDlg->setModal(false);
-    dutDlg->setWindowTitle("Dut Debug Pannel");
+    QDialog* dlg = new QDialog(this);
+    dlg->setModal(false);
+    dlg->setWindowTitle("Dut Debug Pannel");
     QVBoxLayout* v1 = new QVBoxLayout();
     v1->addWidget(plugin->createWidget());
     v1->setContentsMargins(0,0,0,0);
-    dutDlg->setLayout(v1);
+    dlg->setLayout(v1);
 
-    int i = plugin->init();
-    dutDlg->resize(640, 480);
-    dutDlg->show();
+    dlg->resize(800, 640);
+    dlg->show();
 
     //关闭后要处理指针。
 }
 
 void MainWindow::showFctForm()
 {
+    IPlugin* plugin = _pluginSubjecter->getPlugin(FctViewPluginName);
+    if (plugin == NULL)
+    {
+        QString path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\FctViewPlugin\\debug\\FctViewPlugin.dll";
+        plugin = loadLibary(path);
+        if (NULL == plugin)
+        {
+            LogMsg(Error, "Load FctViewPlugin libary failed.");
+            QMessageBox::critical(this, "Load Libary", "Load FctViewPlugin failed.");
+            return;
+        }
 
+        int i = plugin->init();
+    }
+
+    QDialog* dlg = new QDialog(this);
+    dlg->setModal(false);
+    dlg->setWindowTitle("Fct Debug Pannel");
+    QVBoxLayout* v1 = new QVBoxLayout();
+    v1->addWidget(plugin->createWidget());
+    v1->setContentsMargins(0,0,0,0);
+    dlg->setLayout(v1);
+
+    dlg->resize(800, 640);
+    dlg->show();
+
+    //关闭后要处理指针。
 }
 
 void MainWindow::showLoadScopeView()
@@ -548,8 +575,8 @@ void MainWindow::showConfigForm()
 void MainWindow::showLoadCsvForm()
 {
     QString path = QFileDialog::getOpenFileName(this, tr("Open CSV File"), ".", tr("CSV Files(*.csv)"));
-   // if(path.length() == 0)
-   //     return;
+    // if(path.length() == 0)
+    //     return;
 
     //load 命令
     //QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv");

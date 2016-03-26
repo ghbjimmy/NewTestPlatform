@@ -11,7 +11,7 @@ TEMPLATE = lib
 
 CONFIG += c++11
 
-DEFINES += FCTVIEWPLUGIN_LIBRARY
+DEFINES += TPLUGIN_LIBRARY
 
 INCLUDEPATH += ../ \
                 ../common \
@@ -21,10 +21,11 @@ INCLUDEPATH += ../ \
                 ../../ZmqCtrl \
                 ../../ZmqCtrl/ZeroMQ/include \
 
-SOURCES += fctviewplugin.cpp
+SOURCES += fctviewplugin.cpp \
+    fctviewform.cpp
 
-HEADERS += fctviewplugin.h\
-        fctviewplugin_global.h
+HEADERS += fctviewplugin.h \
+    fctviewform.h
 
 unix {
     target.path = /usr/lib

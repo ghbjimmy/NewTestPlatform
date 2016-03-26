@@ -1,13 +1,25 @@
 #ifndef FCTVIEWPLUGIN_H
 #define FCTVIEWPLUGIN_H
 
-#include "fctviewplugin_global.h"
+#include <QWidget>
+#include "plugin_global.h"
 
-class FCTVIEWPLUGINSHARED_EXPORT FctViewPlugin
+class TPLUGINSHARED_EXPORT FctViewPlugin : public IPlugin
 {
 
 public:
     FctViewPlugin();
+    ~FctViewPlugin();
+
+public:
+    virtual int init();
+    virtual void fini();
+    virtual int onMessage(const IMessage* msg);
+    virtual bool isHandleMessage(const IMessage* msg);
+    virtual QWidget * createWidget();
+
+private:
+    QWidget* _widget;
 };
 
 #endif // FCTVIEWPLUGIN_H

@@ -146,11 +146,12 @@ int main(int argc, char *argv[]){
         QMessageBox::critical(NULL, "Init.","Main Form Init Failed.");
         return -1;
     }
+
     w.show();
     a.processEvents();
     a.processEvents();
 
-    w.startLoadFile();
+    //w.startLoadFile();
 
     w.startHeartBeat();
     a.exec();
