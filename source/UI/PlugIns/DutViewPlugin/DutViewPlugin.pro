@@ -29,7 +29,8 @@ SOURCES += dutviewplugin.cpp \
     dutviewconfigdlg.cpp \
     dutzmqrpc.cpp \
     ../../ZmqCtrl/zmqsocket.cpp \
-    ../../ZmqCtrl/buffer.cpp
+    ../../ZmqCtrl/buffer.cpp \
+    ../../Util/util.cpp
 
 HEADERS += dutviewplugin.h\
     ../../Util/plugin_global.h \
@@ -38,7 +39,8 @@ HEADERS += dutviewplugin.h\
     dutviewconfigdlg.h \
     dutzmqrpc.h \
     ../../ZmqCtrl/zmqsocket.h \
-    ../../ZmqCtrl/buffer.h
+    ../../ZmqCtrl/buffer.h \
+    ../../Util/util.h
 
 unix {
     target.path = /usr/lib

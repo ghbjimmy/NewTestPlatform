@@ -2,6 +2,8 @@
 #include "qlog.h"
 #include "dutviewconfigdlg.h"
 #include "dutzmqrpc.h"
+#include "util.h"
+
 #include <QTabWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -15,11 +17,13 @@
 #include <QLineEdit>
 #include <QSpacerItem>
 #include <QMessageBox>
+#include <QSplitter>
+#include <QTextEdit>
+#include <QList>
 
 static const QString& DUT_CONFIG = "dutconfig.xml";
 DutViewForm::DutViewForm(IPlugin* plugIn, QWidget *parent) : QWidget(parent)
 {
-    _isAutoScroll = true;
     _plugIn = plugIn;
     setupUI();
 }
@@ -54,16 +58,11 @@ QToolBar* DutViewForm::createToolBar()
     _tClearMsgBtn->setText("Clear");
     bar->addWidget(_tClearMsgBtn);
 
-    _tSelAutoScrollBtn = new QToolButton();
-    connect(_tSelAutoScrollBtn, SIGNAL(clicked()), this, SLOT(onScroll()));
-    _tSelAutoScrollBtn->setText("AutoScroll");
-    bar->addWidget(_tSelAutoScrollBtn);
     return bar;
 }
 
-void DutViewForm::setupUI()
-{ 
-    QToolBar* bar = createToolBar();
+QWidget* DutViewForm::createSendWidget()
+{
     _cbx = new QComboBox();
     _cbxListWgt = new QListWidget();
     _cbx->setModel(_cbxListWgt->model());
@@ -76,26 +75,92 @@ void DutViewForm::setupUI()
     connect(_sendBtn, SIGNAL(clicked()), this, SLOT(onSend()));
 
     QHBoxLayout* h1 = new QHBoxLayout();
-    h1->addWidget(_cbx, 1);
     h1->addWidget(_sendBtn);
-    h1->setContentsMargins(0,0,0,0);
+    h1->addStretch(1);
 
+    QVBoxLayout* v1 = new QVBoxLayout();
+    v1->addLayout(h1);
+    v1->addWidget(_cbx);
+    v1->addStretch(1);
+    v1->setContentsMargins(0,0,0,0);
+
+    QWidget* bgWgt = new QWidget();
+    bgWgt->setLayout(v1);
+    //bgWgt->setStyleSheet ("background-color: rgb(0,0,0);color: rgb(255,255,255);");
+
+    QVBoxLayout* v2 = new QVBoxLayout();
+    v2->addWidget(bgWgt);
+    v2->addStretch(1);
+    v2->setContentsMargins(0,0,0,0);
+
+    QWidget* wgt = new QWidget();
+    wgt->setLayout(v1);
+    wgt->setMaximumWidth(160);
+
+    return wgt;
+}
+
+QWidget* DutViewForm::createTextEdit()
+{
+    _clearTxtBtn = new QPushButton();
+    _clearTxtBtn->setText("Clear");
+    connect(_clearTxtBtn, SIGNAL(clicked()), this, SLOT(onClearCmd()));
+
+    QHBoxLayout* h1 = new QHBoxLayout();
+    h1->addStretch(1);
+    h1->addWidget(_clearTxtBtn);
+
+    _recvDataEdit = new QTextEdit();
+    _recvDataEdit->setReadOnly(true);
+
+    QVBoxLayout* v1 = new QVBoxLayout();
+    v1->addLayout(h1);
+    v1->addWidget(_recvDataEdit, 1);
+    v1->setContentsMargins(0,0,0,0);
+
+    QWidget* wgt = new QWidget();
+    wgt->setLayout(v1);
+    return wgt;
+}
+
+void DutViewForm::setupUI()
+{ 
+    QToolBar* bar = createToolBar();
     _tabWgt = new QTabWidget();
-
-    _recvDataEdit = new QLineEdit();
-    QHBoxLayout* h2 = new QHBoxLayout();
-    h2->addWidget(_recvDataEdit, 1);
-    h2->addSpacerItem(new QSpacerItem(80,10, QSizePolicy::Expanding, QSizePolicy::Minimum));
-    h2->setContentsMargins(0,0,0,0);
 
     QVBoxLayout* v1 = new QVBoxLayout();
     v1->addWidget(bar);
     v1->addWidget(_tabWgt, 1);
-    v1->addLayout(h1);
-    v1->addLayout(h2);
-    //v1->setContentsMargins(3,3,3,3);
+    v1->setContentsMargins(3,3,3,3);
 
-    this->setLayout(v1);
+    QWidget* topWgt = new QWidget();
+    topWgt->setLayout(v1);
+
+
+    QWidget* sendWgt = createSendWidget();
+
+    QWidget* textWgt = createTextEdit();
+    QHBoxLayout* h2 = new QHBoxLayout();
+    h2->addWidget(sendWgt);
+    h2->addWidget(textWgt);
+    h2->setContentsMargins(3,3,3,3);
+
+    QWidget* bottomWgt = new QWidget();
+    bottomWgt->setLayout(h2);
+
+
+    QSplitter* split = new QSplitter(Qt::Orientation::Vertical);
+    split->addWidget(topWgt);
+    split->addWidget(bottomWgt);
+
+
+    split->setStretchFactor(0, 1);
+    split->setStretchFactor(1, 0);
+
+    split->setSizes(QList<int>() << 400 << 100);
+    QVBoxLayout* v2 = new QVBoxLayout();
+    v2->addWidget(split,1);
+    this->setLayout(v2);
 
     _cfgDlg = new DutViewConfigDlg(this);
 }
@@ -109,9 +174,9 @@ bool DutViewForm::LoadCfg(const QString& path)
         int size = datas.size();
         for (int i = 0; i < size; ++i)
         {
-            QListWidget* listwgt = new QListWidget();
-            _tabWgt->addTab(listwgt, "UUT" + QString::number(i+1));
-            _msgList.push_back(listwgt);
+            QTextEdit* textEdit = new QTextEdit();
+            _tabWgt->addTab(textEdit, "UUT" + QString::number(i+1));
+            _msgList.push_back(textEdit);
         }
     }
 
@@ -133,8 +198,13 @@ void DutViewForm::onStart()
         if (!rpc->init(datas[i].subIp, datas[i].subPort, datas[i].reqIp, datas[i].reqPort))
         {
             LogMsg(Error, "DutZmq init failed.");
+            onAppendText(QString("Create Client[%1] Failed: tcp://%2:%3 tcp://%4:%5").arg(i).arg(datas[i].subIp)
+                         .arg(datas[i].subPort).arg(datas[i].reqIp).arg(datas[i].reqPort), -1);
             continue;
         }
+
+        onAppendText(QString("Create Client[%1] Success: tcp://%2:%3 tcp://%4:%5").arg(i).arg(datas[i].subIp)
+                     .arg(datas[i].subPort).arg(datas[i].reqIp).arg(datas[i].reqPort), 1);
 
         connect(rpc, SIGNAL(dutMsgSignal(int, const QString&)), this, SLOT(onDutRecvMsg(int,const QString&)));
         rpc->start();
@@ -149,9 +219,11 @@ void DutViewForm::onStart()
 
 void DutViewForm::onStop()
 {
+    int i = 0;
     foreach (DutZmqRpc* rpc, dutRpcs)
     {
         rpc->stop();
+        onAppendText(QString("Stop Client[%1] Success").arg(i++), 1);
         delete rpc;
     }
 
@@ -172,12 +244,6 @@ void DutViewForm::onClear()
     }
 }
 
-void DutViewForm::onScroll()
-{
-    _isAutoScroll = !_isAutoScroll;
-
-    _tSelAutoScrollBtn->setText(_isAutoScroll ? "AutoScroll" : "NoScroll");
-}
 
 void DutViewForm::onSend()
 {
@@ -192,13 +258,14 @@ void DutViewForm::onSend()
     DutZmqRpc* curRpc = dutRpcs[index];
 
     QString recvData;
+    onAppendText("Req: " + curCmd, 0);
     if (!curRpc->sendCommand(curCmd,recvData))
     {
-        _recvDataEdit->setText("error:recvOverTime.");
+        onAppendText("Rsp: " + QString("recv data time out."), -1);
     }
     else
     {
-        _recvDataEdit->setText(recvData);
+        onAppendText("Rsp: " + recvData, 1);
 
         bool existFlag = false;
         int cnt = _cbxListWgt->count();
@@ -226,11 +293,24 @@ void DutViewForm::onDutRecvMsg(int index, const QString& msg)
 {
     if (index < _msgList.size())
     {
-        _msgList[index]->addItem(msg);
-        if (_isAutoScroll)
-        {
-            int size = _msgList[index]->count();
-            _msgList[index]->setCurrentRow(size - 1);
-        }
+        _msgList[index]->append(msg);
     }
+}
+
+void DutViewForm::onAppendText(const QString& text, int state)
+{
+    QString colorText;
+    if (state == 0)
+        colorText = QString("<font color=black>%1</font>\n").arg(text);
+    else if (state == 1)
+        colorText = QString("<font color=blue>%1</font>\n").arg(text);
+    else
+        colorText = QString("<font color=red>%1</font>\n").arg(text);
+
+    _recvDataEdit->append(colorText);
+}
+
+void DutViewForm::onClearCmd()
+{
+    _recvDataEdit->clear();
 }

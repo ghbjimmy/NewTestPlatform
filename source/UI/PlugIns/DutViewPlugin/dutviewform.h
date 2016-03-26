@@ -12,10 +12,11 @@ class DutViewConfigDlg;
 class DutZmqRpc;
 class QToolButton;
 class QToolBar;
-class QListWidget;
+class QTextEdit;
 class QPushButton;
 class QComboBox;
 class QLineEdit;
+class QListWidget;
 
 class DutViewForm : public QWidget
 {
@@ -30,16 +31,20 @@ public:
 private:
     void setupUI();
     QToolBar* createToolBar();
+    QWidget* createSendWidget();
+    QWidget* createTextEdit();
 
 private slots:
     void onConfig();
     void onStart();
     void onStop();
     void onClear();
-    void onScroll();
     void onSend();
 
     void onDutRecvMsg(int index, const QString& msg);
+
+    void onAppendText(const QString& text, int state);
+    void onClearCmd();
 
 private:
     IPlugin* _plugIn;
@@ -54,15 +59,14 @@ private:
     QToolButton* _tStopBtn;
 
     QToolButton* _tClearMsgBtn;
-    QToolButton* _tSelAutoScrollBtn;
 
     QPushButton* _sendBtn;
     QListWidget* _cbxListWgt;
     QComboBox* _cbx;
-    QVector<QListWidget*> _msgList;
+    QVector<QTextEdit*> _msgList;
 
-    QLineEdit* _recvDataEdit;
-    bool _isAutoScroll;
+    QTextEdit* _recvDataEdit;
+    QPushButton* _clearTxtBtn;
 };
 
 #endif // DUTVIEWFORM_H
