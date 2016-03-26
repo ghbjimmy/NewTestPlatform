@@ -3,9 +3,15 @@
 #include "cvsdatatreemodel.h"
 #include "cvsdatatreenode.h"
 #include "cvsdatatreedelegate.h"
-#include "structdefine.h"
+
+#include <QContextMenuEvent>
+#include <QMenu>
 
 static const QString& TESTING = "Testing";
+
+const int COL_UNIT = 4;
+const int COL_LOWER = 5;
+const int COL_UPPER = 6;
 
 CVSDataTreeView::CVSDataTreeView(QWidget *parent) : QTreeView(parent)
 {
@@ -14,6 +20,11 @@ CVSDataTreeView::CVSDataTreeView(QWidget *parent) : QTreeView(parent)
 
      _model = new CVSDataTreeModel();
       this->setModel(_model);
+
+     this->setColumnHidden(COL_UNIT, true);
+     this->setColumnHidden(COL_LOWER, true);
+     this->setColumnHidden(COL_UPPER, true);
+     createPopupMenu();
 }
 
 CVSDataTreeView::~CVSDataTreeView()
@@ -25,8 +36,6 @@ void CVSDataTreeView::setRootNode(CVSDataTreeNode* rootNode)
 {
     _model->setRootNode(rootNode);
     this->expandAll();
-
-    return;
 }
 
 void setText(int index, const QString& text, TDetailViewItem *viewItem)
@@ -84,3 +93,42 @@ void CVSDataTreeView::procItemEnd(int index, const TItemEnd& itemEnd, TDetailVie
     this->update();
 }
 
+void CVSDataTreeView::createPopupMenu()
+{
+    _popUpMenu = new QMenu(this);
+    QAction* showUnit = _popUpMenu->addAction("Show Unit Col");
+    QAction* showLower = _popUpMenu->addAction("Show Lower Col");
+    QAction* showUpper = _popUpMenu->addAction("Show Upper Col");
+    showUnit->setCheckable(true);
+    showLower->setCheckable(true);
+    showUpper->setCheckable(true);
+
+    connect(showUnit,SIGNAL(triggered(bool)),this,SLOT(onMenuAction(bool)));
+    connect(showLower,SIGNAL(triggered(bool)),this,SLOT(onMenuAction(bool)));
+    connect(showUpper,SIGNAL(triggered(bool)),this,SLOT(onMenuAction(bool)));
+}
+
+void CVSDataTreeView::onMenuAction(bool ischecked)
+{
+    QAction* action = static_cast<QAction*>(sender());
+    if (NULL == action)
+        return;
+    if (action->text() == "Show Unit Col")
+    {
+       this->setColumnHidden(COL_UNIT, !ischecked);
+    }
+    else if (action->text() == "Show Lower Col")
+    {
+        this->setColumnHidden(COL_LOWER, !ischecked);
+    }
+    else if (action->text() == "Show Upper Col")
+    {
+        this->setColumnHidden(COL_UPPER, !ischecked);
+    }
+}
+
+void CVSDataTreeView::contextMenuEvent(QContextMenuEvent* event)
+{
+    _popUpMenu->exec(QCursor::pos());
+    event->accept();
+}

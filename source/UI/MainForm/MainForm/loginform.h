@@ -11,7 +11,7 @@ class LoginForm : public QDialog
     Q_OBJECT
 
 public:
-    LoginForm();
+    LoginForm(QWidget* parent=0);
     ~LoginForm();
 
 private:

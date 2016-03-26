@@ -79,7 +79,7 @@ void ScopeviewForm::setupUI()
     setScene(scene);
     setCacheMode(QGraphicsView::CacheBackground);
     setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-    this->setBackgroundBrush(QBrush(Qt::gray));
+    this->setBackgroundBrush(QBrush(QColor(195,195,195)));
 
    /* for (int i = 0; i < 8; ++i)
     {

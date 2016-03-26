@@ -15,9 +15,7 @@ LoadCsvForm::LoadCsvForm(QWidget *parent) : QDialog(parent)
     //this->setWindowFlags(Qt::FramelessWindowHint);
     this->setWindowTitle("Loading File");
 
-    Qt::WindowFlags flags=Qt::Dialog;
-    flags |=Qt::CustomizeWindowHint;
-    this->setWindowFlags(flags);
+    this->setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint);
 
     UIUtil::moveToScreenCenter(this);
 }

@@ -415,11 +415,11 @@ void MainWindow::createMenu()
 void MainWindow::setupUI()
 {
     mTitleWgt = createTitleWgt();
-    mTitleWgt->setFixedHeight(60);
+    mTitleWgt->setFixedHeight(80);
 
     QWidget* mDetailViewWgt = createDetailViewWgt();
     _scopeViewWgt = new QWidget();
-    UIUtil::setBgColor(_scopeViewWgt, Qt::gray);
+    UIUtil::setBgColor(_scopeViewWgt, QColor(195,195,195));
     _scopeViewWgt->setMinimumHeight(200);
 
     QWidget* statWidget = createStatusWgt();

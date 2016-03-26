@@ -4,6 +4,10 @@
 #include "cvsdatatreedelegate.h"
 #include "structdefine.h"
 
+const int COL_UNIT = 4;
+const int COL_LOWER = 5;
+const int COL_UPPER = 6;
+
 FailForm::FailForm(QWidget *parent) :QTreeView(parent)
 {
     //CVSDataTreeDelegate* delegate = new CVSDataTreeDelegate(this);
@@ -13,6 +17,10 @@ FailForm::FailForm(QWidget *parent) :QTreeView(parent)
     _rootNode = new CVSDataTreeNode();
     _model->setRootNode(_rootNode);
     this->setModel(_model);
+
+    this->setColumnHidden(COL_UNIT, true);
+    this->setColumnHidden(COL_LOWER, true);
+    this->setColumnHidden(COL_UPPER, true);
 }
 
 FailForm::~FailForm()

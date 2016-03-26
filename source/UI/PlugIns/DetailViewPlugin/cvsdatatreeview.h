@@ -7,6 +7,8 @@
 class CVSDataTreeNode;
 class CVSDataTreeModel;
 class TDetailViewItem;
+class QMenu;
+class QContextMenuEvent;
 
 class CVSDataTreeView : public QTreeView
 {
@@ -21,11 +23,21 @@ public:
     void procItemStart(int index, const TItemStart& data, TDetailViewItem* viewItem);
     void procItemEnd(int index, const TItemEnd& itemEnd, TDetailViewItem* viewItem);
 
+protected:
+    void contextMenuEvent(QContextMenuEvent* event);
+
+private slots:
+    void onMenuAction(bool ischecked);
+
+private:
+    void createPopupMenu();
+
 signals:
     void itemFailed(int index, int slotNum, void* viewItem); //通知失败情况
 
 private:
     CVSDataTreeModel* _model;
+    QMenu* _popUpMenu;
 };
 
 #endif

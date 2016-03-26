@@ -93,7 +93,7 @@ QWidget* createStationWgt()
     QWidget* wgt = new QWidget();
     wgt->setLayout(h1);
 
-    UIUtil::setBgColor(wgt, Qt::gray);
+    UIUtil::setBgColor(wgt, QColor(195,195,195));
     return wgt;
 }
 
@@ -163,7 +163,7 @@ QWidget* createtResultWgt()
 
     QWidget* wgt = new QWidget();
     wgt->setLayout(h1);
-    UIUtil::setBgColor(wgt, Qt::gray);
+    UIUtil::setBgColor(wgt, QColor(195,195,195));
 
     wgt->setMinimumSize(200, 80);
     return wgt;

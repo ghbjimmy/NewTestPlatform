@@ -9,9 +9,11 @@
 #include <QGridLayout>
 #include <QSpacerItem>
 
-LoginForm::LoginForm()
+LoginForm::LoginForm(QWidget* parent) : QDialog(parent)
 {
     setupUI();
+    this->setWindowTitle("Login");
+    this->setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
 }
 
 LoginForm::~LoginForm()
@@ -27,6 +29,7 @@ void LoginForm::setupUI()
     QLabel* pwdLbl = new QLabel("Password:");
     _pwdLdt = new QLineEdit();
     _pwdLdt->setFixedWidth(200);
+    _pwdLdt->setEchoMode(QLineEdit::Password);
     QGridLayout* g1 = new QGridLayout();
     g1->setSpacing(10);
 

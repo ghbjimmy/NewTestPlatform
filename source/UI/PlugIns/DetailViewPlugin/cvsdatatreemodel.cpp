@@ -66,10 +66,7 @@ QVariant CVSDataTreeModel::data(const QModelIndex &index, int role) const
     int column = index.column();
     if (role == Qt::TextAlignmentRole)
     {
-        if (column != 0)
-        {
-            return Qt::AlignCenter;
-        }
+        return Qt::AlignCenter;
     }
 
     if (role == Qt::ForegroundRole)
@@ -180,40 +177,44 @@ Qt::ItemFlags CVSDataTreeModel::flags(const QModelIndex &index) const
 
 QVariant CVSDataTreeModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-	if (role != Qt::DisplayRole) 
+    if (role == Qt::DisplayRole)
 	{
-		return QVariant();
+        switch (section)
+        {
+        case COL_INDEX:
+            return "index";
+        case COL_TESTKEY:
+            return "TestKey";
+        case COL_DESC:
+            return "Description";
+        case COL_TIME:
+            return "Time";
+        case COL_UNIT:
+            return "Unit";
+        case COL_LOWER:
+            return "Lower Limited";
+        case COL_UPPER:
+            return "Upper Limited";
+        case COL_UUT1:
+            return "UUT1";
+        case COL_UUT2:
+            return "UUT2";
+        case COL_UUT3:
+            return "UUT3";
+        case COL_UUT4:
+            return "UUT4";
+        case COL_UUT5:
+            return "UUT5";
+        case COL_UUT6:
+            return "UUT6";
+        default:
+            return QVariant();
+        }
 	}
-
-	switch (section)
-	{
-    case COL_INDEX:
-		return "index";
-    case COL_TESTKEY:
-		return "TestKey";
-    case COL_DESC:
-		return "Description";
-    case COL_TIME:
-		return "Time";
-    case COL_UNIT:
-        return "Unit";
-    case COL_LOWER:
-		return "Lower Limited";
-    case COL_UPPER:
-		return "Upper Limited";
-    case COL_UUT1:
-		return "UUT1";
-    case COL_UUT2:
-		return "UUT2";
-    case COL_UUT3:
-		return "UUT3";
-    case COL_UUT4:
-		return "UUT4";
-    case COL_UUT5:
-		return "UUT5";
-    case COL_UUT6:
-		return "UUT6";
-	}
+    else if (role == Qt::TextAlignmentRole)
+    {
+        return Qt::AlignCenter;
+    }
 
 	return QVariant();
 }
