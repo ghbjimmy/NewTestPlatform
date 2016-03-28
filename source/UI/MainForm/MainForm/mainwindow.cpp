@@ -584,7 +584,7 @@ void MainWindow::showLoadCsvForm()
     //load 命令
     //QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv");
     //QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/Hantest_plan__0322_11h.csv");
-    QVector<int> failVecs = _sequencerMgr->loadProfile("/Hantest_plan_finishnormal__0322_11.csv");
+    QVector<int> failVecs = _sequencerMgr->loadProfile("/Hantest_plan_finishnormal__0322_22.csv");
     if (!failVecs.empty())
     {
         LogMsg(Error, "load profile failed. failed count is %d", failVecs.size());

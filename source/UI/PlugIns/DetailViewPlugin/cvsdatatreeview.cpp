@@ -81,7 +81,7 @@ void CVSDataTreeView::procItemEnd(int index, const TItemEnd& itemEnd, TDetailVie
     }
     else if (itemEnd.result == 1)
     {
-        if (!itemEnd.value.isEmpty())
+        if (itemEnd.value.isEmpty())
             text = "--PASS--";
         else
             text = itemEnd.value;
