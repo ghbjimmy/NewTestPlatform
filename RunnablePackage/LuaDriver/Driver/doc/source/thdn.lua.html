@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Source</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../source/development.lua.html">development.lua</a></li>
+  <li><a href="../source/pathfinder.lua.html">pathfinder.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/dummy.lua.html">dummy.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/function_table.lua.html">function_table.lua</a></li>
+  <li><a href="../source/datalogger.lua.html">datalogger.lua</a></li>
+  <li><a href="../source/dmm.lua.html">dmm.lua</a></li>
+  <li><a href="../source/dut.lua.html">dut.lua</a></li>
+  <li><a href="../source/eload.lua.html">eload.lua</a></li>
+  <li><a href="../source/fixture.lua.html">fixture.lua</a></li>
+  <li><a href="../source/measure.lua.html">measure.lua</a></li>
+  <li><a href="../source/relay.lua.html">relay.lua</a></li>
+  <li><a href="../source/reset.lua.html">reset.lua</a></li>
+  <li><a href="../source/supply.lua.html">supply.lua</a></li>
+  <li><strong>thdn.lua</strong></li>
+  <li><a href="../source/HWIO.lua.html">HWIO.lua</a></li>
+  <li><a href="../source/MCU.lua.html">MCU.lua</a></li>
+  <li><a href="../source/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../source/test_engine.lua.html">test_engine.lua</a></li>
+  <li><a href="../source/config_utils.lua.html">config_utils.lua</a></li>
+  <li><a href="../source/global_data.lua.html">global_data.lua</a></li>
+  <li><a href="../source/sequence_utils.lua.html">sequence_utils.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/string_utils.lua.html">string_utils.lua</a></li>
+  <li><a href="../source/time_utils.lua.html">time_utils.lua</a></li>
+  <li><a href="../source/uuid.lua.html">uuid.lua</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h2>thdn.lua</h2>
+<pre>
+<span class="comment">--- Speaker/Alert THDN Analysis Module
+</span><span class="comment">-- @module functions.thdn
+</span><span class="comment">-- @alias thdn_module
+</span>
+<span class="comment">--===========================--
+</span><span class="comment">-- THDN exported module
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> thdn_module = {}
+<span class="comment">-- function relay_module.thdn(sequence_or_connections)
+</span>
+<span class="comment">--===========================--
+</span><span class="comment">-- THDN Public API
+</span><span class="comment">--===========================--
+</span>
+<span class="comment">--- NOT IMPLEMENTED: Measure the THDN of the [param1] net.
+</span><span class="comment">-- @tparam sequence_object sequence FCT test sequence table
+</span><span class="comment">-- @param global_var_table table full of "global" test variables
+</span><span class="comment">-- @return measured THDN
+</span><span class="comment">-- @return passing status (whether the returned value is within the expected range)
+</span><a id="21"></a><span class="comment">-- @raise error
+</span><span class="keyword">function</span> thdn(sequence, global_var_table)
+	<span class="comment">--FIXME: Implement THDN
+</span>	error(<span class="string">"THDN Not implemented yet."</span>)
+	<span class="keyword">return</span> <span class="keyword">false</span>, <span class="keyword">false</span>
+<span class="keyword">end</span>
+
+<span class="keyword">return</span> thdn_module</pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

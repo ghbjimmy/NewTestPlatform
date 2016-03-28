@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Source</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../source/development.lua.html">development.lua</a></li>
+  <li><a href="../source/pathfinder.lua.html">pathfinder.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/dummy.lua.html">dummy.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/function_table.lua.html">function_table.lua</a></li>
+  <li><a href="../source/datalogger.lua.html">datalogger.lua</a></li>
+  <li><a href="../source/dmm.lua.html">dmm.lua</a></li>
+  <li><a href="../source/dut.lua.html">dut.lua</a></li>
+  <li><a href="../source/eload.lua.html">eload.lua</a></li>
+  <li><a href="../source/fixture.lua.html">fixture.lua</a></li>
+  <li><a href="../source/measure.lua.html">measure.lua</a></li>
+  <li><a href="../source/relay.lua.html">relay.lua</a></li>
+  <li><a href="../source/reset.lua.html">reset.lua</a></li>
+  <li><a href="../source/supply.lua.html">supply.lua</a></li>
+  <li><a href="../source/thdn.lua.html">thdn.lua</a></li>
+  <li><a href="../source/HWIO.lua.html">HWIO.lua</a></li>
+  <li><a href="../source/MCU.lua.html">MCU.lua</a></li>
+  <li><a href="../source/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../source/test_engine.lua.html">test_engine.lua</a></li>
+  <li><a href="../source/config_utils.lua.html">config_utils.lua</a></li>
+  <li><a href="../source/global_data.lua.html">global_data.lua</a></li>
+  <li><a href="../source/sequence_utils.lua.html">sequence_utils.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/string_utils.lua.html">string_utils.lua</a></li>
+  <li><a href="../source/time_utils.lua.html">time_utils.lua</a></li>
+  <li><strong>uuid.lua</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h2>uuid.lua</h2>
+<pre>
+<span class="comment">---------------------------------------------------------------------------------------
+</span><span class="comment">-- Copyright 2012 Rackspace (original), 2013 Thijs Schreijer (modifications)
+</span><span class="comment">--
+</span><span class="comment">-- Licensed under the Apache License, Version 2.0 (the "License");
+</span><span class="comment">-- you may not use this file except in compliance with the License.
+</span><span class="comment">-- You may obtain a copy of the License at
+</span><span class="comment">--
+</span><span class="comment">--     http://www.apache.org/licenses/LICENSE-2.0
+</span><span class="comment">--
+</span><span class="comment">-- Unless required by applicable law or agreed to in writing, software
+</span><span class="comment">-- distributed under the License is distributed on an "AS-IS" BASIS,
+</span><span class="comment">-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span><span class="comment">-- See the License for the specific language governing permissions and
+</span><span class="comment">-- limitations under the License.
+</span><span class="comment">--
+</span><span class="comment">-- see http://www.ietf.org/rfc/rfc4122.txt
+</span><span class="comment">--
+</span><span class="comment">-- Note that this is not a true version 4 (random) UUID.  Since `os.time()` precision is only 1 second, it would be hard
+</span><span class="comment">-- to guarantee spacial uniqueness when two hosts generate a uuid after being seeded during the same second.  This
+</span><span class="comment">-- is solved by using the node field from a version 1 UUID.  It represents the mac address.
+</span><span class="comment">--
+</span><span class="comment">-- 28-apr-2013 modified by Thijs Schreijer from the original [Rackspace code](https://github.com/kans/zirgo/blob/807250b1af6725bad4776c931c89a784c1e34db2/util/uuid.lua) as a generic Lua module.
+</span><span class="comment">-- Regarding the above mention on `os.time()`; the modifications use the `socket.gettime()` function from LuaSocket
+</span><span class="comment">-- if available and hence reduce that problem (provided LuaSocket has been loaded before uuid).
+</span>
+<span class="keyword">local</span> M = {}
+<span class="keyword">local</span> <span class="global">math</span> = <span class="global">require</span>(<span class="string">'math'</span>)
+<span class="keyword">local</span> <span class="global">os</span> = <span class="global">require</span>(<span class="string">'os'</span>)
+<span class="keyword">local</span> <span class="global">string</span> = <span class="global">require</span>(<span class="string">'string'</span>)
+
+<span class="keyword">local</span> bitsize = <span class="number">32</span>  <span class="comment">-- bitsize assumed for Lua VM. See randomseed function below.
+</span><span class="keyword">local</span> lua_version = <span class="global">tonumber</span>(_VERSION:match(<span class="string">"%d%.*%d*"</span>))  <span class="comment">-- grab Lua version used
+</span>
+<span class="keyword">local</span> MATRIX_AND = {{<span class="number">0</span>,<span class="number">0</span>},{<span class="number">0</span>,<span class="number">1</span>} }
+<span class="keyword">local</span> MATRIX_OR = {{<span class="number">0</span>,<span class="number">1</span>},{<span class="number">1</span>,<span class="number">1</span>}}
+<span class="keyword">local</span> HEXES = <span class="string">'0123456789abcdef'</span>
+
+<span class="comment">-- performs the bitwise operation specified by truth matrix on two numbers.
+</span><span class="keyword">local</span> <span class="keyword">function</span> BITWISE(x, y, matrix)
+  <span class="keyword">local</span> z = <span class="number">0</span>
+  <span class="keyword">local</span> pow = <span class="number">1</span>
+  <span class="keyword">while</span> x &gt; <span class="number">0</span> <span class="keyword">or</span> y &gt; <span class="number">0</span> <span class="keyword">do</span>
+    z = z + (matrix[x%<span class="number">2</span>+<span class="number">1</span>][y%<span class="number">2</span>+<span class="number">1</span>] * pow)
+    pow = pow * <span class="number">2</span>
+    x = <span class="global">math</span>.floor(x/<span class="number">2</span>)
+    y = <span class="global">math</span>.floor(y/<span class="number">2</span>)
+  <span class="keyword">end</span>
+  <span class="keyword">return</span> z
+<span class="keyword">end</span>
+
+<span class="keyword">local</span> <span class="keyword">function</span> INT2HEX(x)
+  <span class="keyword">local</span> s,base = <span class="string">''</span>,<span class="number">16</span>
+  <span class="keyword">local</span> d
+  <span class="keyword">while</span> x &gt; <span class="number">0</span> <span class="keyword">do</span>
+    d = x % base + <span class="number">1</span>
+    x = <span class="global">math</span>.floor(x/base)
+    s = <span class="global">string</span>.sub(HEXES, d, d)..s
+  <span class="keyword">end</span>
+  <span class="keyword">while</span> #s &lt; <span class="number">2</span> <span class="keyword">do</span> s = <span class="string">"0"</span> .. s <span class="keyword">end</span>
+  <span class="keyword">return</span> s
+<span class="keyword">end</span>
+
+<span class="comment">----------------------------------------------------------------------------
+</span><span class="comment">-- Creates a new uuid. Either provide a unique hex string, or make sure the
+</span><span class="comment">-- random seed is properly set. The module table itself is a shortcut to this
+</span><span class="comment">-- function, so `my_uuid = uuid.new()` equals `my_uuid = uuid()`.
+</span><span class="comment">--
+</span><span class="comment">-- For proper use there are 3 options;
+</span><span class="comment">--
+</span><span class="comment">-- 1. first require `luasocket`, then call `uuid.seed()`, and request a uuid using no
+</span><span class="comment">-- parameter, eg. `my_uuid = uuid()`
+</span><span class="comment">-- 2. use `uuid` without `luasocket`, set a random seed using `uuid.randomseed(some_good_seed)`,
+</span><span class="comment">-- and request a uuid using no parameter, eg. `my_uuid = uuid()`
+</span><span class="comment">-- 3. use `uuid` without `luasocket`, and request a uuid using an unique hex string,
+</span><span class="comment">-- eg. `my_uuid = uuid(my_networkcard_macaddress)`
+</span><span class="comment">--
+</span><span class="comment">-- @return a properly formatted uuid string
+</span><span class="comment">-- @param hwaddr (optional) string containing a unique hex value (e.g.: `00:0c:29:69:41:c6`), to be used to compensate for the lesser `math.random()` function. Use a mac address for solid results. If omitted, a fully randomized uuid will be generated, but then you must ensure that the random seed is set properly!
+</span><span class="comment">-- @usage
+</span><span class="comment">-- local uuid = require("uuid")
+</span><a id="82"></a><span class="comment">-- print("here's a new uuid: ",uuid())
+</span><span class="keyword">function</span> M.new(hwaddr)
+  <span class="comment">-- bytes are treated as 8bit unsigned bytes.
+</span>  <span class="keyword">local</span> bytes = {
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+      <span class="global">math</span>.random(<span class="number">0</span>, <span class="number">255</span>),
+    }
+
+  <span class="keyword">if</span> hwaddr <span class="keyword">then</span>
+    <span class="global">assert</span>(<span class="global">type</span>(hwaddr)==<span class="string">"string"</span>, <span class="string">"Expected hex string, got "</span>..<span class="global">type</span>(hwaddr))
+    <span class="comment">-- Cleanup provided string, assume mac address, so start from back and cleanup until we've got 12 characters
+</span>    <span class="keyword">local</span> i,str, hwaddr = #hwaddr, hwaddr, <span class="string">""</span>
+    <span class="keyword">while</span> i&gt;<span class="number">0</span> <span class="keyword">and</span> #hwaddr&lt;<span class="number">12</span> <span class="keyword">do</span>
+      <span class="keyword">local</span> c = str:sub(i,i):lower()
+      <span class="keyword">if</span> HEXES:find(c, <span class="number">1</span>, <span class="keyword">true</span>) <span class="keyword">then</span>
+        <span class="comment">-- valid HEX character, so append it
+</span>        hwaddr = c..hwaddr
+      <span class="keyword">end</span>
+      i = i - <span class="number">1</span>
+    <span class="keyword">end</span>
+    <span class="global">assert</span>(#hwaddr == <span class="number">12</span>, <span class="string">"Provided string did not contain at least 12 hex characters, retrieved '"</span>..hwaddr..<span class="string">"' from '"</span>..str..<span class="string">"'"</span>)
+
+    <span class="comment">-- no split() in lua. :(
+</span>    bytes[<span class="number">11</span>] = <span class="global">tonumber</span>(hwaddr:sub(<span class="number">1</span>, <span class="number">2</span>), <span class="number">16</span>)
+    bytes[<span class="number">12</span>] = <span class="global">tonumber</span>(hwaddr:sub(<span class="number">3</span>, <span class="number">4</span>), <span class="number">16</span>)
+    bytes[<span class="number">13</span>] = <span class="global">tonumber</span>(hwaddr:sub(<span class="number">5</span>, <span class="number">6</span>), <span class="number">16</span>)
+    bytes[<span class="number">14</span>] = <span class="global">tonumber</span>(hwaddr:sub(<span class="number">7</span>, <span class="number">8</span>), <span class="number">16</span>)
+    bytes[<span class="number">15</span>] = <span class="global">tonumber</span>(hwaddr:sub(<span class="number">9</span>, <span class="number">10</span>), <span class="number">16</span>)
+    bytes[<span class="number">16</span>] = <span class="global">tonumber</span>(hwaddr:sub(<span class="number">11</span>, <span class="number">12</span>), <span class="number">16</span>)
+  <span class="keyword">end</span>
+
+  <span class="comment">-- set the version
+</span>  bytes[<span class="number">7</span>] = BITWISE(bytes[<span class="number">7</span>], <span class="number">0x0f</span>, MATRIX_AND)
+  bytes[<span class="number">7</span>] = BITWISE(bytes[<span class="number">7</span>], <span class="number">0x40</span>, MATRIX_OR)
+  <span class="comment">-- set the variant
+</span>  bytes[<span class="number">9</span>] = BITWISE(bytes[<span class="number">7</span>], <span class="number">0x3f</span>, MATRIX_AND)
+  bytes[<span class="number">9</span>] = BITWISE(bytes[<span class="number">7</span>], <span class="number">0x80</span>, MATRIX_OR)
+  <span class="keyword">return</span>  INT2HEX(bytes[<span class="number">1</span>])..INT2HEX(bytes[<span class="number">2</span>])..INT2HEX(bytes[<span class="number">3</span>])..INT2HEX(bytes[<span class="number">4</span>])..<span class="string">"-"</span>..
+         INT2HEX(bytes[<span class="number">5</span>])..INT2HEX(bytes[<span class="number">6</span>])..<span class="string">"-"</span>..
+         INT2HEX(bytes[<span class="number">7</span>])..INT2HEX(bytes[<span class="number">8</span>])..<span class="string">"-"</span>..
+         INT2HEX(bytes[<span class="number">9</span>])..INT2HEX(bytes[<span class="number">10</span>])..<span class="string">"-"</span>..
+         INT2HEX(bytes[<span class="number">11</span>])..INT2HEX(bytes[<span class="number">12</span>])..INT2HEX(bytes[<span class="number">13</span>])..INT2HEX(bytes[<span class="number">14</span>])..INT2HEX(bytes[<span class="number">15</span>])..INT2HEX(bytes[<span class="number">16</span>])
+<span class="keyword">end</span>
+
+<span class="comment">----------------------------------------------------------------------------
+</span><span class="comment">-- Improved randomseed function.
+</span><span class="comment">-- Lua 5.1 and 5.2 both truncate the seed given if it exceeds the integer
+</span><span class="comment">-- range. If this happens, the seed will be 0 or 1 and all randomness will
+</span><span class="comment">-- be gone (each application run will generate the same sequence of random
+</span><span class="comment">-- numbers in that case). This improved version drops the most significant
+</span><span class="comment">-- bits in those cases to get the seed within the proper range again.
+</span><span class="comment">-- @param seed the random seed to set (integer from 0 - 2^32, negative values will be made positive)
+</span><span class="comment">-- @return the (potentially modified) seed used
+</span><span class="comment">-- @usage
+</span><span class="comment">-- local socket = require("socket")  -- gettime() has higher precision than os.time()
+</span><span class="comment">-- local uuid = require("uuid")
+</span><span class="comment">-- -- see also example at uuid.seed()
+</span><span class="comment">-- uuid.randomseed(socket.gettime()*10000)
+</span><a id="154"></a><span class="comment">-- print("here's a new uuid: ",uuid())
+</span><span class="keyword">function</span> M.randomseed(seed)
+  seed = <span class="global">math</span>.floor(<span class="global">math</span>.abs(seed))
+  <span class="keyword">if</span> seed &gt;= (<span class="number">2</span>^bitsize) <span class="keyword">then</span>
+    <span class="comment">-- integer overflow, so reduce to prevent a bad seed
+</span>    seed = seed - <span class="global">math</span>.floor(seed / <span class="number">2</span>^bitsize) * (<span class="number">2</span>^bitsize)
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> lua_version &lt; <span class="number">5.2</span> <span class="keyword">then</span>
+    <span class="comment">-- 5.1 uses (incorrect) signed int
+</span>    <span class="global">math</span>.randomseed(seed - <span class="number">2</span>^(bitsize-<span class="number">1</span>))
+  <span class="keyword">else</span>
+    <span class="comment">-- 5.2 uses (correct) unsigned int
+</span>    <span class="global">math</span>.randomseed(seed)
+  <span class="keyword">end</span>
+  <span class="keyword">return</span> seed
+<span class="keyword">end</span>
+
+<span class="comment">----------------------------------------------------------------------------
+</span><span class="comment">-- Seeds the random generator.
+</span><span class="comment">-- It does so in 2 possible ways;
+</span><span class="comment">--
+</span><span class="comment">-- 1. use `os.time()`: this only offers resolution to one second (used when
+</span><span class="comment">-- LuaSocket hasn't been loaded yet
+</span><span class="comment">-- 2. use luasocket `gettime()` function, but it only does so when LuaSocket
+</span><span class="comment">-- has been required already.
+</span><span class="comment">-- @usage
+</span><span class="comment">-- local socket = require("socket")  -- gettime() has higher precision than os.time()
+</span><span class="comment">-- -- LuaSocket loaded, so below line does the same as the example from randomseed()
+</span><span class="comment">-- uuid.seed()
+</span><a id="183"></a><span class="comment">-- print("here's a new uuid: ",uuid())
+</span><span class="keyword">function</span> M.seed()
+  <span class="keyword">if</span> <span class="global">package</span>.loaded[<span class="string">"socket"</span>] <span class="keyword">and</span> <span class="global">package</span>.loaded[<span class="string">"socket"</span>].gettime <span class="keyword">then</span>
+    <span class="keyword">return</span> M.randomseed(<span class="global">package</span>.loaded[<span class="string">"socket"</span>].gettime()*<span class="number">10000</span>)
+  <span class="keyword">else</span>
+    <span class="keyword">return</span> M.randomseed(<span class="global">os</span>.time())
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">return</span> <span class="global">setmetatable</span>( M, { __call = <span class="keyword">function</span>(self, hwaddr) <span class="keyword">return</span> self.new(hwaddr) <span class="keyword">end</span>} )</pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

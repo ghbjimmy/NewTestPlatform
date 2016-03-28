@@ -1,0 +1,389 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Source</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../source/development.lua.html">development.lua</a></li>
+  <li><a href="../source/pathfinder.lua.html">pathfinder.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/dummy.lua.html">dummy.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/function_table.lua.html">function_table.lua</a></li>
+  <li><a href="../source/datalogger.lua.html">datalogger.lua</a></li>
+  <li><a href="../source/dmm.lua.html">dmm.lua</a></li>
+  <li><strong>dut.lua</strong></li>
+  <li><a href="../source/eload.lua.html">eload.lua</a></li>
+  <li><a href="../source/fixture.lua.html">fixture.lua</a></li>
+  <li><a href="../source/measure.lua.html">measure.lua</a></li>
+  <li><a href="../source/relay.lua.html">relay.lua</a></li>
+  <li><a href="../source/reset.lua.html">reset.lua</a></li>
+  <li><a href="../source/supply.lua.html">supply.lua</a></li>
+  <li><a href="../source/thdn.lua.html">thdn.lua</a></li>
+  <li><a href="../source/HWIO.lua.html">HWIO.lua</a></li>
+  <li><a href="../source/MCU.lua.html">MCU.lua</a></li>
+  <li><a href="../source/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../source/test_engine.lua.html">test_engine.lua</a></li>
+  <li><a href="../source/config_utils.lua.html">config_utils.lua</a></li>
+  <li><a href="../source/global_data.lua.html">global_data.lua</a></li>
+  <li><a href="../source/sequence_utils.lua.html">sequence_utils.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/string_utils.lua.html">string_utils.lua</a></li>
+  <li><a href="../source/time_utils.lua.html">time_utils.lua</a></li>
+  <li><a href="../source/uuid.lua.html">uuid.lua</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h2>dut.lua</h2>
+<pre>
+<span class="comment">--- DUT Function
+</span><span class="comment">-- @module functions.dut
+</span><span class="comment">-- @alias dut_module
+</span><span class="keyword">local</span> dut_module = {}
+
+<span class="keyword">local</span> sequence_utils = <span class="global">require</span>(<span class="string">"utils.sequence_utils"</span>)
+<span class="keyword">local</span> string_utils = <span class="global">require</span>(<span class="string">"utils.string_utils"</span>)
+<span class="keyword">local</span> time_utils = <span class="global">require</span>(<span class="string">"utils.time_utils"</span>)
+<span class="keyword">local</span> global_data = <span class="global">require</span>(<span class="string">"utils.global_data"</span>)
+<span class="keyword">local</span> console = <span class="global">require</span>(CONFIG.DUT_UART_CONSOLE)
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Module local variables
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> _PDCA_KEY_MATCH_ = <span class="string">"{{(.-)}}"</span>
+<span class="keyword">local</span> _last_diags_command = <span class="string">""</span>
+<span class="keyword">local</span> _last_diags_response = <span class="string">""</span>
+<span class="keyword">local</span> TemplatePatternTable = {}
+<span class="comment">-- local TemplateVariantTable = {}
+</span>
+<span class="comment">--===========================--
+</span><span class="comment">--- Private Functions
+</span><span class="comment">-- @section private
+</span><span class="comment">--===========================--
+</span>
+<span class="comment">--- Parse diags template file and populate the match table with patterns
+</span><span class="comment">-- @param diags_command Diags command parsing template that should be processed
+</span><a id="29"></a><span class="comment">-- @return TemplatePatternTable reference
+</span><span class="keyword">local</span> <span class="keyword">function</span> parse_template_file(diags_command)<span class="comment">--par = file Name
+</span>  <span class="keyword">local</span> fileName = diags_command..<span class="string">".txt"</span>
+  <span class="keyword">local</span> file = <span class="global">io</span>.open(CONFIG.TEMPLATE_PATH..fileName)
+
+  <span class="keyword">if</span>(file) <span class="keyword">then</span>
+    <span class="keyword">local</span> keyTable = {}
+    <span class="keyword">local</span> patternTable = {}
+    <span class="keyword">local</span> str = file:read(<span class="string">"*a"</span>)
+    file:close()
+
+    <span class="keyword">for</span> key <span class="keyword">in</span> <span class="global">string</span>.gmatch(str, _PDCA_KEY_MATCH_) <span class="keyword">do</span><span class="comment">--{{Phosphorus_ASIC_odr}}, delete {{}}
+</span>      <span class="global">table</span>.insert(keyTable, key)
+    <span class="keyword">end</span>
+
+    <span class="comment">-- TemplateVariantTable[fileName] = keyTable--{"123.txt"={key1,key2,...}},key has no {{}}
+</span>
+    <span class="keyword">local</span> strMatch = <span class="string">""</span>
+    <span class="keyword">local</span> sig = <span class="number">1</span>
+    <span class="keyword">for</span> i=<span class="number">1</span>, #keyTable <span class="keyword">do</span>
+      st, ed = <span class="global">string</span>.find(str, <span class="string">"{{"</span>..keyTable[i]..<span class="string">"}}"</span>, sig)
+      txt = <span class="global">string</span>.sub(str, sig, st-<span class="number">1</span>)
+      txt = string_utils.replace_special_char(txt)
+
+      <span class="keyword">local</span> endStr = <span class="global">string</span>.sub(str, ed+<span class="number">1</span>, ed+<span class="number">1</span>)
+      endStr = string_utils.replace_special_char(endStr)
+      <span class="keyword">local</span> endStr2 = <span class="global">string</span>.sub(str, ed+<span class="number">2</span>, ed+<span class="number">2</span>)
+
+      <span class="keyword">if</span>(endStr2 ~= <span class="string">"{"</span>) <span class="keyword">then</span>
+        endStr2 = string_utils.replace_special_char(endStr2)
+      <span class="keyword">else</span>
+        endStr2 = <span class="string">""</span>
+      <span class="keyword">end</span>
+
+      matchTmp = strMatch .. txt .. <span class="string">"(.-)"</span> .. endStr .. endStr2<span class="comment">--string.sub(str, ed+1, ed+1)
+</span>      strMatch = strMatch .. txt .. <span class="string">".-"</span> .. endStr<span class="comment">--string.sub(str, ed+1, ed+1)
+</span>      patternTable[keyTable[i]] = matchTmp<span class="comment">--patternTable={"ABC"="xxxx(.-)",...}, "ABC", there is no "{{}}""
+</span>      sig = ed + <span class="number">2</span>
+      <span class="comment">-- print(keyTable[i], matchTmp)
+</span>    <span class="keyword">end</span>
+
+    TemplatePatternTable[diags_command] = patternTable<span class="comment">--{"file.txt" = {key="..."}, ...} key has no {{}}
+</span>
+  <span class="keyword">else</span>
+    error(<span class="string">"Failed to open template file: "</span>..fileName)
+  <span class="keyword">end</span>
+
+  <span class="keyword">return</span> TemplatePatternTable
+<span class="keyword">end</span>
+
+<span class="comment">--===========================--
+</span><span class="comment">--- Public API
+</span><span class="comment">-- @section public
+</span><span class="comment">--===========================--
+</span>
+<span class="comment">--- Run the given smokey script on the device
+</span><span class="comment">-- @tparam sequence_object sequence FCT test sequence table
+</span><span class="comment">-- @param global_var_table table full of "global" test variables
+</span><span class="comment">-- @return true, or whether the returned data matches the expected value
+</span><span class="comment">-- @return passing status (whether the returned data matches the expected value)
+</span><span class="comment">-- @raise error
+</span><a id="90"></a><span class="comment">-- @see diags, parse
+</span><span class="keyword">function</span> dut_module.smokey(sequence, global_var_table)
+    <span class="keyword">local</span> old_command = sequence.param1
+    sequence.param1 = <span class="string">"smokeyshell -f nandfs:\\AppleInternal\\Diags\\Scripts\\X527\\"..tostring(old_command)
+
+    local retsult, passing = dut_module.diags(sequence, global_var_table)
+    _last_diags_command = tostring(old_command)
+
+    sequence.param1 = old_command
+
+    return result, passing
+end
+
+--- Run the given diags command on the device
+-- @tparam sequence_object sequence FCT test sequence table
+-- @param global_var_table table full of "</span>global<span class="string">" test variables
+-- @return true, or whether the returned data matches the expected value
+-- @return passing status (whether the returned data matches the expected value)
+-- @raise error
+-- @see parse
+function dut_module.diags(sequence, global_var_table)
+  local timeout = tonumber(sequence)  --3sec
+  if(timeout == nil or timeout &lt; 5000) then
+      timeout = 5000
+  end
+
+  local command = global_data.sub(global_var_table, sequence.param1)
+
+  if(command) then
+    -- FIXME: Log correctly.
+    -- _Print_Log_("</span> &lt; DUT SendCommand: &gt; %s<span class="string">", tostring(cmd))
+    _last_diags_command = command
+    _last_diags_response = console._Dut_Read_String_()
+
+    if string.match(command, "</span>sleep<span class="string">") ~= nil then
+      -- patternTablet = _Dut_Send_Cmd_("</span>time <span class="string">"..cmd, _timeout)--this function will set detect to :-)
+      console._Dut_Send_String_(command)
+    else
+      console._Dut_Send_Cmd_(command, timeout) --this function will set detect to :-)
+    end
+
+    _last_diags_response = console._Dut_Read_String_()
+    -- _Print_Log_("</span> &lt; DUT ReadResp: &gt; %s<span class="string">",_last_diags_response)
+  else
+    error("</span>Problem with diags command <span class="global">string</span> <span class="keyword">or</span> variable substitution: <span class="string">"..command)
+  end
+
+  local result = sequence_utils.check_string_match_limit(_last_diags_response, sequence)
+  return result, result
+end
+
+--- Spin until timeout or we detect a string (given in the sequence)
+-- @tparam sequence_object sequence FCT test sequence table
+-- @return true
+-- @return passing status (true)
+-- @raise error
+function dut_module.detect(sequence) --par = "</span>xxx<span class="string">"
+  local det = string_utils.replace_special_char(sequence.param1)
+  print("</span>&lt; Note &gt; : wait to detect...<span class="string">'"..det.."'</span><span class="string">")
+  console._Dut_Set_Detect_String_(det)
+  -- _Dut_Send_Cmd_
+  local st, msg = console._Dut_Wait_For_String_(30000)
+  if st ~= 0 then
+    error("</span>Timeout when waiting <span class="keyword">for</span> <span class="string">".. tostring(det) .."</span>. Time out due to: <span class="string">"..tostring(msg))
+  end
+
+  console._Dut_Set_Detect_String_("</span>%:%-%)<span class="string">")
+  console._Dut_Read_String_()
+  time_utils.delay(1000)
+
+  return true, true
+end
+
+
+--- Parse serial output from the previous diags command and extract values
+--  using a parsing template.
+-- @tparam sequence_object sequence FCT test sequence table
+-- @param global_var_table table full of "</span>global<span class="string">" test variables
+-- @return result of parsing the serial
+-- @return passing status (whether the returned data matches the expected value or is within the expected range)
+-- @see diags, smokey
+-- @raise error
+function dut_module.parse(sequence, global_var_table) --params = {fileName, keyName} --In keyName, including {{}}
+  local diags_command = _last_diags_command --_last_diags_command global variant, changed by diags function
+  local keyName = string.match(sequence.param1, _PDCA_KEY_MATCH_) --{{Phosphorus_ASIC_odr}},delete {{}}
+
+  if keyName == nil then
+    error("</span>Invalid match key name <span class="keyword">or</span> format: <span class="string">"..sequence.param1)
+  end
+
+  if TemplatePatternTable[diags_command] == nil then
+    --scan file, and stor key. if the file is scaned, it will not scan again.
+    --Also, cant do this when Engine start due to dont know which file need to scan
+    parse_template_file(diags_command)
+  end
+
+  if TemplatePatternTable[diags_command] == nil then
+    global_data.set_from_param(global_var_table, sequence.param2, "</span>NULL<span class="string">")
+    error("</span>Parsing file does <span class="keyword">not</span> exist <span class="keyword">for</span>: <span class="string">".._last_diags_command)
+  end
+
+  if TemplatePatternTable[diags_command][keyName] == nil then
+    global_data.set_from_param(global_var_table, sequence.param2, "</span>NULL<span class="string">")
+    error("</span>Match key <span class="string">'"..keyName.."'</span> does <span class="keyword">not</span> exist <span class="keyword">for</span> command: <span class="string">".._last_diags_command)
+  end
+    -- print("</span>*************************\r\n&lt;  match parttern  &gt; : <span class="string">" .. tostring(TemplatePatternTable[matchFileName][keyName]).."</span>\r\n*********************\r\n<span class="string">")
+  local value = string.match(_last_diags_response, TemplatePatternTable[diags_command][keyName])
+  if value == nil then
+    global_data.set_from_param(global_var_table, sequence.param2, "</span>NULL<span class="string">")
+    error("</span>Could <span class="keyword">not</span> match pattern <span class="keyword">for</span> <span class="string">'"..keyName.."'</span> <span class="keyword">for</span> command: <span class="string">".._last_diags_command)
+  end
+
+  value = string.gsub(value, "</span>[\r\n]<span class="string">", "</span><span class="string">")
+  global_data.set_from_param(global_var_table, sequence.param2, value)
+
+  -- If we have numerical limits
+  local passing = true
+  if tonumber(sequence.low) or tonumber(sequence.high) then
+    passing = sequence_utils.check_numerical_limits(value, sequence)
+  else
+    passing = sequence_utils.check_string_low_high_limit(value, sequence)
+  end
+
+  -- FIXME: What is this for? Do we still need it?
+  --this part should delete when MP
+  -- if(string.match(tostring(_last_diags_command), "</span>syscfg <span class="global">print</span> MLB#<span class="string">")) then
+  --   -- FIXME: Figure out how to get this data
+  --   local stationType = tc.StationType()
+  --   if(stationType ~= "</span>PREFCT<span class="string">" and stationType~="</span>PREFCT2<span class="string">") then--sip station
+  --     print("</span>PrintMLB:<span class="string">"..tostring(value).."</span> \tFromCarrier:<span class="string">"..tostring(tc.mlbSN()))
+  --     local carrierSN = tc.mlbSN() --SN read from carrier
+  --     tc.SetMlbSN(value)
+  --     if(value ==nil or carrierSN == nil) then
+  --       assert(nil, "</span>EmptySN:(PrintMLB:<span class="string">"..tostring(value).."</span>\tTC:<span class="string">"..tostring(carrierSN))
+  --     elseif(value ~= carrierSN) then
+  --       assert(nil, "</span>SN different:(PrintMLB:<span class="string">"..tostring(value).."</span>\tTC:<span class="string">"..tostring(carrierSN))
+  --     end
+  --   end
+  -- end
+  return value, passing
+end
+
+--- Evaluate the given lua expression, substituting any variables in {{}} braces.
+-- @tparam sequence_object sequence FCT test sequence table
+-- @param global_var_table table full of "</span>global<span class="string">" test variables
+-- @return result of executing the lua expression
+-- @return true
+-- @see diags, smokey
+-- @raise error
+function dut_module.calculate(sequence, global_var_table)
+  local command = global_data.sub(global_var_table, sequence.param1)
+  local result = loadstring("</span><span class="keyword">return</span> (<span class="string">"..command.."</span>)<span class="string">")()
+
+  global_data.set_from_param(global_var_table, sequence.param2, result)
+  return result, true
+end
+
+-- local function ready()
+--   print("</span>&lt; Note &gt; : wait to iboot...<span class="string">")
+--   local det = "</span>m]<span class="string">"
+--   _Dut_Set_Detect_String_(det)
+--   local st, msg = _Dut_Wait_For_String_(30000)
+--   if( st~= 0) then
+--     return nil,"</span>Wait <span class="string">".. tostring(det) .."</span>Time out due to: <span class="string">"..tostring(msg)
+--   end
+
+--   _Dut_Set_Detect_String_("</span>:%-%)<span class="string">")
+--   -- _Dut_Send_Cmd_("</span>\r\n<span class="string">", "</span><span class="number">3</span><span class="string">")
+--   _Dut_Send_String_("</span>diags<span class="string">")
+--   print("</span>&lt; Note &gt; : wait to diags...<span class="string">")
+--   -- calculate the amount of time until :-)
+--   if(_Dut_Wait_For_String_(40000) ~= 0) then
+--     return nil,"</span>Wait Time out"
+<span class="comment">--   end
+</span><span class="comment">--   _Dut_Read_String_()
+</span><span class="comment">--   -- _Print_Log_(_Dut_Read_String_())
+</span><span class="comment">--   time_utils.delay(1000)
+</span><span class="comment">--   return 0;
+</span><span class="comment">-- end
+</span>
+
+<span class="keyword">return</span> dut_module</pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

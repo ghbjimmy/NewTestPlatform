@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><strong>utils.time_utils</strong></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>utils.time_utils</code></h1>
+<p>Time utils</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#delay">delay (ms)</a></td>
+	<td class="summary">Delay (not a busywait)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_unix_time_ms">get_unix_time_ms ()</a></td>
+	<td class="summary">Get unix time in MS</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_time_delta_ms">get_time_delta_ms (start_time)</a></td>
+	<td class="summary">Get difference between a unix timestamp and the current time</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_time_string_ms">get_time_string_ms ()</a></td>
+	<td class="summary">Get a formatted time string for the current time.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "delay"></a>
+    <strong>delay (ms)</strong>
+    <a style="float:right;" href="../source/time_utils.lua.html#18">line 18</a>
+    </dt>
+    <dd>
+    Delay (not a busywait)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">ms</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        status (false if there was an error)
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_unix_time_ms"></a>
+    <strong>get_unix_time_ms ()</strong>
+    <a style="float:right;" href="../source/time_utils.lua.html#25">line 25</a>
+    </dt>
+    <dd>
+    Get unix time in MS
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        time in ms
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_time_delta_ms"></a>
+    <strong>get_time_delta_ms (start_time)</strong>
+    <a style="float:right;" href="../source/time_utils.lua.html#32">line 32</a>
+    </dt>
+    <dd>
+    Get difference between a unix timestamp and the current time
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">start_time</span>
+         unix timestamp(in ms)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        time difference in ms
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_time_string_ms"></a>
+    <strong>get_time_string_ms ()</strong>
+    <a style="float:right;" href="../source/time_utils.lua.html#40">line 40</a>
+    </dt>
+    <dd>
+    Get a formatted time string for the current time.
+ Format will be used across all log files and print outputs. It is currently YEAR-MONTH-DAY 24HOUR:MIN:SEC.MS
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        formatted time string</li>
+        <li>
+        unix time in ms</li>
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

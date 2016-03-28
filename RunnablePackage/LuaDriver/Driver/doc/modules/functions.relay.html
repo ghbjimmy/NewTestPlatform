@@ -1,0 +1,408 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Local_Functions">Local Functions</a></li>
+<li><a href="#ConvenienceFunctions">ConvenienceFunctions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><strong>functions.relay</strong></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>functions.relay</code></h1>
+<p>Relay Functions Module</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#relay">relay (sequence)</a></td>
+	<td class="summary">Connect net at [param1] to default fixture HW (or the fixture net specified in [param2])</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#disconnect">disconnect (sequence)</a></td>
+	<td class="summary">Disconnect net at [param1] from fixture HW</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#button">button (sequence)</a></td>
+	<td class="summary">Connect the net [param1] for two seconds.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#tbat">tbat (sequence)</a></td>
+	<td class="summary">Set the battery NTC to a given resistance
+ Automatically connects the NTC to the DUT.</td>
+	</tr>
+</table>
+<h2><a href="#Local_Functions">Local Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#relay_from_connections">relay_from_connections (hwio_table[, disconnect=true[, connect_to="CONNECT"]])</a></td>
+	<td class="summary">Control the fixture relays</td>
+	</tr>
+</table>
+<h2><a href="#ConvenienceFunctions">ConvenienceFunctions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#relay_from_IO_only_item">relay_from_IO_only_item (HWIO_table_item)</a></td>
+	<td class="summary">Convenience function to connect testpoints for Measure, DMM, and Eload
+ This only exists because these HWIO table items only have "IO" entries
+ (instead of "CONNECT" and "DISCONNECT" entries)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#relay_from_connections">relay_from_connections (connections)</a></td>
+	<td class="summary">Convenience function to expose raw connections API to outside users</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#disconnect_from_connections">disconnect_from_connections (connections)</a></td>
+	<td class="summary">Convenience function to expose raw connections API to outside users</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "relay"></a>
+    <strong>relay (sequence)</strong>
+    <a style="float:right;" href="../source/relay.lua.html#93">line 93</a>
+    </dt>
+    <dd>
+    Connect net at [param1] to default fixture HW (or the fixture net specified in [param2])
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">sequence</span>
+            <span class="types"><span class="type">sequence_object</span></span>
+         FCT test sequence table
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        result (true)</li>
+        <li>
+        passing status (true)</li>
+    </ol>
+
+    <h3>Raises:</h3>
+    error
+
+
+
+</dd>
+    <dt>
+    <a name = "disconnect"></a>
+    <strong>disconnect (sequence)</strong>
+    <a style="float:right;" href="../source/relay.lua.html#115">line 115</a>
+    </dt>
+    <dd>
+    Disconnect net at [param1] from fixture HW
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">sequence</span>
+            <span class="types"><span class="type">sequence_object</span></span>
+         FCT test sequence table
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        result (true)</li>
+        <li>
+        passing status (true)</li>
+    </ol>
+
+    <h3>Raises:</h3>
+    error
+
+
+
+</dd>
+    <dt>
+    <a name = "button"></a>
+    <strong>button (sequence)</strong>
+    <a style="float:right;" href="../source/relay.lua.html#157">line 157</a>
+    </dt>
+    <dd>
+    Connect the net [param1] for two seconds.
+ Currently only supports BUTTON1_L.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">sequence</span>
+            <span class="types"><span class="type">sequence_object</span></span>
+         FCT test sequence table
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        result (true)</li>
+        <li>
+        passing status (true)</li>
+    </ol>
+
+    <h3>Raises:</h3>
+    error
+
+
+
+</dd>
+    <dt>
+    <a name = "tbat"></a>
+    <strong>tbat (sequence)</strong>
+    <a style="float:right;" href="../source/relay.lua.html#178">line 178</a>
+    </dt>
+    <dd>
+    Set the battery NTC to a given resistance
+ Automatically connects the NTC to the DUT.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">sequence</span>
+            <span class="types"><span class="type">sequence_object</span></span>
+         FCT test sequence table
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        result (true)</li>
+        <li>
+        passing status (true)</li>
+    </ol>
+
+    <h3>Raises:</h3>
+    error
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Local_Functions"></a>Local Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "relay_from_connections"></a>
+    <strong>relay_from_connections (hwio_table[, disconnect=true[, connect_to="CONNECT"]])</strong>
+    <a style="float:right;" href="../source/relay.lua.html#31">line 31</a>
+    </dt>
+    <dd>
+    Control the fixture relays
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">hwio_table</span>
+         table of connection-to-IO mappings
+        </li>
+        <li><span class="parameter">disconnect</span>
+         true if disconnecting the relays
+         (<em>default</em> true)
+        </li>
+        <li><span class="parameter">connect_to</span>
+         specify a non-default connection
+         (<em>default</em> "CONNECT")
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        true</li>
+        <li>
+        passing status (whether the eload was sucessfully applied)</li>
+    </ol>
+
+    <h3>Raises:</h3>
+    error
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="ConvenienceFunctions"></a>ConvenienceFunctions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "relay_from_IO_only_item"></a>
+    <strong>relay_from_IO_only_item (HWIO_table_item)</strong>
+    <a style="float:right;" href="../source/relay.lua.html#129">line 129</a>
+    </dt>
+    <dd>
+    Convenience function to connect testpoints for Measure, DMM, and Eload
+ This only exists because these HWIO table items only have "IO" entries
+ (instead of "CONNECT" and "DISCONNECT" entries)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">HWIO_table_item</span>
+         measure, dmm, or eload HWIO table items
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        passing status (true)
+    </ol>
+
+    <h3>Raises:</h3>
+    error
+
+
+
+</dd>
+    <dt>
+    <a name = "relay_from_connections"></a>
+    <strong>relay_from_connections (connections)</strong>
+    <a style="float:right;" href="../source/relay.lua.html#138">line 138</a>
+    </dt>
+    <dd>
+    Convenience function to expose raw connections API to outside users
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">connections</span>
+         standard HWIO table mapping
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        passing status (true)
+    </ol>
+
+    <h3>Raises:</h3>
+    error
+
+
+
+</dd>
+    <dt>
+    <a name = "disconnect_from_connections"></a>
+    <strong>disconnect_from_connections (connections)</strong>
+    <a style="float:right;" href="../source/relay.lua.html#147">line 147</a>
+    </dt>
+    <dd>
+    Convenience function to expose raw connections API to outside users
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">connections</span>
+         standard HWIO table mapping
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        passing status (true)
+    </ol>
+
+    <h3>Raises:</h3>
+    error
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

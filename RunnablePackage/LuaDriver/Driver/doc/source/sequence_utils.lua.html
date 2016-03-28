@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Source</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../source/development.lua.html">development.lua</a></li>
+  <li><a href="../source/pathfinder.lua.html">pathfinder.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/dummy.lua.html">dummy.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/function_table.lua.html">function_table.lua</a></li>
+  <li><a href="../source/datalogger.lua.html">datalogger.lua</a></li>
+  <li><a href="../source/dmm.lua.html">dmm.lua</a></li>
+  <li><a href="../source/dut.lua.html">dut.lua</a></li>
+  <li><a href="../source/eload.lua.html">eload.lua</a></li>
+  <li><a href="../source/fixture.lua.html">fixture.lua</a></li>
+  <li><a href="../source/measure.lua.html">measure.lua</a></li>
+  <li><a href="../source/relay.lua.html">relay.lua</a></li>
+  <li><a href="../source/reset.lua.html">reset.lua</a></li>
+  <li><a href="../source/supply.lua.html">supply.lua</a></li>
+  <li><a href="../source/thdn.lua.html">thdn.lua</a></li>
+  <li><a href="../source/HWIO.lua.html">HWIO.lua</a></li>
+  <li><a href="../source/MCU.lua.html">MCU.lua</a></li>
+  <li><a href="../source/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../source/test_engine.lua.html">test_engine.lua</a></li>
+  <li><a href="../source/config_utils.lua.html">config_utils.lua</a></li>
+  <li><a href="../source/global_data.lua.html">global_data.lua</a></li>
+  <li><strong>sequence_utils.lua</strong></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/string_utils.lua.html">string_utils.lua</a></li>
+  <li><a href="../source/time_utils.lua.html">time_utils.lua</a></li>
+  <li><a href="../source/uuid.lua.html">uuid.lua</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h2>sequence_utils.lua</h2>
+<pre>
+<span class="comment">--- Sequence utils
+</span><span class="comment">-- @module utils.sequence_utils
+</span><span class="comment">-- @alias sequence_utils
+</span><span class="keyword">local</span> string_utils = <span class="global">require</span>(<span class="string">"utils.string_utils"</span>)
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Unit exponents
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> unit_exponents = {
+	UV 		= -<span class="number">6</span>,
+	MV 		= -<span class="number">3</span>,
+	V 		= <span class="number">0</span>,
+	UA 		= -<span class="number">6</span>,
+	MA 		= -<span class="number">3</span>,
+	A 		= <span class="number">0</span>,
+	HZ 		= <span class="number">0</span>,
+	KHZ 	= <span class="number">3</span>,
+	MHZ 	= <span class="number">6</span>,
+	GHZ 	= <span class="number">9</span>,
+	OHM 	= <span class="number">0</span>,
+	KOHM 	= <span class="number">3</span>,
+	S 		= <span class="number">0</span>,
+	MS		= -<span class="number">3</span>,
+	VPP		= <span class="number">0</span>,
+	MVPP	= -<span class="number">3</span>
+}
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Exported module
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> sequence_utils = {}
+<span class="comment">-- function sequence_utils.check_numerical_limits(value, sequence)
+</span><span class="comment">-- function sequence_utils.convert_units(value, from_units, to_units)
+</span>
+<span class="comment">--- Compare a value against numerical limits in a sequence object
+</span><span class="comment">-- @param result result value from test
+</span><span class="comment">-- @param sequence FCT test sequence table
+</span><a id="39"></a><span class="comment">-- @return pass/fail boolean
+</span><span class="keyword">function</span> sequence_utils.check_numerical_limits(result, sequence)
+	<span class="keyword">local</span> passing = <span class="keyword">true</span>
+
+    <span class="keyword">if</span> (<span class="global">tonumber</span>(sequence.low) <span class="keyword">and</span> <span class="global">tonumber</span>(result) &lt; <span class="global">tonumber</span>(sequence.low)) <span class="keyword">or</span>
+            (<span class="global">tonumber</span>(sequence.high) <span class="keyword">and</span> <span class="global">tonumber</span>(result) &gt; <span class="global">tonumber</span>(sequence.high)) <span class="keyword">then</span>
+        passing = <span class="keyword">false</span>
+    <span class="keyword">end</span>
+
+    <span class="keyword">return</span> passing
+<span class="keyword">end</span>
+
+<span class="comment">--- Match expected text (from sequence object) against diags command output
+</span><span class="comment">-- @param result response string from diags command
+</span><span class="comment">-- @param sequence FCT test sequence table
+</span><a id="54"></a><span class="comment">-- @return pass/fail boolean
+</span><span class="keyword">function</span> sequence_utils.check_string_match_limit(result, sequence)
+	<span class="keyword">local</span> passing = <span class="keyword">true</span>
+
+    <span class="keyword">if</span> sequence.param2 <span class="keyword">and</span> sequence.param2 ~= <span class="string">""</span> <span class="keyword">and</span> <span class="global">string</span>.match(result, string_utils.replace_special_char(sequence.param2)) == <span class="keyword">nil</span> <span class="keyword">then</span>
+        passing = <span class="keyword">false</span>
+    <span class="keyword">end</span>
+
+    <span class="keyword">return</span> passing
+<span class="keyword">end</span>
+
+<span class="comment">--- Compare parsed diags parameter against string limits in a sequence object
+</span><span class="comment">-- @param result parsed diags parameter
+</span><span class="comment">-- @param sequence FCT test sequence table
+</span><a id="68"></a><span class="comment">-- @return pass/fail boolean
+</span><span class="keyword">function</span> sequence_utils.check_string_low_high_limit(result, sequence)
+	<span class="keyword">local</span> passing = <span class="keyword">true</span>
+
+    <span class="keyword">if</span> sequence.low ~= <span class="keyword">nil</span> <span class="keyword">and</span> sequence.low ~= <span class="string">""</span> <span class="keyword">and</span> <span class="global">string</span>.match(result, string_utils.replace_special_char(sequence.low)) == <span class="keyword">nil</span> <span class="keyword">then</span>
+        passing = <span class="keyword">false</span>
+    <span class="keyword">elseif</span> sequence.high ~= <span class="keyword">nil</span> <span class="keyword">and</span> sequence.high ~= <span class="string">""</span> <span class="keyword">and</span> <span class="global">string</span>.match(result, string_utils.replace_special_char(sequence.high)) == <span class="keyword">nil</span> <span class="keyword">then</span>
+        passing = <span class="keyword">false</span>
+    <span class="keyword">end</span>
+
+    <span class="keyword">return</span> passing
+<span class="keyword">end</span>
+
+<span class="comment">--- Convert value from one unit to another.
+</span><span class="comment">-- Can be used to guarantee consistent units for a specific function.
+</span><span class="comment">-- Does not guarantee that volts are converted to volts, seconds to seconds, etc.
+</span><span class="comment">-- @param value number to convert
+</span><span class="comment">-- @param from_units units to convert from (e.g. mV)
+</span><span class="comment">-- @param to_units units to convert to (e.g. V)
+</span><a id="87"></a><span class="comment">-- @return number converted from from_units -&gt; to_units
+</span><span class="keyword">function</span> sequence_utils.convert_units(value, from_units, to_units)
+	<span class="keyword">if</span> from_units == <span class="keyword">nil</span> <span class="keyword">or</span> to_units == <span class="keyword">nil</span> <span class="keyword">then</span>
+		error(<span class="string">"Units are not specified but are required."</span>, <span class="number">2</span>)
+	<span class="keyword">end</span>
+
+	<span class="keyword">local</span> from_u = unit_exponents[<span class="global">string</span>.upper(from_units)]
+	<span class="keyword">local</span> to_u = unit_exponents[<span class="global">string</span>.upper(to_units)]
+
+	<span class="keyword">if</span> from_u == <span class="keyword">nil</span> <span class="keyword">or</span> to_u == <span class="keyword">nil</span> <span class="keyword">then</span>
+		error(<span class="string">"Invalid units!"</span>, <span class="number">2</span>)
+	<span class="keyword">end</span>
+
+	<span class="keyword">local</span> delta_exponent = from_u - to_u
+	<span class="keyword">return</span> <span class="global">tonumber</span>(value) * <span class="global">math</span>.pow(<span class="number">10</span>, delta_exponent)
+<span class="keyword">end</span>
+
+<span class="keyword">return</span> sequence_utils</pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

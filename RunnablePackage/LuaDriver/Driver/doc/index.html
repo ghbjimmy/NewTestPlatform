@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="modules/config.development.html">config.development</a></li>
+  <li><a href="modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="modules/function_table.html">function_table</a></li>
+  <li><a href="modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+</ul>
+
+</div>
+
+<div id="content">
+
+
+  <p>This code interfaces between the test sequencer (using ZMQ) and the raw fixture interfaces (using one of the console modules). It conditionally executes tests and publishes the results over ZMQ after completion.
+</p>
+
+<h2>Modules</h2>
+<table class="module_list">
+	<tr>
+		<td class="name"  nowrap><a href="modules/config.development.html">config.development</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/config.pathfinder.html">config.pathfinder</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/config.zmq.html">config.zmq</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/console.dummy.html">console.dummy</a></td>
+		<td class="summary">Dummy socket library simulates a fake fixture and DUT UART connection.</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/console.dut.socket.html">console.dut.socket</a></td>
+		<td class="summary">TCP Socket-based connection to DUT UART</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/console.dut.zmq.html">console.dut.zmq</a></td>
+		<td class="summary">ZMQ-based connection to DUT UART
+ Depends on a running serial_master.lua</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/console.fixture.socket.html">console.fixture.socket</a></td>
+		<td class="summary">TCP Socket-based connection to DUT UART</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/function_table.html">function_table</a></td>
+		<td class="summary">Table of implemented functions</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/functions.datalogger.html">functions.datalogger</a></td>
+		<td class="summary">This function communicates over a ZMQ socket to the
+ datalogger -- it requests an RMS current over a specific number of samples.</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/functions.dmm.html">functions.dmm</a></td>
+		<td class="summary">DMM Function</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/functions.dut.html">functions.dut</a></td>
+		<td class="summary">DUT Function</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/functions.eload.html">functions.eload</a></td>
+		<td class="summary">Eload Function Module</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/functions.fixture.html">functions.fixture</a></td>
+		<td class="summary">Fixture functions</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/functions.measure.html">functions.measure</a></td>
+		<td class="summary">Measure Functions</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/functions.relay.html">functions.relay</a></td>
+		<td class="summary">Relay Functions Module</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/functions.reset.html">functions.reset</a></td>
+		<td class="summary">Reset Function</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/functions.supply.html">functions.supply</a></td>
+		<td class="summary">Supply Functions</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/functions.thdn.html">functions.thdn</a></td>
+		<td class="summary">Speaker/Alert THDN Analysis Module</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/hw.HWIO.html">hw.HWIO</a></td>
+		<td class="summary">HW IO mapping table</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/hw.MCU.html">hw.MCU</a></td>
+		<td class="summary">Higher level abstraction on top of the fixture UART</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/utils.config_utils.html">utils.config_utils</a></td>
+		<td class="summary">Global data dictionary utilities</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/utils.global_data.html">utils.global_data</a></td>
+		<td class="summary">Global data dictionary utilities</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/utils.sequence_utils.html">utils.sequence_utils</a></td>
+		<td class="summary">Sequence utils</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/utils.socket.html">utils.socket</a></td>
+		<td class="summary">Lua Socket Extensions</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/utils.string_utils.html">utils.string_utils</a></td>
+		<td class="summary">String utils</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/utils.time_utils.html">utils.time_utils</a></td>
+		<td class="summary">Time utils</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/utils.uuid.html">utils.uuid</a></td>
+		<td class="summary">Copyright 2012 Rackspace (original), 2013 Thijs Schreijer (modifications)
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.</td>
+	</tr>
+</table>
+<h2>Scripts</h2>
+<table class="module_list">
+	<tr>
+		<td class="name"  nowrap><a href="scripts/serial_master.lua.html">serial_master.lua</a></td>
+		<td class="summary">serial_master.lua is an optional script to manage the DUT UART connection and publish the log over ZMQ.</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="scripts/test_engine.lua.html">test_engine.lua</a></td>
+		<td class="summary">test_engine.lua manages fixture interactions for the FCT test fixture.</td>
+	</tr>
+</table>
+<h2>Source</h2>
+<table class="module_list">
+	<tr>
+		<td class="name"  nowrap><a href="source/development.lua.html">development.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/pathfinder.lua.html">pathfinder.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/zmq.lua.html">zmq.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/dummy.lua.html">dummy.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/socket.lua.html">socket.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/zmq.lua.html">zmq.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/socket.lua.html">socket.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/function_table.lua.html">function_table.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/datalogger.lua.html">datalogger.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/dmm.lua.html">dmm.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/dut.lua.html">dut.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/eload.lua.html">eload.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/fixture.lua.html">fixture.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/measure.lua.html">measure.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/relay.lua.html">relay.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/reset.lua.html">reset.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/supply.lua.html">supply.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/thdn.lua.html">thdn.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/HWIO.lua.html">HWIO.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/MCU.lua.html">MCU.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/serial_master.lua.html">serial_master.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/test_engine.lua.html">test_engine.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/config_utils.lua.html">config_utils.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/global_data.lua.html">global_data.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/sequence_utils.lua.html">sequence_utils.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/socket.lua.html">socket.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/string_utils.lua.html">string_utils.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/time_utils.lua.html">time_utils.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="source/uuid.lua.html">uuid.lua</a></td>
+		<td class="summary"></td>
+	</tr>
+</table>
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

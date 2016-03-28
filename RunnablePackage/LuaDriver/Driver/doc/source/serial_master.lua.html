@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Source</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../source/development.lua.html">development.lua</a></li>
+  <li><a href="../source/pathfinder.lua.html">pathfinder.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/dummy.lua.html">dummy.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/function_table.lua.html">function_table.lua</a></li>
+  <li><a href="../source/datalogger.lua.html">datalogger.lua</a></li>
+  <li><a href="../source/dmm.lua.html">dmm.lua</a></li>
+  <li><a href="../source/dut.lua.html">dut.lua</a></li>
+  <li><a href="../source/eload.lua.html">eload.lua</a></li>
+  <li><a href="../source/fixture.lua.html">fixture.lua</a></li>
+  <li><a href="../source/measure.lua.html">measure.lua</a></li>
+  <li><a href="../source/relay.lua.html">relay.lua</a></li>
+  <li><a href="../source/reset.lua.html">reset.lua</a></li>
+  <li><a href="../source/supply.lua.html">supply.lua</a></li>
+  <li><a href="../source/thdn.lua.html">thdn.lua</a></li>
+  <li><a href="../source/HWIO.lua.html">HWIO.lua</a></li>
+  <li><a href="../source/MCU.lua.html">MCU.lua</a></li>
+  <li><strong>serial_master.lua</strong></li>
+  <li><a href="../source/test_engine.lua.html">test_engine.lua</a></li>
+  <li><a href="../source/config_utils.lua.html">config_utils.lua</a></li>
+  <li><a href="../source/global_data.lua.html">global_data.lua</a></li>
+  <li><a href="../source/sequence_utils.lua.html">sequence_utils.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/string_utils.lua.html">string_utils.lua</a></li>
+  <li><a href="../source/time_utils.lua.html">time_utils.lua</a></li>
+  <li><a href="../source/uuid.lua.html">uuid.lua</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>serial_master.lua</strong></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h2>serial_master.lua</h2>
+<pre>
+#!/usr/bin/lua
+<span class="comment">--- serial_master.lua is an optional script to manage the DUT UART connection and publish the log over ZMQ.
+</span><span class="comment">-- It continuously publishes the UART traffic to a ZMQ socket (&lt;code&gt;DUT_UART_ZMQ&lt;/code&gt;), and takes requests
+</span><span class="comment">-- to send text over UART to the DUT using another ZMQ socket (&lt;code&gt;UART_ZMQ_REQ&lt;/code&gt;).
+</span><span class="comment">--
+</span><span class="comment">-- It uses the following ZMQ Sockets:
+</span><span class="comment">-- &lt;ul&gt;
+</span><span class="comment">--      &lt;li&gt;&lt;span class="parameter"&gt;DUT_UART_ZMQ&lt;/span&gt; PUB socket&lt;/li&gt;
+</span><span class="comment">--      &lt;li&gt;&lt;span class="parameter"&gt;UART_ZMQ_REQ&lt;/span&gt; REP socket&lt;/li&gt;
+</span><span class="comment">-- &lt;/ul&gt;
+</span><span class="comment">-- @script serial_master.lua
+</span><span class="comment">-- @usage serial_master.lua [-c config file] [-u DUT #] [OPT=VAL]
+</span><span class="comment">-- @usage serial_master.lua -c config.zmq -u 0 UNIT_STAGE=PRESMT2
+</span><span class="global">require</span>(<span class="string">"utils.zhelpers"</span>)
+<span class="keyword">local</span> zmq = <span class="global">require</span>(<span class="string">"lzmq"</span>)
+<span class="keyword">local</span> zpoller = <span class="global">require</span>(<span class="string">"lzmq.poller"</span>)
+<span class="keyword">local</span> socket = <span class="global">require</span>(<span class="string">"utils.socket"</span>)
+<span class="keyword">local</span> time_utils = <span class="global">require</span>(<span class="string">"utils.time_utils"</span>)
+<span class="keyword">local</span> config_utils = <span class="global">require</span>(<span class="string">"utils.config_utils"</span>)
+<span class="keyword">local</span> lapp = <span class="global">require</span>(<span class="string">"pl.lapp"</span>)
+
+<span class="keyword">local</span> args = <span class="string">[[
+X527 Serial Master
+
+This is a logger that sits between the DUT UART and a ZMQ socket. It publishes the UART log over ZMQ,
+and also writes the log to the text file specified in the config.
+
+    -c,--config     (default "config.zmq")          Config module to load.
+    -u,--uut        (default 0)                     UUT slot number (used for IP/Port selection)
+    &lt;updates...&gt;    (default "")                    Series of X=Y pairs to update the CONFIG table with
+]]</span>
+
+
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Global (!!!) config variable
+</span><span class="comment">--===========================--
+</span>CONFIG = config_utils.get_config(args)
+<span class="keyword">local</span> serial
+<span class="keyword">if</span> CONFIG.SERIAL_PORT == <span class="keyword">true</span> <span class="keyword">then</span>
+    serial = <span class="global">require</span>(<span class="string">"socket.serial"</span>)
+<span class="keyword">end</span>
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Local Buffer
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> recv_buffer = <span class="string">""</span>
+<span class="keyword">local</span> start_time = time_utils.get_unix_time_ms()
+<span class="keyword">local</span> max_send_timeout = <span class="number">500</span>
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Setup ZMQ sockets
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> context = zmq.context()
+<span class="keyword">local</span> serial_cmd_zmq, err = context:socket(zmq.REP, {bind = config_utils.get_addr(CONFIG, <span class="string">"UART_ZMQ_REQ"</span>, CONFIG.ID)})
+zassert(serial_cmd_zmq, err)
+
+<span class="keyword">local</span> dut_serial_output_zmq, err = context:socket(zmq.PUB, {bind = config_utils.get_addr(CONFIG, <span class="string">"DUT_UART_ZMQ"</span>, CONFIG.ID)})
+zassert(dut_serial_output_zmq, err)
+
+<span class="comment">-- local fixture_serial_output_zmq, err = context:socket(zmq.PUB, {bind = CONFIG.get_addr("FIX_UART_ZMQ", CONFIG.ID)})
+</span><span class="comment">-- zassert(fixture_serial_output_zmq, err)
+</span>
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Open Log Files
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> DutLogOut = config_utils.get_log_writer(CONFIG, <span class="string">"DUT"</span>, CONFIG.log_prefix)
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Setup real sockets
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> dut_socket = <span class="keyword">nil</span>
+<span class="keyword">if</span> CONFIG.SERIAL_PORT == <span class="keyword">true</span> <span class="keyword">then</span>
+    dut_socket = <span class="global">assert</span>(serial(CONFIG.DUT_UART_ADDRESS[CONFIG.ID + <span class="number">1</span>]))
+    dut_socket:settimeout(<span class="number">1</span>)
+<span class="keyword">else</span>
+    dut_socket = <span class="global">assert</span>(
+        socket.timeout_connect(<span class="number">5</span>,CONFIG.DUT_UART_ADDRESS[CONFIG.ID + <span class="number">1</span>], CONFIG.DUT_UART_PORT),<span class="string">"HW: "</span>..<span class="global">tostring</span>(CONFIG.ID)..<span class="string">" Connect Fail"</span>)
+    dut_socket:settimeout(<span class="number">1</span>)
+    dut_socket:setoption(<span class="string">"keepalive"</span>,<span class="keyword">true</span>)
+<span class="keyword">end</span>
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Serial loop function
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> <span class="keyword">function</span> serial_loop()
+    <span class="comment">-- Rebroadcast Serial
+</span>    <span class="keyword">local</span> ret, rcvState = dut_socket:receive(<span class="number">1</span>)
+
+    <span class="keyword">if</span>(rcvState == <span class="string">"closed"</span>) <span class="keyword">then</span>
+        error(<span class="string">"DUT port Connection Closed."</span>)
+    <span class="keyword">end</span>
+
+    <span class="keyword">if</span> ret <span class="keyword">and</span> ret ~= <span class="string">"\0"</span> <span class="keyword">then</span>
+        recv_buffer = recv_buffer .. <span class="global">tostring</span>(ret)
+    <span class="keyword">end</span>
+
+    <span class="keyword">if</span> recv_buffer:match(<span class="string">"\n"</span>) <span class="keyword">or</span> recv_buffer:match(<span class="string">"\r"</span>) <span class="keyword">then</span>
+        dut_serial_output_zmq:send(recv_buffer)
+        <span class="keyword">if</span> (DutLogOut) <span class="keyword">then</span> DutLogOut.write(recv_buffer, <span class="keyword">nil</span>, <span class="keyword">false</span>) <span class="keyword">end</span>
+
+        recv_buffer = <span class="string">""</span>
+        start_time = time_utils.get_unix_time_ms()
+    <span class="keyword">end</span>
+
+    <span class="keyword">if</span> time_utils.get_time_delta_ms(start_time) &gt; max_send_timeout <span class="keyword">then</span>
+        dut_serial_output_zmq:send(recv_buffer)
+        <span class="keyword">if</span> (DutLogOut) <span class="keyword">then</span> DutLogOut.write(recv_buffer, <span class="keyword">nil</span>, <span class="keyword">true</span>) <span class="keyword">end</span>
+
+        recv_buffer = <span class="string">""</span>
+        start_time = time_utils.get_unix_time_ms()
+    <span class="keyword">end</span>
+
+    <span class="comment">-- Process any commands
+</span>    <span class="keyword">local</span> msg = <span class="keyword">nil</span>
+    <span class="keyword">if</span> serial_cmd_zmq:poll(<span class="number">0</span>) <span class="keyword">then</span>
+        msg = serial_cmd_zmq:recv()
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> msg ~= <span class="keyword">nil</span> <span class="keyword">then</span>
+        <span class="global">print</span>(<span class="string">"MSG: "</span>.. msg)
+        command = msg:match(<span class="string">"DUT:(.*)"</span>)
+        dut_socket:send(<span class="global">string</span>.format(<span class="string">"%s\r"</span>, command))
+        serial_cmd_zmq:send(<span class="string">"SENT:"</span>..command)
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">while</span> <span class="keyword">true</span> <span class="keyword">do</span>
+    serial_loop()
+<span class="keyword">end</span></pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

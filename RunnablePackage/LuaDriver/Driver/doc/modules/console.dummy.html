@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><strong>console.dummy</strong></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>console.dummy</code></h1>
+<p>Dummy socket library simulates a fake fixture and DUT UART connection.</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#_Arm_Socket_Connect_">_Arm_Socket_Connect_ ()</a></td>
+	<td class="summary">Connect to the fixture UART socket</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_ARM_Send_Cmd_">_ARM_Send_Cmd_ (command)</a></td>
+	<td class="summary">Send command to the fixture (ARM)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_Arm_Socket_Close_">_Arm_Socket_Close_ ()</a></td>
+	<td class="summary">Close the fixture UART socket</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_DUT_Socket_Connect_">_DUT_Socket_Connect_ ()</a></td>
+	<td class="summary">Connect to the DUT UART socket</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_Dut_Send_String_">_Dut_Send_String_ (str)</a></td>
+	<td class="summary">Send a string over the DUT UART without waiting for a response</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_Dut_Set_Detect_String_">_Dut_Set_Detect_String_ (str)</a></td>
+	<td class="summary">Set the detect string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_Dut_Wait_For_String_">_Dut_Wait_For_String_ (timeout)</a></td>
+	<td class="summary">Buffer DUT UART responses until finding the detect string.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_Dut_Send_Cmd_">_Dut_Send_Cmd_ (str, timeout)</a></td>
+	<td class="summary">Send a command to the fixture and wait for the response.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_Dut_Read_String_">_Dut_Read_String_ ()</a></td>
+	<td class="summary">Get the UART response from the last diags command.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_Dut_Socket_Receive_">_Dut_Socket_Receive_ ()</a></td>
+	<td class="summary">DEPRECATED: Do a raw read of the DUT Socket.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#_Dut_Socket_Close_">_Dut_Socket_Close_ ()</a></td>
+	<td class="summary">Close the DUT UART socket</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "_Arm_Socket_Connect_"></a>
+    <strong>_Arm_Socket_Connect_ ()</strong>
+    <a style="float:right;" href="../source/dummy.lua.html#29">line 29</a>
+    </dt>
+    <dd>
+    Connect to the fixture UART socket
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "_ARM_Send_Cmd_"></a>
+    <strong>_ARM_Send_Cmd_ (command)</strong>
+    <a style="float:right;" href="../source/dummy.lua.html#36">line 36</a>
+    </dt>
+    <dd>
+    Send command to the fixture (ARM)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">command</span>
+         command to send to the fixture
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+        Response from the fixture
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "_Arm_Socket_Close_"></a>
+    <strong>_Arm_Socket_Close_ ()</strong>
+    <a style="float:right;" href="../source/dummy.lua.html#52">line 52</a>
+    </dt>
+    <dd>
+    Close the fixture UART socket
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "_DUT_Socket_Connect_"></a>
+    <strong>_DUT_Socket_Connect_ ()</strong>
+    <a style="float:right;" href="../source/dummy.lua.html#62">line 62</a>
+    </dt>
+    <dd>
+    Connect to the DUT UART socket
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "_Dut_Send_String_"></a>
+    <strong>_Dut_Send_String_ (str)</strong>
+    <a style="float:right;" href="../source/dummy.lua.html#69">line 69</a>
+    </dt>
+    <dd>
+    Send a string over the DUT UART without waiting for a response
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         string to send to DUT
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "_Dut_Set_Detect_String_"></a>
+    <strong>_Dut_Set_Detect_String_ (str)</strong>
+    <a style="float:right;" href="../source/dummy.lua.html#78">line 78</a>
+    </dt>
+    <dd>
+    Set the detect string.
+ The detect string is used to determine when the system is done sending back a response.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         string to use as a detect string.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../modules/console.dummy.html#_Dut_Wait_For_String_">_Dut_Wait_For_String_</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "_Dut_Wait_For_String_"></a>
+    <strong>_Dut_Wait_For_String_ (timeout)</strong>
+    <a style="float:right;" href="../source/dummy.lua.html#87">line 87</a>
+    </dt>
+    <dd>
+    Buffer DUT UART responses until finding the detect string.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">timeout</span>
+         timeout when waiting for detect string
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        0</li>
+        <li>
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+        status message</li>
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../modules/console.dummy.html#_Dut_Set_Detect_String_">_Dut_Set_Detect_String_</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "_Dut_Send_Cmd_"></a>
+    <strong>_Dut_Send_Cmd_ (str, timeout)</strong>
+    <a style="float:right;" href="../source/dummy.lua.html#99">line 99</a>
+    </dt>
+    <dd>
+    Send a command to the fixture and wait for the response.
+ The detect string is set to the diags default of "] :-)", and used to determine when the
+ system is done sending back a response.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">str</span>
+         command to sent to the DUT
+        </li>
+        <li><span class="parameter">timeout</span>
+         time to wait for detect string before failing
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        0
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "_Dut_Read_String_"></a>
+    <strong>_Dut_Read_String_ ()</strong>
+    <a style="float:right;" href="../source/dummy.lua.html#116">line 116</a>
+    </dt>
+    <dd>
+    Get the UART response from the last diags command.
+ This also erases the local UART buffer, so more calls of this function will read an empty string.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+        DUT response from last diags command
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "_Dut_Socket_Receive_"></a>
+    <strong>_Dut_Socket_Receive_ ()</strong>
+    <a style="float:right;" href="../source/dummy.lua.html#122">line 122</a>
+    </dt>
+    <dd>
+    DEPRECATED: Do a raw read of the DUT Socket.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+        DUT response from last diags command
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "_Dut_Socket_Close_"></a>
+    <strong>_Dut_Socket_Close_ ()</strong>
+    <a style="float:right;" href="../source/dummy.lua.html#131">line 131</a>
+    </dt>
+    <dd>
+    Close the DUT UART socket
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">nil</span></span>
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,6 @@
+GROUP,DESCRIPTION,FUNCTION,TIMEOUT,PARAM1,PARAM2,UNIT,LOW,HIGH,KEY,VAL,TID
+HANTESTGROUP,Test function - Han,han_sayhello,,,,,,,,,INTEL_HOG_100_STAT_whatever
+INTELLIGENT GROUNDHOG,"Add Dummy value for ""comment"" key",get_version,,"( ""82acbb644ce34f361e07fea2183812de3c803af49281a0fab902d07e3911170e"" )",{{comment}},,,,,,INTEL_HOG_150_STAT_COMMENT
+HANTESTGROUP,Test function - Han return Fail,han_fail,,,{{value}},,5,50,,,INTEL_HOG_100_STAT_somefail
+HANTESTGROUP,Test function - Han return Error,han_error,,,,,,,,,INTEL_HOG_100_STAT_someerror
+HANTESTGROUP,Test function - Han return Fail,han_fail,,,{{value}},,5,100,,,INTEL_HOG_100_STAT_somefail

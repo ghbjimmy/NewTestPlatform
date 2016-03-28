@@ -1,0 +1,522 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Source</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../source/development.lua.html">development.lua</a></li>
+  <li><a href="../source/pathfinder.lua.html">pathfinder.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/dummy.lua.html">dummy.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/function_table.lua.html">function_table.lua</a></li>
+  <li><a href="../source/datalogger.lua.html">datalogger.lua</a></li>
+  <li><a href="../source/dmm.lua.html">dmm.lua</a></li>
+  <li><a href="../source/dut.lua.html">dut.lua</a></li>
+  <li><a href="../source/eload.lua.html">eload.lua</a></li>
+  <li><a href="../source/fixture.lua.html">fixture.lua</a></li>
+  <li><a href="../source/measure.lua.html">measure.lua</a></li>
+  <li><a href="../source/relay.lua.html">relay.lua</a></li>
+  <li><a href="../source/reset.lua.html">reset.lua</a></li>
+  <li><a href="../source/supply.lua.html">supply.lua</a></li>
+  <li><a href="../source/thdn.lua.html">thdn.lua</a></li>
+  <li><strong>HWIO.lua</strong></li>
+  <li><a href="../source/MCU.lua.html">MCU.lua</a></li>
+  <li><a href="../source/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../source/test_engine.lua.html">test_engine.lua</a></li>
+  <li><a href="../source/config_utils.lua.html">config_utils.lua</a></li>
+  <li><a href="../source/global_data.lua.html">global_data.lua</a></li>
+  <li><a href="../source/sequence_utils.lua.html">sequence_utils.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/string_utils.lua.html">string_utils.lua</a></li>
+  <li><a href="../source/time_utils.lua.html">time_utils.lua</a></li>
+  <li><a href="../source/uuid.lua.html">uuid.lua</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h2>HWIO.lua</h2>
+<pre>
+<span class="comment">--- HW IO mapping table
+</span><span class="comment">-- @module hw.HWIO
+</span><span class="comment">--- @alias HWIO
+</span><span class="keyword">local</span> HWIO = {}
+
+<span class="comment">-- Missing
+</span>HWIO.MissingRelays = {
+    AOP_TO_MIC_PDM_CLK_LIO = <span class="number">300</span>,
+    MIC_TO_AOP_PDM_DATA_LIO = <span class="number">300</span>,
+    RFFE2_CLK_BUFFER_RIO = <span class="number">250</span>,
+    RFFE2_DATA_BUFFER_RIO = <span class="number">250</span>,
+}
+
+HWIO.EloadTable = {
+    PP3V3_SLEEP3_BUBO = {
+        IO = { { <span class="number">180</span>, <span class="number">1</span> }, { <span class="number">179</span>, <span class="number">1</span> }, { <span class="number">178</span>, <span class="number">1</span> }, { <span class="number">177</span>, <span class="number">1</span> }, { <span class="number">98</span>, <span class="number">0</span> }, },
+        DAC = <span class="string">"A"</span>,
+    },
+    PP_VDD_MAIN_DISP_BOOST_SW = {
+        IO = { { <span class="number">180</span>, <span class="number">1</span> }, { <span class="number">179</span>, <span class="number">0</span> }, { <span class="number">178</span>, <span class="number">0</span> }, { <span class="number">177</span>, <span class="number">1</span> }, { <span class="number">98</span>, <span class="number">0</span> }, },
+        DAC = <span class="string">"A"</span>,
+    },
+    PPVDD_MAIN_SLEEP1_SW4 = {
+        IO = { { <span class="number">180</span>, <span class="number">1</span> }, { <span class="number">179</span>, <span class="number">1</span> }, { <span class="number">178</span>, <span class="number">0</span> }, { <span class="number">177</span>, <span class="number">0</span> }, { <span class="number">98</span>, <span class="number">0</span> }, },
+        DAC = <span class="string">"A"</span>,
+    },
+    PP1V8_SLEEP2_SW3A = {
+        IO = { { <span class="number">180</span>, <span class="number">1</span> }, { <span class="number">179</span>, <span class="number">1</span> }, { <span class="number">178</span>, <span class="number">0</span> }, { <span class="number">177</span>, <span class="number">1</span> }, { <span class="number">98</span>, <span class="number">0</span> }, },
+        DAC = <span class="string">"A"</span>,
+    },
+    PP3V0_SLEEP2_LDO3 = {
+        IO = { { <span class="number">180</span>, <span class="number">1</span> }, { <span class="number">179</span>, <span class="number">1</span> }, { <span class="number">178</span>, <span class="number">1</span> }, { <span class="number">177</span>, <span class="number">0</span> }, { <span class="number">98</span>, <span class="number">0</span> }, },
+        DAC = <span class="string">"A"</span>,
+    },
+    PP_VDD_MAIN = {
+        IO = { { <span class="number">180</span>, <span class="number">1</span> }, { <span class="number">179</span>, <span class="number">0</span> }, { <span class="number">178</span>, <span class="number">0</span> }, { <span class="number">177</span>, <span class="number">0</span> }, { <span class="number">98</span>, <span class="number">0</span> }, },
+        DAC = <span class="string">"A"</span>,
+    },
+    PP_VRECT = {
+        IO = { { <span class="number">180</span>, <span class="number">1</span> }, { <span class="number">179</span>, <span class="number">0</span> }, { <span class="number">178</span>, <span class="number">1</span> }, { <span class="number">177</span>, <span class="number">1</span> }, { <span class="number">98</span>, <span class="number">0</span> }, },
+        DAC = <span class="string">"A"</span>,
+    },
+    PP5V2_SLEEP2_BOOST = {
+        IO = { { <span class="number">180</span>, <span class="number">1</span> }, { <span class="number">179</span>, <span class="number">0</span> }, { <span class="number">178</span>, <span class="number">1</span> }, { <span class="number">177</span>, <span class="number">0</span> }, { <span class="number">98</span>, <span class="number">0</span> }, },
+        DAC = <span class="string">"A"</span>,
+    },
+    DISCONNECT = {
+        IO = { { <span class="number">180</span>, <span class="number">0</span> }, { <span class="number">179</span>, <span class="number">0</span> }, { <span class="number">178</span>, <span class="number">0</span> }, { <span class="number">177</span>, <span class="number">0</span> }, { <span class="number">98</span>, <span class="number">0</span> }, },
+        DAC = <span class="string">"A"</span>, <span class="comment">-- should set to 0
+</span>    },
+}
+
+HWIO.MeasureTable = {
+      BAUX_DEBUG_TO_PMU_VBUS_DET_L = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"A"</span>, },
+        STOCKHOLM_TO_AOP_HOST_WAKE = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"B"</span>, },
+               PMU_TO_STOCKHOLM_EN = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"C"</span>, },
+          GRAPE_TO_BBPMU_FORCE_PWM = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"D"</span>, },
+                          PP_VRECT = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"G"</span>, },
+                   VDD_MAIN_I_FLAG = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"H"</span>, },
+            BOOST_TO_PT_BROWNOUT_L = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"A"</span>, },
+       AP_TO_STOCKHOLM_FW_DWLD_REQ = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"B"</span>, },
+       AP_TO_STOCKHOLM_DEVICE_WAKE = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"C"</span>, },
+             PPBATT_PWRBOARD_FORCE = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"G"</span>, },
+                       BATT_I_FLAG = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"H"</span>, },
+                   PP1V2_DISP_CONN = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"A"</span>, },
+                   DEBUG_CON_DET_L = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"B"</span>, },
+                   AOP_TO_ALS_SYNC = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"C"</span>, },
+              PP3V0_SLEEP2_ORB_LIO = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"E"</span>, },
+             PPBATT_PWRBOARD_SENSE = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"G"</span>, },
+                   VDD_MAIN_T_FLAG = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"H"</span>, },
+                  RX_SELF_TEST_CH1 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"A"</span>, },
+             PP_CON_DET_EN_PIN_RVP = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"B"</span>, },
+       DEBUG_BI_BAUX_POWER_GATE_EN = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"C"</span>, },
+                      LOAD_VOLTAGE = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"G"</span>, },
+                       BATT_T_FLAG = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"H"</span>, },
+              PP_CON_DET_EN_PIN_SW = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"A"</span>, },
+          AP_BI_GG_TO_PMU_HDQ_CONN = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"B"</span>, },
+        STOCKHOLM_TO_AP_UART_CTS_L = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"C"</span>, },
+                AP_TO_GRAPE_SWDCLK = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"D"</span>, },
+                     ELOAD_CURRENT = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"G"</span>, },
+                       POSITIVE12V = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"H"</span>, },
+             PMU_TO_DISP_SYS_ALIVE = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"A"</span>, },
+        BONN_AOPRT_TO_BERLIN_PD_ON = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"B"</span>, },
+        AP_TO_STOCKHOLM_UART_RTS_L = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"C"</span>, },
+                   VDDMAIN_CURRENT = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"G"</span>, },
+                       NEGATIVE12V = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"H"</span>, },
+         DEBUG_TO_AOP_DOCK_CONNECT = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"A"</span>, },
+        BAUX_TO_DEBUG_DOCK_CONNECT = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"B"</span>, },
+                  ALS_TO_AOP_INT_L = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"C"</span>, },
+              PP1V8_SLEEP2_ORB_LIO = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"E"</span>, },
+                   PPVRECT_CURRENT = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"G"</span>, },
+                        POSITIVE5V = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"H"</span>, },
+                PMU_TO_AOP_RESET_L = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"A"</span>, },
+                 PP3V0_AWAKE_DISP  = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"B"</span>, },
+                 PP3V0_AWAKE_LDO5  = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"B"</span>, }, <span class="comment">-- duplicate
+</span>                 AP_BI_GRAPE_SWDIO = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"C"</span>, },
+                 PP_CON_DET_EN_PIN = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"D"</span>, },
+                      BATT_CURRENT = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"G"</span>, },
+                       POSITIVE5VU = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">1</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"H"</span>, },
+                  PP1V8_AWAKE_SW3C = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"A"</span>, },
+             PPVDD_MAIN_SLEEP1_SW4 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"B"</span>, },
+                       PMU_VDD_RTC = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"C"</span>, },
+             PP_VDD_MAIN_SNS_CODEC = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"D"</span>, },
+                 PP3V0_SLEEP3_LDO2 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"E"</span>, },
+                      LF_PEAK_DC_N = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"F"</span>, },
+                 ELOAD_SET_VOLTAGE = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"G"</span>, },
+            VDDMAIN_VCC_POWERBOARD = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"H"</span>, },
+            PP1V9_SLEEP2_BONN_AVDD = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"A"</span>, },
+                 PP1V8_SLEEP2_SW3A = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"B"</span>, },
+                 PP3V3_SLEEP3_BUBO = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"C"</span>, },
+                       PP_VDD_MAIN = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"E"</span>, },
+                   PP3V3_SLEEP2_PT = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"F"</span>, },
+                  PP3V3_SLEEP2_SW6 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"F"</span>, }, <span class="comment">-- duplicate
+</span>                PPBATT_SET_VOLTAGE = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"G"</span>, },
+               PP_VDD_MAIN_WLAN_SW = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"A"</span>, },
+                    PMU_SW1_EXT_ON = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"B"</span>, },
+           PP1V8_SLEEP2_GRAPE_CONN = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"C"</span>, },
+                   PP1V8_DISP_CONN = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"E"</span>, },
+                 I2C_1V8_SCL_PD_AI = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"F"</span>, },
+            PPVDD_MAIN_SET_VOLTAGE = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"G"</span>, },
+                PP0V8_SLEEP2_BUCK1 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"A"</span>, },
+                PPV_SLEEP2_AUX_LDO = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"B"</span>, },
+                      LF_PEAK_DC_P = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"E"</span>, },
+                PP1V1_SLEEP3_BUCK2 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"F"</span>, },
+               PPVRECT_SET_VOLTAGE = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"G"</span>, },
+                 PP1V2_AWAKE_BUCK4 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"A"</span>, },
+                  PP0V8_SLEEP1_SW1 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"B"</span>, },
+                 PP3V0_SLEEP2_LDO3 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"C"</span>, },
+                       PP_BATT_VCC = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"D"</span>, },
+                  SWD_DEBUG_SWDCLK = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"E"</span>, },
+                 PP0V6_SLEEP2_LDO0 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"F"</span>, },
+                  RX_SELF_TEST_CH0 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"A"</span>, },
+                 I2C_1V8_SDA_PD_AI = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"B"</span>, },
+                  PP3V0_AWAKE_LDO7 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"C"</span>, },
+            PP1V8_SLEEP1_DMIC_CONN = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"D"</span>, },
+       PMU_TO_SYSTEM_AWAKE_PWRGOOD = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"E"</span>, },
+                 PP1V8_ALWAYS_LDO9 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"F"</span>, },
+                         NTC_300MV = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">"G"</span>, },
+                SWD_DEBUG_AID_SDIO = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"A"</span>, },
+               AP_BI_GG_TO_PMU_HDQ = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"B"</span>, },
+          PMU_TO_AP_DISP_SYS_ALIVE = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"C"</span>, },
+              DEBUG_TO_AOP_PMU_INT = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"D"</span>, },
+                       AP_VBUS_DET = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"E"</span>, },
+              PMU_TO_SYSTEM_VDD_OK = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"F"</span>, },
+                       NTC_TEST_AI = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"G"</span>, },
+                  PP1V1_SLEEP1_SW2 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"A"</span>, },
+                DEBUG_TO_PMU_RESET = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"B"</span>, },
+                          PMU_VREF = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"C"</span>, },
+             PMU_TO_DEBUG_AMUX_OUT = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"D"</span>, },
+      PMU_TO_AOP_AP_SLEEP1_PWRGOOD = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"E"</span>, },
+                       RAIL_REF_AI = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> }, }, ADC = <span class="string">"F"</span>, },
+    <span class="comment">-- special channels: RAIL_REF_AI
+</span>                    PP4V8_HV_ANODE = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> },
+                                              { <span class="number">203</span>, <span class="number">1</span> }, { <span class="number">202</span>, <span class="number">0</span> }, { <span class="number">201</span>, <span class="number">0</span> }, { <span class="number">200</span>, <span class="number">0</span> }, { <span class="number">199</span>, <span class="number">1</span> }, { <span class="number">197</span>, <span class="number">1</span> }, }, ADC = <span class="string">"F"</span>, },
+                    PP2V8_LV_ANODE = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> },
+                                              { <span class="number">203</span>, <span class="number">1</span> }, { <span class="number">202</span>, <span class="number">0</span> }, { <span class="number">201</span>, <span class="number">0</span> }, { <span class="number">200</span>, <span class="number">1</span> }, { <span class="number">199</span>, <span class="number">0</span> }, { <span class="number">198</span>, <span class="number">1</span> }, }, ADC = <span class="string">"F"</span>, },
+                  P1V8_SLEEP2_SW3A = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> },
+                                              { <span class="number">203</span>, <span class="number">1</span> }, { <span class="number">202</span>, <span class="number">0</span> }, { <span class="number">201</span>, <span class="number">0</span> }, { <span class="number">200</span>, <span class="number">1</span> }, { <span class="number">199</span>, <span class="number">0</span> }, }, ADC = <span class="string">"F"</span>, },
+                PP1V1_SLEEP3_BUCK2 = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> },
+                                              { <span class="number">203</span>, <span class="number">1</span> }, { <span class="number">202</span>, <span class="number">0</span> }, { <span class="number">201</span>, <span class="number">1</span> }, { <span class="number">200</span>, <span class="number">0</span> }, { <span class="number">199</span>, <span class="number">0</span> }, }, ADC = <span class="string">"F"</span>, },
+                     PP2V7_PT_AVDD = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> },
+                                              { <span class="number">203</span>, <span class="number">1</span> }, { <span class="number">202</span>, <span class="number">0</span> }, { <span class="number">201</span>, <span class="number">1</span> }, { <span class="number">200</span>, <span class="number">0</span> }, { <span class="number">199</span>, <span class="number">1</span> }, }, ADC = <span class="string">"F"</span>, },
+                PP5V2_SLEEP2_BOOST = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> },
+                                              { <span class="number">203</span>, <span class="number">1</span> }, { <span class="number">202</span>, <span class="number">0</span> }, { <span class="number">201</span>, <span class="number">1</span> }, { <span class="number">200</span>, <span class="number">1</span> }, { <span class="number">199</span>, <span class="number">1</span> }, }, ADC = <span class="string">"F"</span>, },
+            CITRINE_TO_AOPRT_INT_L = { IO = { { <span class="number">112</span>, <span class="number">1</span> }, { <span class="number">111</span>, <span class="number">1</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">1</span> }, { <span class="number">108</span>, <span class="number">1</span> }, { <span class="number">107</span>, <span class="number">1</span> },
+                                              { <span class="number">203</span>, <span class="number">1</span> }, { <span class="number">202</span>, <span class="number">1</span> }, { <span class="number">201</span>, <span class="number">0</span> }, { <span class="number">200</span>, <span class="number">0</span> }, { <span class="number">199</span>, <span class="number">0</span> }, }, ADC = <span class="string">"F"</span>, },
+    <span class="comment">-- disconnect
+</span>                        DISCONNECT = { IO = { { <span class="number">197</span>, <span class="number">0</span> }, { <span class="number">198</span>, <span class="number">0</span> }, { <span class="number">205</span>, <span class="number">0</span> }, { <span class="number">204</span>, <span class="number">0</span> }, { <span class="number">203</span>, <span class="number">0</span> }, { <span class="number">202</span>, <span class="number">0</span> }, { <span class="number">201</span>, <span class="number">0</span> }, { <span class="number">200</span>, <span class="number">0</span> }, { <span class="number">199</span>, <span class="number">0</span> },
+                                              { <span class="number">112</span>, <span class="number">0</span> }, { <span class="number">111</span>, <span class="number">0</span> }, { <span class="number">110</span>, <span class="number">0</span> }, { <span class="number">109</span>, <span class="number">0</span> }, { <span class="number">108</span>, <span class="number">0</span> }, { <span class="number">107</span>, <span class="number">0</span> }, }, ADC = <span class="string">""</span>, },
+
+}
+
+HWIO.DMMCurrentTable = {
+    PP_BATT_VCC_UA  = { IO = { { <span class="number">132</span>, <span class="number">0</span> }, { <span class="number">133</span>, <span class="number">0</span> }, { <span class="number">134</span>, <span class="number">1</span> }, { <span class="number">142</span>, <span class="number">0</span> }, }, }, <span class="comment">-- 0-100uAA
+</span>    PP_BATT_VCC_MA  = { IO = { { <span class="number">132</span>, <span class="number">1</span> }, { <span class="number">133</span>, <span class="number">0</span> }, { <span class="number">134</span>, <span class="number">1</span> }, { <span class="number">142</span>, <span class="number">0</span> }, }, }, <span class="comment">-- 100uA-2mA
+</span>    DISCONNECT      = { IO = { { <span class="number">142</span>, <span class="number">1</span> }, { <span class="number">132</span>, <span class="number">0</span> }, { <span class="number">133</span>, <span class="number">0</span> }, { <span class="number">134</span>, <span class="number">0</span> }, }, }, <span class="comment">-- open
+</span>}
+
+
+HWIO.DMMVoltageTable = {
+    PP_BATT_VCC                 = { IO = { { <span class="number">137</span>, <span class="number">0</span> }, { <span class="number">136</span>, <span class="number">0</span> }, { <span class="number">135</span>, <span class="number">0</span> }, }, },
+    PP1V8_SLEEP2_LDO1           = { IO = { { <span class="number">137</span>, <span class="number">0</span> }, { <span class="number">136</span>, <span class="number">0</span> }, { <span class="number">135</span>, <span class="number">1</span> }, }, },
+    PP3V0_AWAKE_LDO4            = { IO = { { <span class="number">137</span>, <span class="number">0</span> }, { <span class="number">136</span>, <span class="number">1</span> }, { <span class="number">135</span>, <span class="number">0</span> }, }, },
+    PP0V6_SLEEP1_BUCK0          = { IO = { { <span class="number">137</span>, <span class="number">0</span> }, { <span class="number">136</span>, <span class="number">1</span> }, { <span class="number">135</span>, <span class="number">1</span> }, }, },
+    PP1V8_SLEEP3_BUCK3          = { IO = { { <span class="number">137</span>, <span class="number">1</span> }, { <span class="number">136</span>, <span class="number">0</span> }, { <span class="number">135</span>, <span class="number">0</span> }, }, },
+    BAUX_TO_PMU_AMUX            = { IO = { { <span class="number">137</span>, <span class="number">1</span> }, { <span class="number">136</span>, <span class="number">0</span> }, { <span class="number">135</span>, <span class="number">1</span> }, }, },
+    PP_VDD_MAIN_DISP_BOOST_SW   = { IO = { { <span class="number">137</span>, <span class="number">1</span> }, { <span class="number">136</span>, <span class="number">1</span> }, { <span class="number">135</span>, <span class="number">0</span> }, }, },
+    DISCONNECT                  = { IO = { { <span class="number">137</span>, <span class="number">1</span> }, { <span class="number">136</span>, <span class="number">1</span> }, { <span class="number">135</span>, <span class="number">1</span> }, }, },
+}
+
+
+HWIO.THDNFrequencyTable = {
+    TCXO_OUT_CLK32K             = { IO = { { <span class="number">190</span>, <span class="number">1</span> }, { <span class="number">189</span>, <span class="number">0</span> }, { <span class="number">188</span>, <span class="number">0</span> }, { <span class="number">187</span>, <span class="number">0</span> }, }, VREF = <span class="number">700</span>, SETTINGS = <span class="string">"LSM,100,0"</span> },
+    TCXO_OUT_CLK32K_1K          = { IO = { { <span class="number">190</span>, <span class="number">1</span> }, { <span class="number">189</span>, <span class="number">0</span> }, { <span class="number">188</span>, <span class="number">0</span> }, { <span class="number">187</span>, <span class="number">0</span> }, }, VREF = <span class="number">700</span>, SETTINGS = <span class="string">"MT,100,0"</span> },
+    TP_PT_TEST_CLKIO            = { IO = { { <span class="number">190</span>, <span class="number">1</span> }, { <span class="number">189</span>, <span class="number">0</span> }, { <span class="number">188</span>, <span class="number">0</span> }, { <span class="number">187</span>, <span class="number">1</span> }, }, VREF = <span class="number">500</span>, SETTINGS = <span class="string">"LSM,100,160"</span> },
+    PT_TO_PMU_AOPRT_REQUEST_PWM = { IO = { { <span class="number">190</span>, <span class="number">1</span> }, { <span class="number">189</span>, <span class="number">0</span> }, { <span class="number">188</span>, <span class="number">1</span> }, { <span class="number">187</span>, <span class="number">0</span> }, }, VREF = <span class="number">700</span>, SETTINGS = <span class="string">"MT,100,0"</span> },
+    AP_TO_DEBUG_TST_CLKOUT      = { IO = { { <span class="number">190</span>, <span class="number">1</span> }, { <span class="number">189</span>, <span class="number">0</span> }, { <span class="number">188</span>, <span class="number">1</span> }, { <span class="number">187</span>, <span class="number">1</span> }, }, VREF = <span class="number">500</span>, SETTINGS = <span class="string">"LSM,100,160"</span> }, <span class="comment">-- AP_TST_CLKOUT
+</span>    SPEAKER_FREQUENCY           = { IO = { { <span class="number">190</span>, <span class="number">1</span> }, { <span class="number">189</span>, <span class="number">1</span> }, { <span class="number">188</span>, <span class="number">1</span> }, { <span class="number">187</span>, <span class="number">0</span> }, }, VREF = <span class="number">1000</span>, SETTINGS = <span class="string">"LSM,100,0"</span> },
+    ALERT_FREQUENCY             = { IO = { { <span class="number">190</span>, <span class="number">1</span> }, { <span class="number">189</span>, <span class="number">1</span> }, { <span class="number">188</span>, <span class="number">1</span> }, { <span class="number">187</span>, <span class="number">1</span> }, }, VREF = <span class="number">1000</span>, SETTINGS = <span class="string">"LSM,100,0"</span> },
+    DISCONNECT                  = { IO = { { <span class="number">190</span>, <span class="number">0</span> }, { <span class="number">189</span>, <span class="number">0</span> }, { <span class="number">188</span>, <span class="number">0</span> }, { <span class="number">187</span>, <span class="number">0</span> }, }, },
+}
+
+HWIO.THDNAmplitudeTable = {
+    PP_CON_DET_EN_PIN_RIO_DC    = { IO = { { <span class="number">120</span>, <span class="number">1</span> }, { <span class="number">119</span>, <span class="number">0</span> }, { <span class="number">118</span>, <span class="number">0</span> }, }, },
+    PP_CON_DET_EN_PIN_RIO_AC    = { IO = { { <span class="number">120</span>, <span class="number">1</span> }, { <span class="number">119</span>, <span class="number">0</span> }, { <span class="number">118</span>, <span class="number">1</span> }, }, },
+    SPEAKER_P                  = { IO = { { <span class="number">140</span>, <span class="number">1</span> }, { <span class="number">120</span>, <span class="number">1</span> }, { <span class="number">119</span>, <span class="number">1</span> }, { <span class="number">118</span>, <span class="number">1</span> }, }, },
+    SPEAKER_N                  = { IO = { { <span class="number">140</span>, <span class="number">1</span> }, { <span class="number">120</span>, <span class="number">1</span> }, { <span class="number">119</span>, <span class="number">1</span> }, { <span class="number">118</span>, <span class="number">0</span> }, }, },
+    ALERT_P                     = { IO = { { <span class="number">140</span>, <span class="number">0</span> }, { <span class="number">120</span>, <span class="number">1</span> }, { <span class="number">119</span>, <span class="number">1</span> }, { <span class="number">118</span>, <span class="number">1</span> }, }, },
+    ALERT_N                     = { IO = { { <span class="number">140</span>, <span class="number">0</span> }, { <span class="number">120</span>, <span class="number">1</span> }, { <span class="number">119</span>, <span class="number">1</span> }, { <span class="number">118</span>, <span class="number">0</span> }, }, },
+    DISCONNECT                  = { IO = { { <span class="number">120</span>, <span class="number">0</span> }, { <span class="number">119</span>, <span class="number">0</span> }, { <span class="number">118</span>, <span class="number">0</span> }, }, }
+}
+
+<span class="comment">-- Supply
+</span>HWIO.SupplyTable = {
+    PP_VDD_MAIN = {
+        DAC = <span class="string">"C"</span>, <span class="comment">-- DAC C (VO3)
+</span>    },
+    PP_CON_DET_EN_PIN = {
+        DAC = <span class="string">"D"</span>, <span class="comment">-- DAC D (VO4)
+</span>    },
+    PP_VRECT = {
+        DAC = <span class="string">"D"</span>, <span class="comment">-- DAC D
+</span>    },
+    PP_BATT_VCC = {
+        DAC = <span class="string">"B"</span>, <span class="comment">-- DAC B
+</span>    },
+}
+
+HWIO.RelayTable = {
+    <span class="comment">-- special
+</span>    <span class="comment">--------------------------------------------------
+</span>    SEAJAY_BOX = {
+        CONNECT = { IO = { { <span class="number">104</span>, <span class="number">1</span> }, { <span class="number">143</span>, <span class="number">1</span> }, }, }, <span class="comment">-- turn on power and connect usb
+</span>        DISCONNECT = { IO = { { <span class="number">104</span>, <span class="number">0</span> }, { <span class="number">143</span>, <span class="number">0</span> }, }, }, <span class="comment">-- turn off
+</span>    },
+    SPAM_BOX = {
+        CONNECT = { IO = { { <span class="number">103</span>, <span class="number">1</span> }, { <span class="number">105</span>, <span class="number">1</span> }, { <span class="number">106</span>, <span class="number">1</span> }, }, }, <span class="comment">-- turn on power, bank_select low, reset_l high
+</span>        DISCONNECT = { IO = { { <span class="number">103</span>, <span class="number">0</span> }, { <span class="number">105</span>, <span class="number">0</span> }, { <span class="number">106</span>, <span class="number">0</span> }, }, }, <span class="comment">-- turn off
+</span>    },
+    DISCHARGER = {
+        CONNECT = { IO = { { <span class="number">121</span>, <span class="number">1</span> }, }, }, <span class="comment">-- 1k to ground, PP_VDD_MAIN, PP_BATT_VCC, PP_VRECT, PP_CON_DET_EN_PIN_RIO
+</span>        DISCONNECT = { IO = { { <span class="number">121</span>, <span class="number">0</span> }, }, },
+    },
+    PLAT_TIA01 = { <span class="comment">-- PLAT feedback / test
+</span>        HVLP_FD_OUT = { IO = { { <span class="number">205</span>, <span class="number">0</span> }, { <span class="number">204</span>, <span class="number">1</span> }, }, },
+        LVLP_FD_OUT = { IO = { { <span class="number">205</span>, <span class="number">1</span> }, { <span class="number">204</span>, <span class="number">1</span> }, }, },
+        SHORT_SELF_TEST = { IO = { { <span class="number">205</span>, <span class="number">1</span> }, { <span class="number">204</span>, <span class="number">0</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">205</span>, <span class="number">0</span> }, { <span class="number">204</span>, <span class="number">0</span> }, }, },
+    },
+    <span class="comment">-- multi
+</span>    <span class="comment">--------------------------------------------------
+</span>    TP_TCXO_CAL_CLK10M = {
+        CLK_10MHZ   = { IO = { { <span class="number">126</span>, <span class="number">1</span> }, { <span class="number">181</span>, <span class="number">1</span> }, }, },
+        PP3V5       = { IO = { { <span class="number">126</span>, <span class="number">0</span> }, { <span class="number">181</span>, <span class="number">0</span> }, }, },
+        DISCONNECT  = { IO = { { <span class="number">126</span>, <span class="number">0</span> }, { <span class="number">181</span>, <span class="number">1</span> }, }, },
+    },
+    PMU_TBAT = {
+        DIGITAL_POT = { IO = { { <span class="number">166</span>, <span class="number">0</span> }, { <span class="number">165</span>, <span class="number">1</span> }, }, },
+        RES_10K     = { IO = { { <span class="number">166</span>, <span class="number">1</span> }, { <span class="number">165</span>, <span class="number">0</span> }, }, },
+        DISCONNECT  = { IO = { { <span class="number">166</span>, <span class="number">0</span> }, { <span class="number">165</span>, <span class="number">0</span> }, }, },
+    },
+    AP_BI_GG_TO_PMU_HDQ_CONN = {
+        PP2V5_PULLUP    = { IO = { { <span class="number">161</span>, <span class="number">1</span> }, { <span class="number">162</span>, <span class="number">0</span> }, }, },
+        GROUND          = { IO = { { <span class="number">161</span>, <span class="number">0</span> }, { <span class="number">162</span>, <span class="number">1</span> }, }, },
+        DISCONNECT      = { IO = { { <span class="number">161</span>, <span class="number">0</span> }, { <span class="number">162</span>, <span class="number">0</span> }, }, },
+    },
+    ALS_TO_AOP_INT_L = {
+        PMU_TO_STOCKHOLM_EN         = { IO = { { <span class="number">186</span>, <span class="number">1</span> }, { <span class="number">185</span>, <span class="number">0</span> }, { <span class="number">184</span>, <span class="number">1</span> }, { <span class="number">183</span>, <span class="number">0</span> }, { <span class="number">182</span>, <span class="number">0</span> }, }, },
+        AP_TO_STOCKHOLM_FW_DWLD_REQ = { IO = { { <span class="number">186</span>, <span class="number">1</span> }, { <span class="number">185</span>, <span class="number">0</span> }, { <span class="number">184</span>, <span class="number">1</span> }, { <span class="number">183</span>, <span class="number">0</span> }, { <span class="number">182</span>, <span class="number">1</span> }, }, },
+        AP_TO_STOCKHOLM_DEVICE_WAKE = { IO = { { <span class="number">186</span>, <span class="number">1</span> }, { <span class="number">185</span>, <span class="number">0</span> }, { <span class="number">184</span>, <span class="number">1</span> }, { <span class="number">183</span>, <span class="number">1</span> }, { <span class="number">182</span>, <span class="number">0</span> }, }, },
+        AOP_TO_ALS_SYNC             = { IO = { { <span class="number">186</span>, <span class="number">1</span> }, { <span class="number">185</span>, <span class="number">1</span> }, { <span class="number">184</span>, <span class="number">0</span> }, { <span class="number">183</span>, <span class="number">0</span> }, { <span class="number">182</span>, <span class="number">0</span> }, }, },
+        AP_TO_STOCKHOLM_UART_RTS_L  = { IO = { { <span class="number">186</span>, <span class="number">1</span> }, { <span class="number">185</span>, <span class="number">1</span> }, { <span class="number">184</span>, <span class="number">0</span> }, { <span class="number">183</span>, <span class="number">0</span> }, { <span class="number">182</span>, <span class="number">1</span> }, }, },
+        STOCKHOLM_TO_AP_UART_CTS_L  = { IO = { { <span class="number">186</span>, <span class="number">1</span> }, { <span class="number">185</span>, <span class="number">1</span> }, { <span class="number">184</span>, <span class="number">0</span> }, { <span class="number">183</span>, <span class="number">1</span> }, { <span class="number">182</span>, <span class="number">0</span> }, }, },
+        STOCKHOLM_TO_AOP_HOST_WAKE  = { IO = { { <span class="number">186</span>, <span class="number">1</span> }, { <span class="number">185</span>, <span class="number">1</span> }, { <span class="number">184</span>, <span class="number">0</span> }, { <span class="number">183</span>, <span class="number">1</span> }, { <span class="number">182</span>, <span class="number">1</span> }, }, },
+        GRAPE_TO_BBPMU_FORCE_PWM    = { IO = { { <span class="number">186</span>, <span class="number">1</span> }, { <span class="number">185</span>, <span class="number">1</span> }, { <span class="number">184</span>, <span class="number">1</span> }, { <span class="number">183</span>, <span class="number">0</span> }, { <span class="number">182</span>, <span class="number">0</span> }, }, },
+        DISCONNECT                  = { IO = { { <span class="number">186</span>, <span class="number">0</span> }, { <span class="number">185</span>, <span class="number">0</span> }, { <span class="number">184</span>, <span class="number">0</span> }, { <span class="number">183</span>, <span class="number">0</span> }, { <span class="number">182</span>, <span class="number">0</span> }, }, },
+    },
+    PP4V8_HV_ANODE = {
+        PP4V8_LED_C0    = { IO = { { <span class="number">195</span>, <span class="number">1</span> }, { <span class="number">194</span>, <span class="number">0</span> }, { <span class="number">193</span>, <span class="number">0</span> }, }, },
+        PP4V8_LED_C1    = { IO = { { <span class="number">195</span>, <span class="number">1</span> }, { <span class="number">194</span>, <span class="number">0</span> }, { <span class="number">193</span>, <span class="number">1</span> }, }, },
+        PP4V8_LED_D0    = { IO = { { <span class="number">195</span>, <span class="number">1</span> }, { <span class="number">194</span>, <span class="number">1</span> }, { <span class="number">193</span>, <span class="number">0</span> }, }, },
+        PP4V8_LED_D1    = { IO = { { <span class="number">195</span>, <span class="number">1</span> }, { <span class="number">194</span>, <span class="number">1</span> }, { <span class="number">193</span>, <span class="number">1</span> }, }, },
+        DISCONNECT      = { IO = { { <span class="number">195</span>, <span class="number">0</span> }, { <span class="number">194</span>, <span class="number">0</span> }, { <span class="number">193</span>, <span class="number">0</span> }, }, },
+    },
+    PP2V8_LV_ANODE = {
+        PP2V8_LED_B1    = { IO = { { <span class="number">196</span>, <span class="number">0</span> }, }, },
+        PP2V8_LED_B0    = { IO = { { <span class="number">196</span>, <span class="number">1</span> }, }, },
+        <span class="comment">-- no disconnect feature
+</span>        <span class="comment">--DISCONNECT      = { IO = { { 196, 0 }, }, },
+</span>    },
+    PP_CON_DET_EN_PIN_RIO = {
+        TO_DUT  = { IO = { { <span class="number">153</span>, <span class="number">1</span> }, { <span class="number">152</span>, <span class="number">1</span> }, { <span class="number">151</span>, <span class="number">0</span> }, { <span class="number">150</span>, <span class="number">0</span> }, }, },
+        TO_2DB  = { IO = { { <span class="number">153</span>, <span class="number">0</span> }, { <span class="number">152</span>, <span class="number">1</span> }, { <span class="number">151</span>, <span class="number">1</span> }, { <span class="number">150</span>, <span class="number">0</span> }, }, },
+        TO_4DB  = { IO = { { <span class="number">153</span>, <span class="number">1</span> }, { <span class="number">152</span>, <span class="number">0</span> }, { <span class="number">151</span>, <span class="number">0</span> }, { <span class="number">150</span>, <span class="number">1</span> }, }, },
+    },
+    <span class="comment">-- share
+</span>    <span class="comment">--------------------------------------------------
+</span>    AOP_TO_DEBUG_UART_TXD = {
+        CONNECT = { IO = { { <span class="number">97</span>, <span class="number">1</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">97</span>, <span class="number">0</span> }, }, },
+    },
+    DEBUG_TO_AOP_UART_RXD = {
+        CONNECT = { IO = { { <span class="number">97</span>, <span class="number">1</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">97</span>, <span class="number">0</span> }, }, },
+    },
+    <span class="comment">-- single
+</span>    <span class="comment">--------------------------------------------------
+</span>    PP_VDD_MAIN = {
+        CONNECT = { IO = { { <span class="number">101</span>, <span class="number">1</span> }, { <span class="number">141</span>, <span class="number">1</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">101</span>, <span class="number">0</span> }, { <span class="number">141</span>, <span class="number">0</span> }, }, },
+    },
+    PP_CON_DET_EN_PIN = {
+        CONNECT = { IO = { { <span class="number">102</span>, <span class="number">1</span> }, { <span class="number">124</span>, <span class="number">1</span> }, { <span class="number">123</span>, <span class="number">0</span> }, { <span class="number">122</span>, <span class="number">0</span> }, { <span class="number">125</span>, <span class="number">1</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">102</span>, <span class="number">0</span> }, { <span class="number">124</span>, <span class="number">0</span> }, { <span class="number">123</span>, <span class="number">0</span> }, { <span class="number">122</span>, <span class="number">0</span> }, { <span class="number">125</span>, <span class="number">0</span> }, }, },
+    },
+    PP_VRECT = {
+        CONNECT = { IO = { { <span class="number">102</span>, <span class="number">1</span> }, { <span class="number">124</span>, <span class="number">1</span> }, { <span class="number">123</span>, <span class="number">1</span> }, { <span class="number">122</span>, <span class="number">0</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">102</span>, <span class="number">0</span> }, { <span class="number">124</span>, <span class="number">0</span> }, { <span class="number">123</span>, <span class="number">0</span> }, { <span class="number">122</span>, <span class="number">0</span> }, }, },
+    },
+    PP_BATT_VCC = {
+        CONNECT = { IO = { { <span class="number">100</span>, <span class="number">1</span> }, { <span class="number">142</span>, <span class="number">1</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">100</span>, <span class="number">0</span> }, { <span class="number">142</span>, <span class="number">0</span> }, }, },
+    },
+    PMU_NTC3 = {
+        CONNECT = { IO = { { <span class="number">164</span>, <span class="number">1</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">164</span>, <span class="number">0</span> }, }, },
+    },
+    PP5V0_BAUX_VMID = {
+        CONNECT = { IO = { { <span class="number">156</span>, <span class="number">1</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">156</span>, <span class="number">0</span> }, }, },
+    },
+    BAUX_DIGTEST = {
+        CONNECT = { IO = { { <span class="number">207</span>, <span class="number">0</span> }, }, }, <span class="comment">-- PP1V5_BAUX_VSRC
+</span>        DISCONNECT = { IO = { { <span class="number">207</span>, <span class="number">1</span> }, }, },
+    },
+    PP1V2_DISP_CONN = {
+        CONNECT = { IO = { { <span class="number">145</span>, <span class="number">0</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">145</span>, <span class="number">1</span> }, }, },
+    },
+    PP1V8_DISP_CONN = {
+        CONNECT = { IO = { { <span class="number">146</span>, <span class="number">0</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">146</span>, <span class="number">1</span> }, }, },
+    },
+    PP3V0_AWAKE_DISP = {
+        CONNECT = { IO = { { <span class="number">147</span>, <span class="number">0</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">147</span>, <span class="number">1</span> }, }, },
+    },
+    PP1V8_SLEEP2_LDO1 = {
+        CONNECT = { IO = { { <span class="number">148</span>, <span class="number">0</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">148</span>, <span class="number">1</span> }, }, },
+    },
+    PP_VDD_MAIN_DISP_BOOST_SW = {
+        CONNECT = { IO = { { <span class="number">149</span>, <span class="number">1</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">149</span>, <span class="number">0</span> }, }, },
+    },
+    PP3V0_BBPMU_LDO14 = {
+        CONNECT = { IO = { { <span class="number">157</span>, <span class="number">0</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">157</span>, <span class="number">1</span> }, }, },
+    },
+    PP1V8_BBPMU_LDO11 = {
+        CONNECT = { IO = { { <span class="number">158</span>, <span class="number">0</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">158</span>, <span class="number">1</span> }, }, },
+    },
+    PP1V8_SLEEP2_GRAPE_CONN = {
+        CONNECT = { IO = { { <span class="number">159</span>, <span class="number">0</span> }, }, },
+        DISCONNECT = { IO = { { <span class="number">159</span>, <span class="number">1</span> }, }, },
+    },
+    BAUX_DEBUG_TO_PMU_VBUS_DET_L = {
+        CONNECT = { IO = { { <span class="number">113</span>, <span class="number">1</span> }, }, }, <span class="comment">-- 10ohm to ground
+</span>        DISCONNECT = { IO = { { <span class="number">113</span>, <span class="number">0</span> }, }, },
+    },
+    LISA_BTN_L = {
+        CONNECT = { IO = { { <span class="number">114</span>, <span class="number">1</span> }, }, }, <span class="comment">-- 10ohm to ground
+</span>        DISCONNECT = { IO = { { <span class="number">114</span>, <span class="number">0</span> }, }, },
+    },
+    BUTTON1_L = {
+        CONNECT = { IO = { { <span class="number">115</span>, <span class="number">1</span> }, }, }, <span class="comment">-- 10ohm to ground
+</span>        DISCONNECT = { IO = { { <span class="number">115</span>, <span class="number">0</span> }, }, },
+    },
+    DEBUG_CON_DET_L = {
+        CONNECT = { IO = { { <span class="number">116</span>, <span class="number">1</span> }, }, }, <span class="comment">-- 10ohm to ground
+</span>        DISCONNECT = { IO = { { <span class="number">116</span>, <span class="number">0</span> }, }, },
+    },
+    PMU_UWAKE_L = {
+        CONNECT = { IO = { { <span class="number">117</span>, <span class="number">1</span> }, }, }, <span class="comment">-- 10ohm to ground
+</span>        DISCONNECT = { IO = { { <span class="number">117</span>, <span class="number">0</span> }, }, },
+    },
+    BAUX_DEBUG_TO_PMU_VBUS_DET_L = {
+        CONNECT = { IO = { { <span class="number">174</span>, <span class="number">1</span> }, }, }, <span class="comment">-- 10ohm to ground
+</span>        DISCONNECT = { IO = { { <span class="number">174</span>, <span class="number">0</span> }, }, },
+    },
+    DEBUG_BI_BAUX_POWER_GATE_EN = {
+        CONNECT = { IO = { { <span class="number">175</span>, <span class="number">1</span> }, }, }, <span class="comment">-- 10ohm to ground
+</span>        DISCONNECT = { IO = { { <span class="number">175</span>, <span class="number">0</span> }, }, },
+    },
+    BAUX_TCK_GPIO6 = {
+        CONNECT = { IO = { { <span class="number">176</span>, <span class="number">1</span> }, }, }, <span class="comment">-- 10ohm to ground
+</span>        DISCONNECT = { IO = { { <span class="number">176</span>, <span class="number">0</span> }, }, },
+    },
+}
+
+
+<span class="keyword">return</span> HWIO</pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

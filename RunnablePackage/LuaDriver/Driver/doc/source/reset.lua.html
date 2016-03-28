@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Source</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../source/development.lua.html">development.lua</a></li>
+  <li><a href="../source/pathfinder.lua.html">pathfinder.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/dummy.lua.html">dummy.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/function_table.lua.html">function_table.lua</a></li>
+  <li><a href="../source/datalogger.lua.html">datalogger.lua</a></li>
+  <li><a href="../source/dmm.lua.html">dmm.lua</a></li>
+  <li><a href="../source/dut.lua.html">dut.lua</a></li>
+  <li><a href="../source/eload.lua.html">eload.lua</a></li>
+  <li><a href="../source/fixture.lua.html">fixture.lua</a></li>
+  <li><a href="../source/measure.lua.html">measure.lua</a></li>
+  <li><a href="../source/relay.lua.html">relay.lua</a></li>
+  <li><strong>reset.lua</strong></li>
+  <li><a href="../source/supply.lua.html">supply.lua</a></li>
+  <li><a href="../source/thdn.lua.html">thdn.lua</a></li>
+  <li><a href="../source/HWIO.lua.html">HWIO.lua</a></li>
+  <li><a href="../source/MCU.lua.html">MCU.lua</a></li>
+  <li><a href="../source/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../source/test_engine.lua.html">test_engine.lua</a></li>
+  <li><a href="../source/config_utils.lua.html">config_utils.lua</a></li>
+  <li><a href="../source/global_data.lua.html">global_data.lua</a></li>
+  <li><a href="../source/sequence_utils.lua.html">sequence_utils.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/string_utils.lua.html">string_utils.lua</a></li>
+  <li><a href="../source/time_utils.lua.html">time_utils.lua</a></li>
+  <li><a href="../source/uuid.lua.html">uuid.lua</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h2>reset.lua</h2>
+<pre>
+<span class="comment">--- Reset Function
+</span><span class="comment">-- @module functions.reset
+</span><span class="comment">-- @alias reset_module
+</span>
+<span class="keyword">local</span> MCU = <span class="global">require</span>(<span class="string">"hw.MCU"</span>)
+<span class="keyword">local</span> HWIO = <span class="global">require</span>(<span class="string">"hw.HWIO"</span>)
+<span class="keyword">local</span> time_utils = <span class="global">require</span>(<span class="string">"utils.time_utils"</span>)
+<span class="keyword">local</span> relay = <span class="global">require</span>(<span class="string">"functions.relay"</span>).relay_from_connections
+<span class="keyword">local</span> disconnect = <span class="global">require</span>(<span class="string">"functions.relay"</span>).disconnect_from_connections
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Reset exported module
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> reset_module = {}
+<span class="comment">-- function reset_module.reset(sequence)
+</span><span class="comment">-- function reset_module.reset_raw()
+</span>
+<span class="comment">--===========================--
+</span><span class="comment">-- Public Reset Functions
+</span><span class="comment">------------------------------
+</span>
+<span class="comment">-- FIXME: Maybe encapsulate this better.
+</span><span class="keyword">function</span> reset_module.reset_raw()
+  MCU_module.RawInstrumentCmd(<span class="string">"dac set(A,0)"</span>)
+  MCU_module.RawInstrumentCmd(<span class="string">"dac set(B,0)"</span>)
+  MCU_module.RawInstrumentCmd(<span class="string">"dac set(C,0)"</span>)
+  MCU_module.RawInstrumentCmd(<span class="string">"dac set(D,0)"</span>)
+  MCU_module.RawInstrumentCmd(<span class="string">"io set(1,bit126=0)"</span>)
+
+  disconnect(IO_TABLE.BATT_EN)
+  disconnect(IO_TABLE.VDDMAIN_EN)
+  disconnect(IO_TABLE.PPVRECT_EN)
+  time_utils.delay(<span class="number">100</span>)
+  disconnect(IO_TABLE.BATTERY_POWER)
+  disconnect(IO_TABLE.PPVDD_MAIN)
+
+  relay(IO_TABLE.DISCHARGERES)
+  relay(IO_TABLE.TP_TCXO_CAL_CLK10M)
+  MCU_module.RawInstrumentCmd(<span class="string">"datalogger close()"</span>)
+  MCU_module.RawInstrumentCmd(<span class="string">"codec close pdm()"</span>)
+
+  disconnect(IO_TABLE.ELOAD_CTRL)                 <span class="comment">--098
+</span>  disconnect(IO_TABLE.UUT_UART_CTRL)                 <span class="comment">--097
+</span>  disconnect(IO_TABLE.FREQUENCY_COUNTER_CTRL)     <span class="comment">--099
+</span>  disconnect(IO_TABLE.SEAJAY_POWER_CTRL)               <span class="comment">--104
+</span>  disconnect(IO_TABLE.SPAM_WORK)                  <span class="comment">--105
+</span>  disconnect(IO_TABLE.BANK_SELECT)                <span class="comment">--106
+</span>
+  disconnect(IO_TABLE.BAUX_DEBUG_TO_PMU_VBUS_DET_L)   <span class="comment">--113
+</span>  disconnect(IO_TABLE.LISA_BTN_L)                 <span class="comment">--114
+</span>  disconnect(IO_TABLE.BUTTON1_L)                  <span class="comment">--115
+</span>  disconnect(IO_TABLE.DEBUG_CON_DET_L)            <span class="comment">--116
+</span>  disconnect(IO_TABLE.PMU_UWAKE_L)                <span class="comment">--117
+</span>
+
+  relay(IO_TABLE.PEAK_DECTECT_TO_NONE)            <span class="comment">--118,119,120=0,0,0
+</span>
+  relay(IO_TABLE.PPVRECT_POWER_OFF)               <span class="comment">--122,123,124=0,0,0
+</span>  disconnect(IO_TABLE.PP_CON_DET_PIN_FIX_TO_PP_CON_DET_EN_PIN_FB)   <span class="comment">--125
+</span>
+  relay(IO_TABLE.DMM_TO_ELSE)                <span class="comment">--135,136,137=1,1,1
+</span>  disconnect(IO_TABLE.ALERT)                 <span class="comment">--138
+</span>
+  <span class="comment">-- --bit 139-144=0
+</span>  disconnect(IO_TABLE.SPERKER)               <span class="comment">--139
+</span>
+  disconnect(IO_TABLE.SEAJAY_UPDATE)              <span class="comment">--143
+</span>  disconnect(IO_TABLE.SPAM_CONNECT_DES)           <span class="comment">--144
+</span>
+  <span class="comment">-- --bit 145-148=1
+</span>  <span class="comment">-- relay(IO_TABLE.PP1V2_DISP_CONN_CTRL)            --145
+</span>  <span class="comment">-- relay(IO_TABLE.PP1V8_DISP_CONN_CTRL)            --146
+</span>  <span class="comment">-- relay(IO_TABLE.PP3V0_AWAKE_DISP_CTRL)           --147
+</span>  <span class="comment">-- relay(IO_TABLE.PP1V8_SLEEP2_LDO1_CTRL)          --148
+</span>
+  <span class="comment">-- -- --bit 149-156=0
+</span>  <span class="comment">-- disconnect(IO_TABLE.PP_VDD_MAIN_DISP_BOOST_SW_CTRL)  --149
+</span>  <span class="comment">-- relay(IO_TABLE.PP_CON_DET_EN_PIN_RIO_TO_NONE)   --150,151,152,153=0,0,0,0
+</span>  <span class="comment">-- disconnect(IO_TABLE.I2C_POWER_CONVERT_EN)       --154
+</span>  <span class="comment">-- disconnect(IO_TABLE.I2C_BUFFER_EN)              --155
+</span>  <span class="comment">-- disconnect(IO_TABLE.PP5V0_BAUX_VMID)       --156
+</span>
+  <span class="comment">-- -- --bit 157-159=1
+</span>  <span class="comment">-- relay(IO_TABLE.PP3V0_BBPMU_LDO14_CTRL)          --157
+</span>  <span class="comment">-- relay(IO_TABLE.PP1V8_BBPMU_LDO11)               --158
+</span>  <span class="comment">-- relay(IO_TABLE.PP1V8_SLEEP2_GRAPE)              --159
+</span>
+  <span class="comment">-- --bit 160-170=0
+</span>  disconnect(IO_TABLE.POWER_SEQENCE_TEST)         <span class="comment">--160
+</span>  relay(IO_TABLE.AP_BI_GG_TO_PMU_HDQ_CONN_TO_NONE)<span class="comment">--161,162=0,0
+</span>  disconnect(IO_TABLE.CRIKET_CONNECT_STOCKHOLM_TO_AP)  <span class="comment">--163
+</span>
+  relay(IO_TABLE.NTC_FIXTURE_TO_NONE)
+  disconnect(IO_TABLE.DEBUG_BI_BAUX_POWER_GATE_EN) <span class="comment">--175
+</span>  disconnect(IO_TABLE.BAUX_TCK_GPIO6)           <span class="comment">--176
+</span>  relay(IO_TABLE.E_LOAD_DISCONNECT)                <span class="comment">--177,178,179,180=0,0,0,0
+</span>  relay(IO_TABLE.ALS_TO_AOP_INT_L_AI_ENABLE)       <span class="comment">--"188,186,185,184,183,182","1,0,0,0,0,0"
+</span>
+  <span class="comment">-- --bit 184-190=0
+</span>  relay(IO_TABLE.FREQ_SWITCH_NONE)          <span class="comment">--{"190,189,188,187", "1,0,0,0"}
+</span>
+  <span class="comment">-- --bit 191,192=1,1
+</span>  <span class="comment">-- relay(IO_TABLE.PMU_AMUX_OUT)                    --191
+</span>  disconnect(IO_TABLE.PMU_SHDN_CTRL)                   <span class="comment">--192
+</span>
+  <span class="comment">-- --bit 193-203=0
+</span>  relay(IO_TABLE.PP4V8_HV_ANODE_TO_NONE)          <span class="comment">--193,194,195=0,0,0
+</span>  disconnect(IO_TABLE.PP2V8_LV_ANODE_TO_LED_B0_B1)<span class="comment">--196
+</span>  disconnect(IO_TABLE.PP4V8_HV_ANODE_CTRL)     <span class="comment">--197
+</span>  relay(IO_TABLE.PLATINUM_RAIL_REF_AI_DISCONNECT)       <span class="comment">--199,200,201,202,203=0,0,0,0,0
+</span>
+  <span class="comment">-- --bit 204-207=0
+</span>  <span class="comment">-- relay(IO_TABLE.PLAT_PD_OUT_TO_NONE)             --204,205=0,0
+</span>  <span class="comment">-- disconnect(IO_TABLE.I2C_SDA_PULL_UP_EN)         --206
+</span>  <span class="comment">-- disconnect(IO_TABLE.I2C_SCL_PULL_UP_EN)         --207
+</span>
+  <span class="comment">-- --bit 208=1
+</span>  relay(IO_TABLE.CRIKET_1V8_CTRL)                 <span class="comment">--208
+</span>  disconnect(IO_TABLE.PP2V8_LV_ANODE_CTRL)  <span class="comment">-- —198
+</span>  <span class="comment">-- relay(IO_TABLE.DMM_TO_LOW_CURR)    -—122
+</span>  relay(IO_TABLE.PMU_TBAT_DC)    <span class="comment">--—165 166
+</span>  relay(IO_TABLE.BLUE_LED)    <span class="comment">--—165 166
+</span>  <span class="comment">--------------------------------------------------------------------------------------------------------
+</span>  <span class="comment">--------------------------------------------------------------------------------------------------------
+</span>  time_utils.delay(<span class="number">1000</span>)
+  disconnect(IO_TABLE.DISCHARGERES)
+  <span class="keyword">return</span> <span class="number">0</span>;
+<span class="keyword">end</span>
+
+<span class="comment">--- NOT IMPLEMENTED: Reset the fixture to its default state
+</span><span class="comment">-- @tparam sequence_object sequence FCT test sequence table
+</span><span class="comment">-- @param global_var_table table full of "global" test variables
+</span><span class="comment">-- @return result (0)
+</span><span class="comment">-- @return passing status (true)
+</span><a id="136"></a><span class="comment">-- @raise error
+</span><span class="keyword">function</span> reset_module.reset(sequence, global_var_table)
+  <span class="keyword">return</span> reset_module.reset_raw(), <span class="keyword">true</span>
+<span class="keyword">end</span>
+
+<span class="comment">-----------------------------------
+</span><span class="comment">-- Export eload to module users
+</span><span class="comment">-----------------------------------
+</span><span class="keyword">return</span> reset_module</pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

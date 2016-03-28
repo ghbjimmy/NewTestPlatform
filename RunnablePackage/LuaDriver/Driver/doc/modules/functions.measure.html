@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Local_Functions">Local Functions</a></li>
+<li><a href="#ConvenienceFunctions">ConvenienceFunctions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><strong>functions.measure</strong></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>functions.measure</code></h1>
+<p>Measure Functions</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#measure">measure (sequence, global_var_table)</a></td>
+	<td class="summary">Measure the net specified by [param1].</td>
+	</tr>
+</table>
+<h2><a href="#Local_Functions">Local Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#fctMeasure">fctMeasure (channel)</a></td>
+	<td class="summary">Measure an AI channel</td>
+	</tr>
+</table>
+<h2><a href="#ConvenienceFunctions">ConvenienceFunctions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#measure_testpoint">measure_testpoint (testpoint)</a></td>
+	<td class="summary">Convenience function to measure voltage of a testpoint by name</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#measure_frequency_testpoint">measure_frequency_testpoint (testpoint)</a></td>
+	<td class="summary">Convenience function to measure frequency of a signal by name</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#measure_amplitude_testpoint">measure_amplitude_testpoint (testpoint)</a></td>
+	<td class="summary">Convenience function to measure amplitude of a signal by name</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "measure"></a>
+    <strong>measure (sequence, global_var_table)</strong>
+    <a style="float:right;" href="../source/measure.lua.html#104">line 104</a>
+    </dt>
+    <dd>
+    Measure the net specified by [param1].
+ Depending on the [unit] supplied in the sequence object, this function can measure either
+ voltage, frequency, and amplitude.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">sequence</span>
+            <span class="types"><span class="type">sequence_object</span></span>
+         FCT test sequence table
+        </li>
+        <li><span class="parameter">global_var_table</span>
+         table full of "global" test variables
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        measurement result</li>
+        <li>
+        passing status (whether the returned value is within the expected range)</li>
+    </ol>
+
+    <h3>Raises:</h3>
+    error
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Local_Functions"></a>Local Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "fctMeasure"></a>
+    <strong>fctMeasure (channel)</strong>
+    <a style="float:right;" href="../source/measure.lua.html#26">line 26</a>
+    </dt>
+    <dd>
+    Measure an AI channel
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">channel</span>
+         AI channel to measure
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        voltage in mV
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="ConvenienceFunctions"></a>ConvenienceFunctions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "measure_testpoint"></a>
+    <strong>measure_testpoint (testpoint)</strong>
+    <a style="float:right;" href="../source/measure.lua.html#50">line 50</a>
+    </dt>
+    <dd>
+    Convenience function to measure voltage of a testpoint by name
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">testpoint</span>
+         testpoint to measure
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        voltage in mV
+    </ol>
+
+    <h3>Raises:</h3>
+    error
+
+
+
+</dd>
+    <dt>
+    <a name = "measure_frequency_testpoint"></a>
+    <strong>measure_frequency_testpoint (testpoint)</strong>
+    <a style="float:right;" href="../source/measure.lua.html#69">line 69</a>
+    </dt>
+    <dd>
+    Convenience function to measure frequency of a signal by name
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">testpoint</span>
+         testpoint to measure
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        frequency in Hz
+    </ol>
+
+    <h3>Raises:</h3>
+    error
+
+
+
+</dd>
+    <dt>
+    <a name = "measure_amplitude_testpoint"></a>
+    <strong>measure_amplitude_testpoint (testpoint)</strong>
+    <a style="float:right;" href="../source/measure.lua.html#92">line 92</a>
+    </dt>
+    <dd>
+    Convenience function to measure amplitude of a signal by name
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">testpoint</span>
+         testpoint to measure
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        amplitude in mVpp
+    </ol>
+
+    <h3>Raises:</h3>
+    error
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

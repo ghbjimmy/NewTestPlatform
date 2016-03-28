@@ -1,0 +1,449 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Source</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../source/development.lua.html">development.lua</a></li>
+  <li><a href="../source/pathfinder.lua.html">pathfinder.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/dummy.lua.html">dummy.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/function_table.lua.html">function_table.lua</a></li>
+  <li><a href="../source/datalogger.lua.html">datalogger.lua</a></li>
+  <li><a href="../source/dmm.lua.html">dmm.lua</a></li>
+  <li><a href="../source/dut.lua.html">dut.lua</a></li>
+  <li><a href="../source/eload.lua.html">eload.lua</a></li>
+  <li><a href="../source/fixture.lua.html">fixture.lua</a></li>
+  <li><a href="../source/measure.lua.html">measure.lua</a></li>
+  <li><a href="../source/relay.lua.html">relay.lua</a></li>
+  <li><a href="../source/reset.lua.html">reset.lua</a></li>
+  <li><a href="../source/supply.lua.html">supply.lua</a></li>
+  <li><a href="../source/thdn.lua.html">thdn.lua</a></li>
+  <li><a href="../source/HWIO.lua.html">HWIO.lua</a></li>
+  <li><a href="../source/MCU.lua.html">MCU.lua</a></li>
+  <li><a href="../source/serial_master.lua.html">serial_master.lua</a></li>
+  <li><strong>test_engine.lua</strong></li>
+  <li><a href="../source/config_utils.lua.html">config_utils.lua</a></li>
+  <li><a href="../source/global_data.lua.html">global_data.lua</a></li>
+  <li><a href="../source/sequence_utils.lua.html">sequence_utils.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/string_utils.lua.html">string_utils.lua</a></li>
+  <li><a href="../source/time_utils.lua.html">time_utils.lua</a></li>
+  <li><a href="../source/uuid.lua.html">uuid.lua</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><strong>test_engine.lua</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h2>test_engine.lua</h2>
+<pre>
+#!/usr/bin/env lua
+<span class="global">require</span>(<span class="string">"utils.zhelpers"</span>)
+<span class="keyword">local</span> json = <span class="global">require</span>(<span class="string">"dkjson"</span>)
+<span class="keyword">local</span> zmq = <span class="global">require</span>(<span class="string">"lzmq"</span>)
+<span class="keyword">local</span> zpoller = <span class="global">require</span>(<span class="string">"lzmq.poller"</span>)
+<span class="keyword">local</span> zthreads = <span class="global">require</span>(<span class="string">"lzmq.threads"</span>)
+<span class="keyword">local</span> config_utils = <span class="global">require</span>(<span class="string">"utils.config_utils"</span>)
+<span class="keyword">local</span> time_utils = <span class="global">require</span>(<span class="string">"utils.time_utils"</span>)
+<span class="keyword">local</span> lapp = <span class="global">require</span>(<span class="string">"pl.lapp"</span>)
+
+
+<span class="keyword">local</span> args = lapp <span class="string">[[
+X527 Test Engine
+
+This is the interface between the test sequencer and the test fixture HW and DUT.
+It does all of the required limits checking and conditional execution. Options (such
+as IP address, ports, log file names, etc.) are set in config files. These files
+are, by default, stored in the config/ directory.
+
+    -c,--config     (default "config.pathfinder")   Config module to load.
+    -u,--uut        (default 0)                     UUT slot number (used for IP/Port selection)
+    &lt;updates...&gt;    (default "")                    Series of X=Y pairs to update the CONFIG table with
+]]</span>
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Global (!!!) config variable
+</span><span class="comment">--===========================--
+</span>CONFIG = config_utils.get_config(args)
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Setup ZMQ sockets
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> context = zmq.context()
+zthreads.set_context(context)
+
+<span class="keyword">local</span> sequence_zmq, err = context:socket(zmq.REP, {bind = config_utils.get_addr(CONFIG, <span class="string">"SEQUENCE"</span>, CONFIG.ID)})
+zassert(sequence_zmq, err)
+
+<span class="keyword">local</span> results_zmq, err = context:socket(zmq.PUB, {bind = config_utils.get_addr(CONFIG, <span class="string">"RESULTS"</span>, CONFIG.ID)})
+zassert(results_zmq, err)
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Setup Fixture / DUT sockets
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> dut_console = <span class="global">require</span>(CONFIG.DUT_UART_CONSOLE)
+dut_console._DUT_Socket_Connect_()
+
+<span class="keyword">local</span> fixture_console = <span class="global">require</span>(CONFIG.FIXTURE_CONSOLE)
+fixture_console._Arm_Socket_Connect_()
+
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Global loggers
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> TestFlowOut = config_utils.get_log_writer(CONFIG, <span class="string">"FLOW"</span>, CONFIG.log_prefix)
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Global Variable Mangement
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> global_var_table = {} <span class="comment">-- Global variable table for conditional execution
+</span><span class="keyword">local</span> global_data = <span class="global">require</span> (<span class="string">"utils.global_data"</span>) <span class="comment">-- global data mangement library
+</span>global_data.set_logger(config_utils.get_log_writer(CONFIG, <span class="string">"VAR"</span>, CONFIG.log_prefix))
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Function dispatch
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> dispatch_table = <span class="global">require</span>(<span class="string">"function_table"</span>) <span class="comment">-- name / function() mapping. Must be called after loggers are set up?
+</span>
+<span class="keyword">local</span> dispatch_function = <span class="keyword">function</span> (sequence_obj)
+    <span class="keyword">local</span> skipped = <span class="keyword">true</span>
+    <span class="keyword">local</span> value, passing= <span class="keyword">nil</span>, <span class="keyword">nil</span>
+
+    <span class="comment">-- Get the function from the dispatch table
+</span>    <span class="keyword">local</span> f = dispatch_table[sequence_obj[<span class="string">"function"</span>]]
+
+    <span class="keyword">if</span> f == <span class="keyword">nil</span> <span class="keyword">then</span>
+        error(<span class="string">"Function '"</span>..<span class="global">tostring</span>(sequence_obj[<span class="string">"function"</span>])..<span class="string">"' is not supported."</span>)
+    <span class="keyword">end</span>
+
+    <span class="comment">-- If we are conditional, check with the global variable table
+</span>    <span class="keyword">if</span> sequence_obj.globalKey == <span class="string">""</span> <span class="keyword">or</span> sequence_obj.globalKey == <span class="keyword">nil</span>
+            <span class="keyword">or</span> global_data.compare_from_param(global_var_table, sequence_obj.globalKey, sequence_obj.globalValue) <span class="keyword">then</span>
+        skipped = <span class="keyword">false</span>
+        value, passing = f(sequence_obj, global_var_table)
+    <span class="keyword">end</span>
+
+    <span class="comment">-- Return the results
+</span>    <span class="keyword">return</span> value, passing, skipped
+<span class="keyword">end</span>
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Watchdog looper thread
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> watchdog_thread, watchdog_pipe = zthreads.fork(context, <span class="keyword">function</span>(pipe, address)
+        <span class="keyword">local</span> zmq = <span class="global">require</span> <span class="string">"lzmq"</span>
+        <span class="keyword">local</span> zthreads = <span class="global">require</span> <span class="string">"lzmq.threads"</span>
+        <span class="keyword">local</span> context = zthreads.get_parent_ctx()
+        <span class="global">require</span>(<span class="string">"utils.zhelpers"</span>)
+
+        <span class="keyword">local</span> watchdog_zmq, err = context:socket(zmq.PUB, {connect = address})
+        zassert(watchdog_zmq, err)
+
+        <span class="keyword">local</span> allowed_delays = <span class="number">4</span>
+        <span class="keyword">local</span> delays = <span class="number">0</span>
+
+        <span class="keyword">while</span> <span class="keyword">true</span> <span class="keyword">do</span>
+            <span class="keyword">if</span> <span class="keyword">not</span> pipe:poll(<span class="number">2500</span>) <span class="keyword">then</span>
+                delays = delays + <span class="number">1</span>
+                <span class="keyword">if</span> delays &lt;= allowed_delays <span class="keyword">then</span>
+                    zassert(watchdog_zmq:send(<span class="string">"EXECUTOR:PONG"</span>))
+                    <span class="global">print</span>(<span class="string">"Sent Watchdog"</span>)
+                <span class="keyword">end</span>
+            <span class="keyword">else</span>
+                <span class="keyword">local</span> msg = pipe:recv()
+                <span class="keyword">if</span> <span class="global">tostring</span>(msg) == <span class="string">"DIE"</span> <span class="keyword">then</span>
+                    <span class="keyword">break</span>
+                <span class="keyword">elseif</span> <span class="global">tostring</span>(msg) == <span class="string">"ALIVE"</span> <span class="keyword">then</span>
+                    delays = <span class="number">0</span>
+                    allowed_delays = <span class="number">4</span>
+                <span class="keyword">elseif</span> <span class="global">string</span>.match(<span class="global">tostring</span>(msg), <span class="string">"TIMEOUT:"</span>) <span class="keyword">then</span>
+                    <span class="keyword">local</span> timeout = <span class="global">tonumber</span>(<span class="global">string</span>.match(<span class="global">tostring</span>(msg),<span class="string">"TIMEOUT:(.*)"</span>))
+                    <span class="keyword">if</span> timeout == <span class="keyword">nil</span> <span class="keyword">then</span> timeout = <span class="number">7500</span> <span class="keyword">end</span>
+                    allowed_delays = (timeout / <span class="number">2500</span>) + <span class="number">1</span>
+                <span class="keyword">end</span>
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>, config_utils.get_addr(CONFIG, <span class="string">"WATCHDOG"</span>, CONFIG.ID))
+watchdog_thread:start(<span class="keyword">true</span>, <span class="keyword">false</span>)
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Sequence poller
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> poller = zpoller.new(<span class="number">1</span>)
+poller:add(sequence_zmq, zmq.POLLIN, <span class="keyword">function</span>()
+    <span class="keyword">local</span> msg = sequence_zmq:recv()
+    <span class="global">print</span> (<span class="string">"Received "</span> .. <span class="global">tostring</span>(msg))
+    <span class="keyword">local</span> msg_obj, pos, err = json.decode (msg, <span class="number">1</span>, <span class="keyword">nil</span>)
+
+    <span class="comment">-- print("Process sequence item.")
+</span>
+    <span class="comment">-- If we have a JSON error, return ERROR and bail
+</span>    <span class="keyword">if</span> err <span class="keyword">or</span> msg_obj == <span class="keyword">nil</span> <span class="keyword">then</span>
+        sequence_zmq:send(json.encode({status = <span class="string">"error"</span>, error = <span class="string">"json"</span>, tid = <span class="string">"nil"</span>}))
+        <span class="keyword">if</span> (TestFlowOut) <span class="keyword">then</span> TestFlowOut.write(<span class="string">"\n==TEST: Unknown\n\tERROR: JSON\n"</span>) <span class="keyword">end</span>
+    <span class="keyword">else</span>
+        <span class="keyword">local</span> result_value, sw_status = <span class="keyword">nil</span>, <span class="keyword">nil</span>
+        <span class="keyword">local</span> result = <span class="string">"FAIL"</span>
+        <span class="keyword">local</span> t1 = time_utils.get_unix_time_ms()
+
+        <span class="comment">-- Setup watchdog for predicted timeout
+</span>        watchdog_pipe:send(<span class="string">"TIMEOUT:"</span>..<span class="global">tostring</span>(msg_obj.timeout))
+
+        <span class="comment">-- Populate the Flowlog
+</span>        <span class="keyword">if</span> (TestFlowOut) <span class="keyword">then</span>
+            TestFlowOut.write(<span class="global">string</span>.format(<span class="string">"\n==TEST: %s\n"</span>, <span class="global">tostring</span>(msg_obj[<span class="string">"tid"</span>])))
+            TestFlowOut.write(<span class="global">string</span>.format(<span class="string">"\tDESC: %s\n"</span>, <span class="global">tostring</span>(msg_obj[<span class="string">"description"</span>])))
+        <span class="keyword">end</span>
+
+        <span class="comment">-- Send sequence to the action dispatch thread, and catch errors
+</span>        <span class="keyword">local</span> dispatch_status, result_value, passfail, skipped = <span class="global">pcall</span>(dispatch_function, msg_obj)
+        <span class="keyword">if</span> skipped == <span class="keyword">nil</span> <span class="keyword">then</span> skipped = <span class="keyword">false</span> <span class="keyword">end</span>
+
+        <span class="comment">-- Check and see if we have any SW errors
+</span>        <span class="keyword">if</span> dispatch_status <span class="keyword">then</span>
+            sequence_zmq:send(json.encode({status = <span class="string">"success"</span>, tid = <span class="global">tostring</span>(msg_obj[<span class="string">"tid"</span>])}))
+        <span class="keyword">else</span>
+            sequence_zmq:send(json.encode({status = <span class="string">"error"</span>, tid = <span class="global">tostring</span>(msg_obj[<span class="string">"tid"</span>]), error = result_value}))
+            sw_status = result_value
+            result_value = <span class="string">"N/A"</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">-- If we Pass, celebrate!
+</span>        <span class="keyword">if</span> passfail <span class="keyword">then</span>
+            result = <span class="string">"PASS"</span>
+        <span class="keyword">end</span>
+
+        <span class="comment">-- Populate the Flowlog
+</span>        t1 = time_utils.get_time_delta_ms(t1)
+        <span class="keyword">if</span> (TestFlowOut) <span class="keyword">then</span>
+            TestFlowOut.write(<span class="global">string</span>.format(<span class="string">"\tSKIPPED: %s\n"</span>, <span class="global">tostring</span>(skipped)))
+            TestFlowOut.write(<span class="global">string</span>.format(<span class="string">"\tLOW: %s\n\tHIGH: %s\n"</span>, <span class="global">tostring</span>(msg_obj[<span class="string">"low"</span>]), <span class="global">tostring</span>(msg_obj[<span class="string">"high"</span>])))
+            TestFlowOut.write(<span class="global">string</span>.format(<span class="string">"\tVAL: %s\n"</span>, <span class="global">tostring</span>(result_value)))
+            TestFlowOut.write(<span class="global">string</span>.format(<span class="string">"\tRESULT: %s\n"</span>, result))
+            TestFlowOut.write(<span class="global">string</span>.format(<span class="string">"\tTIME: %.3f\n"</span>, t1/<span class="number">1000</span>))
+            <span class="keyword">if</span> sw_status <span class="keyword">then</span> TestFlowOut.write(<span class="global">string</span>.format(<span class="string">"\tERROR: %s\n"</span>, sw_status)) <span class="keyword">end</span>
+            TestFlowOut.write(<span class="global">string</span>.format(<span class="string">"==END: %s\n"</span>, <span class="global">tostring</span>(msg_obj[<span class="string">"tid"</span>])))
+        <span class="keyword">end</span>
+
+        <span class="comment">-- Prepare results to be sent
+</span>        <span class="keyword">local</span> result_msg = {
+            tid = msg_obj[<span class="string">"tid"</span>],
+            result = result,
+            value = result_value,
+            sw_status = sw_status,
+            sequence = msg_obj
+        }
+
+        <span class="comment">-- But don't actually send if we skipped it due to conditional execution
+</span>        <span class="keyword">if</span> <span class="keyword">not</span> skipped <span class="keyword">then</span>
+            zassert(results_zmq:send(json.encode(result_msg)))
+            <span class="comment">-- print("Results sent.")
+</span>        <span class="keyword">end</span>
+
+        TestFlowOut.flush()
+    <span class="keyword">end</span>
+
+    <span class="comment">-- Tell the watchdog that we are alive and running sequence items
+</span>    watchdog_pipe:send(<span class="string">"ALIVE"</span>)
+<span class="keyword">end</span>)
+
+<span class="comment">-- Process messages from both sockets
+</span><span class="global">print</span>(<span class="string">"Running."</span>)
+poller:start()
+
+<span class="comment">--- test_engine.lua manages fixture interactions for the FCT test fixture.
+</span><span class="comment">-- It receives a series of &lt;code&gt;sequence_object&lt;/code&gt; from the sequencer over a ZMQ socket,
+</span><span class="comment">-- executes the test item, sends a reply back to the sequencer over ZMQ, and sends the result
+</span><span class="comment">-- over ZMQ to any subscribers.
+</span><span class="comment">--
+</span><span class="comment">-- All of the test items are run using the lua &lt;code&gt;pcall(...)&lt;/code&gt; function, so the
+</span><span class="comment">-- top level code will continue running even in the case of unchecked errors. Any errors
+</span><span class="comment">-- will be reported to the sequencer and sent out on the result socket.
+</span><span class="comment">--
+</span><span class="comment">-- A seperate thread publishes a ping on a watchdog ZMQ socket while waiting on timeouts (to
+</span><span class="comment">-- allow for detecting hung code).
+</span><span class="comment">--
+</span><span class="comment">-- It uses the following ZMQ Sockets:
+</span><span class="comment">-- &lt;ul&gt;
+</span><span class="comment">--      &lt;li&gt;&lt;span class="parameter"&gt;SEQUENCE&lt;/span&gt; REP socket&lt;/li&gt;
+</span><span class="comment">--      &lt;li&gt;&lt;span class="parameter"&gt;RESULTS&lt;/span&gt; PUB socket&lt;/li&gt;
+</span><span class="comment">--      &lt;li&gt;&lt;span class="parameter"&gt;WATCHDOG&lt;/span&gt; PUB socket&lt;/li&gt;
+</span><span class="comment">-- &lt;/ul&gt;
+</span><span class="comment">-- @script test_engine.lua
+</span><span class="comment">-- &lt;h2 class="section-header "&gt;&lt;a name="Types"&gt;&lt;/a&gt;Types&lt;/h2&gt;
+</span><span class="comment">-- &lt;dl class="function"&gt;
+</span><span class="comment">--     &lt;dt&gt;
+</span><span class="comment">--     &lt;a name="sequence_object"&gt;&lt;/a&gt;
+</span><span class="comment">--     &lt;strong&gt;sequence_object&lt;/strong&gt;
+</span><span class="comment">--     &lt;/dt&gt;
+</span><span class="comment">--      &lt;dd&gt;
+</span><span class="comment">--         Example of sequence object, generated from JSON string sent by the sequencer
+</span><span class="comment">--         &lt;h3&gt;Fields:&lt;/h3&gt;
+</span><span class="comment">--         &lt;ul&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;id&lt;/span&gt;
+</span><span class="comment">--              ID of the test in the source database
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;tid&lt;/span&gt;
+</span><span class="comment">--              Test ID string
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;description&lt;/span&gt;
+</span><span class="comment">--              Description of the sequence item
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;function&lt;/span&gt;
+</span><span class="comment">--              Test function (see: &lt;a href="../modules/function_table.html"&gt;function_table&lt;/a&gt;)
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;param1&lt;/span&gt;
+</span><span class="comment">--              Param1 from test sequence
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;param2&lt;/span&gt;
+</span><span class="comment">--              Param2 from test sequence
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;unit&lt;/span&gt;
+</span><span class="comment">--              Unit for function result and for the test limits
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;low&lt;/span&gt;
+</span><span class="comment">--              Lower limit
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;high&lt;/span&gt;
+</span><span class="comment">--              Upper limit
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;global_key&lt;/span&gt;
+</span><span class="comment">--              Global Key for conditional execution
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;global_val&lt;/span&gt;
+</span><span class="comment">--              Global Value to match for conditional execution
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;timeout&lt;/span&gt;
+</span><span class="comment">--              Timeout for the test item to execute (diags commands only)
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--         &lt;/ul&gt;
+</span><span class="comment">--     &lt;/dd&gt;
+</span><span class="comment">--     &lt;dt&gt;
+</span><span class="comment">--     &lt;a name="sequence_response"&gt;&lt;/a&gt;
+</span><span class="comment">--     &lt;strong&gt;sequence_response&lt;/strong&gt;
+</span><span class="comment">--     &lt;/dt&gt;
+</span><span class="comment">--      &lt;dd&gt;
+</span><span class="comment">--         Example of a response object sent back to the sequencer
+</span><span class="comment">--         &lt;h3&gt;Fields:&lt;/h3&gt;
+</span><span class="comment">--         &lt;ul&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;status&lt;/span&gt;
+</span><span class="comment">--              "success" or "error"
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;tid&lt;/span&gt;
+</span><span class="comment">--              test ID string
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;error&lt;/span&gt;
+</span><span class="comment">--              (optional) error string
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--         &lt;/ul&gt;
+</span><span class="comment">--      &lt;/dd&gt;
+</span><span class="comment">--     &lt;dt&gt;
+</span><span class="comment">--     &lt;a name="result_object"&gt;&lt;/a&gt;
+</span><span class="comment">--     &lt;strong&gt;result_object&lt;/strong&gt;
+</span><span class="comment">--     &lt;/dt&gt;
+</span><span class="comment">--      &lt;dd&gt;
+</span><span class="comment">--         Example of a result object sent as a JSON string over the result socket
+</span><span class="comment">--         &lt;h3&gt;Fields:&lt;/h3&gt;
+</span><span class="comment">--         &lt;ul&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;tid&lt;/span&gt;
+</span><span class="comment">--              test ID string
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;result&lt;/span&gt;
+</span><span class="comment">--              "PASS" or "FAIL"
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;value&lt;/span&gt;
+</span><span class="comment">--              value returned from the test function, or nil, or "N/A" on error
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;sw_status&lt;/span&gt;
+</span><span class="comment">--              nil, or error string on error
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--             &lt;li&gt;&lt;span class="parameter"&gt;sequence&lt;/span&gt;
+</span><span class="comment">--              original &lt;code&gt;sequence_object&lt;/code&gt;
+</span><span class="comment">--             &lt;/li&gt;
+</span><span class="comment">--         &lt;/ul&gt;
+</span><span class="comment">--      &lt;/dd&gt;
+</span><span class="comment">-- &lt;/dl&gt;
+</span><span class="comment">--&lt;dl class="function"&gt;&lt;dt&gt;&lt;/dt&gt;&lt;/dl&gt;
+</span><span class="comment">-- @usage test_engine.lua [-c config file] [-u UUT #] [OPT=VAL]
+</span><span class="comment">-- @usage test_engine.lua -c config.dummy -u 0 UNIT_STAGE=PRESMT2
+</span></pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

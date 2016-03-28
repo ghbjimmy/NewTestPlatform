@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Source</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../source/development.lua.html">development.lua</a></li>
+  <li><a href="../source/pathfinder.lua.html">pathfinder.lua</a></li>
+  <li><strong>zmq.lua</strong></li>
+  <li><a href="../source/dummy.lua.html">dummy.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><strong>zmq.lua</strong></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/function_table.lua.html">function_table.lua</a></li>
+  <li><a href="../source/datalogger.lua.html">datalogger.lua</a></li>
+  <li><a href="../source/dmm.lua.html">dmm.lua</a></li>
+  <li><a href="../source/dut.lua.html">dut.lua</a></li>
+  <li><a href="../source/eload.lua.html">eload.lua</a></li>
+  <li><a href="../source/fixture.lua.html">fixture.lua</a></li>
+  <li><a href="../source/measure.lua.html">measure.lua</a></li>
+  <li><a href="../source/relay.lua.html">relay.lua</a></li>
+  <li><a href="../source/reset.lua.html">reset.lua</a></li>
+  <li><a href="../source/supply.lua.html">supply.lua</a></li>
+  <li><a href="../source/thdn.lua.html">thdn.lua</a></li>
+  <li><a href="../source/HWIO.lua.html">HWIO.lua</a></li>
+  <li><a href="../source/MCU.lua.html">MCU.lua</a></li>
+  <li><a href="../source/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../source/test_engine.lua.html">test_engine.lua</a></li>
+  <li><a href="../source/config_utils.lua.html">config_utils.lua</a></li>
+  <li><a href="../source/global_data.lua.html">global_data.lua</a></li>
+  <li><a href="../source/sequence_utils.lua.html">sequence_utils.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/string_utils.lua.html">string_utils.lua</a></li>
+  <li><a href="../source/time_utils.lua.html">time_utils.lua</a></li>
+  <li><a href="../source/uuid.lua.html">uuid.lua</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h2>zmq.lua</h2>
+<pre>
+<span class="comment">--- ZMQ-based connection to DUT UART
+</span><span class="comment">-- Depends on a running serial_master.lua
+</span><span class="comment">-- @module console.dut.zmq
+</span><span class="comment">-- @alias zmq_module
+</span><span class="global">require</span>(<span class="string">"utils.zhelpers"</span>)
+<span class="keyword">local</span> zmq = <span class="global">require</span>(<span class="string">"lzmq"</span>)
+<span class="keyword">local</span> zthreads = <span class="global">require</span>(<span class="string">"lzmq.threads"</span>)
+<span class="keyword">local</span> time_utils = <span class="global">require</span>(<span class="string">"utils.time_utils"</span>)
+<span class="keyword">local</span> config_utils = <span class="global">require</span>(<span class="string">"utils.config_utils"</span>)
+
+<span class="comment">--===========================--
+</span><span class="comment">-- tcp exported module
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> zmq_module = {}
+
+<span class="comment">--===========================--
+</span><span class="comment">-- module local state
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> _dut_detect_ = <span class="string">"%] %:%-%)"</span>
+<span class="keyword">local</span> _dut_response_ = <span class="string">""</span>
+
+<span class="keyword">local</span> context = zthreads.context()
+zmq_module.DUTSocket = <span class="keyword">nil</span>
+
+<span class="comment">--===========================--
+</span><span class="comment">-- module Private API
+</span><span class="comment">--===========================--
+</span><span class="comment">-- We need to only subscribe to messages while we need the data, otherwise we might overflow our buffer?
+</span><span class="comment">-- FIXME: Not sure if that is actually true in reality.
+</span>
+<span class="comment">--- Enable or disable subscribing to DUT UART messages
+</span><span class="comment">-- @lfunction _DUT_ZMQ_Set_Listen_
+</span><a id="34"></a><span class="comment">-- @tparam boolean should_listen should we subscribe to ZMQ UART messages
+</span><span class="keyword">function</span> zmq_module._DUT_ZMQ_Set_Listen_(should_listen)
+	<span class="keyword">if</span> should_listen <span class="keyword">then</span>
+		zmq_module.uart_socket:subscribe(<span class="string">""</span>)
+	<span class="keyword">else</span>
+		zmq_module.uart_socket:subscribe(<span class="string">"#IGNORE#ALL#MSG#"</span>)
+	<span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">--===========================--
+</span><span class="comment">-- module Public API
+</span><span class="comment">--===========================--
+</span>
+<span class="comment">--- Connect to the DUT UART socket
+</span><a id="48"></a><span class="comment">-- @treturn nil
+</span><span class="keyword">function</span> zmq_module._DUT_Socket_Connect_( )
+	<span class="global">print</span>(<span class="string">"connecting to ZMQ sockets"</span>)
+	zmq_module.uart_socket, err = context:socket(zmq.SUB, {connect = config_utils.get_addr(CONFIG, <span class="string">"DUT_UART_ZMQ_SVR"</span>, CONFIG.ID),
+														  subscribe = <span class="string">"#IGNORE#ALL#MSG#"</span>})
+	zassert(zmq_module.uart_socket, err)
+
+	zmq_module.req_socket, err = context:socket(zmq.REQ, {connect = config_utils.get_addr(CONFIG, <span class="string">"UART_ZMQ_REQ_SVR"</span>, CONFIG.ID)})
+	zassert(zmq_module.req_socket, err)
+	<span class="global">print</span>(<span class="string">"connect successfully"</span>)
+<span class="keyword">end</span>
+
+<span class="comment">--- Send a string over the DUT UART without waiting for a response
+</span><span class="comment">-- @param str string to send to DUT
+</span><a id="62"></a><span class="comment">-- @treturn nil
+</span><span class="keyword">function</span> zmq_module._Dut_Send_String_(str) <span class="comment">--""
+</span>	zmq_module.req_socket:send(<span class="string">"DUT:"</span>..<span class="global">string</span>.format(<span class="string">"%s\r"</span>, str))
+	<span class="keyword">return</span> zmq_module.req_socket:recv()
+<span class="keyword">end</span>
+
+<span class="comment">--- Set the detect string.
+</span><span class="comment">-- The detect string is used to determine when the system is done sending back a response.
+</span><span class="comment">-- @param str string to use as a detect string.
+</span><span class="comment">-- @treturn nil
+</span><a id="72"></a><span class="comment">-- @see _Dut_Wait_For_String_
+</span><span class="keyword">function</span> zmq_module._Dut_Set_Detect_String_(str) <span class="comment">--":-)"
+</span>	_dut_detect_ = <span class="global">tostring</span>(str)
+<span class="keyword">end</span>
+
+<span class="comment">--- Buffer DUT UART responses until finding the detect string.
+</span><span class="comment">-- @param timeout timeout when waiting for detect string
+</span><span class="comment">-- @return 0
+</span><span class="comment">-- @treturn string status message
+</span><a id="81"></a><span class="comment">-- @see _Dut_Set_Detect_String_
+</span><span class="keyword">function</span> zmq_module._Dut_Wait_For_String_(timeout)<span class="comment">--msec
+</span>	<span class="keyword">local</span> start_time = time_utils.get_unix_time_ms()
+	<span class="keyword">local</span> loop_counter = <span class="number">1</span>
+
+	<span class="comment">-- Make sure we are listening
+</span>	zmq_module._DUT_ZMQ_Set_Listen_(<span class="keyword">true</span>)
+
+	<span class="keyword">while</span> <span class="keyword">true</span> <span class="keyword">do</span>
+		<span class="comment">-- Non-blocking receive loop
+</span>		<span class="keyword">if</span> zmq_module.uart_socket:poll(<span class="number">20</span>) <span class="keyword">then</span>
+			<span class="keyword">local</span> msg, err = zmq_module.uart_socket:recv(zmq.DONTWAIT)
+			zmq.<span class="global">assert</span>(msg, err)
+
+			msg = <span class="global">tostring</span>(msg)
+
+			<span class="comment">-- Not sure what this null detection is for, but keeping it from the old code.
+</span>			<span class="keyword">if</span> msg ~= <span class="string">"\0"</span> <span class="keyword">then</span>
+				<span class="comment">-- Log the data here!
+</span>				<span class="comment">-- print(ret)
+</span>				<span class="global">io</span>.write(ret)
+				<span class="comment">-- FIXME: What is this DUT Host thing??
+</span>				<span class="comment">-- __dut_host:SendMsg(tostring(ret));
+</span>				_dut_response_ = _dut_response_ .. <span class="global">tostring</span>(msg)
+			<span class="keyword">end</span>
+
+			<span class="comment">-- local _t, _v = string.find(_dut_response_ , _dut_detect_)
+</span>			<span class="keyword">if</span> <span class="global">string</span>.match(_dut_response_, _dut_detect_) <span class="keyword">then</span>
+				<span class="keyword">return</span> <span class="number">0</span>, <span class="string">"Get "</span>.._dut_detect_
+			<span class="keyword">end</span>
+
+			<span class="comment">-- Look for power on failures
+</span>			<span class="comment">-- FIXME: More general hang detection?
+</span>			<span class="keyword">if</span> <span class="global">string</span>.match(_dut_response_, <span class="string">"Power on canceled"</span>) <span class="keyword">then</span>
+				error(<span class="string">"gas guage timed out"</span>)
+			<span class="keyword">end</span>
+
+			<span class="comment">-- If we timeout, then EJECT! with an error message
+</span>			<span class="keyword">if</span> time_utils.get_time_delta_ms(start_time) &gt; timeout <span class="keyword">then</span>
+	            error(<span class="string">"Timed out waiting for UART on loop "</span>..loop_counter..<span class="string">". Got: "</span>.._dut_response_:sub(<span class="number">0</span>,<span class="number">150</span>)..<span class="string">"..."</span>)
+			<span class="keyword">end</span>
+
+			<span class="comment">-- FIXME: Do we still need this
+</span>			loop_counter = loop_counter + <span class="number">1</span>
+		<span class="keyword">end</span>
+	<span class="keyword">end</span>
+
+	<span class="comment">-- Stop listening to uart
+</span>	zmq_module._DUT_ZMQ_Set_Listen_(<span class="keyword">false</span>)
+<span class="keyword">end</span>
+
+<span class="comment">--- Send a command to the fixture and wait for the response.
+</span><span class="comment">-- The detect string is set to the diags default of "] :-)", and used to determine when the
+</span><span class="comment">-- system is done sending back a response.
+</span><span class="comment">-- @param str command to sent to the DUT
+</span><span class="comment">-- @param timeout time to wait for detect string before failing
+</span><a id="137"></a><span class="comment">-- @return 0
+</span><span class="keyword">function</span> zmq_module._Dut_Send_Cmd_(str,timeout) <span class="comment">--""
+</span>  zmq_module._Dut_Set_Detect_String_(<span class="string">"%] %:%-%)"</span>)
+  <span class="keyword">local</span> s1, t1 = time_utils.get_time_string_ms()
+  <span class="comment">-- if(DutLogOut) then DutLogOut(s1 .. "&lt; send: &gt; " .. str) end
+</span>  <span class="keyword">if</span>(TestFlowOut) <span class="keyword">then</span> TestFlowOut( <span class="string">"\t&lt; DUT send: &gt; "</span> .. str) <span class="keyword">end</span>
+
+  <span class="comment">-- we need to listen to Serial data when sending stuff
+</span>  zmq_module._DUT_ZMQ_Set_Listen_(<span class="keyword">true</span>)
+
+  zmq_module._Dut_Send_String_(str)
+  <span class="keyword">local</span> ret = zmq_module._Dut_Wait_For_String_(_timeout)
+
+  zmq_module._DUT_ZMQ_Set_Listen_(<span class="keyword">false</span>)
+
+  <span class="keyword">local</span> s2, t2 = time_utils.get_time_string_ms()
+  <span class="comment">-- if(DutLogOut) then DutLogOut("\t\t--&gt; elapsed(sec): ".. tostring(t2-t1)) end
+</span>  <span class="keyword">if</span>(TestFlowOut) <span class="keyword">then</span> TestFlowOut(<span class="string">"\t&lt; DUT elapsed: &gt; (sec)"</span>.. <span class="global">tostring</span>(t2 - t1)) <span class="keyword">end</span>
+  <span class="keyword">return</span> ret;
+<span class="keyword">end</span>
+
+<span class="comment">--- Get the UART response from the last diags command.
+</span><span class="comment">-- This also erases the local UART buffer, so more calls of this function will read an empty string.
+</span><a id="160"></a><span class="comment">-- @treturn string DUT response from last diags command
+</span><span class="keyword">function</span> zmq_module._Dut_Read_String_()
+  <span class="keyword">local</span> tmp =  _dut_response_
+  _dut_response_ = <span class="string">""</span>
+  <span class="keyword">return</span> tmp;
+<span class="keyword">end</span>
+
+<span class="comment">--- DEPRECATED: Do a raw read of the DUT Socket.
+</span><a id="168"></a><span class="comment">-- @treturn string DUT response from last diags command
+</span><span class="keyword">function</span> zmq_module._Dut_Socket_Receive_()
+	<span class="comment">-- local recv,_,_ = sc.select({zmq_module.DUTSocket},nil,1)
+</span>	<span class="comment">-- if(recv) then
+</span>		<span class="keyword">return</span> zmq_module.DUTSocket:receive()
+	<span class="comment">-- end
+</span><span class="keyword">end</span>
+
+<span class="comment">--- Close the DUT UART socket
+</span><a id="177"></a><span class="comment">-- @treturn nil
+</span><span class="keyword">function</span> zmq_module._Dut_Socket_Close_(  )
+	zmq_module.DUTSocket:close()
+	zmq_module.DUTSocket = <span class="keyword">nil</span>;
+<span class="keyword">end</span>
+
+<span class="global">print</span>(<span class="string">"&lt; "</span>.. <span class="global">tostring</span>(CONFIG.ID)..<span class="string">" &gt; Finished Load DUT TCP Library...\r\n"</span>)
+
+<span class="keyword">return</span> zmq_module</pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

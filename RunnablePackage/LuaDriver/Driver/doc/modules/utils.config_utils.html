@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><strong>utils.config_utils</strong></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>utils.config_utils</code></h1>
+<p>Global data dictionary utilities</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#get_addr">get_addr (CONFIG, name, uut)</a></td>
+	<td class="summary">Get a "[ADDRESS]:[PORT]" string for a given service from a config file.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_log_writer">get_log_writer (CONFIG, log_type, log_file_prefix)</a></td>
+	<td class="summary">Get the a logger with file output defined by the external config file ([name]_LOG_FILENAME).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_config">get_config (cmd_args)</a></td>
+	<td class="summary">Given command line arguments, import the correct config file and add any additional parameters.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#log_writer">log_writer</a></td>
+	<td class="summary">Log Writer</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "get_addr"></a>
+    <strong>get_addr (CONFIG, name, uut)</strong>
+    <a style="float:right;" href="../source/config_utils.lua.html#17">line 17</a>
+    </dt>
+    <dd>
+    Get a "[ADDRESS]:[PORT]" string for a given service from a config file.
+ Assumes that the address variable's name is [name]_ADDRESS and that the port is [name]_BASE_PORT (+ uut #).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">CONFIG</span>
+         config module
+        </li>
+        <li><span class="parameter">name</span>
+         name of the service address to get
+        </li>
+        <li><span class="parameter">uut</span>
+         UUT #
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        address string
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">sequencer_address = config_utils.get_addr(CONFIG, <span class="string">"SEQUENCE"</span>, CONFIG.ID)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "get_log_writer"></a>
+    <strong>get_log_writer (CONFIG, log_type, log_file_prefix)</strong>
+    <a style="float:right;" href="../source/config_utils.lua.html#33">line 33</a>
+    </dt>
+    <dd>
+    Get the a logger with file output defined by the external config file ([name]_LOG_FILENAME).
+ Logger must implement a "write" function. The current function will automatically append a
+ timestamp and print to console as well.
+<p> Example: "2015-10-15 17:01:14.862:	:: iBoot for n65, Copyright 2007-2015, Apple Inc."
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">CONFIG</span>
+         config module
+        </li>
+        <li><span class="parameter">log_type</span>
+         name of logger to create. Each logger will only be created once, and the same logger will be returned on another function call.
+        </li>
+        <li><span class="parameter">log_file_prefix</span>
+         prefix to append to the log filename in teh config file. Examples could include a serial name or a directory.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">log_writer</span></span>
+        logger object
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../modules/utils.config_utils.html#log_writer">log_writer</a>
+    </ul>
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">DUTLogger = config_utils.get_log_writer(CONFIG, <span class="string">"DUT"</span>, <span class="string">"FNXXfake-serial-number4N7C"</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "get_config"></a>
+    <strong>get_config (cmd_args)</strong>
+    <a style="float:right;" href="../source/config_utils.lua.html#102">line 102</a>
+    </dt>
+    <dd>
+    Given command line arguments, import the correct config file and add any additional parameters.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">cmd_args</span> processed command line arguments table
+        <ul>
+        <li><span class="parameter">config</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         config module to import
+        </li>
+        <li><span class="parameter">uut</span>
+            <span class="types"><span class="type">number</span></span>
+         UUT test slot number
+        </li>
+        </li></ul>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        CONFIG populated config table
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">CONFIG = config_utils.get_config(arg, <span class="string">"config.pathfinder"</span>)</pre>
+    </ul>
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "log_writer"></a>
+    <strong>log_writer</strong>
+    <a style="float:right;" href="../source/config_utils.lua.html#59">line 59</a>
+    </dt>
+    <dd>
+    Log Writer
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">write</span>
+            <span class="types"><span class="type">function</span></span>
+         write(text to print, optional prefix for console output, should we skip newline at beginning)
+        </li>
+        <li><span class="parameter">flush</span>
+            <span class="types"><span class="type">function</span></span>
+         force the file to flush
+        </li>
+        <li><span class="parameter">close</span>
+            <span class="types"><span class="type">function</span></span>
+         force close the file
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

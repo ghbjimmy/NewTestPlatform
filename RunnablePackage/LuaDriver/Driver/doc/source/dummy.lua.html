@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Source</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../source/development.lua.html">development.lua</a></li>
+  <li><a href="../source/pathfinder.lua.html">pathfinder.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><strong>dummy.lua</strong></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/function_table.lua.html">function_table.lua</a></li>
+  <li><a href="../source/datalogger.lua.html">datalogger.lua</a></li>
+  <li><a href="../source/dmm.lua.html">dmm.lua</a></li>
+  <li><a href="../source/dut.lua.html">dut.lua</a></li>
+  <li><a href="../source/eload.lua.html">eload.lua</a></li>
+  <li><a href="../source/fixture.lua.html">fixture.lua</a></li>
+  <li><a href="../source/measure.lua.html">measure.lua</a></li>
+  <li><a href="../source/relay.lua.html">relay.lua</a></li>
+  <li><a href="../source/reset.lua.html">reset.lua</a></li>
+  <li><a href="../source/supply.lua.html">supply.lua</a></li>
+  <li><a href="../source/thdn.lua.html">thdn.lua</a></li>
+  <li><a href="../source/HWIO.lua.html">HWIO.lua</a></li>
+  <li><a href="../source/MCU.lua.html">MCU.lua</a></li>
+  <li><a href="../source/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../source/test_engine.lua.html">test_engine.lua</a></li>
+  <li><a href="../source/config_utils.lua.html">config_utils.lua</a></li>
+  <li><a href="../source/global_data.lua.html">global_data.lua</a></li>
+  <li><a href="../source/sequence_utils.lua.html">sequence_utils.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/string_utils.lua.html">string_utils.lua</a></li>
+  <li><a href="../source/time_utils.lua.html">time_utils.lua</a></li>
+  <li><a href="../source/uuid.lua.html">uuid.lua</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h2>dummy.lua</h2>
+<pre>
+<span class="comment">--- Dummy socket library simulates a fake fixture and DUT UART connection.
+</span><span class="comment">-- @module console.dummy
+</span><span class="comment">-- @alias dummy_module
+</span><span class="global">print</span>(<span class="string">"&lt; "</span>.. <span class="global">tostring</span>(CONFIG.ID)..<span class="string">" &gt; Load Dummy Socket Library..."</span>)
+<span class="keyword">local</span> time_utils = <span class="global">require</span>(<span class="string">"utils.time_utils"</span>)
+<span class="keyword">local</span> config_utils = <span class="global">require</span>(<span class="string">"utils.config_utils"</span>)
+<span class="keyword">local</span> uuid = <span class="global">require</span>(<span class="string">"utils.uuid"</span>)
+<span class="comment">-- CONFIG is present from global environment!!!!
+</span>
+<span class="comment">--===========================--
+</span><span class="comment">-- dummy exported module
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> dummy_module = {}
+
+<span class="comment">--===========================--
+</span><span class="comment">-- module local state
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> InstrumentSocket = <span class="keyword">nil</span>
+<span class="keyword">local</span> DutLogOut = config_utils.get_log_writer(CONFIG, <span class="string">"DUT"</span>, CONFIG.log_prefix)
+<span class="keyword">local</span> HwLogOut = config_utils.get_log_writer(CONFIG, <span class="string">"HW"</span>, CONFIG.log_prefix)
+<span class="keyword">local</span> TestFlowOut = config_utils.get_log_writer(CONFIG, <span class="string">"FLOW"</span>, CONFIG.log_prefix)
+
+<span class="comment">--===========================--
+</span><span class="comment">-- fake fixture module Public API
+</span><span class="comment">--===========================--
+</span>
+<span class="comment">--- Connect to the fixture UART socket
+</span><a id="29"></a><span class="comment">-- @treturn nil
+</span><span class="keyword">function</span> dummy_module._Arm_Socket_Connect_()
+  <span class="global">print</span>(<span class="string">"Dummy connection."</span>)
+<span class="keyword">end</span>
+
+<span class="comment">--- Send command to the fixture (ARM)
+</span><span class="comment">-- @param command command to send to the fixture
+</span><a id="36"></a><span class="comment">-- @treturn string Response from the fixture
+</span><span class="keyword">function</span> dummy_module._ARM_Send_Cmd_(command)
+  <span class="comment">-- local cmd = string.format("[%d8888888]%s\r\n",CONFIG.ID,str)
+</span>  <span class="keyword">local</span> command = <span class="string">"["</span>..<span class="global">string</span>.sub(uuid(),<span class="number">25</span>,<span class="number">36</span>)..<span class="string">"]"</span> .. command
+  <span class="keyword">local</span> t1 = time_utils.get_unix_time_ms()
+  <span class="comment">-- FIX the logging functions here
+</span>  <span class="keyword">if</span>(HwLogOut) <span class="keyword">then</span> HwLogOut.write(<span class="string">"&lt;    send: &gt; "</span> .. <span class="global">tostring</span>(command)) <span class="keyword">end</span>
+  time_utils.delay(<span class="number">1</span>)
+
+  <span class="keyword">local</span> t2 = time_utils.get_unix_time_ms()
+  <span class="keyword">if</span>(HwLogOut) <span class="keyword">then</span> HwLogOut.write(<span class="string">"&lt; receive: &gt; "</span> .. <span class="global">tostring</span>(<span class="string">"DONE"</span>) .. <span class="string">"\r\n\t\t--&gt; elapsed(sec): "</span> .. <span class="global">tostring</span>(t2 - t1) .. <span class="string">"\r\n"</span>) <span class="keyword">end</span>
+
+  <span class="keyword">return</span> <span class="string">"DONE"</span>
+<span class="keyword">end</span>
+
+<span class="comment">--- Close the fixture UART socket
+</span><a id="52"></a><span class="comment">-- @treturn nil
+</span><span class="keyword">function</span> dummy_module._Arm_Socket_Close_()
+  <span class="global">print</span>(<span class="string">"Dummy Closed"</span>)
+<span class="keyword">end</span>
+
+<span class="comment">--===========================--
+</span><span class="comment">-- fake dut module Public API
+</span><span class="comment">--===========================--
+</span>
+<span class="comment">--- Connect to the DUT UART socket
+</span><a id="62"></a><span class="comment">-- @treturn nil
+</span><span class="keyword">function</span> dummy_module._DUT_Socket_Connect_()
+  <span class="keyword">return</span> dummy_module._Arm_Socket_Connect_()
+<span class="keyword">end</span>
+
+<span class="comment">--- Send a string over the DUT UART without waiting for a response
+</span><span class="comment">-- @param str string to send to DUT
+</span><a id="69"></a><span class="comment">-- @treturn nil
+</span><span class="keyword">function</span> dummy_module._Dut_Send_String_(str)
+  DutLogOut.write(<span class="string">"Dummy sent string "</span>..str)
+<span class="keyword">end</span>
+
+<span class="comment">--- Set the detect string.
+</span><span class="comment">-- The detect string is used to determine when the system is done sending back a response.
+</span><span class="comment">-- @param str string to use as a detect string.
+</span><span class="comment">-- @treturn nil
+</span><a id="78"></a><span class="comment">-- @see _Dut_Wait_For_String_
+</span><span class="keyword">function</span> dummy_module._Dut_Set_Detect_String_(str)
+  <span class="comment">-- print("Dummy set detect string to "..str)
+</span><span class="keyword">end</span>
+
+<span class="comment">--- Buffer DUT UART responses until finding the detect string.
+</span><span class="comment">-- @param timeout timeout when waiting for detect string
+</span><span class="comment">-- @return 0
+</span><span class="comment">-- @treturn string status message
+</span><a id="87"></a><span class="comment">-- @see _Dut_Set_Detect_String_
+</span><span class="keyword">function</span> dummy_module._Dut_Wait_For_String_(timeout)
+  time_utils.delay(<span class="number">100</span>)
+  <span class="comment">-- print("Dummy wait for string.")
+</span>  <span class="keyword">return</span> <span class="number">0</span>, <span class="string">"Get dummy detect."</span>
+<span class="keyword">end</span>
+
+<span class="comment">--- Send a command to the fixture and wait for the response.
+</span><span class="comment">-- The detect string is set to the diags default of "] :-)", and used to determine when the
+</span><span class="comment">-- system is done sending back a response.
+</span><span class="comment">-- @param str command to sent to the DUT
+</span><span class="comment">-- @param timeout time to wait for detect string before failing
+</span><a id="99"></a><span class="comment">-- @return 0
+</span><span class="keyword">function</span> dummy_module._Dut_Send_Cmd_(str, timeout)
+  dummy_module._Dut_Set_Detect_String_(<span class="string">"%] %:%-%)"</span>)
+  <span class="keyword">local</span> s1, t1 = time_utils.get_time_string_ms()
+
+  <span class="keyword">if</span>(TestFlowOut) <span class="keyword">then</span> TestFlowOut.write( <span class="string">"\t&lt; DUT send: &gt; "</span> .. str) <span class="keyword">end</span>
+  dummy_module._Dut_Send_String_(str)
+  ret = dummy_module._Dut_Wait_For_String_(_timeout)
+
+  <span class="keyword">local</span> s2, t2 = time_utils.get_time_string_ms()
+
+  <span class="keyword">if</span>(TestFlowOut) <span class="keyword">then</span> TestFlowOut.write(<span class="string">"\t&lt; DUT elapsed: &gt; (sec)"</span>.. <span class="global">tostring</span>(t2 - t1)) <span class="keyword">end</span>
+  <span class="keyword">return</span> ret
+<span class="keyword">end</span>
+
+<span class="comment">--- Get the UART response from the last diags command.
+</span><span class="comment">-- This also erases the local UART buffer, so more calls of this function will read an empty string.
+</span><a id="116"></a><span class="comment">-- @treturn string DUT response from last diags command
+</span><span class="keyword">function</span> dummy_module._Dut_Read_String_()
+  <span class="keyword">return</span> <span class="string">"Dummy Response"</span>;
+<span class="keyword">end</span>
+
+<span class="comment">--- DEPRECATED: Do a raw read of the DUT Socket.
+</span><a id="122"></a><span class="comment">-- @treturn string DUT response from last diags command
+</span><span class="keyword">function</span> dummy_module._Dut_Socket_Receive_()
+  <span class="comment">-- local recv,_,_ = sc.select({DUTSocket},nil,1)
+</span>  <span class="comment">-- if(recv) then
+</span>  <span class="keyword">return</span> <span class="string">"DONE!"</span>
+  <span class="comment">-- end
+</span><span class="keyword">end</span>
+
+<span class="comment">--- Close the DUT UART socket
+</span><a id="131"></a><span class="comment">-- @treturn nil
+</span><span class="keyword">function</span> dummy_module._Dut_Socket_Close_(  )
+  <span class="global">print</span>(<span class="string">"Dummy Closed"</span>)
+<span class="keyword">end</span>
+
+<span class="global">print</span>(<span class="string">"&lt; "</span>.. <span class="global">tostring</span>(CONFIG.ID)..<span class="string">" &gt; Finished Load Dummy Socket Library...\r\n"</span>)
+
+<span class="keyword">return</span> dummy_module</pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

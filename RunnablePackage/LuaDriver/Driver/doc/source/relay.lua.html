@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>X527 Test Engine Documentation</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>X527 Test Engine</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Source</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../source/development.lua.html">development.lua</a></li>
+  <li><a href="../source/pathfinder.lua.html">pathfinder.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/dummy.lua.html">dummy.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/zmq.lua.html">zmq.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/function_table.lua.html">function_table.lua</a></li>
+  <li><a href="../source/datalogger.lua.html">datalogger.lua</a></li>
+  <li><a href="../source/dmm.lua.html">dmm.lua</a></li>
+  <li><a href="../source/dut.lua.html">dut.lua</a></li>
+  <li><a href="../source/eload.lua.html">eload.lua</a></li>
+  <li><a href="../source/fixture.lua.html">fixture.lua</a></li>
+  <li><a href="../source/measure.lua.html">measure.lua</a></li>
+  <li><strong>relay.lua</strong></li>
+  <li><a href="../source/reset.lua.html">reset.lua</a></li>
+  <li><a href="../source/supply.lua.html">supply.lua</a></li>
+  <li><a href="../source/thdn.lua.html">thdn.lua</a></li>
+  <li><a href="../source/HWIO.lua.html">HWIO.lua</a></li>
+  <li><a href="../source/MCU.lua.html">MCU.lua</a></li>
+  <li><a href="../source/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../source/test_engine.lua.html">test_engine.lua</a></li>
+  <li><a href="../source/config_utils.lua.html">config_utils.lua</a></li>
+  <li><a href="../source/global_data.lua.html">global_data.lua</a></li>
+  <li><a href="../source/sequence_utils.lua.html">sequence_utils.lua</a></li>
+  <li><a href="../source/socket.lua.html">socket.lua</a></li>
+  <li><a href="../source/string_utils.lua.html">string_utils.lua</a></li>
+  <li><a href="../source/time_utils.lua.html">time_utils.lua</a></li>
+  <li><a href="../source/uuid.lua.html">uuid.lua</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/config.development.html">config.development</a></li>
+  <li><a href="../modules/config.pathfinder.html">config.pathfinder</a></li>
+  <li><a href="../modules/config.zmq.html">config.zmq</a></li>
+  <li><a href="../modules/console.dummy.html">console.dummy</a></li>
+  <li><a href="../modules/console.dut.socket.html">console.dut.socket</a></li>
+  <li><a href="../modules/console.dut.zmq.html">console.dut.zmq</a></li>
+  <li><a href="../modules/console.fixture.socket.html">console.fixture.socket</a></li>
+  <li><a href="../modules/function_table.html">function_table</a></li>
+  <li><a href="../modules/functions.datalogger.html">functions.datalogger</a></li>
+  <li><a href="../modules/functions.dmm.html">functions.dmm</a></li>
+  <li><a href="../modules/functions.dut.html">functions.dut</a></li>
+  <li><a href="../modules/functions.eload.html">functions.eload</a></li>
+  <li><a href="../modules/functions.fixture.html">functions.fixture</a></li>
+  <li><a href="../modules/functions.measure.html">functions.measure</a></li>
+  <li><a href="../modules/functions.relay.html">functions.relay</a></li>
+  <li><a href="../modules/functions.reset.html">functions.reset</a></li>
+  <li><a href="../modules/functions.supply.html">functions.supply</a></li>
+  <li><a href="../modules/functions.thdn.html">functions.thdn</a></li>
+  <li><a href="../modules/hw.HWIO.html">hw.HWIO</a></li>
+  <li><a href="../modules/hw.MCU.html">hw.MCU</a></li>
+  <li><a href="../modules/utils.config_utils.html">utils.config_utils</a></li>
+  <li><a href="../modules/utils.global_data.html">utils.global_data</a></li>
+  <li><a href="../modules/utils.sequence_utils.html">utils.sequence_utils</a></li>
+  <li><a href="../modules/utils.socket.html">utils.socket</a></li>
+  <li><a href="../modules/utils.string_utils.html">utils.string_utils</a></li>
+  <li><a href="../modules/utils.time_utils.html">utils.time_utils</a></li>
+  <li><a href="../modules/utils.uuid.html">utils.uuid</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/serial_master.lua.html">serial_master.lua</a></li>
+  <li><a href="../scripts/test_engine.lua.html">test_engine.lua</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h2>relay.lua</h2>
+<pre>
+<span class="comment">--- Relay Functions Module
+</span><span class="comment">-- @module functions.relay
+</span><span class="comment">-- @alias relay_module
+</span>
+<span class="keyword">local</span> HWIO = <span class="global">require</span>(<span class="string">"hw.HWIO"</span>)
+<span class="keyword">local</span> MCU = <span class="global">require</span>(<span class="string">"hw.MCU"</span>)
+<span class="keyword">local</span> time_utils = <span class="global">require</span>(<span class="string">"utils.time_utils"</span>)
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Relay exported module
+</span><span class="comment">--===========================--
+</span><span class="keyword">local</span> relay_module = {}
+<span class="comment">-- function relay_module.relay(sequence)
+</span><span class="comment">-- function relay_module.disconnect(sequence)
+</span><span class="comment">-- function relay_module.relay_from_connections(connections)
+</span><span class="comment">-- function relay_module.disconnect_from_connections(connections)
+</span><span class="comment">-- function relay_module.button(sequence)
+</span><span class="comment">-- function relay_module.tbat(sequence)
+</span>
+<span class="comment">--===========================--
+</span><span class="comment">-- Raw Relay Connections function
+</span><span class="comment">--===========================--
+</span>
+<span class="comment">--- Control the fixture relays
+</span><span class="comment">-- @param hwio_table table of connection-to-IO mappings
+</span><span class="comment">-- @param[opt=true] disconnect true if disconnecting the relays
+</span><span class="comment">-- @param[optchain="CONNECT"] connect_to specify a non-default connection
+</span><span class="comment">-- @return true
+</span><span class="comment">-- @return passing status (whether the eload was sucessfully applied)
+</span><a id="31"></a><span class="comment">-- @raise error
+</span><span class="keyword">local</span> <span class="keyword">function</span> relay_from_connections(hwio_table, disconnect, connect_to)
+  <span class="keyword">if</span> hwio_table == <span class="keyword">nil</span> <span class="keyword">then</span>
+    error(<span class="string">"Incorrect testpoint or connection."</span>, <span class="number">2</span>)
+  <span class="keyword">end</span>
+
+  <span class="comment">-- FIXME: Codec?
+</span>  <span class="comment">-- local ret = ""
+</span>  <span class="comment">-- if(params == 300) then
+</span>  <span class="comment">--   -- FIXME: Update instrument command with new HWIO table format
+</span>  <span class="comment">--   local ret = MCU.InstrumentCmd("codec open pdm(1000,3300)");
+</span>  <span class="comment">--   if(string.match(ret,"DONE")) then
+</span>  <span class="comment">--      return 0
+</span>  <span class="comment">--   else
+</span>  <span class="comment">--      return nil,"Can't set the PDM waveform."
+</span>  <span class="comment">--   end
+</span>  <span class="comment">-- end
+</span>
+  <span class="comment">-- -- FIXME: Fix this for proto2
+</span>  <span class="comment">-- if(params == 164) then
+</span>  <span class="comment">--   relay(IO_TABLE.PMU_NTC3_FIXTURE)
+</span>  <span class="comment">--   if(string.match(ret,"DONE")) then
+</span>  <span class="comment">--      return 0
+</span>  <span class="comment">--   else
+</span>  <span class="comment">--      return nil,"Can't set the PDM waveform."
+</span>  <span class="comment">--   end
+</span>  <span class="comment">-- end
+</span>
+  <span class="keyword">local</span> connections
+  <span class="keyword">if</span> disconnect == <span class="keyword">true</span> <span class="keyword">then</span>
+    connect_to = <span class="string">"DISCONNECT"</span>
+  <span class="keyword">elseif</span> connect_to == <span class="keyword">nil</span> <span class="keyword">or</span> connect_to == <span class="string">""</span> <span class="keyword">then</span>
+    connect_to = <span class="string">"CONNECT"</span>
+  <span class="keyword">end</span>
+
+  connections = hwio_table[connect_to]
+
+  <span class="keyword">if</span> connections == <span class="keyword">nil</span> <span class="keyword">then</span>
+    error(<span class="string">"Invalid connection for relay: "</span> .. connect_to, <span class="number">2</span>)
+  <span class="keyword">end</span>
+
+  <span class="comment">--FIXME: Do we really need to do this sort of loop? Can we just do it all at once instead?
+</span>  <span class="keyword">for</span> n = <span class="number">1</span>,#connections.IO <span class="keyword">do</span>
+    ret = MCU.InstrumentCmd(<span class="string">"io set"</span>, connections.IO[n][<span class="number">1</span>], connections.IO[n][<span class="number">2</span>])
+    <span class="keyword">if</span> <span class="global">string</span>.match(<span class="global">tostring</span>(ret),<span class="string">"DONE"</span>) == <span class="keyword">nil</span> <span class="keyword">then</span>
+      error(<span class="string">"Problem communicating with MCU."</span>)
+    <span class="keyword">end</span>
+    time_utils.delay(<span class="number">3</span>) <span class="comment">--FIXME: REquested by intelligent
+</span>  <span class="keyword">end</span>
+
+  <span class="keyword">return</span> <span class="keyword">true</span>
+<span class="keyword">end</span>
+
+
+<span class="comment">--===========================--
+</span><span class="comment">-- Public Relay Functions
+</span><span class="comment">--===========================--
+</span>
+<span class="comment">--- Connect net at [param1] to default fixture HW (or the fixture net specified in [param2])
+</span><span class="comment">-- @tparam sequence_object sequence FCT test sequence table
+</span><span class="comment">-- @return result (true)
+</span><span class="comment">-- @return passing status (true)
+</span><a id="93"></a><span class="comment">-- @raise error
+</span><span class="keyword">function</span> relay_module.relay(sequence)
+  <span class="keyword">local</span> testpoint = sequence.param1
+  <span class="keyword">local</span> connect_to = sequence.param2
+  <span class="comment">-- For nets with mutiple connections, we need to specify which one.
+</span>
+  <span class="comment">-- FIXME: Special case for the discharge resistors for now
+</span>  <span class="keyword">if</span> testpoint == <span class="string">"DISCHARGER"</span> <span class="keyword">then</span>
+    <span class="comment">-- Disconnect all the supplies
+</span>    <span class="keyword">for</span> supply, connections <span class="keyword">in</span> HWIO.SupplyTable <span class="keyword">do</span>
+      relay_from_connections(HWIO.RelayTable[supply], <span class="keyword">true</span>)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+
+  <span class="keyword">local</span> result = relay_from_connections(HWIO.RelayTable[testpoint], <span class="keyword">false</span>, connect_to)
+  <span class="keyword">return</span> result, <span class="keyword">true</span>
+<span class="keyword">end</span>
+
+<span class="comment">--- Disconnect net at [param1] from fixture HW
+</span><span class="comment">-- @tparam sequence_object sequence FCT test sequence table
+</span><span class="comment">-- @return result (true)
+</span><span class="comment">-- @return passing status (true)
+</span><a id="115"></a><span class="comment">-- @raise error
+</span><span class="keyword">function</span> relay_module.disconnect(sequence)
+  <span class="keyword">local</span> testpoint = sequence.param1
+
+  <span class="keyword">local</span> result = relay_from_connections(HWIO.RelayTable[testpoint], <span class="keyword">true</span>)
+  <span class="keyword">return</span> result, <span class="keyword">true</span>
+<span class="keyword">end</span>
+
+<span class="comment">--- Convenience function to connect testpoints for Measure, DMM, and Eload
+</span><span class="comment">-- This only exists because these HWIO table items only have "IO" entries
+</span><span class="comment">-- (instead of "CONNECT" and "DISCONNECT" entries)
+</span><span class="comment">-- @param HWIO_table_item measure, dmm, or eload HWIO table items
+</span><span class="comment">-- @return passing status (true)
+</span><span class="comment">-- @raise error
+</span><a id="129"></a><span class="comment">-- @within ConvenienceFunctions
+</span><span class="keyword">function</span> relay_module.relay_from_IO_only_item(HWIO_table_item)
+  <span class="keyword">return</span> relay_from_connections({CONNECT = HWIO_table_item}, <span class="keyword">false</span>)
+<span class="keyword">end</span>
+
+<span class="comment">--- Convenience function to expose raw connections API to outside users
+</span><span class="comment">-- @param connections standard HWIO table mapping
+</span><span class="comment">-- @return passing status (true)
+</span><span class="comment">-- @raise error
+</span><a id="138"></a><span class="comment">-- @within ConvenienceFunctions
+</span><span class="keyword">function</span> relay_module.relay_from_connections(connections)
+  <span class="keyword">return</span> relay_from_connections(connections, <span class="keyword">false</span>)
+<span class="keyword">end</span>
+
+<span class="comment">--- Convenience function to expose raw connections API to outside users
+</span><span class="comment">-- @param connections standard HWIO table mapping
+</span><span class="comment">-- @return passing status (true)
+</span><span class="comment">-- @raise error
+</span><a id="147"></a><span class="comment">-- @within ConvenienceFunctions
+</span><span class="keyword">function</span> relay_module.disconnect_from_connections(connections)
+  <span class="keyword">return</span> relay_from_connections(connections, <span class="keyword">true</span>)
+<span class="keyword">end</span>
+
+<span class="comment">--- Connect the net [param1] for two seconds.
+</span><span class="comment">-- Currently only supports BUTTON1_L.
+</span><span class="comment">-- @tparam sequence_object sequence FCT test sequence table
+</span><span class="comment">-- @return result (true)
+</span><span class="comment">-- @return passing status (true)
+</span><a id="157"></a><span class="comment">-- @raise error
+</span><span class="keyword">function</span> relay_module.button(sequence)
+  <span class="comment">-- this is button1. just press the button.
+</span>  <span class="keyword">if</span> sequence <span class="keyword">and</span> sequence.param1 ~= <span class="string">"BUTTON1_L"</span> <span class="keyword">then</span>
+    error(<span class="string">"Button command only works for BUTTON1_L"</span>)
+  <span class="keyword">end</span>
+
+  relay_from_connections(HWIO.RelayTable[<span class="string">"BUTTON1_L"</span>], <span class="keyword">true</span>)
+  time_utils.delay(<span class="number">2000</span>)
+  relay_from_connections(HWIO.RelayTable[<span class="string">"BUTTON1_L"</span>], <span class="keyword">false</span>)
+  time_utils.delay(<span class="number">2000</span>)
+  relay_from_connections(HWIO.RelayTable[<span class="string">"BUTTON1_L"</span>], <span class="keyword">true</span>)
+
+  <span class="keyword">return</span> <span class="keyword">true</span>, <span class="keyword">true</span>;
+<span class="keyword">end</span>
+
+<span class="comment">--- Set the battery NTC to a given resistance
+</span><span class="comment">-- Automatically connects the NTC to the DUT.
+</span><span class="comment">-- @tparam sequence_object sequence FCT test sequence table
+</span><span class="comment">-- @return result (true)
+</span><span class="comment">-- @return passing status (true)
+</span><a id="178"></a><span class="comment">-- @raise error
+</span><span class="keyword">function</span> relay_module.tbat(sequence)
+    <span class="keyword">if</span> sequence.param1 == <span class="keyword">nil</span> <span class="keyword">then</span>
+      error(<span class="string">"Resistance must be specified."</span>)
+    <span class="keyword">end</span>
+
+    <span class="comment">-- FIXME: Do we want to do this?
+</span>    relay_module.relay_from_connections(HWIO.RelayTable[<span class="string">"PMU_TBAT"</span>], <span class="keyword">false</span>, <span class="string">"DIGITAL_POT"</span>)
+
+    <span class="keyword">local</span> ret = MCU.InstrumentCmd(<span class="global">string</span>.format(<span class="string">"resistor set(%s ohm)"</span>,<span class="global">tostring</span>(sequence.param1)));
+    <span class="keyword">if</span> <span class="global">string</span>.match(<span class="global">tostring</span>(ret),<span class="string">"DONE"</span>) == <span class="keyword">nil</span> <span class="keyword">then</span>
+      error(<span class="string">"Problem communicating with MCU."</span>)
+    <span class="keyword">end</span>
+
+    <span class="keyword">return</span> <span class="keyword">true</span>, <span class="keyword">true</span>
+<span class="keyword">end</span>
+
+<span class="comment">-----------------------------------
+</span><span class="comment">-- Export relay to module users
+</span><span class="comment">-----------------------------------
+</span><span class="keyword">return</span> relay_module</pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2015-10-20 13:15:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

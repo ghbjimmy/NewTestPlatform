@@ -1,0 +1,39 @@
+--jason
+
+local fct_module ={
+	name = "X527_FCT",
+	module=1,
+	slot=4,
+    profile = "common.lua",
+    fixture = "",
+    sn_plugin = "",
+    plugins="",
+}
+
+print("os execute : ",os.execute("ulimit -n 4096"))
+local tfp = io.open("/vault/data_collection/test_station_config/gh_station_info.json","r")
+if(tfp ~= nil) then
+	local fstr = tfp:read("*a")
+	tfp:close()
+	local stationTp = string.match(fstr, "\"STATION_TYPE\" : \"(.-)\",")
+	-- print(stationTp)
+	--this setting should sync with function of station() in Global.lua--COMBINE-FCT
+	if(stationTp == 'PREFCT' or stationTp == 'PREFCT2') then
+		print("6 slot")
+		fct_module.slot = 6
+		fct_module.fixture = ""
+		fct_module.name = "X527_Panel_FCT"
+		fct_module.sn_plugin = ""
+		fct_module.plugins = {"UIExternal.bundle","FCT_Debug.bundle"}
+	else
+		print("4 slot")
+		fct_module.slot = 4
+		fct_module.fixture = "libSipFixture.dylib"
+		fct_module.sn_plugin = "sn.bundle"
+		fct_module.name = "X527_FCT"
+		fct_module.plugins = {"FCT_Debug.bundle","bundleDUT.bundle"}
+	end
+end
+
+return fct_module;
+
