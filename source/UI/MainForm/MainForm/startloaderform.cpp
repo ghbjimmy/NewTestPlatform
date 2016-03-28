@@ -17,7 +17,8 @@ static void startFun(void* obj)
 StartLoaderForm::StartLoaderForm(int& isFinish, QWidget* parent) : _isFinish(isFinish), QWidget(parent)
 {
     setupUI();
-    this->setWindowFlags(Qt::FramelessWindowHint);
+    //this->setWindowFlags(Qt::FramelessWindowHint);
+    this->setWindowFlags(Qt::CustomizeWindowHint);
 }
 
 StartLoaderForm::~StartLoaderForm()

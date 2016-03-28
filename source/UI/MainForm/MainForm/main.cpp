@@ -17,6 +17,61 @@
 
 #include <thread>
 #include <QMessageBox>
+
+TItemEnd* convertItemEnd(const QString& itemJson)
+{
+    QJsonParseError json_error;
+    QJsonDocument document = QJsonDocument::fromJson(itemJson.toUtf8(), &json_error);
+    if(json_error.error != QJsonParseError::NoError)
+    {
+        LogMsg(Error, "Parse ItemStart json failed. %s", itemJson.toStdString().c_str());
+        return NULL;
+    }
+
+    if (!document.isObject())
+    {
+        LogMsg(Error, "Parse ItemStar json format is error. %s", itemJson.toStdString().c_str());
+        return NULL;
+    }
+
+    TItemEnd* itemEnd = new TItemEnd();
+
+    QJsonObject obj = document.object();
+    if (obj.contains("tid"))
+    {
+        itemEnd->tid = obj.take("tid").toString();
+    }
+    if (obj.contains("value"))
+    {
+        itemEnd->value = obj.take("value").toString();
+    }
+    if (obj.contains("result"))
+    {
+        bool bresult1 = obj.value("result").toBool();
+        int val = -9999;
+        if  (-9999 == (val = obj.value("result").toInt(-9999)))
+        {
+            QString qstr = obj.value("result").toString("abcd");
+            bool bresult = obj.value("result").isBool();
+            itemEnd->result = bresult ? 1 : 0;
+        }
+        else
+        {
+            itemEnd->result = val;
+        }
+    }
+    if (obj.contains("error"))
+    {
+        itemEnd->error = obj.take("error").toString();
+    }
+    if (obj.contains("pdca"))
+    {
+        itemEnd->pdca = obj.take("pdca").toString();
+    }
+
+    return itemEnd;
+}
+
 void testDecode()
 {
     const char* json = "{\"jsonrpc\": \"1.0\", \"id\": \"6bb7cfe8ea4611e5b3abacbc32d422bf\", \"result\": [[0, 0, 6], [1, \"{'FUNCTION': 'station', 'PARAM1': '', 'GROUP': 'INTELLIGENT GROUNDHOG', 'DESCRIPTION': 'Get Station Type', 'VAL': '', 'HIGH': '', 'TIMEOUT': '', 'PARAM2': '{{stationName}}', 'KEY': '', 'TID': 'INTEL_HOG_100_STAT_UNITSTAGE', 'UNIT': '', 'LOW': ''}\"]]}";
@@ -25,6 +80,15 @@ void testDecode()
     Buffer buffer;
     buffer.setBuf(json, strlen(json));
     rsp->decode(buffer);
+}
+//\"-1\"
+void testJson()
+{
+    const char* json = "{\"result\": 1,\"tid\": \"INTEL_HOG_150_STAT_COMMENT\",\"to_pdca\": true,\"value\": \"20151211.V1\"}";
+
+
+    TItemEnd* end1 = convertItemEnd(json);
+    int i = 0;
 }
 
 void test()
@@ -110,6 +174,8 @@ void test()
 }
 
 int main(int argc, char *argv[]){
+
+    testJson();
 
     QApplication a(argc, argv);
 

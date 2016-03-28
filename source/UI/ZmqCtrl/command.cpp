@@ -99,12 +99,12 @@ bool LoadCsvCmdRsp::decode(const Buffer& buf)
     QJsonObject obj = document.object();
     if(obj.contains("result"))
     {
-        _result = obj.take("result").toString();
+        _result = obj.value("result").toString();
         _isSuccess = true;
     }
     else if (obj.contains("error"))
     {
-        _result = obj.take("error").toString();
+        _result = obj.value("error").toString();
         _isSuccess = false;
     }
 
@@ -177,7 +177,7 @@ bool ListCmdRsp::decode(const Buffer& buf)
     QJsonValue value;
     if(obj.contains("result"))
     {
-        value = obj.take("result");
+        value = obj.value("result");
         if (!value.isArray())
         {
             LogMsg(Error, "json format is error:'result' is not array.");
@@ -288,7 +288,7 @@ bool SimpleFuncCmdRsp::decode(const Buffer& buf)
     QString result = "";
     if(obj.contains("status"))
     {
-        result = obj.take("status").toString();
+        result = obj.value("status").toString();
     }
 
     if (result != "ok")

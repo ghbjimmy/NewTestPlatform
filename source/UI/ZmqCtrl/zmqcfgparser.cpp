@@ -66,50 +66,50 @@ bool ZmqCfgParser::parse(const QString& path)
     QJsonValue value;
     if(obj.contains(SEQUENCER_PORT))
     {
-        value = obj.take(SEQUENCER_PORT);
+        value = obj.value(SEQUENCER_PORT);
         _seqPort = value.toInt();
     }
 
     if(obj.contains(SEQUENCER_PUB))
     {
-        value = obj.take(SEQUENCER_PUB);
+        value = obj.value(SEQUENCER_PUB);
         _seqPub = value.toInt();
     }
 
     if(obj.contains(SM_PUB))
     {
-        value = obj.take(SM_PUB);
+        value = obj.value(SM_PUB);
         _smPub = value.toInt();
     }
 
     if(obj.contains(SM_PORT))
     {
-        value = obj.take(SM_PORT);
+        value = obj.value(SM_PORT);
         _smPort = value.toInt();
     }
 
     if(obj.contains(SM_HEARTBEAT))
     {
-        value = obj.take(SM_HEARTBEAT);
+        value = obj.value(SM_HEARTBEAT);
         _smHeartBeat = value.toInt();
     }
 
     if(obj.contains(TEST_ENGINE_PORT))
     {
-        value = obj.take(TEST_ENGINE_PORT);
+        value = obj.value(TEST_ENGINE_PORT);
         _testEnginePort = value.toInt();
     }
 
     if(obj.contains(TEST_ENGINE_PUB))
     {
-        value = obj.take(TEST_ENGINE_PUB);
+        value = obj.value(TEST_ENGINE_PUB);
         _testEnginePub = value.toInt();
     }
 
     //static const char* ip = "172.15.3.78";
     //static const char* ip = "127.0.0.1";
     //static const char* ip = "172.22.0.60";
-    static const char* ip = "172.15.2.246";
+    static const char* ip = "172.15.3.89";
     _seqIp = ip;
     _engineIp = ip;
     _smIp = ip;

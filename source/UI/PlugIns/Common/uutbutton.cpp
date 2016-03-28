@@ -72,5 +72,7 @@ void UutButton::setChecked(bool flag)
 
 void UutButton::showColor(const QColor &color)
 {
-    UIUtil::setBgColor(this, color);
+    QString btn_style = QString("QPushButton{background:rgb(%1,%2,%3);}")
+            .arg(color.red()).arg(color.green()).arg(color.blue());
+    this->setStyleSheet(btn_style);
 }

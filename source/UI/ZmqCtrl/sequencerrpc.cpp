@@ -35,14 +35,14 @@ static int getMsgType(const QString& msg, QString& data)
     QJsonObject obj = document.object();
     if (obj.contains("event"))
     {
-        ret = obj.take("event").toInt();
+        ret = obj.value("event").toInt();
 
         if (!obj.contains("data"))
         {
             return -1;
         }
 
-        QJsonObject jsonObject = obj.take("data").toObject();;
+        QJsonObject jsonObject = obj.value("data").toObject();;
         data = QJsonDocument(jsonObject).toJson();
     }
 

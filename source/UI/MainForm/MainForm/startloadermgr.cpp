@@ -3,7 +3,7 @@
 
 #include <QThread>
 
-const int sleepTime = 100;
+const int sleepTime = 300;
 StartLoaderMgr::StartLoaderMgr()
 {
 

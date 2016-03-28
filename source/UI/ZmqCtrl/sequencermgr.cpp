@@ -67,7 +67,6 @@ QVector<int> SequencerMgr::loadProfile(const QString& csvFilePath)
         emit showLoadingInfoSignal(QString("%1  Sequence %2 start loading...").arg(UIUtil::getNowTime()).arg(i), 0);
         if (_sequencers[i]->getAliveState() == Dead)
         {
-            emit showLoadingInfoSignal(QString("%1  Sequence %2 is not runing, no need to load file").arg(UIUtil::getNowTime()).arg(i), 2);
             continue;
         }
 

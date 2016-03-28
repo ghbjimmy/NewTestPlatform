@@ -156,27 +156,27 @@ TItemStart* CVSDataAdapter::convertItemStart(const QString& itemJson)
     QJsonObject obj = document.object();
     if(obj.contains("group"))
     {
-        itemStart->group = obj.take("group").toString();
+        itemStart->group = obj.value("group").toString();
     }
     if (obj.contains("tid"))
     {
-        itemStart->tid = obj.take("tid").toString();
+        itemStart->tid = obj.value("tid").toString();
     }
     if (obj.contains("unit"))
     {
-        itemStart->unit = obj.take("unit").toString();
+        itemStart->unit = obj.value("unit").toString();
     }
     if (obj.contains("low"))
     {
-        itemStart->low = obj.take("low").toString();
+        itemStart->low = obj.value("low").toString();
     }
     if (obj.contains("high"))
     {
-        itemStart->high = obj.take("high").toString();
+        itemStart->high = obj.value("high").toString();
     }
     if (obj.contains("pdca"))
     {
-        itemStart->pdca = obj.take("pdca").toString();
+        itemStart->pdca = obj.value("pdca").toString();
     }
 
     return itemStart;
@@ -203,23 +203,40 @@ TItemEnd* CVSDataAdapter::convertItemEnd(const QString& itemJson)
     QJsonObject obj = document.object();
     if (obj.contains("tid"))
     {
-        itemEnd->tid = obj.take("tid").toString();
+        itemEnd->tid = obj.value("tid").toString();
     }
     if (obj.contains("value"))
     {
-        itemEnd->value = obj.take("value").toString();
+        itemEnd->value = obj.value("value").toString();
     }
     if (obj.contains("result"))
     {
-        itemEnd->result = obj.take("result").toInt();
+        int val = -9999;
+        if  (-9999 == (val = obj.value("result").toInt(-9999)))
+        {
+            QString sval = "";
+            if ("-9999" == (sval = obj.value("result").toString("-9999")))
+            {
+                bool bresult = obj.value("result").toBool();
+                itemEnd->result = bresult ? 1 : 0;
+            }
+            else
+            {
+                itemEnd->result = sval.toInt(); // "-1"
+            }
+        }
+        else
+        {
+            itemEnd->result = val;
+        }
     }
     if (obj.contains("error"))
     {
-        itemEnd->error = obj.take("error").toString();
+        itemEnd->error = obj.value("error").toString();
     }
     if (obj.contains("pdca"))
     {
-        itemEnd->pdca = obj.take("pdca").toString();
+        itemEnd->pdca = obj.value("pdca").toString();
     }
 
     return itemEnd;

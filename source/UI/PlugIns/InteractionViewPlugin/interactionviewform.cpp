@@ -317,7 +317,8 @@ void InteractionViewForm::onSelCheckStateChanged(int state)
 
 void InteractionViewForm::onChanelStateMsg(int index, int result)
 {
-    _btn[index]->showColor(Qt::red);
+    if (result == 0 || result == -1)
+        _btn[index]->showColor(Qt::red);
 }
 
 void InteractionViewForm::onSeqStart(int index, const QString& data)
@@ -345,7 +346,24 @@ void InteractionViewForm::onSeqEnd(int index, const QString& data)
     QJsonObject obj = document.object();
     if (obj.contains("result"))
     {
-       ret = obj.take("result").toInt();
+        int val = -9999;
+        if  (-9999 == (val = obj.value("result").toInt(-9999)))
+        {
+            QString sval = "";
+            if ("-9999" == (sval = obj.value("result").toString("-9999")))
+            {
+                bool bresult = obj.value("result").toBool();
+                ret = bresult ? 1 : 0;
+            }
+            else
+            {
+                ret = sval.toInt(); // "-1"
+            }
+        }
+        else
+        {
+            ret = val;
+        }
     }
 
     if (ret == 1)
