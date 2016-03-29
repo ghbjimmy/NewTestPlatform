@@ -1,5 +1,5 @@
 local _DUT_ = {}
-require "pathManager"
+require "PathManager_New"
 --[[
 package.cpath = package.cpath..";"..deleteLastPathComponent(CurrentDir()).."/lib/?.dylib"
 
@@ -25,12 +25,12 @@ local TestFlowOut = config_utils.get_log_writer(CONFIG, "FLOW", CONFIG.log_prefi
 
 function _DUT_._DUT_Socket_Connect_()
 	_DUT_.device = CSocketDevice:new();
-	os.execute("ping -c 1 "..ip); 
+	os.execute("ping -c 1 "..ip);
 	print("< ".. tostring(CONFIG.ID).." libSocketDev > DUT Port connect to: " .. tostring(ip)..":"..tostring(port))
 	local ret = _DUT_.device:Open(ip,port)
 	if(ret < 0) then
 		error("< ".. tostring(CONFIG.ID).." libSocketDev > DUT Port connect Fail (xxxx)")
-	else 
+	else
 		print("< ".. tostring(CONFIG.ID).." libSocketDev > DUT Port connect successfully")
 	end
 	print("< ".. tostring(CONFIG.ID).." libSocketDev > DUT REP . SUB: " .. tostring(rep).." . "..tostring(pub))
@@ -43,8 +43,8 @@ function _DUT_._Dut_Send_String_(str)
 end
 
 function _DUT_._Dut_Set_Detect_String_(det)
-	if(det) then 
-		_dut_detect_ = det 
+	if(det) then
+		_dut_detect_ = det
 		_DUT_.device:SetDetectString(det)
 	end
 end
@@ -68,7 +68,7 @@ function _DUT_._Dut_Send_Cmd_(str, timeout)
   	-- if(TestFlowOut) then TestFlowOut.write( "\t< DUT send: > " .. str) end
   	_DUT_._Dut_Send_String_(str)
   	local ret, errmsg = _DUT_._Dut_Wait_For_String_(timeout)
-  	
+
   	-- local s2, t2 = time_utils.get_time_string_ms()
  	-- if(TestFlowOut) then TestFlowOut.write("\t< DUT elapsed: > (sec)".. tostring((t2 - t1)/1000)) end
   	return ret, errmsg

@@ -3,7 +3,8 @@ local zmq = require("lzmq")
 local zpoller = require "lzmq.poller"
 local zthreads = require "lzmq.threads"
 local json = require "dkjson"
-require "pathManager"
+--require "pathManager"
+require "PathManager_New"
 --here, need to modify location.
 local needZmq = false
 local _fixture = {}
@@ -18,12 +19,12 @@ function _fixture.connect(arg)
 		local c = config_utils.get_config(arg)
 		local sub = tostring(config_utils.get_addr(c, "FIXTURE_CTRL_SUB", c.ID))
 		local req = tostring(config_utils.get_addr(c, "FIXTURE_CTRL_REQ", c.ID))
-		
+
 		print("< Fixture Client > Set SUB : ".. sub)
 		local context = zmq.context()
 		_fixture.sub, err = context:socket{zmq.SUB, connect = sub, subscribe = ""}
 		zmq.assert(_fixture.sub, err)
-		
+
 		print("< Fixture Client > Set REQ : ".. req)
 		_fixture.req, err = context:socket{zmq.REQ, connect = req}
 		zmq.assert(_fixture.req, err)

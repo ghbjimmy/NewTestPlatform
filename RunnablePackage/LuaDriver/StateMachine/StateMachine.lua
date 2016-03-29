@@ -6,14 +6,20 @@ local json = require "dkjson"
 local lapp = require("pl.lapp")
 local ztimer  = require "lzmq.timer"
 
-require "pathManager"
-package.path = package.path..";"..deleteLastPathComponent(CurrentDir()).."/Driver/?.lua"
+--require "pathManager"
+require "PathManager_New"
+
+local pathSuffix = JoinPath("Driver","?.lua")
+local pPath = JoinPath(DeleteLastPathComponentTricky(CurrentDir()),pathSuffix)
+package.path = package.path..";"..pPath
+print("package.path", package.path)
+
 local config_utils = require("utils.config_utils")
-local fixturetype = require("functions.GhInfo").fixturetype()--need to distinguish Panel, SIP, or SipOptilcal
+local fixturetype = "SIP"--require("functions.GhInfo").fixturetype()--need to distinguish Panel, SIP, or SipOptilcal
 
 local args = lapp [[
 X527 State Machine
-    
+
     -c,--config     (default config.socket_zmq)   		Config module to load.
     -e,--enable     (default all) 						Enable slot to test(start from 0)
     -s,--slots		(default 6) 							set slots of the fixture
@@ -116,6 +122,7 @@ function setZmq()
 	args.uut=0
 	c = config_utils.get_config(args)
 	n = tostring(config_utils.get_addr(c, "STATEMACHINE_REP", c.ID))
+	n = "tcp://*:6480"
 	print("< "..tostring(c.ID).." StateMachine >Trigger REP : ".. n)
 	triggerRep, err = context:socket{zmq.REP, bind = n}
 	zmq.assert(triggerRep, err)
@@ -128,9 +135,9 @@ local function sendStartToSeq()
 	for i=1, args.slots do--send start msg to sequencer
 		if(uutEnable[i]) then
 			local s = getSN(i-1)
-			if(s) then 
+			if(s) then
 				seqStartCmd.params = {{attributes={MLBSN=s}}}
-			else 
+			else
 				seqStartCmd.params = ""
 			end
 			print("< REQ send >",json.encode(seqStartCmd) )
@@ -162,11 +169,12 @@ local function triggerMesseageHandle(cmd)
 	else
 		print(msg_obj["function"])
 		if msg_obj["function"] == "START" then--{function":"START"}
-			-- triggerRep:send(ok)
+			print("start command hanhanhanhanhan")
+			--triggerRep:send(ok)
 			print(msg_obj["times"])
-			if msg_obj.times then 
+			if msg_obj.times then
 				print("loop")
-				loopTimes = tonumber(msg_obj.times) 
+				loopTimes = tonumber(msg_obj.times)
 				sm.setLoopTestFlag(true)--this flag is to control fixture
 			else
 				print("start")
@@ -184,7 +192,10 @@ local function triggerMesseageHandle(cmd)
 					setSN(msg_obj.uutinfo.uut, msg_obj.uutinfo.sn)
 				end
 			end
+			print("11111111")
 			sendStartToSeq() --send start message to Sequencer
+			print("2222222222")
+
 		elseif msg_obj["function"] == "UUTENABLE" then
 			--{"enable":1,"uut":0,"function":"UUTENABLE"}
 			local f,e = false, true
@@ -224,7 +235,7 @@ function addPoller()
   				if(currentLoopTimes == loopTimes or stopLoopFlag==true) then
   					print("< Stop Test > testing finished ...\n < Wait > Wait for Trigger ...")
   					currentLoopTimes = 0;
-  				else 
+  				else
   					ztimer.sleep(5000)
   					print(string.format("Loop %d start...", currentLoopTimes))
   					sendStartToSeq()
@@ -235,7 +246,7 @@ function addPoller()
 	poller:add(triggerRep,zmq.POLLIN, function()
 		local cmd = triggerRep:recv()
 		print("< REP Receive > : ",cmd)
-		if(cmd) then 
+		if(cmd) then
 			triggerMesseageHandle(cmd)
 		end
 	end)
@@ -282,6 +293,7 @@ local SMHeadBeat, pipe = zthreads.fork(context, function(pipe, address)
         local context = zthreads.get_parent_ctx()
         local  t = require "lzmq.timer"
 
+		address = "tcp://*:6580"
         print(" < StateMachine > Set HeartBeat PUB : ", address)
         local watchdog_zmq, err = context:socket(zmq.PUB, {bind = address})
         zmq.assert(watchdog_zmq, err)
@@ -295,5 +307,3 @@ SMHeadBeat:start(true, false)
 
 print("< StateMachine Started > : Wait for Trigger...")
 poller:start()--poller receive Msg from Sequencer Pub
-
-

@@ -1,7 +1,12 @@
 local json = require "dkjson"
+
+require "PathManager_New"
 --local path = "echo ~/testerconfig/zmqports.json"
+local portFile = JoinPath("testerconfig","zmqports.json")
+local usrPath = UserHome()
+--local path = JoinPath(usrPath, portFile)
 local path = "/zmqports.json"
-print("path::::::::::: ",path)
+print("path:::::::::: ",path)
 --local f = io.popen(path);
 --path = f:read();
 --f:close()
