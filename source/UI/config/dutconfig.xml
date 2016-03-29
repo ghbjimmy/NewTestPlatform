@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DutConfig>
+	<Slot>
+		<Req Ip="127.0.0.1" Port= "5560"></Req>
+		<Sub Ip="127.0.0.1" Port= "6650"></Sub>
+	</Slot>
+	
+	<Slot>
+		<Req Ip="127.0.0.1" Port= "5561"></Req>
+		<Sub Ip="127.0.0.1" Port= "6651"></Sub>
+	</Slot>
+	
+	<Slot>
+		<Req Ip="127.0.0.1" Port= "5562"></Req>
+		<Sub Ip="127.0.0.1" Port= "6652"></Sub>
+	</Slot>
+	
+	<Slot>
+		<Req Ip="127.0.0.1" Port= "5563"></Req>
+		<Sub Ip="127.0.0.1" Port= "6653"></Sub>
+	</Slot>
+	
+	<Slot>
+		<Req Ip="127.0.0.1" Port= "5564"></Req>
+		<Sub Ip="127.0.0.1" Port= "6654"></Sub>
+	</Slot>
+	
+	<Slot>
+		<Req Ip="127.0.0.1" Port= "5565"></Req>
+		<Sub Ip="127.0.0.1" Port= "6655"></Sub>
+	</Slot>
+</DutConfig>
