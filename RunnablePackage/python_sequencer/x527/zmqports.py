@@ -1,7 +1,8 @@
 import json
 import os
 
-config_dir = '/'#os.path.expanduser('~/testerconfig')
+#config_dir = '/'#os.path.expanduser('~/testerconfig')
+config_dir = os.path.expanduser('~')
 config_file = os.path.join(config_dir, 'zmqports.json')
 f = open(config_file, 'rU')
 config = json.load(f)

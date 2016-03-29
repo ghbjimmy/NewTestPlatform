@@ -1,10 +1,4 @@
 
-local zmq = require("lzmq")
-local zpoller = require "lzmq.poller"
-local zthreads = require "lzmq.threads"
-local json = require "dkjson"
-local lapp = require("pl.lapp")
-local ztimer  = require "lzmq.timer"
 
 --require "pathManager"
 require "PathManager_New"
@@ -13,6 +7,13 @@ local pathSuffix = JoinPath("Driver","?.lua")
 local pPath = JoinPath(DeleteLastPathComponentTricky(CurrentDir()),pathSuffix)
 package.path = package.path..";"..pPath
 print("package.path", package.path)
+
+local zmq = require("lzmq")
+local zpoller = require "lzmq.poller"
+local zthreads = require "lzmq.threads"
+local json = require "dkjson"
+local lapp = require("pl.lapp")
+local ztimer  = require "lzmq.timer"
 
 local config_utils = require("utils.config_utils")
 local fixturetype = "SIP"--require("functions.GhInfo").fixturetype()--need to distinguish Panel, SIP, or SipOptilcal
