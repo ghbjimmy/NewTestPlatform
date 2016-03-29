@@ -5,7 +5,8 @@
 
 FctViewPlugin::FctViewPlugin()
 {
-    _widget = NULL;
+    _name = "FctViewPlugin";
+    _widget = new FctViewForm(this);
 }
 
 FctViewPlugin::~FctViewPlugin()
@@ -36,17 +37,8 @@ bool FctViewPlugin::isHandleMessage(const IMessage* msg)
     return true;
 }
 
-QWidget* FctViewPlugin::createWidget()
+IModuleForm *FctViewPlugin::getModuleForm()
 {
-    if (_widget != NULL)
-    {
-        delete _widget;
-        _widget = NULL;
-    }
-
-    _widget = new FctViewForm(this);
-    QString runPath = QApplication::applicationDirPath();
-
     return _widget;
 }
 

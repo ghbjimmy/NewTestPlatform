@@ -5,8 +5,8 @@
 
 ScopeViewPlugin::ScopeViewPlugin()
 {
-    _widget = NULL;
     _name = ScopeViewPluginName;
+    _widget = new ScopeviewForm(this);
 }
 
 ScopeViewPlugin::~ScopeViewPlugin()
@@ -69,9 +69,8 @@ bool ScopeViewPlugin::isHandleMessage(const IMessage* msg)
     return ret;
 }
 
-QWidget * ScopeViewPlugin::createWidget()
+IModuleForm *ScopeViewPlugin::getModuleForm()
 {
-    _widget = new ScopeviewForm(this);
     return _widget;
 }
 

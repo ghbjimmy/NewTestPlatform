@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Modules>
+	<Module name="DetailViewPlugin.dll" isLoad="true">
+		<Path>D:\Work\tm_platform_new\source\UI\bin\PlugIns\DetailViewPlugin\debug</Path>
+		<Actions isExport="false"></Actions>
+	</Module>
+	<Module name="InteractionViewPlugin.dll" isLoad="true">
+		<Path>D:\Work\tm_platform_new\source\UI\bin\PlugIns\InteractionViewPlugin\debug</Path>
+		<Actions isExport="false"></Actions>
+	</Module>
+	<Module name="ScopeViewPlugin.dll" isLoad="true">
+		<Path>D:\Work\tm_platform_new\source\UI\bin\PlugIns\InteractionViewPlugin\debug</Path>
+		<Actions isExport="true">Instrument</Actions>
+	</Module>
+	<Module name="DutViewPlugin.dll" isLoad="true">
+		<Path>D:\Work\tm_platform_new\source\UI\bin\PlugIns\DutViewPlugin\debug</Path>
+		<Actions isExport="true">Instrument</Actions>
+	</Module>
+	<Module name="FctViewPlugin.dll" isLoad="true">
+		<Path>D:\Work\tm_platform_new\source\UI\bin\PlugIns\FctViewPlugin\debug</Path>
+		<Actions isExport="true">Instrument</Actions>
+	</Module>
+</Modules>

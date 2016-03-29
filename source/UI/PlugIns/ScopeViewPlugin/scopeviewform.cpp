@@ -60,9 +60,8 @@ QGroupBox* createGroupBox(int num)
     return gbox;
 }
 
-ScopeviewForm::ScopeviewForm(IPlugin* plugIn, QWidget *parent) : QGraphicsView(parent)
+ScopeviewForm::ScopeviewForm(IPlugin* plugIn, QWidget *parent) : IModuleForm(plugIn, parent)
 {
-    _plugIn = plugIn;
     setupUI();
 }
 
@@ -71,16 +70,37 @@ ScopeviewForm::~ScopeviewForm()
 
 }
 
+bool ScopeviewForm::init()
+{
+    return true;
+}
+
+void ScopeviewForm::clear()
+{
+
+}
+
+QVector<QAction*> ScopeviewForm::getActions()
+{
+    return QVector<QAction*>();
+}
+
 void ScopeviewForm::setupUI()
 {
-    QGraphicsScene* scene = new QGraphicsScene(this);
+    _graphView = new QGraphicsView();
+    QGraphicsScene* scene = new QGraphicsScene(_graphView);
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
     scene->setSceneRect(this->rect());
-    setScene(scene);
-    setCacheMode(QGraphicsView::CacheBackground);
-    setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-    this->setBackgroundBrush(QBrush(QColor(195,195,195)));
+    _graphView->setScene(scene);
+    _graphView->setCacheMode(QGraphicsView::CacheBackground);
+    _graphView->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+    _graphView->setBackgroundBrush(QBrush(QColor(195,195,195)));
 
+    QVBoxLayout* vv = new QVBoxLayout();
+    vv->addWidget(_graphView);
+    vv->setContentsMargins(0,0,0,0);
+
+    this->setLayout(vv);
    /* for (int i = 0; i < 8; ++i)
     {
         QGroupBox* gbox = createGroupBox(i + 1);
@@ -96,21 +116,21 @@ void ScopeviewForm::setupUI()
 void ScopeviewForm::onClicked()
 {
     ChannelStateMsg msg;
-    _plugIn->sendMessage(&msg);
+    _plugin->sendMessage(&msg);
 }
 
 void ScopeviewForm::resizeEvent(QResizeEvent* evt)
 {
     updateSceneRect();
     updateSceneItemPos();
-    QGraphicsView::resizeEvent(evt);
+    QWidget::resizeEvent(evt);
 }
 
 void ScopeviewForm::updateSceneRect()
 {
     if (_groupboxs.empty())
     {
-        this->setSceneRect(0,0,0,GHeight + 10);
+        _graphView->setSceneRect(0,0,0,GHeight + 10);
         return;
     }
 
@@ -127,13 +147,13 @@ void ScopeviewForm::updateSceneRect()
 
     if (viewHeight <= GHeight + 20)
     {
-        this->setSceneRect(0, 0, totalItemWidth, 0);
+        _graphView->setSceneRect(0, 0, totalItemWidth, 0);
     }
     else
     {
         int num = viewWidth / GWidth;
         int sceneHeight = (_groupboxs.size() / num) * GHeight;
-        this->setSceneRect(0, 0, 0, sceneHeight);
+        _graphView->setSceneRect(0, 0, 0, sceneHeight);
     }
 }
 
@@ -142,10 +162,10 @@ void ScopeviewForm::updateSceneItemPos()
     if (_groupboxs.empty())
         return;
 
-    int yoff = 0 - this->verticalScrollBar()->value();
-    int xoff = 0 - this->horizontalScrollBar()->value();
-    int viewWidth = this->size().width();
-    int viewHeight = this->size().height();
+    int yoff = 0 - _graphView->verticalScrollBar()->value();
+    int xoff = 0 - _graphView->horizontalScrollBar()->value();
+    int viewWidth = _graphView->size().width();
+    int viewHeight = _graphView->size().height();
     int count = _groupboxs.size();
 
     if (viewHeight <= GHeight + 20)
@@ -154,7 +174,7 @@ void ScopeviewForm::updateSceneItemPos()
         {
             int x = xoff + i * _groupboxs.at(i)->size().width();
             int y = yoff + 5;
-            QPointF point = mapToScene(x, y);
+            QPointF point = _graphView->mapToScene(x, y);
             _groupboxs.at(i)->move(point.x() + i * 5, point.y());
         }
     }
@@ -177,11 +197,11 @@ void ScopeviewForm::updateSceneItemPos()
                 y = yoff + (i / num )* GHeight + (i / num ) * 5;
             }
 
-            QPointF point = mapToScene(x, y);
+            QPointF point = _graphView->mapToScene(x, y);
             _groupboxs.at(i)->move(point.x(), point.y());
         }
     }
-    this->update();
+    _graphView->update();
 }
 
 void ScopeviewForm::loadData()
@@ -191,7 +211,7 @@ void ScopeviewForm::loadData()
         QGroupBox* gbox = createGroupBox(i + 1);
         _groupboxs.append(gbox);
 
-        this->scene()->addWidget(gbox);
+        _graphView->scene()->addWidget(gbox);
     }
 
     updateSceneRect();

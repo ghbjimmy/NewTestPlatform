@@ -2,7 +2,6 @@
 #include "uutbutton.h"
 #include "util.h"
 #include "message.h"
-#include "plugin_global.h"
 #include "qlog.h"
 
 #include <QHBoxLayout>
@@ -18,15 +17,29 @@
 #include <QJsonArray>
 
 
-InteractionViewForm::InteractionViewForm(IPlugin* plugIn, QWidget *parent) : QScrollArea(parent)
+InteractionViewForm::InteractionViewForm(IPlugin* plugIn, QWidget *parent) : IModuleForm(plugIn, parent)
 {
-    _plugIn = plugIn;
     setupUI();
 }
 
 InteractionViewForm::~InteractionViewForm()
 {
 
+}
+
+bool InteractionViewForm::init()
+{
+    return true;
+}
+
+void InteractionViewForm::clear()
+{
+
+}
+
+QVector<QAction*> InteractionViewForm::getActions()
+{
+    return QVector<QAction*>();
 }
 
 QHBoxLayout* InteractionViewForm::createBtnLayout(UutButton*& btn, int index, const QString& text)
@@ -267,10 +280,19 @@ void InteractionViewForm::setupUI()
     QWidget* wgt = new QWidget();
     wgt->setLayout(v1);
 
-    this->setStyleSheet("QScrollArea{border:none}");
-    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    this->setWidgetResizable(true);
-    this->setWidget(wgt);
+
+    QScrollArea* scrollArea = new QScrollArea();
+    scrollArea->setWidget(wgt);
+
+    scrollArea->setStyleSheet("QScrollArea{border:none}");
+    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    scrollArea->setWidgetResizable(true);
+
+
+    QVBoxLayout* vv = new QVBoxLayout();
+    vv->addWidget(scrollArea);
+    vv->setContentsMargins(0,0,0,0);
+    this->setLayout(vv);
 }
 
 void InteractionViewForm::onBtnCheckBoxStatedChanged(int state)
@@ -379,7 +401,7 @@ void InteractionViewForm::onSeqEnd(int index, const QString& data)
 void InteractionViewForm::onStart()
 {
     StartTestMsg msg;
-    _plugIn->sendMessage(&msg);
+    _plugin->sendMessage(&msg);
 
     _startBtn->setEnabled(false);
     _stopBtn->setEnabled(true);
@@ -388,7 +410,7 @@ void InteractionViewForm::onStart()
 void InteractionViewForm::onStop()
 {
     StopTestMsg msg;
-    _plugIn->sendMessage(&msg);
+    _plugin->sendMessage(&msg);
 
     _startBtn->setEnabled(true);
     _stopBtn->setEnabled(false);

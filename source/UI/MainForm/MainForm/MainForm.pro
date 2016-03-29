@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets xml
 
 TARGET = MainForm
 TEMPLATE = app
@@ -44,7 +44,8 @@ SOURCES += main.cpp\
     configform.cpp \
     loadcsvform.cpp \
     loginform.cpp \
-    userctrl.cpp
+    userctrl.cpp \
+    ../../Util/pluginsloader.cpp
 
 HEADERS  += mainwindow.h \
     ../../Util/libaryparser.h \
@@ -71,7 +72,8 @@ HEADERS  += mainwindow.h \
     configform.h \
     loadcsvform.h \
     loginform.h \
-    userctrl.h
+    userctrl.h \
+    ../../Util/pluginsloader.h
 
 FORMS    +=
 

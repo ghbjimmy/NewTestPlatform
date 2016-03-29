@@ -7,8 +7,8 @@
 
 DutViewPlugin::DutViewPlugin()
 {
-    _widget = NULL;
     _name = DutViewPluginName;
+    _widget = new DutViewForm(this);
 }
 
 DutViewPlugin::~DutViewPlugin()
@@ -39,23 +39,9 @@ bool DutViewPlugin::isHandleMessage(const IMessage* msg)
     return true;
 }
 
-QWidget* DutViewPlugin::createWidget()
+IModuleForm *DutViewPlugin::getModuleForm()
 {
-    if (_widget != NULL)
-    {
-        delete _widget;
-        _widget = NULL;
-    }
-
-    _widget = new DutViewForm(this);
-    QString runPath = QApplication::applicationDirPath();
-    if (!((DutViewForm*)_widget)->LoadCfg(runPath))
-    {
-        delete _widget;
-        _widget = NULL;
-        return NULL;
-    }
-
+    _widget->init();
     return _widget;
 }
 

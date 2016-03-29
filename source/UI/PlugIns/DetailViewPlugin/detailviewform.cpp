@@ -9,9 +9,8 @@
 #include "detailviewplugin.h"
 #include "message.h"
 
-DetailViewForm::DetailViewForm(IPlugin* plugIn, QWidget *parent) : QTabWidget(parent)
+DetailViewForm::DetailViewForm(IPlugin* plugIn, QWidget *parent) : IModuleForm(plugIn, parent)
 {
-     _plugIn = plugIn;;
     setupUI();
 }
 
@@ -20,15 +19,36 @@ DetailViewForm::~DetailViewForm()
 
 }
 
+bool DetailViewForm::init()
+{
+    return true;
+}
+
+void DetailViewForm::clear()
+{
+
+}
+
+QVector<QAction*> DetailViewForm::getActions()
+{
+    return QVector<QAction*>();
+}
+
 void DetailViewForm::setupUI()
 {
     _csvTreeView = new CVSDataTreeView();
     _failForm = new FailForm();
-
     _progressForm = new ProgressForm();
-    this->addTab(_csvTreeView , QString("Detail"));
-    this->addTab(_progressForm, QString("Progress"));
-    this->addTab(_failForm, QString("Fail Only"));
+
+    QTabWidget* tab = new QTabWidget();
+    tab->addTab(_csvTreeView , QString("Detail"));
+    tab->addTab(_progressForm, QString("Progress"));
+    tab->addTab(_failForm, QString("Fail Only"));
+
+    QVBoxLayout* vv = new QVBoxLayout();
+    vv->addWidget(tab);
+    vv->setContentsMargins(0,0,0,0);
+    this->setLayout(vv);
 }
 
 bool DetailViewForm::listCsvData(const QVector<QString>& datas)
@@ -91,7 +111,7 @@ bool DetailViewForm::procItemEnd(int index, const QString& data)
         {
             ChannelStateMsg msg;
              msg.setData(index, itemEnd->result);
-            _plugIn->sendMessage(&msg);
+            _plugin->sendMessage(&msg);
         }
 
         //结果状态标识

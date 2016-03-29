@@ -1,12 +1,26 @@
 #include "fctviewform.h"
-#include "plugin_global.h"
 
-FctViewForm::FctViewForm(IPlugin *plugIn, QWidget *parent) : QWidget(parent)
+FctViewForm::FctViewForm(IPlugin *plugIn, QWidget *parent) : IModuleForm(plugIn, parent)
 {
-    _plugIn = plugIn;
+
 }
 
 FctViewForm::~FctViewForm()
 {
 
+}
+
+bool FctViewForm::init()
+{
+    return true;
+}
+
+void FctViewForm::clear()
+{
+
+}
+
+QVector<QAction*> FctViewForm::getActions()
+{
+    return QVector<QAction*>();
 }

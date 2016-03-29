@@ -59,6 +59,7 @@ void DutViewConfigDlg::setupUI()
 
 void DutViewConfigDlg::setData(const QVector<TSlotConfig>& cfgs)
 {
+    _cfgTbl->clear();
     int rowCnt = cfgs.size();
     _cfgTbl->setRowCount(rowCnt);
 
@@ -75,7 +76,8 @@ void DutViewConfigDlg::setData(const QVector<TSlotConfig>& cfgs)
 
 bool DutViewConfigDlg::loadData(const QString& path)
 {
-    QString file_name = path + "/" + DUT_CONFIG;
+    _slotCfgs.clear();
+    QString file_name = path + "/config/" + DUT_CONFIG;
     QFile file(file_name);
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {

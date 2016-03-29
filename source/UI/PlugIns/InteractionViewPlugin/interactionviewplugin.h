@@ -14,10 +14,8 @@ public:
     virtual void fini();
     virtual int onMessage(const IMessage* msg);
     virtual bool isHandleMessage(const IMessage* msg);
-    virtual QWidget * createWidget();
+    virtual IModuleForm * getModuleForm();
 
-private:
-    QWidget* _widget;
 };
 
 #endif // INTERACTIONVIEWPLUGIN_H

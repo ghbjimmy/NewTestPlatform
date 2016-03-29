@@ -15,10 +15,7 @@ public:
     virtual void fini();
     virtual int onMessage(const IMessage* msg);
     virtual bool isHandleMessage(const IMessage* msg);
-    virtual QWidget * createWidget();
-
-private:
-    QWidget* _widget;
+    virtual IModuleForm * getModuleForm();
 };
 
 #endif // SCOPEVIEWPLUGIN_H

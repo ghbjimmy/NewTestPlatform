@@ -5,8 +5,8 @@
 
 InteractionViewPlugin::InteractionViewPlugin()
 {
-    _widget = NULL;
     _name = InteractionViewPluginName;
+    _widget = new InteractionViewForm(this);
 }
 
 int InteractionViewPlugin::init()
@@ -85,9 +85,8 @@ bool InteractionViewPlugin::isHandleMessage(const IMessage* msg)
     return ret;
 }
 
-QWidget * InteractionViewPlugin::createWidget()
+IModuleForm *InteractionViewPlugin::getModuleForm()
 {
-    _widget = new InteractionViewForm(this);
     return _widget;
 }
 
