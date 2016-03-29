@@ -19,7 +19,7 @@ public:
     static void moveToScreenCenter(QWidget* wgt); //移到屏幕中央
 
     template <class T>
-    static T* getModuleFormWithName(const QString& text, const QString& objName="")
+    static T* createWidgetWithName(const QString& text, const QString& objName="")
     {
         T* obj = new T(0);
         obj->setText(text);

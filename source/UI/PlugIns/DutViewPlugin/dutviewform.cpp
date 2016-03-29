@@ -148,7 +148,7 @@ QWidget* DutViewForm::createTextEdit()
 
 void DutViewForm::setupUI()
 { 
-    _showFormAct = UIUtil::getModuleFormWithName<QAction>(DUT_PANNEL);
+    _showFormAct = UIUtil::createWidgetWithName<QAction>(DUT_PANNEL);
     connect(_showFormAct, SIGNAL(triggered()), this, SLOT(onShowForm()));
 
     QToolBar* bar = createToolBar();

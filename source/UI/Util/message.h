@@ -28,13 +28,6 @@ protected:
     int _id;
 };
 
-class LoadScopeViewMsg : public IMessage
-{
-public:
-    LoadScopeViewMsg();
-    ~LoadScopeViewMsg();
-};
-
 
 //处理csv内容消息
 class ListCsvFileMsg : public IMessage

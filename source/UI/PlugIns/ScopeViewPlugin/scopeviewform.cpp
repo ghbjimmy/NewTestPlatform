@@ -1,4 +1,9 @@
 #include "scopeviewform.h"
+#include "uutbutton.h"
+#include "util.h"
+#include "message.h"
+#include "plugin_global.h"
+
 #include <QPalette>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -7,10 +12,7 @@
 #include <QGridLayout>
 #include <QResizeEvent>
 #include <QScrollBar>
-#include "uutbutton.h"
-#include "util.h"
-#include "message.h"
-#include "plugin_global.h"
+#include <QAction>
 
 int GWidth = 180;
 int GHeight = 140;
@@ -82,11 +84,14 @@ void ScopeviewForm::clear()
 
 QVector<QAction*> ScopeviewForm::getActions()
 {
-    return QVector<QAction*>();
+    return QVector<QAction*>() << _showFormAct;
 }
 
 void ScopeviewForm::setupUI()
 {
+    _showFormAct = UIUtil::createWidgetWithName<QAction>("ScopeView Pannel");
+    connect(_showFormAct, SIGNAL(triggered()), this, SLOT(onShowForm()));
+
     _graphView = new QGraphicsView();
     QGraphicsScene* scene = new QGraphicsScene(_graphView);
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -206,6 +211,10 @@ void ScopeviewForm::updateSceneItemPos()
 
 void ScopeviewForm::loadData()
 {
+    //暂时
+    _graphView->scene()->clear();
+    _groupboxs.clear();
+
     for (int i = 0; i < 8; ++i)
     {
         QGroupBox* gbox = createGroupBox(i + 1);
@@ -216,4 +225,9 @@ void ScopeviewForm::loadData()
 
     updateSceneRect();
     updateSceneItemPos();
+}
+
+void ScopeviewForm::onShowForm()
+{
+    loadData();
 }

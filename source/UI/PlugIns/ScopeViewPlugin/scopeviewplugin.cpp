@@ -33,14 +33,6 @@ int ScopeViewPlugin::onMessage(const IMessage* msg)
     int id = msg->messageID();
     switch(id)
     {
-    case 130:
-    {
-        if (_widget != NULL)
-        {
-            ((ScopeviewForm*)_widget)->loadData();
-            break;
-        }
-    }
     default:
         ret = -1;
         break;

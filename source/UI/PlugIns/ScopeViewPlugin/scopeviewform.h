@@ -9,6 +9,8 @@
 
 class IPlugin;
 class QGroupBox;
+class QAction;
+
 class ScopeviewForm : public IModuleForm
 {
     Q_OBJECT
@@ -20,12 +22,15 @@ public:
     virtual void clear();
     virtual QVector<QAction*> getActions();
 
-    void loadData();
-
 protected:
     virtual void resizeEvent(QResizeEvent* evt);
 
+private slots:
+    void onShowForm();
+
 private:
+    void loadData();
+
     void setupUI();
     void updateSceneRect();
     void updateSceneItemPos();
@@ -34,6 +39,7 @@ private slots:
     void onClicked();
 
 private:
+    QAction* _showFormAct;
     QGraphicsView* _graphView;
     QVector<QGroupBox*> _groupboxs;
 };

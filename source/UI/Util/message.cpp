@@ -10,16 +10,6 @@ ListCsvFileMsg::~ListCsvFileMsg()
 
 }
 
-LoadScopeViewMsg::LoadScopeViewMsg()
-{
-    _id = 130;
-}
-
-LoadScopeViewMsg::~LoadScopeViewMsg()
-{
-
-}
-
 ProcItemStateMsg::ProcItemStateMsg()
 {
     _id = PROC_ITEMSTATE_MSG;

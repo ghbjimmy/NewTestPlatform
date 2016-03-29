@@ -15,6 +15,15 @@ public:
     virtual bool init();
     virtual void clear();
     virtual QVector<QAction*> getActions();
+
+private slots:
+    void onShowForm();
+
+private:
+    void setupUI();
+
+private:
+    QAction* _showFormAct;
 };
 
 #endif // FCTVIEWFORM_H

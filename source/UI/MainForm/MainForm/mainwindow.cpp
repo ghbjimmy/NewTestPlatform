@@ -33,9 +33,7 @@
 #include <QJsonArray>
 #include <QDialog>
 #include <QMessageBox>
-
-static const QString& FCT_PANNEL = "FCT Pannel";
-static const QString& DUT_PANNEL = "Dut Pannel";
+#include <QApplication>
 
 static void sendMessageCallBack(const IMessage* msg)
 {
@@ -100,7 +98,8 @@ bool MainWindow::init()
     fillPluginWgt(&loader);
 
     _zmqCfgParse = new ZmqCfgParser();
-    if (!_zmqCfgParse->parse("D:\\Work\\tm_platform_v2_1\\LuaDriver\\Driver\\config\\zmqports.json"))
+    QString runPath = QApplication::applicationDirPath() + "/config/zmqports.json";
+    if (!_zmqCfgParse->parse(runPath))
     {
         LogMsg(Error, "parse config file failed.");
         return false;
@@ -424,28 +423,15 @@ void MainWindow::createMenu()
 
     QAction* confgAction = new QAction("Config",this);
     QAction* loadAction = new QAction("Load CSV",this);
-    QAction* loadScopeAction = new QAction("Load ScopeView",this);
 
     connect(confgAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
     connect(loadAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
-    connect(loadScopeAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
 
     fileMenu->addAction(confgAction);
     fileMenu->addAction(loadAction);
-    fileMenu->addAction(loadScopeAction);
 
     QMenu* instruMenu = menuBar()->addMenu("Instrument");
-
     _menus.push_back(instruMenu);
-
-   /* QAction* loadDutAction = new QAction(DUT_PANNEL,this);
-    QAction* loadFctAction = new QAction(FCT_PANNEL,this);
-
-    connect(loadDutAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
-    connect(loadFctAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
-
-    instruMenu->addAction(loadDutAction);
-    instruMenu->addAction(loadFctAction);*/
 
     QMenu* userMenu = menuBar()->addMenu("User");
     QAction* loginAction = new QAction("Login",this);
@@ -514,10 +500,6 @@ void MainWindow::onMenuAction()
     {
         showLoadCsvForm();
     }
-    else if (action->text() == "Load ScopeView")
-    {
-        showLoadScopeView();
-    }
     else if (action->text() == "Login")
     {
         showLoginForm();
@@ -536,11 +518,6 @@ void MainWindow::showLoginForm()
     delete form;
 }
 
-void MainWindow::showLoadScopeView()
-{
-    LoadScopeViewMsg* loadScopeViewMsg = new LoadScopeViewMsg();
-    dispatchMessage(loadScopeViewMsg);
-}
 
 void MainWindow::showConfigForm()
 {

@@ -52,7 +52,6 @@ private:
 
     void showConfigForm();
     void showLoadCsvForm();
-    void showLoadScopeView();
     void showLoginForm();
 
 private slots:
