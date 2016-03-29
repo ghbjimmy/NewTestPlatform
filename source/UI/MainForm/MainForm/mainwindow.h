@@ -16,6 +16,7 @@ class StateMachineMgr;
 
 class QLabel;
 class ConfigForm;
+class PluginsLoader;
 
 class MainWindow : public QMainWindow
 {
@@ -36,8 +37,8 @@ public:
     void loadFile();
 
 private:
-    bool initPlugin();
-    void fillPluginWgt();
+    bool initPlugin(PluginsLoader* loader);
+    void fillPluginWgt(PluginsLoader* loader);
 
     IPlugin*  loadLibary(const QString& path);
 
@@ -52,8 +53,6 @@ private:
     void showConfigForm();
     void showLoadCsvForm();
     void showLoadScopeView();
-    void showDutForm();
-    void showFctForm();
     void showLoginForm();
 
 private slots:
@@ -64,6 +63,9 @@ private slots:
     void onSmIsAlive(int index, bool isAlive, bool isShow);
 
     void onSeqEvent(int index, int evt, const QString& item);
+
+    //插件的动作响应
+    void onPluginAction();
 
 private:
     static MainWindow* _instance;
@@ -89,6 +91,8 @@ private:
     QLabel* _smLbl;
 
     ConfigForm* _configForm;
+
+    QVector<QMenu*> _menus;
 };
 
 #endif // MAINWINDOW_H

@@ -5,8 +5,8 @@
 
 DetailViewPlugin::DetailViewPlugin()
 {
-    _widget = NULL;
     _name = DetailViewPluginName;
+    _widget = new DetailViewForm(this);
 }
 
 DetailViewPlugin::~DetailViewPlugin()
@@ -88,9 +88,8 @@ bool DetailViewPlugin::isHandleMessage(const IMessage* msg)
     return ret;
 }
 
-QWidget * DetailViewPlugin::createWidget()
+IModuleForm *DetailViewPlugin::getModuleForm()
 {
-    _widget = new DetailViewForm(this);
     return _widget;
 }
 

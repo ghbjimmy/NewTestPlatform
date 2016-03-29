@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QScrollArea>
+#include "plugin_global.h"
 
 class UutButton;
 class QHBoxLayout;
@@ -10,13 +11,17 @@ class QCheckBox;
 class IPlugin;
 class QPushButton;
 
-class InteractionViewForm : public QScrollArea
+class InteractionViewForm : public IModuleForm
 {
     Q_OBJECT
 
 public:
-    explicit InteractionViewForm(IPlugin* plugIn, QWidget *parent = 0);
+    InteractionViewForm(IPlugin* plugIn, QWidget *parent = 0);
     ~InteractionViewForm();
+
+    virtual bool init();
+    virtual void clear();
+    virtual QVector<QAction*> getActions();
 
     void onChanelStateMsg(int index, int result);
 
@@ -39,7 +44,6 @@ private:
     void connectBtnSignal(UutButton* btn, bool isConnect);
 
 private:
-    IPlugin* _plugIn;
     UutButton* _btn[6];
     QCheckBox* _selBox;
 

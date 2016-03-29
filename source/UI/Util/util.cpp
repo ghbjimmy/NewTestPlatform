@@ -5,6 +5,7 @@
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QSize>
+#include <QAction>
 
 void UIUtil::setBgColor(QWidget* wgt, const QColor &color)
 {
@@ -50,3 +51,4 @@ void UIUtil::moveToScreenCenter(QWidget* wgt)
     int ht = desk->height();
     wgt->move((wd - wgt->width()) / 2,(ht - wgt->height()) / 2);
 }
+

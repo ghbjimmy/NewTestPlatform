@@ -17,6 +17,7 @@
 #include "loadcsvform.h"
 #include "loginform.h"
 #include "userctrl.h"
+#include "pluginsloader.h"
 
 #include <QLabel>
 #include <QHBoxLayout>
@@ -26,14 +27,12 @@
 #include <QLibrary>
 #include <QMenuBar>
 #include <QFileDialog>
-#include <QApplication>
 #include <thread>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDialog>
 #include <QMessageBox>
-#include <QDesktopWidget>
 
 static const QString& FCT_PANNEL = "FCT Pannel";
 static const QString& DUT_PANNEL = "Dut Pannel";
@@ -84,13 +83,21 @@ MainWindow* MainWindow::getInstance()
 
 bool MainWindow::init()
 {
-    if (!initPlugin())
+    //解析模块xml
+    PluginsLoader loader;
+    if (!loader.parseXml())
+    {
+        LogMsg(Error, "parse module config failed.");
+        return false;
+    }
+
+    if (!initPlugin(&loader))
     {
         LogMsg(Error, "init Plugin failed.");
         return false;
     }
 
-    fillPluginWgt();
+    fillPluginWgt(&loader);
 
     _zmqCfgParse = new ZmqCfgParser();
     if (!_zmqCfgParse->parse("D:\\Work\\tm_platform_v2_1\\LuaDriver\\Driver\\config\\zmqports.json"))
@@ -130,46 +137,37 @@ bool MainWindow::init()
     return true;
 }
 
-bool MainWindow::initPlugin()
+bool MainWindow::initPlugin(PluginsLoader* loader)
 {
-    IPlugin* plugin = NULL;
-    QString path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\DetailViewPlugin\\debug\\DetailViewPlugin.dll";
-    plugin = loadLibary(path);
-
-    if (NULL == plugin)
+    const QVector<TPluginInfo>& infos = loader->getPluginInfos();
+    int size = infos.size();
+    for (int i = 0; i < size; ++i)
     {
-        LogMsg(Error, "Load DetailViewPlugin libary failed.");
-        return false;
-    }
+        if (infos[i].isLoad)
+        {
+            IPlugin* plugin = NULL;
+            plugin = loadLibary(infos[i].path);
+            if (NULL == plugin)
+            {
+                LogMsg(Error, "Load plugin libary failed.name:%s", infos[i].path.toStdString().c_str());
+                return false;
+            }
 
-    path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\ScopeViewPlugin\\debug\\ScopeViewPlugin.dll";
-    plugin = loadLibary(path);
-    if (NULL == plugin)
-    {
-        LogMsg(Error, "Load ScopeViewPlugin libary failed.");
-        return false;
-    }
-
-
-    path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\InteractionViewPlugin\\debug\\InteractionViewPlugin.dll";
-    plugin = loadLibary(path);
-    if (NULL == plugin)
-    {
-        LogMsg(Error, "Load InteractionViewPlugin libary failed.");
-        return false;
+            _pluginSubjecter->attach(plugin);
+        }
     }
 
     return true;
 }
 
-void MainWindow::fillPluginWgt()
+void MainWindow::fillPluginWgt(PluginsLoader* loader)
 {
     IPlugin* plugin = NULL;
     plugin = _pluginSubjecter->getPlugin(DetailViewPluginName);
     if (NULL != plugin)
     {
         QHBoxLayout* h1 = new QHBoxLayout();
-        h1->addWidget(plugin->createWidget());
+        h1->addWidget(plugin->getModuleForm());
         h1->setContentsMargins(0,0,0,0);
         _detailViewWgt->setLayout(h1);
     }
@@ -178,7 +176,7 @@ void MainWindow::fillPluginWgt()
     if (NULL != plugin)
     {
         QHBoxLayout* h1 = new QHBoxLayout();
-        h1->addWidget(plugin->createWidget());
+        h1->addWidget(plugin->getModuleForm());
         h1->setContentsMargins(0,0,0,0);
         _scopeViewWgt->setLayout(h1);
         _scopeViewWgt->setMinimumHeight(0);
@@ -188,9 +186,43 @@ void MainWindow::fillPluginWgt()
     if (NULL != plugin)
     {
         QHBoxLayout* h1 = new QHBoxLayout();
-        h1->addWidget(plugin->createWidget());
+        h1->addWidget(plugin->getModuleForm());
         h1->setContentsMargins(0,0,0,0);
         _interViewWgt->setLayout(h1);
+    }
+
+    //填充菜单
+    const QVector<TPluginInfo>& infos = loader->getPluginInfos();
+    int size = infos.size();
+    for (int i = 0; i < size; ++i)
+    {
+        if (infos[i].isExportMenu)
+        {
+            QMenu* curMenu = NULL;
+            foreach (QMenu* menu, _menus)
+            {
+                if (menu->title() == infos[i].menuName)
+                {
+                    curMenu = menu;
+                    break;
+                }
+            }
+
+            if (NULL == curMenu)
+                continue;
+
+            QString pluginName = infos[i].name.section(".", 0,0);
+            plugin = _pluginSubjecter->getPlugin(pluginName);
+            if (plugin)
+            {
+                plugin->getModuleForm()->setOwner(this);
+                QVector<QAction*> actions = plugin->getModuleForm()->getActions();
+                for (int i = 0; i < actions.size(); ++i)
+                {
+                    curMenu->addAction(actions[i]);
+                }
+            }
+        }
     }
 }
 
@@ -258,7 +290,6 @@ IPlugin* MainWindow::loadLibary(const QString& path)
 
     pPlugin->registerSendMsgCallBack(sendMessageCallBack);
     _libParsers.append(parser);
-    _pluginSubjecter->attach(pPlugin);
 
     return pPlugin;
 }
@@ -388,6 +419,9 @@ QWidget* MainWindow::createStatusWgt()
 void MainWindow::createMenu()
 {
     QMenu* fileMenu = menuBar()->addMenu("File");
+
+    _menus.push_back(fileMenu);
+
     QAction* confgAction = new QAction("Config",this);
     QAction* loadAction = new QAction("Load CSV",this);
     QAction* loadScopeAction = new QAction("Load ScopeView",this);
@@ -400,21 +434,25 @@ void MainWindow::createMenu()
     fileMenu->addAction(loadAction);
     fileMenu->addAction(loadScopeAction);
 
-    QMenu* debugMenu = menuBar()->addMenu("Debug");
+    QMenu* instruMenu = menuBar()->addMenu("Instrument");
 
-    QAction* loadDutAction = new QAction(DUT_PANNEL,this);
+    _menus.push_back(instruMenu);
+
+   /* QAction* loadDutAction = new QAction(DUT_PANNEL,this);
     QAction* loadFctAction = new QAction(FCT_PANNEL,this);
 
     connect(loadDutAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
     connect(loadFctAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
 
-    debugMenu->addAction(loadDutAction);
-    debugMenu->addAction(loadFctAction);
+    instruMenu->addAction(loadDutAction);
+    instruMenu->addAction(loadFctAction);*/
 
     QMenu* userMenu = menuBar()->addMenu("User");
     QAction* loginAction = new QAction("Login",this);
     userMenu->addAction(loginAction);
     connect(loginAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
+
+    _menus.push_back(userMenu);
 }
 
 void MainWindow::setupUI()
@@ -480,18 +518,15 @@ void MainWindow::onMenuAction()
     {
         showLoadScopeView();
     }
-    else if (action->text() == DUT_PANNEL)
-    {
-        showDutForm();
-    }
-    else if (action->text() == FCT_PANNEL)
-    {
-        showFctForm();
-    }
     else if (action->text() == "Login")
     {
         showLoginForm();
     }
+}
+
+void MainWindow::onPluginAction()
+{
+
 }
 
 void MainWindow::showLoginForm()
@@ -499,68 +534,6 @@ void MainWindow::showLoginForm()
     LoginForm* form = new LoginForm();
     form->exec();
     delete form;
-}
-
-void MainWindow::showDutForm()
-{
-    IPlugin* plugin = _pluginSubjecter->getPlugin(DutViewPluginName);
-    if (plugin == NULL)
-    {
-        QString path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\DutViewPlugin\\debug\\DutViewPlugin.dll";
-        plugin = loadLibary(path);
-        if (NULL == plugin)
-        {
-            LogMsg(Error, "Load DutViewPlugin libary failed.");
-            QMessageBox::critical(this, "Load Libary", "Load DutViewPlugin failed.");
-            return;
-        }
-
-        int i = plugin->init();
-    }
-
-    QDialog* dlg = new QDialog(this);
-    dlg->setModal(false);
-    dlg->setWindowTitle("Dut Debug Pannel");
-    QVBoxLayout* v1 = new QVBoxLayout();
-    v1->addWidget(plugin->createWidget());
-    v1->setContentsMargins(0,0,0,0);
-    dlg->setLayout(v1);
-
-    dlg->resize(800, 640);
-    dlg->show();
-
-    //关闭后要处理指针。
-}
-
-void MainWindow::showFctForm()
-{
-    IPlugin* plugin = _pluginSubjecter->getPlugin(FctViewPluginName);
-    if (plugin == NULL)
-    {
-        QString path = "D:\\Work\\tm_platform_new\\source\\UI\\bin\\PlugIns\\FctViewPlugin\\debug\\FctViewPlugin.dll";
-        plugin = loadLibary(path);
-        if (NULL == plugin)
-        {
-            LogMsg(Error, "Load FctViewPlugin libary failed.");
-            QMessageBox::critical(this, "Load Libary", "Load FctViewPlugin failed.");
-            return;
-        }
-
-        int i = plugin->init();
-    }
-
-    QDialog* dlg = new QDialog(this);
-    dlg->setModal(false);
-    dlg->setWindowTitle("Fct Debug Pannel");
-    QVBoxLayout* v1 = new QVBoxLayout();
-    v1->addWidget(plugin->createWidget());
-    v1->setContentsMargins(0,0,0,0);
-    dlg->setLayout(v1);
-
-    dlg->resize(800, 640);
-    dlg->show();
-
-    //关闭后要处理指针。
 }
 
 void MainWindow::showLoadScopeView()

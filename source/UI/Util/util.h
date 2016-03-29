@@ -5,7 +5,6 @@
 #include <QPalette>
 #include <QWidget>
 
-class QLayout;
 
 class UIUtil
 {
@@ -18,6 +17,18 @@ public:
     static QString getNowTime();//获取当前时间 精确到毫秒
 
     static void moveToScreenCenter(QWidget* wgt); //移到屏幕中央
+
+    template <class T>
+    static T* getModuleFormWithName(const QString& text, const QString& objName="")
+    {
+        T* obj = new T(0);
+        obj->setText(text);
+        if (!objName.isEmpty())
+            obj->setObjectName(objName);
+
+        return obj;
+    }
+
 private:
     UIUtil(){}
 

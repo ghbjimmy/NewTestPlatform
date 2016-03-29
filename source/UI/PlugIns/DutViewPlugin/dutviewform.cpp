@@ -20,17 +20,40 @@
 #include <QSplitter>
 #include <QTextEdit>
 #include <QList>
+#include <QAction>
+#include <QApplication>
 
+static const QString& DUT_PANNEL = "Dut Pannel";
 static const QString& DUT_CONFIG = "dutconfig.xml";
-DutViewForm::DutViewForm(IPlugin* plugIn, QWidget *parent) : QWidget(parent)
+DutViewForm::DutViewForm(IPlugin* plugIn, QWidget *parent) : IModuleForm(plugIn, parent)
 {
-    _plugIn = plugIn;
-    setupUI();
+    setupUI(); 
 }
 
 DutViewForm::~DutViewForm()
 {
 
+}
+
+bool DutViewForm::init()
+{
+    QString runPath = QApplication::applicationDirPath();
+    if (!LoadCfg(runPath))
+    {
+        return false;
+    }
+
+    return true;
+}
+
+void DutViewForm::clear()
+{
+
+}
+
+QVector<QAction*> DutViewForm::getActions()
+{
+    return QVector<QAction*>() << _showFormAct;
 }
 
 QToolBar* DutViewForm::createToolBar()
@@ -125,6 +148,9 @@ QWidget* DutViewForm::createTextEdit()
 
 void DutViewForm::setupUI()
 { 
+    _showFormAct = UIUtil::getModuleFormWithName<QAction>(DUT_PANNEL);
+    connect(_showFormAct, SIGNAL(triggered()), this, SLOT(onShowForm()));
+
     QToolBar* bar = createToolBar();
     _tabWgt = new QTabWidget();
 
@@ -313,4 +339,23 @@ void DutViewForm::onAppendText(const QString& text, int state)
 void DutViewForm::onClearCmd()
 {
     _recvDataEdit->clear();
+}
+
+void DutViewForm::onShowForm()
+{
+    QDialog* dlg = NULL;
+    if (_ownerWgt != NULL)
+        dlg = new QDialog(_ownerWgt);
+    else
+        dlg = new QDialog();
+
+    dlg->setWindowTitle("Dut Debug Pannel");
+    QHBoxLayout* h1 = new QHBoxLayout();
+    h1->addWidget(this);
+    h1->setContentsMargins(0,0,0,0);
+    dlg->setLayout(h1);
+    dlg->resize(800, 640);
+    dlg->show();
+
+    //dlg 内存需要处理，暂时先放着
 }

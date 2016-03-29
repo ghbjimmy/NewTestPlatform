@@ -5,7 +5,7 @@
 #include <QVector>
 
 #include <QTabWidget>
-
+#include "plugin_global.h"
 class QTableWidget;
 class IPlugin;
 class DutViewConfigDlg;
@@ -18,13 +18,17 @@ class QComboBox;
 class QLineEdit;
 class QListWidget;
 
-class DutViewForm : public QWidget
+class DutViewForm : public IModuleForm
 {
     Q_OBJECT
 
 public:
     explicit DutViewForm(IPlugin* plugIn, QWidget *parent = 0);
     ~DutViewForm();
+
+    virtual bool init();
+    virtual void clear();
+    virtual QVector<QAction*> getActions();
 
     bool LoadCfg(const QString& path);
 
@@ -46,8 +50,9 @@ private slots:
     void onAppendText(const QString& text, int state);
     void onClearCmd();
 
+    void onShowForm();
+
 private:
-    IPlugin* _plugIn;
     QTabWidget* _tabWgt;
 
     DutViewConfigDlg* _cfgDlg;
@@ -67,6 +72,8 @@ private:
 
     QTextEdit* _recvDataEdit;
     QPushButton* _clearTxtBtn;
+
+    QAction* _showFormAct;
 };
 
 #endif // DUTVIEWFORM_H
