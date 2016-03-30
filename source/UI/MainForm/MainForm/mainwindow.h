@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QVector>
+#include <QMap>
 #include "const.h"
 
 class IPlugin;
@@ -18,6 +19,7 @@ class QLabel;
 class ConfigForm;
 class PluginsLoader;
 class UserCtrl;
+class WidgetPrivilCtrl;
 
 class MainWindow : public QMainWindow
 {
@@ -54,6 +56,8 @@ private:
     void showConfigForm();
     void showLoadCsvForm();
     void showLoginForm();
+
+    void onUserLogin(const QMap<QString, int>& userPrivils);
 
 private slots:
     void onMenuAction();
@@ -97,6 +101,7 @@ private:
     QVector<QMenu*> _menus;
 
     UserCtrl* _userCtrl;
+    WidgetPrivilCtrl* _wgtPrivilCtrl;
 };
 
 #endif // MAINWINDOW_H

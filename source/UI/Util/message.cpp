@@ -70,7 +70,7 @@ StopTestMsg::~StopTestMsg()
 
 UserLoginMsg::UserLoginMsg()
 {
-
+    _id = USERLOGIN_MSG;
 }
 
 UserLoginMsg::~UserLoginMsg()
@@ -80,5 +80,5 @@ UserLoginMsg::~UserLoginMsg()
 
 void UserLoginMsg::setUserPrivils(const QMap<QString, int>& privils)
 {
-
+    _widgetPrivils = privils;
 }

@@ -19,6 +19,7 @@
 #include "userctrl.h"
 #include "pluginsloader.h"
 #include "userctrl.h"
+#include "widgetprivilctrl.h"
 
 #include <QLabel>
 #include <QHBoxLayout>
@@ -53,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _pluginSubjecter = new PluginSubjecter();
 
     _userCtrl = new UserCtrl();
+    _wgtPrivilCtrl = new WidgetPrivilCtrl();
     setupUI();
     _instance = this;
 
@@ -430,8 +432,11 @@ void MainWindow::createMenu()
 
     _menus.push_back(fileMenu);
 
-    QAction* confgAction = new QAction("Config",this);
-    QAction* loadAction = new QAction("Load CSV",this);
+    QAction* confgAction = UIUtil::createWidgetWithName<QAction>("Config", "Config");
+    QAction* loadAction = UIUtil::createWidgetWithName<QAction>("Load profile", "Load profile");
+
+    _wgtPrivilCtrl->addWidget(confgAction);
+    _wgtPrivilCtrl->addWidget(loadAction);
 
     connect(confgAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
     connect(loadAction,SIGNAL(triggered()),this,SLOT(onMenuAction()));
@@ -586,6 +591,11 @@ void MainWindow::prcoMsgBySelf(const IMessage* msg)
             return;
         }
     }
+    else if (msgId == USERLOGIN_MSG)//权限控制
+    {
+        const UserLoginMsg* userLoginMsg = (const UserLoginMsg*)msg;
+        this->onUserLogin(userLoginMsg->getUserPrivils());
+    }
 }
 
 void MainWindow::dispatchMessage(const IMessage* msg)
@@ -648,12 +658,18 @@ void MainWindow::onSeqEvent(int index, int evt, const QString& item)
     ProcItemStateMsg* procItemStarteMsg = new ProcItemStateMsg();
     procItemStarteMsg->setData(index, evt, item);
 
-    //发送结果到插件
     dispatchMessage(procItemStarteMsg);
     delete procItemStarteMsg;
 }
 
 void MainWindow::onUserPrivils(const QMap<QString, int>& widgetPrivils)
+{
+    UserLoginMsg userLoginMsg;
+    userLoginMsg.setUserPrivils(widgetPrivils);
+    dispatchMessage(&userLoginMsg);
+}
+
+void MainWindow::onUserLogin(const QMap<QString, int>& userPrivils)
 {
 
 }

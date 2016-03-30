@@ -20,6 +20,8 @@
 InteractionViewForm::InteractionViewForm(IPlugin* plugIn, QWidget *parent) : IModuleForm(plugIn, parent)
 {
     setupUI();
+
+    _isNeedPrivil = false; //默认不需要权限控制
 }
 
 InteractionViewForm::~InteractionViewForm()
@@ -184,14 +186,15 @@ QWidget* createtResultWgt()
 
 QHBoxLayout* InteractionViewForm::createCtrlWgt()
 {
-    _startBtn = new QPushButton();
-    _startBtn->setText("Start(F5)");
+    _startBtn = UIUtil::createWidgetWithName<QPushButton>("Start(F5)", "Start");
     connect(_startBtn, SIGNAL(clicked()), this, SLOT(onStart()));
 
-    _stopBtn = new QPushButton();
-    _stopBtn->setText("Stop(F6)");
+    _stopBtn = UIUtil::createWidgetWithName<QPushButton>("Stop(F6)", "Stop");
     _stopBtn->setEnabled(false);
     connect(_stopBtn, SIGNAL(clicked()), this, SLOT(onStop()));
+
+    //需要放入权限控制列表
+     _needPrivilCtrls.push_back(_startBtn);
 
     QCheckBox* dbgBox = new QCheckBox();
     dbgBox->setEnabled(false);
@@ -404,7 +407,9 @@ void InteractionViewForm::onStart()
     _plugin->sendMessage(&msg);
 
     _startBtn->setEnabled(false);
-    _stopBtn->setEnabled(true);
+
+    if (!_isNeedPrivil)
+        _stopBtn->setEnabled(true);
 }
 
 void InteractionViewForm::onStop()
@@ -414,4 +419,38 @@ void InteractionViewForm::onStop()
 
     _startBtn->setEnabled(true);
     _stopBtn->setEnabled(false);
+}
+
+void InteractionViewForm::onUserLogin(const QMap<QString, int>& userPrivils)
+{
+    if (userPrivils.empty())
+    {
+        _isNeedPrivil = false;
+        return;
+    }
+
+    int size = _needPrivilCtrls.size();
+    auto iter = userPrivils.begin();
+    for (; iter != userPrivils.end(); ++iter)
+    {
+        for (int i = 0; i < size; ++i)
+        {
+            QWidget* wgt = _needPrivilCtrls[i];
+            if (wgt->objectName() == iter.key())
+            {//0:隐藏 1:可见只读
+                if (iter.value() == 0)
+                {
+                    wgt->hide();
+                }
+                else if (iter.value() == 1)
+                {
+                    if (wgt->isHidden())
+                        wgt->show();
+                    wgt->setEnabled(false);
+                }
+
+                _isNeedPrivil = true;
+            }
+        }
+    }
 }

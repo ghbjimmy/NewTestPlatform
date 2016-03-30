@@ -54,6 +54,12 @@ int InteractionViewPlugin::onMessage(const IMessage* msg)
 
         break;
     }
+    case USERLOGIN_MSG:
+    {
+        const UserLoginMsg* userLoginMsg = (const UserLoginMsg*)msg;
+        form->onUserLogin(userLoginMsg->getUserPrivils());
+        break;
+    }
     default:
     {
         ret = -1;
@@ -72,6 +78,7 @@ bool InteractionViewPlugin::isHandleMessage(const IMessage* msg)
     {
     case CHANEL_STATE_MSG:
     case PROC_ITEMSTATE_MSG:
+    case USERLOGIN_MSG:
     {
         ret = true;
         break;

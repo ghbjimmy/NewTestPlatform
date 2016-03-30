@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QScrollArea>
+#include <QVector>
+
 #include "plugin_global.h"
 
 class UutButton;
@@ -28,6 +30,8 @@ public:
     void onSeqStart(int index, const QString& data);
     void onSeqEnd(int index, const QString& data);
 
+    void onUserLogin(const QMap<QString, int>& userPrivils);
+
 private:
     void setupUI();
     QHBoxLayout* createBtnLayout(UutButton*& btn1, int index, const QString& text);
@@ -49,6 +53,9 @@ private:
 
     QPushButton* _startBtn;
     QPushButton* _stopBtn;
+
+    QVector<QWidget*> _needPrivilCtrls;
+    bool _isNeedPrivil;
 };
 
 #endif // INTERACTIONVIEWFORM_H

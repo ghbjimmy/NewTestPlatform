@@ -45,7 +45,8 @@ SOURCES += main.cpp\
     loadcsvform.cpp \
     loginform.cpp \
     userctrl.cpp \
-    ../../Util/pluginsloader.cpp
+    ../../Util/pluginsloader.cpp \
+    ../../Util/widgetprivilctrl.cpp
 
 HEADERS  += mainwindow.h \
     ../../Util/libaryparser.h \
@@ -73,7 +74,8 @@ HEADERS  += mainwindow.h \
     loadcsvform.h \
     loginform.h \
     userctrl.h \
-    ../../Util/pluginsloader.h
+    ../../Util/pluginsloader.h \
+    ../../Util/widgetprivilctrl.h
 
 FORMS    +=
 
