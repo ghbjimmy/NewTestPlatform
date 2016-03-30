@@ -3,6 +3,7 @@
 #include "util.h"
 #include "message.h"
 #include "qlog.h"
+#include "widgetprivilctrl.h"
 
 #include <QHBoxLayout>
 #include <QProgressBar>
@@ -20,8 +21,7 @@
 InteractionViewForm::InteractionViewForm(IPlugin* plugIn, QWidget *parent) : IModuleForm(plugIn, parent)
 {
     setupUI();
-
-    _isNeedPrivil = false; //默认不需要权限控制
+    _wgtPrivilCtrl = new WidgetPrivilCtrl();
 }
 
 InteractionViewForm::~InteractionViewForm()
@@ -186,15 +186,15 @@ QWidget* createtResultWgt()
 
 QHBoxLayout* InteractionViewForm::createCtrlWgt()
 {
-    _startBtn = UIUtil::createWidgetWithName<QPushButton>("Start(F5)", "Start");
+    _startBtn = UIUtil::createWidgetWithName<QPushButton>("Start(F5)", "Start(F5)");
     connect(_startBtn, SIGNAL(clicked()), this, SLOT(onStart()));
 
-    _stopBtn = UIUtil::createWidgetWithName<QPushButton>("Stop(F6)", "Stop");
+    _stopBtn = UIUtil::createWidgetWithName<QPushButton>("Stop(F6)", "Stop(F6)");
     _stopBtn->setEnabled(false);
     connect(_stopBtn, SIGNAL(clicked()), this, SLOT(onStop()));
 
     //需要放入权限控制列表
-     _needPrivilCtrls.push_back(_startBtn);
+     _wgtPrivilCtrl->addWidget(_stopBtn);
 
     QCheckBox* dbgBox = new QCheckBox();
     dbgBox->setEnabled(false);
@@ -408,7 +408,7 @@ void InteractionViewForm::onStart()
 
     _startBtn->setEnabled(false);
 
-    if (!_isNeedPrivil)
+    if (!_wgtPrivilCtrl->isNeedPrivil())
         _stopBtn->setEnabled(true);
 }
 
@@ -423,34 +423,5 @@ void InteractionViewForm::onStop()
 
 void InteractionViewForm::onUserLogin(const QMap<QString, int>& userPrivils)
 {
-    if (userPrivils.empty())
-    {
-        _isNeedPrivil = false;
-        return;
-    }
-
-    int size = _needPrivilCtrls.size();
-    auto iter = userPrivils.begin();
-    for (; iter != userPrivils.end(); ++iter)
-    {
-        for (int i = 0; i < size; ++i)
-        {
-            QWidget* wgt = _needPrivilCtrls[i];
-            if (wgt->objectName() == iter.key())
-            {//0:隐藏 1:可见只读
-                if (iter.value() == 0)
-                {
-                    wgt->hide();
-                }
-                else if (iter.value() == 1)
-                {
-                    if (wgt->isHidden())
-                        wgt->show();
-                    wgt->setEnabled(false);
-                }
-
-                _isNeedPrivil = true;
-            }
-        }
-    }
+    _wgtPrivilCtrl->onWidgetPrivilCtrl(userPrivils);
 }

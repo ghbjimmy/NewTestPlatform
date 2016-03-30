@@ -24,7 +24,8 @@ SOURCES += interactionviewplugin.cpp \
     ../Common/uutbutton.cpp \
     ../../Util/util.cpp \
     ../../Util/message.cpp \
-    ../../Log/qlog.cpp
+    ../../Log/qlog.cpp \
+    ../../Util/widgetprivilctrl.cpp
 
 HEADERS += interactionviewplugin.h\
     interactionviewform.h \
@@ -33,7 +34,8 @@ HEADERS += interactionviewplugin.h\
     ../../Util/plugin_global.h \
     ../../Util/const.h \
     ../../Util/message.h \
-    ../../Log/qlog.h
+    ../../Log/qlog.h \
+    ../../Util/widgetprivilctrl.h
 
 unix {
     target.path = /usr/lib

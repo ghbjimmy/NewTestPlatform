@@ -207,7 +207,15 @@ TItemEnd* CVSDataAdapter::convertItemEnd(const QString& itemJson)
     }
     if (obj.contains("value"))
     {
-        itemEnd->value = obj.value("value").toString();
+        double val = -9999;
+        if  (-9999 == (val = obj.value("value").toDouble(-9999)))
+        {
+            itemEnd->value = obj.value("value").toString();
+        }
+        else
+        {
+            itemEnd->value = QString::number(val);
+        }
     }
     if (obj.contains("result"))
     {

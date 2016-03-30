@@ -57,8 +57,6 @@ private:
     void showLoadCsvForm();
     void showLoginForm();
 
-    void onUserLogin(const QMap<QString, int>& userPrivils);
-
 private slots:
     void onMenuAction();
 

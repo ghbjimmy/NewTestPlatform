@@ -12,6 +12,7 @@ class QHBoxLayout;
 class QCheckBox;
 class IPlugin;
 class QPushButton;
+class WidgetPrivilCtrl;
 
 class InteractionViewForm : public IModuleForm
 {
@@ -54,8 +55,7 @@ private:
     QPushButton* _startBtn;
     QPushButton* _stopBtn;
 
-    QVector<QWidget*> _needPrivilCtrls;
-    bool _isNeedPrivil;
+    WidgetPrivilCtrl* _wgtPrivilCtrl;
 };
 
 #endif // INTERACTIONVIEWFORM_H

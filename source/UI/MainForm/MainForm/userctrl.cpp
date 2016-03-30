@@ -19,12 +19,14 @@ UserCtrl::~UserCtrl()
 
 bool UserCtrl::init()
 {
-    QString path = "";
+    /*QString path = "";
     if (!parseConfig(path))
     {
         LogMsg(Error, "init user file failed.[%s]", path.toStdString().c_str());
         return false;
-    }
+    }*/
+
+    return true;
 }
 
 bool UserCtrl::parseConfig(const QString& path)

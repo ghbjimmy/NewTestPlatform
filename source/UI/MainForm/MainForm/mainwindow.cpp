@@ -510,7 +510,7 @@ void MainWindow::onMenuAction()
     {
         showConfigForm();
     }
-    else if (action->text() == "Load CSV")
+    else if (action->text() == "Load profile")
     {
         showLoadCsvForm();
     }
@@ -544,13 +544,12 @@ void MainWindow::showConfigForm()
 void MainWindow::showLoadCsvForm()
 {
     QString path = QFileDialog::getOpenFileName(this, tr("Open CSV File"), ".", tr("CSV Files(*.csv)"));
-    // if(path.length() == 0)
-    //     return;
+    if(path.length() == 0)
+         return;
 
     //load 命令
-    //QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/test_plan__0225_12h_optical_fct_only.csv");
-    //QVector<int> failVecs = _sequencerMgr->loadProfile("/Users/mac/Desktop/Hantest_plan__0322_11h.csv");
-    QVector<int> failVecs = _sequencerMgr->loadProfile("/Hantest_plan_finishnormal__0322_22.csv");
+    //QVector<int> failVecs = _sequencerMgr->loadProfile("/Hantest_plan_finishnormal__0322_22.csv");
+    QVector<int> failVecs = _sequencerMgr->loadProfile(path);
     if (!failVecs.empty())
     {
         LogMsg(Error, "load profile failed. failed count is %d", failVecs.size());
@@ -594,7 +593,7 @@ void MainWindow::prcoMsgBySelf(const IMessage* msg)
     else if (msgId == USERLOGIN_MSG)//权限控制
     {
         const UserLoginMsg* userLoginMsg = (const UserLoginMsg*)msg;
-        this->onUserLogin(userLoginMsg->getUserPrivils());
+        _wgtPrivilCtrl->onWidgetPrivilCtrl(userLoginMsg->getUserPrivils());
     }
 }
 
@@ -669,7 +668,3 @@ void MainWindow::onUserPrivils(const QMap<QString, int>& widgetPrivils)
     dispatchMessage(&userLoginMsg);
 }
 
-void MainWindow::onUserLogin(const QMap<QString, int>& userPrivils)
-{
-
-}
