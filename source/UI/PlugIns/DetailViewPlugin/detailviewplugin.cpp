@@ -44,7 +44,7 @@ int DetailViewPlugin::onMessage(const IMessage* msg)
         form->listCsvData(listcsvMsg->getItems());
         break;
     }
-    case PROC_ITEMSTATE_MSG:
+    case PROC_PUBEVENT_MSG:
     {
         const ProcItemStateMsg* itemMsg = (const ProcItemStateMsg*)msg;
         int evtId = itemMsg->getEventId();
@@ -76,7 +76,7 @@ bool DetailViewPlugin::isHandleMessage(const IMessage* msg)
     switch(id)
     {
     case LIST_CSV_MSG:
-    case PROC_ITEMSTATE_MSG:
+    case PROC_PUBEVENT_MSG:
     {
         ret = true;
         break;

@@ -174,8 +174,33 @@ void test()
     bool ff = req.encode(buf);
 }
 
+int msgId = 0x10000002;
+
 int main(int argc, char *argv[]){
 
+    int group = msgId >> 16;
+    int id = msgId & 0xFFFF;
+
+    int total = group | id;
+    if (total & 0x1000)
+    {
+        int i = 0;
+    }
+
+    if (total & 0x1001)
+    {
+        int i = 0;
+    }
+
+    if (total & 0x2001)
+    {
+        int i = 0;
+    }
+
+    if (total & 8)
+    {
+        int i = 0;
+    }
     QString str = UIUtil::EncryptMd5("aabbcd");
     testJson();
 

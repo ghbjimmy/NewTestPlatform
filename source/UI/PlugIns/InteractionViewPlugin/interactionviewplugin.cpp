@@ -32,13 +32,13 @@ int InteractionViewPlugin::onMessage(const IMessage* msg)
     int id = msg->messageID();
     switch(id)
     {
-    case CHANEL_STATE_MSG:
+    case SLOT_STATE_MSG:
     {
         const ChannelStateMsg* statevMsg = (const ChannelStateMsg*)msg;
         form->onChanelStateMsg(statevMsg->getIndex(), statevMsg->getResult());
         break;
     }
-    case PROC_ITEMSTATE_MSG:
+    case PROC_PUBEVENT_MSG:
     {
         const ProcItemStateMsg* itemMsg = (const ProcItemStateMsg*)msg;
         int evtId = itemMsg->getEventId();
@@ -76,8 +76,8 @@ bool InteractionViewPlugin::isHandleMessage(const IMessage* msg)
     int id = msg->messageID();
     switch(id)
     {
-    case CHANEL_STATE_MSG:
-    case PROC_ITEMSTATE_MSG:
+    case SLOT_STATE_MSG:
+    case PROC_PUBEVENT_MSG:
     case USERLOGIN_MSG:
     {
         ret = true;

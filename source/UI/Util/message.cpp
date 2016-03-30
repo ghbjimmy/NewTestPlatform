@@ -12,8 +12,8 @@ ListCsvFileMsg::~ListCsvFileMsg()
 
 ProcItemStateMsg::ProcItemStateMsg()
 {
-    _id = PROC_ITEMSTATE_MSG;
-
+    _id = PROC_PUBEVENT_MSG;
+    _strategyId = Active;
     _evtId = -1;
     _index = -1;
 }
@@ -33,7 +33,7 @@ void ProcItemStateMsg::setData(int index, int evt, const QString& data)
 
 ChannelStateMsg::ChannelStateMsg()
 {
-    _id = CHANEL_STATE_MSG;
+    _id = SLOT_STATE_MSG;
 }
 
 ChannelStateMsg::~ChannelStateMsg()

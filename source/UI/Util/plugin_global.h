@@ -18,7 +18,6 @@ class IPlugin;
 
 typedef void (*fnSendMsg)(const IMessage* msg);
 
-
 class TPLUGINSHARED_EXPORT IModuleForm : public QWidget
 {
 public:
@@ -34,6 +33,14 @@ public:
 protected:
     IPlugin* _plugin;
     QWidget* _ownerWgt; //设置所属窗口
+};
+
+//插件的类型，跟消息的type对应，一个插件可以处理多个类型的消息，如 Main | Device
+enum TPLUGINSHARED_EXPORT EPluginType
+{
+    Main = 0x1000, //主插件
+    Device = 0x2000, //设备相关
+    Tool = 0x4000   //工具相关
 };
 
 class TPLUGINSHARED_EXPORT IPlugin
@@ -55,6 +62,7 @@ protected:
     IModuleForm* _widget;
     QString _name;
     fnSendMsg _sendCallback;
+    int _pluginType;
 };
 
 typedef IPlugin * (*fnCreatePlugin)();

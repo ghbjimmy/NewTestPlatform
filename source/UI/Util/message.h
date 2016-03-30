@@ -5,29 +5,49 @@
 #include <QMap>
 #include "structdefine.h"
 
-const int LIST_CSV_MSG = 1000;
-const int PROC_ITEMSTATE_MSG = 1001;
-const int CHANEL_STATE_MSG = 1002;
-const int START_TEST_MSG = 1003;
-const int STOP_TEST_MSG = 1004;
-const int USERLOGIN_MSG = 1005;
+const int LIST_CSV_MSG = 0x10000001; //load csv 消息
+const int PROC_PUBEVENT_MSG = 0x10000002; //处理 pub event 消息 包括seq start/end,  item start/end
+const int SLOT_STATE_MSG = 0x10000003;  //通道状态消息
+const int START_TEST_MSG = 0x10000004;  //开始测试消息
+const int STOP_TEST_MSG = 0x10000005;   //停止测试消息
+const int USERLOGIN_MSG = 0x10000006;   //用户登录消息
+
+enum EStrategyID
+{
+    All = 0, //全部
+    Active, //激活
+    InActive, //非激活
+    Foucse //焦点窗口
+};
 
 class IMessage
 {
 public:
     IMessage() {
         _id = -1;
+        _strategyId = All;
     }
 
     virtual ~IMessage(){}
 
-    virtual int  messageID() const
+    int groupID() const //分组id 跟插件的pluginType相对应
     {
-        return _id;
+        return _id >> 16;
+    }
+
+    int messageID() const //消息id
+    {
+         return _id & 0xFFFF;
+    }
+
+    int strategyID() const //策略id
+    {
+        return _strategyId;
     }
 
 protected:
     int _id;
+    int _strategyId;
 };
 
 
@@ -110,6 +130,7 @@ public:
     ~UserLoginMsg();
     void setUserPrivils(const QMap<QString, int>& privils);
     inline const QMap<QString, int>& getUserPrivils() const {return _widgetPrivils;}
+
 private:
     QMap<QString, int> _widgetPrivils;
 };

@@ -20,8 +20,8 @@
 
 InteractionViewForm::InteractionViewForm(IPlugin* plugIn, QWidget *parent) : IModuleForm(plugIn, parent)
 {
-    setupUI();
     _wgtPrivilCtrl = new WidgetPrivilCtrl();
+    setupUI();
 }
 
 InteractionViewForm::~InteractionViewForm()
@@ -36,7 +36,8 @@ bool InteractionViewForm::init()
 
 void InteractionViewForm::clear()
 {
-
+    //_startBtn->setEnabled(true);
+    //_stopBtn->setEnabled(false);
 }
 
 QVector<QAction*> InteractionViewForm::getActions()
@@ -399,6 +400,9 @@ void InteractionViewForm::onSeqEnd(int index, const QString& data)
     {
         _btn[index]->showColor(Qt::red);
     }
+
+    //测试完需要复位界面
+    clear();
 }
 
 void InteractionViewForm::onStart()
