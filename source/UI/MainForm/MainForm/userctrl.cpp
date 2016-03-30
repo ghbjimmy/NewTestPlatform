@@ -1,5 +1,6 @@
 #include "userctrl.h"
 #include "qlog.h"
+#include "util.h"
 
 #include <QFile>
 #include <QJsonDocument>
@@ -8,12 +9,22 @@
 
 UserCtrl::UserCtrl()
 {
-
+    _curUserIndex = -1;
 }
 
 UserCtrl::~UserCtrl()
 {
 
+}
+
+bool UserCtrl::init()
+{
+    QString path = "";
+    if (!parseConfig(path))
+    {
+        LogMsg(Error, "init user file failed.[%s]", path.toStdString().c_str());
+        return false;
+    }
 }
 
 bool UserCtrl::parseConfig(const QString& path)
@@ -87,7 +98,33 @@ bool UserCtrl::parseConfig(const QString& path)
     return true;
 }
 
-bool UserCtrl::checkUser(const QString& name, const QString& pwd)
+bool UserCtrl::login(const QString& name, const QString& pwd, QMap<QString, int>& widgetPrivils)
 {
+    bool ret = false;
+    QString md5Pwd = UIUtil::EncryptMd5(pwd);
+    for (int i = 0; i < _userPris.size(); ++i)
+    {
+        const TUserPrivilege& userPri = _userPris[i];
+        if (userPri.name == name && userPri.password == md5Pwd)
+        {
+            _curUserIndex = i;
+            int level = userPri.level;
+            for (auto iter = _wgtPrivileges.begin(); iter != _wgtPrivileges.end(); ++iter)
+            {
+                if (iter.key() == level)
+                {
+                    const QVector<TWidgetPrivilege>& vecs = iter.value();
+                    for (int j = 0; j < vecs.size(); ++j)
+                    {
+                        widgetPrivils[vecs[j].name] = vecs[j].state;
+                    }
+                }
+            }
+
+            ret = true;
+            break;
+        }
+    }
+
     return true;
 }

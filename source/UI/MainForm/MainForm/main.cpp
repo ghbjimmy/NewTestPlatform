@@ -14,6 +14,7 @@
 #include <QSplashScreen>
 #include <QDesktopWidget>
 #include "startloaderform.h"
+#include "util.h"
 
 #include <thread>
 #include <QMessageBox>
@@ -175,6 +176,7 @@ void test()
 
 int main(int argc, char *argv[]){
 
+    QString str = UIUtil::EncryptMd5("aabbcd");
     testJson();
 
     QApplication a(argc, argv);

@@ -2,6 +2,7 @@
 #define MESSAGE_H
 
 #include <QVector>
+#include <QMap>
 #include "structdefine.h"
 
 const int LIST_CSV_MSG = 1000;
@@ -89,7 +90,7 @@ private:
 
 };
 
-//停止测试命令
+//停止测试消息
 class StopTestMsg : public IMessage
 {
 public:
@@ -98,6 +99,18 @@ public:
 
 private:
 
+};
+
+//用户登录消息
+class UserLoginMsg : public IMessage
+{
+public:
+    UserLoginMsg();
+    ~UserLoginMsg();
+    void setUserPrivils(const QMap<QString, int>& privils);
+    inline const QMap<QString, int>& getUserPrivils() const {return _widgetPrivils;}
+private:
+    QMap<QString, int> _widgetPrivils;
 };
 
 #endif

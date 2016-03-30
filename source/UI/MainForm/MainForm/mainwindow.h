@@ -17,6 +17,7 @@ class StateMachineMgr;
 class QLabel;
 class ConfigForm;
 class PluginsLoader;
+class UserCtrl;
 
 class MainWindow : public QMainWindow
 {
@@ -63,8 +64,10 @@ private slots:
 
     void onSeqEvent(int index, int evt, const QString& item);
 
-    //插件的动作响应
-    void onPluginAction();
+    //响应用户登录
+    void onUserPrivils(const QMap<QString, int>& widgetPrivils);
+
+
 
 private:
     static MainWindow* _instance;
@@ -92,6 +95,8 @@ private:
     ConfigForm* _configForm;
 
     QVector<QMenu*> _menus;
+
+    UserCtrl* _userCtrl;
 };
 
 #endif // MAINWINDOW_H

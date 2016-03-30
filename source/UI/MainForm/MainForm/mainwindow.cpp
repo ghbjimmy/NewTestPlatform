@@ -18,6 +18,7 @@
 #include "loginform.h"
 #include "userctrl.h"
 #include "pluginsloader.h"
+#include "userctrl.h"
 
 #include <QLabel>
 #include <QHBoxLayout>
@@ -51,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     _pluginSubjecter = new PluginSubjecter();
 
+    _userCtrl = new UserCtrl();
     setupUI();
     _instance = this;
 
@@ -81,6 +83,13 @@ MainWindow* MainWindow::getInstance()
 
 bool MainWindow::init()
 {
+    //用户登录模块
+    if (!_userCtrl->init())
+    {
+        LogMsg(Error, "userctrl init failed.");
+        return false;
+    }
+
     //解析模块xml
     PluginsLoader loader;
     if (!loader.parseXml())
@@ -506,15 +515,17 @@ void MainWindow::onMenuAction()
     }
 }
 
-void MainWindow::onPluginAction()
-{
-
-}
 
 void MainWindow::showLoginForm()
 {
-    LoginForm* form = new LoginForm();
-    form->exec();
+    LoginForm* form = new LoginForm(_userCtrl);
+    connect(form, SIGNAL(userPrivilSignal(const QMap<QString, int>&)), this, SLOT(onUserPrivils(const QMap<QString, int>& widgetPrivils)));
+    int ret = form->exec();
+    if (QDialog::Accepted == ret)
+    {
+
+    }
+
     delete form;
 }
 
@@ -642,3 +653,7 @@ void MainWindow::onSeqEvent(int index, int evt, const QString& item)
     delete procItemStarteMsg;
 }
 
+void MainWindow::onUserPrivils(const QMap<QString, int>& widgetPrivils)
+{
+
+}

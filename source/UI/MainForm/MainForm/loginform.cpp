@@ -1,5 +1,6 @@
 #include "loginform.h"
 #include "util.h"
+#include "userctrl.h"
 
 #include <QLineEdit>
 #include <QHBoxLayout>
@@ -8,8 +9,9 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QSpacerItem>
+#include <QMessageBox>
 
-LoginForm::LoginForm(QWidget* parent) : QDialog(parent)
+LoginForm::LoginForm(UserCtrl* userctrl, QWidget* parent) : _userCtrl(userctrl), QDialog(parent)
 {
     setupUI();
     this->setWindowTitle("Login");
@@ -71,10 +73,18 @@ void LoginForm::setupUI()
 
 void LoginForm::onOK()
 {
-    //this->close();
+    QMap<QString, int> widgetPrivils;
+    if (!_userCtrl->login(_userLdt->text(), _pwdLdt->text(),widgetPrivils))
+    {
+        QMessageBox::critical(this, "Login", "User name or Password is not valid.Please check!");
+        return;
+    }
+
+    emit userPrivilSignal(widgetPrivils);
+    this->accept();
 }
 
 void LoginForm::onCancel()
 {
-    this->close();
+    this->reject();
 }

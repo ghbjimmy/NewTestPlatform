@@ -18,6 +18,10 @@ public:
 
     static void moveToScreenCenter(QWidget* wgt); //移到屏幕中央
 
+    static QString EncryptMd5(const QString& str);
+    static QString Decrypt(const QString& str);
+
+    //创建widget及子类，并可设置名字
     template <class T>
     static T* createWidgetWithName(const QString& text, const QString& objName="")
     {

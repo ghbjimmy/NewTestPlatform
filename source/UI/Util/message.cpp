@@ -67,3 +67,18 @@ StopTestMsg::~StopTestMsg()
 {
 
 }
+
+UserLoginMsg::UserLoginMsg()
+{
+
+}
+
+UserLoginMsg::~UserLoginMsg()
+{
+
+}
+
+void UserLoginMsg::setUserPrivils(const QMap<QString, int>& privils)
+{
+
+}
