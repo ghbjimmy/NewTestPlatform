@@ -4,6 +4,12 @@ function CurrentDir()
 	return lfs.currentdir()
 end
 
+function CurrentPathSeparator()
+	local path = require("pl.path")
+	local tempStr = path.join("1","2")
+	return string.sub(tempStr,2,2)
+end
+
 function deleteLastPathComponent(p)
 	local t = {}
 	for v in string.gmatch(p,"[^/]+")do

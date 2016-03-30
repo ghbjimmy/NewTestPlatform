@@ -1,7 +1,12 @@
 local fixture = require "fixture"
 
-require "pathManager"
-package.path = package.path..";"..deleteLastPathComponent(CurrentDir()).."/Driver/?.lua"
+--require "pathManager"
+require "PathManager_New"
+--package.path = package.path..";"..deleteLastPathComponent(CurrentDir()).."/Driver/?.lua"
+local pathSuffix = JoinPath("Driver","?.lua")
+local pPath = JoinPath(DeleteLastPathComponentTricky(CurrentDir()),pathSuffix)
+package.path = package.path..";"..pPath
+
 local config_utils = require("utils.config_utils")
 
 local json = require "dkjson"
@@ -43,6 +48,7 @@ function _State.fixtureConnect(arg)
 
 	c = config_utils.get_config(arg)
 	n = config_utils.get_addr(c, "STATEMACHINE_PUB", c.ID)
+	n = "tcp://*:6880"
 	print("< StateMachine Set PUB > : ".. n)
 	sm_pub, err = context:socket(zmq.PUB, {bind=n})
 	zassert(sm_pub,err)

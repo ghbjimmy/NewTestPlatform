@@ -1,5 +1,10 @@
 #!/usr/bin/env lua
-package.path = package.path..";".."./?.lua"
+
+require "PathManager_New"
+
+local pathSuffix = JoinPath("..","?.lua")
+package.path = package.path..";".. pathSuffix
+--package.path = package.path..";".."./?.lua"
 
 require("utils.zhelpers")
 local json = require("dkjson")
@@ -113,6 +118,7 @@ local watchdog_thread, watchdog_pipe = zthreads.fork(context, function(pipe, add
         require("utils.zhelpers")
         local  t = require "lzmq.timer"
 
+		address = "tcp://*:6150"
         print(" < TE > Set HeartBeat PUB : ", address)
         local watchdog_zmq, err = context:socket(zmq.PUB, {bind = address})
         zassert(watchdog_zmq, err)
