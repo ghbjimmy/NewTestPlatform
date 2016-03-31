@@ -6,7 +6,8 @@
 DetailViewPlugin::DetailViewPlugin()
 {
     _name = DetailViewPluginName;
-    _widget = new DetailViewForm(this);
+    _pluginType = EPluginType::Main;
+    _widget = NULL;
 }
 
 DetailViewPlugin::~DetailViewPlugin()
@@ -16,6 +17,7 @@ DetailViewPlugin::~DetailViewPlugin()
 
 int DetailViewPlugin::init()
 {
+    _widget = new DetailViewForm(this);
     return 0;
 }
 
@@ -24,6 +26,8 @@ void DetailViewPlugin::fini()
     if(NULL != _widget)
     {
         _widget->setParent(NULL);
+        delete _widget;
+        _widget = NULL;
     }
 }
 
@@ -71,6 +75,10 @@ int DetailViewPlugin::onMessage(const IMessage* msg)
 
 bool DetailViewPlugin::isHandleMessage(const IMessage* msg)
 {
+    //先判断是否同个组，如不是，直接返回
+    if (!_pluginType & msg->groupType())
+        return false;
+
     bool ret = false;
     int id = msg->messageID();
     switch(id)

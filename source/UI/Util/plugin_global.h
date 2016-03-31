@@ -6,6 +6,7 @@
 #include <QVector>
 #include <QAction>
 
+
 #if defined(TPLUGIN_LIBRARY)
 #  define TPLUGINSHARED_EXPORT Q_DECL_EXPORT
 #else
@@ -38,15 +39,16 @@ protected:
 //插件的类型，跟消息的type对应，一个插件可以处理多个类型的消息，如 Main | Device
 enum TPLUGINSHARED_EXPORT EPluginType
 {
-    Main = 0x1000, //主插件
-    Device = 0x2000, //设备相关
-    Tool = 0x4000   //工具相关
+    Main = 0x10, //主插件
+    Device = 0x20, //设备相关
+    Tool = 0x40,   //工具相关
+    ALL = 0xFFFF   //全部都要处理
 };
 
 class TPLUGINSHARED_EXPORT IPlugin
 {
 public:
-    IPlugin() {_name = "unknown"; _sendCallback = NULL;}
+    IPlugin() {_name = "unknown"; _sendCallback = NULL; _pluginType = ALL; _pluginStrategyID = 0;}
     virtual ~IPlugin(){}
 
     virtual void registerSendMsgCallBack(fnSendMsg callback) {_sendCallback = callback;}
@@ -58,11 +60,15 @@ public:
     virtual bool isHandleMessage(const IMessage* msg) = 0;
     virtual IModuleForm* getModuleForm() = 0;
 
+    virtual int getStrategyID() const { return _pluginStrategyID;}
+    virtual void setStrategyID(int state) {_pluginStrategyID = state;}
+
 protected:
     IModuleForm* _widget;
     QString _name;
     fnSendMsg _sendCallback;
     int _pluginType;
+    int _pluginStrategyID; //0: inactive; 1: active
 };
 
 typedef IPlugin * (*fnCreatePlugin)();

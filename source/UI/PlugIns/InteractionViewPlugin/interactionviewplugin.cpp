@@ -6,11 +6,13 @@
 InteractionViewPlugin::InteractionViewPlugin()
 {
     _name = InteractionViewPluginName;
-    _widget = new InteractionViewForm(this);
+    _pluginType = EPluginType::Main;
+    _widget = NULL;
 }
 
 int InteractionViewPlugin::init()
 {
+    _widget = new InteractionViewForm(this);
     return 0;
 }
 
@@ -19,6 +21,8 @@ void InteractionViewPlugin::fini()
     if(NULL != _widget)
     {
         _widget->setParent(NULL);
+        delete _widget;
+        _widget = NULL;
     }
 }
 
@@ -72,6 +76,10 @@ int InteractionViewPlugin::onMessage(const IMessage* msg)
 
 bool InteractionViewPlugin::isHandleMessage(const IMessage* msg)
 {
+    //先判断是否同个组，如不是，直接返回
+    if (!_pluginType & msg->groupType())
+        return false;
+
     bool ret = false;
     int id = msg->messageID();
     switch(id)

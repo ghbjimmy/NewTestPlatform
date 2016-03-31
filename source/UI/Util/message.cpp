@@ -3,6 +3,7 @@
 ListCsvFileMsg::ListCsvFileMsg()
 {
     _id = LIST_CSV_MSG;
+    _strategyId = Active;
 }
 
 ListCsvFileMsg::~ListCsvFileMsg()
@@ -34,6 +35,7 @@ void ProcItemStateMsg::setData(int index, int evt, const QString& data)
 ChannelStateMsg::ChannelStateMsg()
 {
     _id = SLOT_STATE_MSG;
+    _strategyId = Active;
 }
 
 ChannelStateMsg::~ChannelStateMsg()
@@ -51,6 +53,7 @@ void ChannelStateMsg::setData(int index, int result)
 StartTestMsg::StartTestMsg()
 {
     _id = START_TEST_MSG;
+    _strategyId = Active;
 }
 
 StartTestMsg::~StartTestMsg()
@@ -61,6 +64,7 @@ StartTestMsg::~StartTestMsg()
 StopTestMsg::StopTestMsg()
 {
     _id = STOP_TEST_MSG;
+    _strategyId = Active;
 }
 
 StopTestMsg::~StopTestMsg()
@@ -71,6 +75,7 @@ StopTestMsg::~StopTestMsg()
 UserLoginMsg::UserLoginMsg()
 {
     _id = USERLOGIN_MSG;
+    _strategyId = Active;
 }
 
 UserLoginMsg::~UserLoginMsg()

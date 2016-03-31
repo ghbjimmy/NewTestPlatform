@@ -15,4 +15,13 @@ static const int SM_NUM = 1;
 
 static const int& TIME_OUT = 3000;
 
+//插件处理策略
+enum EStrategyID
+{
+    InActive = 0, //非激活
+    Active, //激活
+    All = 2 //全部
+};
+
+
 #endif

@@ -4,40 +4,33 @@
 #include <QVector>
 #include <QMap>
 #include "structdefine.h"
+#include "const.h"
 
-const int LIST_CSV_MSG = 0x10000001; //load csv 消息
-const int PROC_PUBEVENT_MSG = 0x10000002; //处理 pub event 消息 包括seq start/end,  item start/end
-const int SLOT_STATE_MSG = 0x10000003;  //通道状态消息
-const int START_TEST_MSG = 0x10000004;  //开始测试消息
-const int STOP_TEST_MSG = 0x10000005;   //停止测试消息
-const int USERLOGIN_MSG = 0x10000006;   //用户登录消息
-
-enum EStrategyID
-{
-    All = 0, //全部
-    Active, //激活
-    InActive, //非激活
-    Foucse //焦点窗口
-};
+const int LIST_CSV_MSG = 0x100001; //load csv 消息
+const int PROC_PUBEVENT_MSG = 0x100002; //处理 pub event 消息 包括seq start/end,  item start/end
+const int SLOT_STATE_MSG = 0x100003;  //通道状态消息
+const int START_TEST_MSG = 0x100004;  //开始测试消息
+const int STOP_TEST_MSG = 0x100005;   //停止测试消息
+const int USERLOGIN_MSG = 0x100006;   //用户登录消息
 
 class IMessage
 {
 public:
     IMessage() {
         _id = -1;
-        _strategyId = All;
+        _strategyId = Active;
     }
 
     virtual ~IMessage(){}
 
-    int groupID() const //分组id 跟插件的pluginType相对应
+    int groupType() const //分组id 跟插件的pluginType相对应
     {
         return _id >> 16;
     }
 
     int messageID() const //消息id
     {
-         return _id & 0xFFFF;
+         return _id;
     }
 
     int strategyID() const //策略id

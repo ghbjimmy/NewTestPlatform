@@ -1,8 +1,24 @@
 #include "pluginSubjecter.h"
+#include "message.h"
+
+PluginSubjecter::PluginMsgFilter::PluginMsgFilter()
+{
+
+}
+
+PluginSubjecter::PluginMsgFilter::~PluginMsgFilter()
+{
+
+}
+
+bool PluginSubjecter::PluginMsgFilter::isNeedProc(int plugState, int msgStatet)
+{
+    return plugState == msgStatet;
+}
 
 PluginSubjecter::PluginSubjecter()
 {
-
+    _msgFilter = new PluginSubjecter::PluginMsgFilter();
 }
 
 PluginSubjecter::~PluginSubjecter()
@@ -15,6 +31,12 @@ PluginSubjecter::~PluginSubjecter()
     }
 
     _plugins.clear();
+
+    if (NULL != _msgFilter)
+    {
+        delete _msgFilter;
+        _msgFilter = NULL;
+    }
 }
 
 IPlugin* PluginSubjecter::getPlugin(const QString& name)
@@ -48,6 +70,10 @@ void PluginSubjecter::notity(const IMessage* msg)
 {
     foreach(IPlugin* plugin , _plugins)
     {
+        //消息状态过滤
+        if (!_msgFilter->isNeedProc(plugin->getStrategyID(), msg->strategyID()))
+            continue;
+
         if (plugin->isHandleMessage(msg))
         {
             int result = plugin->onMessage(msg);

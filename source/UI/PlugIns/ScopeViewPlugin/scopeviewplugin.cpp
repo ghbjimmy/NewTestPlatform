@@ -6,7 +6,8 @@
 ScopeViewPlugin::ScopeViewPlugin()
 {
     _name = ScopeViewPluginName;
-    _widget = new ScopeviewForm(this);
+    _pluginType = EPluginType::Device;
+    _widget = NULL;
 }
 
 ScopeViewPlugin::~ScopeViewPlugin()
@@ -16,6 +17,7 @@ ScopeViewPlugin::~ScopeViewPlugin()
 
 int ScopeViewPlugin::init()
 {
+    _widget = new ScopeviewForm(this);
     return 0;
 }
 
@@ -24,6 +26,8 @@ void ScopeViewPlugin::fini()
     if(NULL != _widget)
     {
         _widget->setParent(NULL);
+        delete _widget;
+        _widget = NULL;
     }
 }
 
@@ -43,6 +47,10 @@ int ScopeViewPlugin::onMessage(const IMessage* msg)
 
 bool ScopeViewPlugin::isHandleMessage(const IMessage* msg)
 {
+    //先判断是否同个组，如不是，直接返回
+    if (!_pluginType & msg->groupType())
+        return false;
+
     bool ret =false;
     int id = msg->messageID();
     switch(id)

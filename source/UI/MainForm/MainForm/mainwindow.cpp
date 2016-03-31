@@ -180,6 +180,8 @@ void MainWindow::fillPluginWgt(PluginsLoader* loader)
         h1->addWidget(plugin->getModuleForm());
         h1->setContentsMargins(0,0,0,0);
         _detailViewWgt->setLayout(h1);
+
+        plugin->setStrategyID(Active);
     }
 
     plugin = _pluginSubjecter->getPlugin(ScopeViewPluginName);
@@ -190,6 +192,8 @@ void MainWindow::fillPluginWgt(PluginsLoader* loader)
         h1->setContentsMargins(0,0,0,0);
         _scopeViewWgt->setLayout(h1);
         _scopeViewWgt->setMinimumHeight(0);
+
+        plugin->setStrategyID(Active);
     }
 
     plugin = _pluginSubjecter->getPlugin(InteractionViewPluginName);
@@ -199,6 +203,8 @@ void MainWindow::fillPluginWgt(PluginsLoader* loader)
         h1->addWidget(plugin->getModuleForm());
         h1->setContentsMargins(0,0,0,0);
         _interViewWgt->setLayout(h1);
+
+        plugin->setStrategyID(Active);
     }
 
     //填充菜单
@@ -299,6 +305,13 @@ IPlugin* MainWindow::loadLibary(const QString& path)
     IPlugin * pPlugin = parser->getPlugin();
 
     pPlugin->registerSendMsgCallBack(sendMessageCallBack);
+    if (0 != pPlugin->init())
+    {
+        LogMsg(Error, "plugin init failed.");
+        delete pPlugin;
+        return NULL;
+    }
+
     _libParsers.append(parser);
 
     return pPlugin;

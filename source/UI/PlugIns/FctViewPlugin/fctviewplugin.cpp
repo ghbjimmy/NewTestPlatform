@@ -6,7 +6,8 @@
 FctViewPlugin::FctViewPlugin()
 {
     _name = "FctViewPlugin";
-    _widget = new FctViewForm(this);
+    _pluginType = EPluginType::Tool;
+    _widget = NULL;
 }
 
 FctViewPlugin::~FctViewPlugin()
@@ -16,6 +17,7 @@ FctViewPlugin::~FctViewPlugin()
 
 int FctViewPlugin::init()
 {
+    _widget = new FctViewForm(this);
     return 0;
 }
 
@@ -24,6 +26,8 @@ void FctViewPlugin::fini()
     if(NULL != _widget)
     {
         _widget->setParent(NULL);
+        delete _widget;
+        _widget = NULL;
     }
 }
 

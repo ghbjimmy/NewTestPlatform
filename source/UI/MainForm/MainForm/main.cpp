@@ -182,7 +182,7 @@ int main(int argc, char *argv[]){
     int id = msgId & 0xFFFF;
 
     int total = group | id;
-    if (total & 0x1000)
+    if (!total & 0x1000)
     {
         int i = 0;
     }
